@@ -1,0 +1,1 @@
+PASS drive tree pocket bypass: waypoints=4/4, end=(40.05, 58.52), grounded minimum=4

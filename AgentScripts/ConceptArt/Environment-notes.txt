@@ -1,0 +1,26 @@
+CONCEPT ENVIRONMENT — implementation notes, 16 October 2026
+
+Sources owned by environment agent:
+  ConceptEnvironment.cs
+  ConceptDressing.cs
+
+Environment family
+All 20 existing WastelandRestored prop kinds are rebuilt as actual3D meshes in their original prefab roots. The builder retains historical colliders, transforms, and gameplay components. The family includes folded/corrugated ivory/rust sheet metal, braced structures, empty fuel pump with nozzle/hose, tire stacks with raised tread, drums and pressed jerrycans, timber/steel supply crates, scavenged machinery, open-cabin pickup wreck, large bus wreck, utility poles, gates, wind pump, irregular sandstone, and restrained cactus/dry scrub.
+
+Wreck quarter-panels have real scalloped tire openings; cabin glazing is framed/open. Rust and paint remnants are broad14-point eroded silhouettes. Roof corrosion follows folded sheet edges and includes a few larger blooms and joining seams. Shared ArtKit materials and batching/atlas are used; this agent does not change pipeline or lighting.
+
+Workshop
+Original20m-diameter service area, radius/rate/session/UI references, and all historical blocking colliders are preserved. Side-awning furniture stays within |localX|>=8.2m, leaving the central16.4m bay clear. No beam spans the center/car; the wrench sign and cabinet face local−Z camera side. Roofs and side panels use worn ivory/rust surfaces. Apron uses IvoryShade warm sandstone-gray. Mint ring keeps unit-radius mesh scaled by the RepairWorkshop's configured radius; active mint feedback still belongs to the existing healing component.
+
+Latest meaningful service detail pass adds a pegboard/spanner wall, workbench with vice and drawers, hydraulic engine hoist with hanging salvaged block, portable compressor with gauge/motor/airline, spare-wheel rack, oil tins, and rear equipment cladding. All are in existing side strips; no bay collider or navigation mutation is performed.
+
+Reusable roadside dressing
+ConceptDressing.Apply(level) creates8 compact shared-mesh prototype compositions and deterministically places up to100 instances along the5 existing route polylines. Reruns replace only the named Concept route-shoulder composition root. Everything added is noncolliding. Candidates near original obstacles, enemy anchors, intersections, workshop radius+4m, ground edges, or prior groups are rejected. Original routes, terrain mesh/elevations, dimensions, encounters, colliders, and NavMesh remain unchanged.
+
+Final shoulder origins (per root review): main7.4m, western7.5m, eastern7.2m, bothspurs6.5m from route center. Prototype content extends chiefly outward from origin so small clusters become visible at the edges of the preserved18m gameplay-camera width while retaining a broad clear central corridor. Group spacing12.1–13.3m; actual count is returned by Apply, depending on exclusion tests.
+
+Integration / validation ownership
+Root agent controls Unity compilation, prefab saving, scene passes, screenshots, gameplay checks, and final delivery. Environment agent did not operate Unity or create additional backups. Visual review performed on actual pass02 workshop/camp, pass03 workshop, and pass06 road/workshop-wide captures; above refinements answer their most visible deficiencies. Final post-refinement validation remains with root.
+
+Potential check
+Cliff rebuild dimensions are read from preserved BoxCollider bounds to prevent cumulative mesh shrink on repeated art passes. Inspect representative cliff corner collision against rounded rock base during driving. New decorative groups intentionally have no physical colliders, per root instruction; main traffic lanes stay clear of their silhouettes.

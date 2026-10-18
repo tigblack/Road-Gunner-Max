@@ -1,0 +1,12 @@
+PASS saved pool and shared population cap: buggies=3, total=27, cap=30
+PASS four wheel suspension: grounded=4, body=(-6.01, 0.62, -9.99)
+PASS physical approach stops at firing distance: distance 11.7 -> 7.4, state=Firing
+PASS holds distance without collision attacks: state=Firing, player health=100
+PASS navigation around existing rock: distance 24.2 -> 7.4, position=(-4.85, 0.63, 7.12)
+PASS automatic turret and obstruction: protected=True, health=0, shots=18
+PASS one death reward and wreck: kill delta=1, scrap value=3
+PASS wreck returns to bounded pool: active=False
+PASS player front ram damages buggy: buggy health 105 -> 86.82938, player speed=0.0
+PASS offscreen respawn and near-player guard: near slot=0, distant slot=1, total=26
+PASS pause and complete restart: frozen=True, alive=3, reset=True
+PASS completed: Normal gameplay restored. Actual Unity physics and combat; no mobile-device performance claim.

@@ -1,0 +1,11 @@
+PASS 10 actual authored spawns and overrides: Human health=60, speed=2; vehicle health=160, speed=8
+PASS 10 player start and grounded physics: Spawn=(0.00, 0.47, 0.00), wheels=4
+PASS 10 enemies use existing AI: Human velocity=1.999992, vehicle=Chase
+PASS 4 human override damage used: Actual melee damage=12
+PASS 4 vehicle override gun used: Actual bullet damage=7, shots=1, configured rate=3
+PASS 10 existing roof shooting: 60-health override killed by four existing 15-damage shots
+PASS 10 human Metal Gear / harpoon / HUD: Existing reward=1
+PASS 10 vehicle override reward / harpoon: Existing reward path with overridden amount=5
+PASS 10 solid obstacle blocks actual car: Actual driven position=(0.00, 0.48, 10.57)
+PASS 10 edited hill collision and navigation: Hill=4.245611, wheels=4, car Y=4.554462
+PASS completed: Actual Unity Play Mode workflow verified; no diagnostic component saved in scenes

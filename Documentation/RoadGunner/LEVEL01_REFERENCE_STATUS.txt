@@ -1,0 +1,87 @@
+LEVEL 01 — REFERENCE AUTHORING PREPARATION
+2026-10-07 (Asia/Yerevan)
+
+Requested reference
+https://www.youtube.com/watch?v=i2-6e8ymC_8
+Butcher Hero: Hook'n'chew RPG gameplay walkthrough.
+
+Reference access
+The watch page redirected to Google's unusual-traffic/CAPTCHA page. Web access
+returned no playable video or frames; no enabled browser surface was available.
+The first level has NOT been visually inspected. No timestamps, start direction,
+territory outline, routes, elevation features, encounters or exit are asserted.
+
+Needed to complete the requested adaptation
+Several screenshots showing the first level: start/facing, each main route and
+junction, combat spaces and enemy groups, narrow passages/terrain changes, and
+exit/transition. Overlapping frames or timestamps help connect visible areas.
+A playable video attachment is also suitable if available.
+
+Prepared Unity scene
+Assets/RoadGunner/Scenes/Level01_Wasteland.unity
+This is an organized copy of the working Scrap Rush prototype, not a recreation
+of the reference. Its original 100 x 100 m terrain and six encounter centers are
+retained. The requested approximately 2x width and length are NOT applied yet:
+the source footprint and proportions cannot be inferred without inspected frames.
+The LevelLayout component explicitly records referenceInspected=false,
+requestedFootprintScale=2, appliedFootprintScale=1 and this pending status.
+
+Authoring changes
+- Sections for Terrain, Boundaries, Environment Props, Landmarks, Player Spawn,
+  Enemy Groups, Navigation, Lighting, Gameplay Systems, Camera and Portrait UI.
+- Editable start position/forward heading and recovery markers wired to session.
+- Editable encounter prefab, enemyCount per group and individual spawn transforms.
+- Deterministic positions with navigation alignment, collision and reachability
+  checks. Existing global cap, pool, offscreen/distance respawn guards and delay.
+- An independently rebuilt Level01 navigation asset; prototype bake untouched.
+- Existing vehicle physics, suspension, speed, turret/combat tuning and UI scale.
+
+Editing the prepared scene
+Select Enemy Groups > Encounter NN and edit enemyCount or its child spawn points.
+Moving the encounter root moves the whole group; marker points define positions.
+If a count exceeds the number of explicit markers, additional points use a
+predictable local circle with fallbackRadius. Invalid/blocked/unreachable spawn
+locations are skipped. Positions project to navigation within 3 m.
+Tools > Road Gunner > Level 01 > Validate Prepared Encounter Markers runs opt-in
+Play Mode checks. Stop Play Mode before saving changes or rebaking navigation.
+Select Navigation's NavMeshSurface and bake again after moving terrain/obstacles.
+
+Preparation menu
+Tools > Road Gunner > Level 01 > Prepare From Working Prototype creates the scene
+once and refuses to overwrite an existing Level01_Wasteland. It also refuses to
+discard dirty scenes. The normal saved scene does not execute any editor builder.
+
+The final reference-based layout, scale, full-route driving validation, encounter
+pacing and reference-grounded overview/captures remain pending the source frames.
+Foundation screenshots describe only the retained prototype map.
+
+Verified preparation (Unity Play Mode)
+41 functional checks passed: 9 prepared-scene/encounter checks, 16 control checks,
+and 16 physics/combat/session checks (completion markers excluded).
+All six original encounters spawned four reachable raiders. Repeated restart
+positions were identical. Independent group counts, global cap and offscreen/
+distance/delay respawn guards passed. Controls include all eight joystick
+headings, moving forward U-turn, touch cancellation and keyboard S reverse.
+Physics/combat checks include acceleration/braking, uneven-ground suspension,
+actual blocked/unblocked turret shots, pickups, health, pause and restart.
+The joystick turn check now stops when the car acquires its requested heading,
+instead of continuing to drive for a fixed five seconds into later scenery;
+it also checks that reverse is never selected throughout the turn.
+
+No missing renderer materials, unsupported shaders or new game/scene Console
+errors were reported. The cloned Unity SearchDatabase emitted its existing
+startup indexing exception (also recorded in the previous Scrap Rush run).
+This does not validate the unavailable video layout, enlarged routes, final
+encounter pacing, physical mobile controls or mobile performance.
+
+Evidence: Documentation/RoadGunner/Level01-2026-10-07/
+- foundation-overview.png: actual top-down render of the retained prototype map.
+- foundation-portrait-start.png and foundation-portrait-driving.png: actual
+  Play Mode renders of the prepared scene with the existing portrait HUD.
+- PreparationChecks.txt, JoystickHeadingResults.txt, PlayModeResults.json,
+  SceneStructure.txt: exact check results.
+
+Backup: Documentation/RoadGunner/Backups/Before-Level01-2026-10-07.zip contains
+preparation-time prototype scene, previous SpawnDirector and Build Settings.
+The prototype remains the current first Build Settings scene while reference
+adaptation is pending. Open Level01_Wasteland explicitly to edit/play the base.

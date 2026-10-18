@@ -1,0 +1,8 @@
+using System;using System.IO;using System.Linq;using UnityEditor;using UnityEngine;using RoadGunner;using RoadGunner.Editor;
+public static class GreenwoodView{public static string Main(string target){
+ if(target=="overview"){var v=SceneView.lastActiveSceneView;v.orthographic=true;v.LookAtDirect(AstraZone01Builder.World(-4,9),Quaternion.Euler(57,45,0),81);v.Repaint();return "Scene overview ready";}
+ if(!EditorApplication.isPlaying)throw new InvalidOperationException("Play Mode required for gameplay views");var s=UnityEngine.Object.FindAnyObjectByType<GameSession>();s.Restart();s.health.DamageEnabled=false;s.turret.enabled=false;s.spawns.enabled=false;
+ foreach(var r in s.spawns.authoredRaiders){if(r.agent.enabled&&r.agent.isOnNavMesh)r.agent.isStopped=true;r.enabled=false;}
+ Vector2 p=target=="entry"?new Vector2(0,-45):target=="southwest"?new Vector2(-15,-12):target=="sanctuary"?new Vector2(11,-3):target=="crossroads"?new Vector2(0,22):target=="west"?new Vector2(-31,29):target=="north"?new Vector2(-5,55):target=="northeast"?new Vector2(23,42):target=="sealed"?new Vector2(38,37):target=="westgate"?new Vector2(-44,24):new Vector2(38,54);
+ s.vehicle.ResetPose(AstraZone01Builder.World(p.x,p.y,.7f),Quaternion.Euler(0,45,0));s.vehicle.Body.constraints=RigidbodyConstraints.FreezeAll;s.follow.Snap();return "View "+target+" ready, enemies visible at authored positions; gameplay camera unchanged";
+}}

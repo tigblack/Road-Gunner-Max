@@ -1,0 +1,3 @@
+Assets/RoadGunner/Prefabs/Dust Jackal.prefab: 8 original physics components, 8 current. Exact serialized differences: []
+Assets/RoadGunner/Prefabs/Wasteland Raider.prefab: 1 original physics components, 1 current. Exact serialized differences: []
+Assets/RoadGunner/Prefabs/Rust Vulture Enemy Buggy.prefab: 6 original physics components, 6 current. Exact serialized differences: []

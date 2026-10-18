@@ -1,0 +1,9 @@
+Scene: Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Ground local X/Z: 124 x 146 m -> 310 x 365 m
+Ground world AABB before=Center: (-0.71, 0.00, 10.61), Extents: (95.46, 0.00, 95.46)
+after=Center: (-1.77, 0.00, 26.52), Extents: (238.65, 0.24, 238.65)
+Configured gameplay bounds before=Center: (0.71, 0.00, 9.19), Extents: (98.00, 12.00, 98.00)
+after=Center: (1.77, 0.00, 22.98), Extents: (245.00, 12.00, 245.00)
+Scale applied once: 2.5 per horizontal axis; 6.25 ground area. Root scale=(1.00, 1.00, 1.00)
+Original 13 encounter roles retained; 6 transit raiders added. Active cap=30
+Workshop radius=10 m, rate=0.1 of maximum HP per scaled second.

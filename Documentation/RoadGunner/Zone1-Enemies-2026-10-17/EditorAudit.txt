@@ -1,0 +1,3 @@
+PASS MINI BOSS · Ashmaw selected in Level Editor with ranges, safe tuning override handling
+PASS ARENA BOSS · Iron Hauler selected in Level Editor with ranges, safe tuning override handling
+PASS Level Editor repaint / scene validation: 0 errors

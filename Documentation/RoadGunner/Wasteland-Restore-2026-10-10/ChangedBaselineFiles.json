@@ -1,0 +1,11 @@
+{
+  "unchanged": 677,
+  "modified": [
+    "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Terrain.asset",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Terrain baseline.asset",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Navigation.asset"
+  ],
+  "missing": [],
+  "ignored": "macOS AppleDouble ._ metadata"
+}

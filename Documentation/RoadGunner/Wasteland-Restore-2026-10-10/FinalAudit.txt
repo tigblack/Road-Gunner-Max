@@ -1,0 +1,10 @@
+Info: Authored enemies: 19; legacy encounter groups: 0; shared resource pool retained.
+Info: Scenes serialize placements, prefab links and markers. Relief and override settings are separate per-level assets. Bounds are authoring/validation guides; physical perimeter stays in the scene.
+Missing scripts=0, missing mesh filters=0, missing renderer materials=0, missing collision meshes=0
+Ground mesh matches collision=True
+Ground bounds=Center: (-1.77, 0.00, 26.52), Extents: (238.65, 0.24, 238.65); local mesh=Center: (-20.00, 0.00, 17.50), Extents: (155.00, 0.24, 182.50)
+Authoring root scale=(1.00, 1.00, 1.00); player scale=(1.00, 1.00, 1.00)
+Game camera=16; rotation=(50.00, 45.00, 0.00); FollowCamera retained without bound system
+Scene=Assets/RoadGunner/Scenes/Level01_Greenwood.unity; dirty=False; navigation needs bake=False
+Workshop=(0.00, 0.00, -42.43); radius=10; max health fraction per second=0.1; wired=True
+Old fountain components=0

@@ -1,0 +1,3 @@
+First unattended batch run routed neither synthetic keyboard nor mouse events to Game View. No production input code was changed. Repeat explicitly focuses Game View before each suite and maintains that focus.
+Input state: window=none, appFocused=True, keyboardEnabled=True, mouseEnabled=True
+Final game/scene errors=0; existing SearchDatabase errors=1

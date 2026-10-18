@@ -1,0 +1,27 @@
+FINAL VERIFICATION — 2026-10-07
+Unity 6000.6.4f1, isolated copy of the same project, real Play Mode and URP rendering.
+60 functional checks passed (suite completion markers excluded):
+17 shared-range/gun/indicator checks; 11 enemy driving/ram/pool checks;
+16 joystick/keyboard/touch-routing checks; 16 vehicle/combat/session checks.
+
+Actual tests: damaging hits at 9.8 m, no firing at 10.2 m for both vehicles;
+exact 10 m horizontal centre boundary; world occlusion; 180-degree gun swivel;
+moving pursuit into range; ground circle terrain height/radius and mesh reuse;
+pause, death and restart; physical suspension, steering, S reverse and rewards.
+Both saved scenes: three wired buggy guns, one wired player circle, range 10.
+Repeated installer did not duplicate circles or pooled buggies.
+Missing/unsupported renderer materials: 0. Game/scene Console errors: 0.
+Previously observed Unity SearchDatabase startup index exception: 1 per run.
+
+The first unattended batch run missed synthetic input due to Game View routing.
+The focused rerun passed all 16 control and all 16 general checks; production
+input scripts/settings were not changed. See InputHarnessNotes.txt.
+No Android/iOS module build, connected phone or physical multitouch/performance
+verification was performed by these Editor diagnostics.
+
+Images are actual Unity captures:
+player-attack-radius-10m.png — real player circle at the existing portrait zoom.
+buggy-fires-at-player.png — staged buggy placement, real gun shot and range circle.
+rust-vulture-roof-gun.png — close-up of real rusty model, rotating gun and muzzle flash.
+The verified prefab, scene files, tuning and import metadata were copied back
+to the main workspace. Temporary batch runners were not copied.

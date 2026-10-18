@@ -1,0 +1,27 @@
+Scene: Assets/RoadGunner/Scenes/RoadGunner_Prototype.unity dirty=False
+Vehicle prefab: Assets/RoadGunner/Prefabs/Dust Jackal.prefab
+Vehicle root: (0.00, 0.65, 0.00) rotation (0.00, 165.00, 0.00)
+Tuning: Assets/RoadGunner/Settings/Vehicle handling.asset
+Turret: yaw (0.00, 1.76, -0.35) pitch (0.00, 0.10, 0.34) muzzle (0.00, 0.00, 1.64)
+Combat tuning: {"MonoBehaviour":{"m_Enabled":true,"m_EditorHideFlags":0,"m_Name":"Combat and population","m_EditorClassIdentifier":"Assembly-CSharp::RoadGunner.CombatTuning","vehicleHealth":100.0,"range":10.0,"shotsPerSecond":5.0,"bulletDamage":15.0,"yawSpeed":300.0,"aimTolerance":7.0,"sharedMeleeCooldown":0.3499999940395355,"ramMinimumSpeed":6.0,"ramCooldown":0.800000011920929,"enemyHealth":45.0,"moveSpeed":3.5,"aggroRadius":18.0,"meleeReach":1.7999999523162842,"meleeDamage":8.0,"attackCooldown":1.0,"activeCap":30,"groupSize":4,"pickupCap":60,"replenishDelay":10.0,"spawnDistance":20.0,"pickupRadius":2.5}}
+Camera: 11.5 pitch (50.00, 45.00, 0.00)
+Pools: raiders=30 buggies=3 pickups=60 gear=60
+Collider: DUST JACKAL • armored muscle car BoxCollider pos=(0.00, 0.65, 0.00) trigger=False
+Collider: DUST JACKAL • armored muscle car BoxCollider pos=(0.00, 0.65, 0.00) trigger=False
+Collider: Front WheelCollider WheelCollider pos=(-0.91, 0.15, 1.35) trigger=False
+Collider: Front WheelCollider WheelCollider pos=(0.91, 0.15, 1.35) trigger=False
+Collider: Rear WheelCollider WheelCollider pos=(-0.91, 0.15, -1.35) trigger=False
+Collider: Rear WheelCollider WheelCollider pos=(0.91, 0.15, -1.35) trigger=False
+Collider: Front ram sensor BoxCollider pos=(0.00, 0.40, 2.45) trigger=True
+Child: Replaceable visuals
+Child: Front WheelCollider
+Child: Wheel dust 0
+Child: Front WheelCollider
+Child: Wheel dust 1
+Child: Rear WheelCollider
+Child: Wheel dust 2
+Child: Rear WheelCollider
+Child: Wheel dust 3
+Child: Turret bearing
+Child: Independent turret yaw
+Child: Front ram sensor

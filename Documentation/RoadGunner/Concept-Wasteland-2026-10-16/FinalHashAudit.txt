@@ -1,0 +1,39 @@
+Baseline files: 943
+Changed baseline files: 31
+Missing baseline files: 0
+Protected original source/settings/terrain/nav/tuning paths: 147
+Unexpected protected differences: []
+Intentional visual quality change in ProjectSettings/QualitySettings.asset: PC antiAliasing 0 -> 2 only.
+
+Changed baseline files:
+Assets/Settings/PC_RPAsset.asset
+Assets/Settings/Mobile_RPAsset.asset
+Assets/Settings/Mobile_Renderer.asset
+Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Assets/RoadGunner/Prefabs/Scrap pickup.prefab
+Assets/RoadGunner/Prefabs/Rust Vulture Enemy Buggy.prefab
+Assets/RoadGunner/Prefabs/Dust Jackal.prefab
+Assets/RoadGunner/Prefabs/Wasteland Raider.prefab
+Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Route sign.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Scrap wind pump.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Dry scrub.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Metal storage crate.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Shipping container.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Damaged utility pole.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Scrap stakes.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Bus wreck.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Fuel drums.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Salvage gantry.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Rusted lookout.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Abandoned pickup.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Weathered concrete.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Danger sign.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Tire and scrap pile.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Service kiosk.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Corrugated fence.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Tire stack.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Open scrap gate.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Sealed industrial bunker.prefab
+Assets/RoadGunner/Levels/WastelandRestored/Prefabs/Closed scrap gate.prefab
+ProjectSettings/QualitySettings.asset

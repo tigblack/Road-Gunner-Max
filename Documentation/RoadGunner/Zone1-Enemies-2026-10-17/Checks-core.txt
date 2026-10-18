@@ -1,0 +1,16 @@
+PASS both bosses alive on actual NavMesh: mutant=Idle, truck=Patrol
+PASS active count includes bosses once: reported=21, counted=21
+PASS real turret acquisition / WastelandMutant: HP 330 -> 315, shots=1, target=WastelandMutant
+PASS nearest boss HUD / WastelandMutant: visible=True, title=ASHMAW · MINI BOSS, target=WastelandMutant
+PASS real turret acquisition / TruckArenaBoss: HP 650 -> 635, shots=1, target=TruckArenaBoss
+PASS nearest boss HUD / TruckArenaBoss: visible=True, title=IRON HAULER · ARENA BOSS, target=TruckArenaBoss
+PASS mutant warns before damage: warning=True, HP=100, progress=0.02
+PASS mutant visible smash deals heavy melee damage: damage=14, configured=14, landed=1
+PASS moving outside locked smash area dodges: HP=100, landed=0
+PASS pause cancels mutant warning without damage: state=Chase, warningVisible=False, HP=100
+PASS resume gives no cached instant smash: HP=100
+PASS player defeat cancels boss attack and ground warning: session=Defeated, mutant=Chase, HP=0
+PASS mutant death rewards exactly once: killsDelta=1, earnedDelta=5
+PASS mutant corpse despawns without automatic respawn: active=False
+PASS restart restores both authored bosses: HP mutant=330, truck=650
+Failures=0; elapsed=8.92 real seconds. Final state: fresh Restart.

@@ -1,0 +1,17 @@
+PASS stick (0.00, 1.00) drives forward toward screen direction: heading error=0.0, forward speed=1.05, seconds=0.21, routed=True, position=(-33.83, 0.48, -33.83), grounded=4
+PASS stick (0.71, 0.71) drives forward toward screen direction: heading error=9.6, forward speed=6.36, seconds=1.55, routed=True, position=(-28.95, 0.48, -32.50), grounded=4
+PASS stick (1.00, 0.00) drives forward toward screen direction: heading error=9.7, forward speed=8.30, seconds=2.21, routed=True, position=(-24.80, 0.48, -35.27), grounded=4
+PASS stick (0.71, -0.71) drives backward toward screen direction: heading error=9.8, forward speed=-4.93, seconds=1.93, routed=True, position=(-36.82, 0.48, -38.17), grounded=4
+PASS stick (0.00, -1.00) drives backward toward screen direction: heading error=0.0, forward speed=-1.04, seconds=0.31, routed=True, position=(-34.09, 0.48, -34.09), grounded=4
+FAIL stick (-0.71, -0.71) drives backward toward screen direction: heading error=4.4, forward speed=-0.01, seconds=7.01, routed=True, position=(-40.90, 0.49, -37.68), grounded=4
+FAIL stick (-1.00, 0.00) drives forward toward screen direction: heading error=90.0, forward speed=0.00, seconds=7.01, routed=False, position=(-42.40, 0.48, -42.40), grounded=4
+FAIL stick (-0.71, 0.71) drives forward toward screen direction: heading error=45.0, forward speed=0.00, seconds=7.00, routed=False, position=(-42.40, 0.48, -42.40), grounded=4
+FAIL rearward command brakes before reversing: initial turn=0.0, initial speed=-5.41, braked first=False, final speed=-5.43, final error=0.0
+FAIL dead zone: magnitude=1
+FAIL analog magnitude symmetric in both gears: up=1, down=1
+FAIL held centered stick overrides S: magnitude=1
+FAIL release clears input: held=False
+PASS S still reverses after stick release: speed=-5.89
+FAIL rearward touch engages reverse: direction=(0.00, -1.00), reverse=True
+FAIL touch cancellation clears heading: held=False
+PASS completed: Normal session restored. Editor pointer simulation; physical device not tested.

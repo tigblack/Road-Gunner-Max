@@ -1,0 +1,13 @@
+Saved-scene audit / failures=0
+PASS Level authoring validation: Info Authored enemies: 19; legacy encounter groups: 0; shared resource pool retained. | Info Scenes serialize placements, prefab links and markers. Relief and override settings are separate per-level assets. Bounds are authoring/validation guides; physical perimeter stays in the scene.
+PASS No missing scripts: 13713 transforms inspected
+PASS No missing visual or collision meshes: 1035 visual mesh filters
+PASS No missing or unsupported materials/shaders: 1073 renderers, including inactive reserves and retired visuals
+PASS Pool and placed population retained: 49 humans,19 authored,3 buggy,60 pickup slots,cap30
+PASS Spawnable family updated: All mapped refs non-null, three shared raider variants
+PASS Workshop contract retained: center=(0.00, 0.00, -42.43),10m,.1 maxHP/s
+PASS Original portrait camera retained: ortho16,distance35,follow damping.2
+PASS Terrain and navigation retained: local bounds=Center: (-20.00, 0.00, 17.50), Extents: (155.00, 0.24, 182.50), gameplay=Center: (1.77, 0.00, 22.98), Extents: (245.00, 12.00, 245.00)
+PASS Nonblocking shoulder family: 79 compositions; no colliders
+PASS Concept daylight active: profile enabled;sun1.65;softshadows;palette atlas
+PASS Saved scene: Assets/RoadGunner/Scenes/Level01_Greenwood.unity

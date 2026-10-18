@@ -1,0 +1,7 @@
+Unity 6000.6.4f1 actual batch graphics render
+Missing renderer materials: 0
+Unsupported shaders: 0
+WheelColliders: 4
+Turret shots before capture: 0
+Vehicle handling max speed: 18
+Reverse max speed: 7

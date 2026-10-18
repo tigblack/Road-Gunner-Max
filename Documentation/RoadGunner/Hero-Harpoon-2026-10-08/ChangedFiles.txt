@@ -1,0 +1,45 @@
+MODIFIED EXISTING FILES
+Assets/RoadGunner/Editor/PrototypeCombatBuilder.cs
+Assets/RoadGunner/Prefabs/Dust Jackal.prefab
+Assets/RoadGunner/README.txt
+Assets/RoadGunner/Scenes/Level01_Wasteland.unity
+Assets/RoadGunner/Scenes/RoadGunner_Prototype.unity
+Assets/RoadGunner/Scripts/EnemyBuggy.cs
+Assets/RoadGunner/Scripts/GameSession.cs
+Assets/RoadGunner/Scripts/PickupPool.cs
+Assets/RoadGunner/Settings/Vehicle handling.asset
+
+NEW ASSET FILES (including Unity metadata)
+Assets/RoadGunner/Art.meta
+Assets/RoadGunner/Art/HeroVehicle_01.meta
+Assets/RoadGunner/Art/HeroVehicle_01/HeroVehicle_source.json
+Assets/RoadGunner/Art/HeroVehicle_01/HeroVehicle_source.json.meta
+Assets/RoadGunner/Editor/HarpoonValidationMenu.cs
+Assets/RoadGunner/Editor/HarpoonValidationMenu.cs.meta
+Assets/RoadGunner/Editor/HeroHarpoonBuilder.cs
+Assets/RoadGunner/Editor/HeroHarpoonBuilder.cs.meta
+Assets/RoadGunner/Materials/Hero glazed teal glass.mat
+Assets/RoadGunner/Materials/Hero glazed teal glass.mat.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_companion_body.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_companion_body.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_companion_harpoon.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_companion_harpoon.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_driver_body.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_driver_body.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_body.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_body.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_rear_platform.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_rear_platform.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_fl.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_fl.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_fr.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_fr.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_rl.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_rl.asset.meta
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_rr.asset
+Assets/RoadGunner/Meshes/HeroVehicle_01/hero_vehicle_wheel_rr.asset.meta
+Assets/RoadGunner/Scripts/Diagnostics/HarpoonCollectionChecks.cs
+Assets/RoadGunner/Scripts/Diagnostics/HarpoonCollectionChecks.cs.meta
+Assets/RoadGunner/Scripts/HarpoonCollector.cs
+Assets/RoadGunner/Scripts/HarpoonCollector.cs.meta

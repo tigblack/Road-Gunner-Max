@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8a371b8eb754c15a156c316707d175, type: 3}
+  m_Name: Rust Vulture Enemy Buggy
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.BuggyTuning
+  health: 160
+  aggroRadius: 26
+  maxSpeed: 8
+  driveTorque: 1450
+  preferredRange: 7.5
+  retreatDistance: 5.5
+  retreatSpeed: 4
+  approachDeceleration: 3.5
+  brakeTorque: 1400
+  shotsPerSecond: 3
+  bulletDamage: 7
+  yawSpeed: 240
+  aimTolerance: 6
+  gunWarmup: 0.8
+  respawnDelay: 16
+  wreckLifetime: 2.5
+  scrapReward: 5

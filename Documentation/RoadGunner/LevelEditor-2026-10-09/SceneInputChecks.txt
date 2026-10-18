@@ -1,0 +1,4 @@
+PASS Scene View click instantiates connected human prefab
+PASS Escape exits placement
+PASS Scene View brush changes mesh and collider
+PASS Scene View stroke Undo restores ground
