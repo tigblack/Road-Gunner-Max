@@ -1,0 +1,39 @@
+name: Deploy playable Road Gunner
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'WebBuild/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - name: Validate built site
+        run: |
+          test -s WebBuild/index.html
+          test -s WebBuild/build-info.json
+          test -n "$(find WebBuild/Build -name '*.wasm.unityweb' -print -quit)"
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: WebBuild
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

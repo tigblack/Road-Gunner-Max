@@ -9,6 +9,10 @@ Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
 Press Play. Drive with the on-screen joystick or WASD / arrow keys; Space brakes. Weapons fire automatically at nearby enemies.
 
+Play the published Web version:
+https://tigblack.github.io/Road-Gunner-Max/
+Tap PLAY, then use the on-screen joystick. The site is published from gh-pages through GitHub's built-in Pages deployment. See Documentation/RoadGunner/Arena1-2026-10-24/Publication.txt for verification and browser/device testing limits.
+
 Arena 1 contains 12 basic Raiders, two Rust Vulture Buggies, the Ashmaw Monster miniboss, and a final Boss Raider. Drive speed is one third of the previous value; outgoing damage is multiplied by 0.35. One-use ATTACK +1 and HEALTH +1 stations, run stats, a live minimap and an Arena Clear result are integrated with the existing Metal Gear / companion harpoon loop. Exact The War reference data was unavailable; the first-arena layout is an explicitly documented fallback.
 
 Assets/            Game assets, scenes, editor tools and runtime code

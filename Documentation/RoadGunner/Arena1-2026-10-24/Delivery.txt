@@ -78,7 +78,8 @@ Console errors, real physics/combat, Metal Gear+harpoon, upgrades/workshop/reset
 minimap rendered geometry/tracking, touch joystick+second-finger pause, boss warning,
 dodge, committed strike damage, completion and resource conservation.
 Portrait captures from the real gameplay camera+HUD: outputs/arena1-validation/.
-Installation.txt also records existing Level Editor validation and connected nav paths.
+Installation.txt records existing Level Editor validation; PlayMode.txt records
+connected navigation paths.
 Physical iOS/Android devices and device performance are not covered by Editor checks.
 
 WEB / PUBLICATION

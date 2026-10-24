@@ -1,0 +1,15 @@
+Published-site verification, 24 October 2026. HTTPS downloads use curl with normal certificate validation.
+PASS index.html: 4426 bytes, SHA256 f90dea837bb9a112c77097419959f920c67791f39cd5874fe722525ed973571b, identical to local build
+PASS build-info.json: 240 bytes, SHA256 cfbe6d12971fa6b66987acaf6b27d3482878fdb58cd821c6098dd29dfe3ae83e, identical to local build
+PASS Build/WebBuild.loader.js: 48779 bytes, SHA256 97c74324f8f474145542af8d12c455a658afd12061b822c8e7800b3290a473e9, identical to local build
+PASS Build/WebBuild.data.unityweb: 10027631 bytes, SHA256 ba53d0088d255e76bfeef5ab5d8994b31793705220025f6b13f49d0e77a17f26, identical to local build
+PASS Build/WebBuild.framework.js.unityweb: 74863 bytes, SHA256 72dbb00b7f6dfb67a86716b8fbb95e544aaa327aef406df7cd2c86acd08dad30, identical to local build
+PASS Build/WebBuild.wasm.unityweb: 9876848 bytes, SHA256 d64fd9427948d8144c189c8b42677cfb15467f292cb0af4c725ef34e2ad61e08, identical to local build
+PASS JavaScript resize function: 393x852 -> 786x1704 rendering pixels at capped DPR 2; zero-size viewport retains last valid render size; 852x393 -> 1704x786.
+PASS Player stripped assemblies contain no AppUI runtime, matching APP_UI_EDITOR_ONLY configuration.
+PASS Final HTTPS Pages build launched through PLAY in Chrome iPhone 16 emulation (393x852); Unity initialized and rendered Arena 1, readable HUD and live minimap.
+PASS Touch-emulated joystick drove the vehicle (16 km/h observed); automatic combat and Metal Gear collection reached enemies 3 / scrap 2, later enemies 6 / scrap 5.
+PASS Rotation 393x852 -> 852x393 -> 393x852, pause on focus loss, resume; no zero-width RenderGraph errors or App UI input exceptions recurred.
+PASS Actual page console query: ready=true, viewport=[393,852], canvas=[786,1704], scrolls=false.
+PASS Desktop-mode held W drove the published player (18 km/h observed). A separate fresh desktop reload, PLAY launch and held W passed (17 km/h). No browser Console error counter; one optional URP shader warning, existing informational postprocessing/audio messages.
+LIMIT Chrome emulation only; physical iPhone/Android, Safari and device performance not tested.

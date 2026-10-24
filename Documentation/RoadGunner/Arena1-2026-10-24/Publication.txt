@@ -1,0 +1,90 @@
+ROAD GUNNER — WEB PUBLICATION, 24 OCTOBER 2026
+
+PLAY
+https://tigblack.github.io/Road-Gunner-Max/
+
+DEPLOYMENT: SUCCEEDED
+Existing repository: https://github.com/tigblack/Road-Gunner-Max
+Source branch: main. Static publication branch: gh-pages, root folder.
+GitHub Pages status: built. GitHub's built-in Pages Actions workflow completed
+successfully, including build, deploy and report-build-status jobs:
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/40124921796
+Published commit: 947379bd67160786fa4d43be132603a459b49749.
+The publication branch tip contains only 8 static publishing files; no Unity
+project source or cache folders are part of the published site.
+
+GIT
+Gameplay implementation commit: 99761eb7aff232e0408faf97af785c447e6550af (feat: rework arena 1 balance progression
+and minimap), pushed to main.
+Web build/template/configuration commit: 7418699f8cf0b35a2996c9d2c90b82801d095bc8,
+pushed to main.
+Publication branch: 947379bd67160786fa4d43be132603a459b49749, pushed to gh-pages.
+No force pushes or existing-history rewrites were performed. Original working
+tree was clean; unrelated source assets and Unity-generated cache folders were
+excluded from the implementation commits.
+
+PUBLISHING METHOD
+The current gh authentication has repo/read:org/gist scopes and no workflow scope.
+Creating .github/workflows/pages.yml through the authenticated API returned 404,
+while normal Git pushes and the Pages administration API succeeded. The missing
+workflow scope is consistent with that refusal; no credential permissions were
+expanded. Publishing therefore uses GitHub's supported built-in branch deployment.
+Pages is already enabled and deployed; no manual setting is required to play.
+The prepared custom Actions artifact workflow is retained as
+pages-workflow.yml.example beside this report. It is an optional future alternative,
+not the workflow used by the successful deployment above.
+
+BUILD
+Unity 6000.6.4f1 / URP 17.6.0.
+Scene: Assets/RoadGunner/Scenes/Level01_Greenwood.unity.
+Local build: /Users/arthuri/Unity Projects/Road Gunner/WebBuild/.
+Build completed 24 October 2026 at 19:17:51 UTC (23:17:51 Asia/Yerevan).
+Static download payload: 20,032,787 bytes (about 20 MB / 19.1 MiB).
+Gzip + JavaScript Decompression Fallback; all three compressed payloads were
+decompressed successfully during validation, and the WASM header was verified.
+GitHub serves .unityweb payloads without Content-Encoding; the included fallback
+handles that hosting configuration. No worker threads/isolation headers required.
+WASM memory 128 MB initial / 512 MB maximum; existing Mobile quality setting.
+Responsive portrait page, safe-area game HUD, disabled page scrolling, touch input,
+pixel ratio capped at 2. Manual resize retains the last positive canvas dimensions
+through zero-sized viewport transitions; common portrait and landscape dimensions
+were checked against the actual JavaScript resize function.
+APP_UI_EDITOR_ONLY matches the existing Android/Standalone configuration, excluding
+unused App UI tooling and its problematic early mobile EnhancedTouch initializer.
+
+VALIDATION
+51 actual Mac Unity Editor Play Mode checks passed; failures 0, runtime Console
+errors/exceptions/asserts 0. PlayMode.txt contains every check and observation.
+See Delivery.txt for implementation details and Installation.txt for exact enemy
+and station placements and Level Editor validation.
+WebVerification.txt records HTTPS downloads of the live page, build metadata,
+loader, data, framework and WASM. Every downloaded file matches the final local
+build byte for byte. The live page and all required payloads returned successfully.
+The browser loader JavaScript and processed template passed syntax validation.
+
+BROWSER OBSERVATIONS AND LIMITS
+The final published build was launched through PLAY in Chrome iPhone 16 emulation,
+393x852. Unity initialized; the compact ATK/HP HUD, minimap and all marker categories
+rendered within the portrait screen. Touch-emulated joystick input moved the car
+(16 km/h observed), with automatic combat and companion Metal Gear collection:
+enemies 3 / scrap 2. After further play the result reached enemies 6 / scrap 5.
+The same published player also responded to held W input in desktop mode, reaching
+18 km/h. A separate fresh desktop reload and PLAY launch initialized successfully;
+held W then reached 17 km/h. Rotating 393x852 -> 852x393 -> 393x852 retained a valid canvas, paused on
+focus loss and resumed successfully. Landscape keeps the existing portrait game
+centered with side borders. Portrait page/canvas fit was checked in DevTools:
+ready=true, viewport=[393,852], canvas=[786,1704], scrolls=false.
+The earlier App UI input initialization exception and zero-width RenderGraph errors
+did not recur. No browser Console error counter appeared during the final run;
+one nonfatal optional URP upscaling shader warning and existing informational
+postprocessing/audio-loading messages remained. The gzip fallback initialized
+successfully on the actual Pages host without Content-Encoding headers.
+Computer-use access was temporarily interrupted but recovered for these final
+checks. These are Chrome device-emulation results, not a physical-phone test.
+No physical iPhone/Android/Safari test or device profiling was performed. Extended
+uninterrupted balance playtesting and physical-device verification remain useful.
+
+REFERENCE LIMIT
+The exact intended The War / The War Idle first-arena footage/version/counts were
+not verified. The 12 Raider / 2 Buggy / 1 Monster / 1 Boss Raider arrangement is the
+explicitly authorized temporary fallback, not data attributed to that reference.
