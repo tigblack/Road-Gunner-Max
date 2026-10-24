@@ -16,3 +16,5 @@
 *.mp3 binary
 *.ogg binary
 *.fbx binary
+*.unityweb binary
+*.wasm binary
