@@ -29,7 +29,7 @@ namespace RoadGunner
             return delta.sqrMagnitude <= healingRadius * healingRadius;
         }
         bool Eligible => session && session.Playing && session.vehicle && session.health &&
-            session.health.Current > 0 && session.health.Current < session.health.tuning.vehicleHealth &&
+            session.health.Current > 0 && session.health.Current < session.health.Maximum &&
             Contains(session.vehicle.transform.position) && maximumHealthFractionPerSecond > 0;
         void LateUpdate()
         {
@@ -48,7 +48,7 @@ namespace RoadGunner
             if (repairing && (!healedFrame.TryGetValue(session.health, out int frame) || frame != Time.frameCount))
             {
                 healedFrame[session.health] = Time.frameCount;
-                session.health.Heal(session.health.tuning.vehicleHealth * maximumHealthFractionPerSecond * Time.deltaTime);
+                session.health.Heal(session.health.Maximum * maximumHealthFractionPerSecond * Time.deltaTime);
             }
             Feedback(repairing && Eligible);
         }

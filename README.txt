@@ -9,7 +9,7 @@ Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
 Press Play. Drive with the on-screen joystick or WASD / arrow keys; Space brakes. Weapons fire automatically at nearby enemies.
 
-The active first zone contains ordinary raiders, two Rust Vulture buggies, the Ashmaw mutant miniboss, and the Iron Hauler arena truck boss. Scene assets, shared prefabs, materials, meshes and gameplay scripts are included.
+Arena 1 contains 12 basic Raiders, two Rust Vulture Buggies, the Ashmaw Monster miniboss, and a final Boss Raider. Drive speed is one third of the previous value; outgoing damage is multiplied by 0.35. One-use ATTACK +1 and HEALTH +1 stations, run stats, a live minimap and an Arena Clear result are integrated with the existing Metal Gear / companion harpoon loop. Exact The War reference data was unavailable; the first-arena layout is an explicitly documented fallback.
 
 Assets/            Game assets, scenes, editor tools and runtime code
 Packages/          Dependency manifest and lockfile
@@ -18,7 +18,13 @@ AgentScripts/      Asset authoring and gameplay verification helpers
 Documentation/     Art direction, implementation notes and validation reports
 
 Latest validation:
-Documentation/RoadGunner/Zone1-Enemies-2026-10-17/Delivery.txt
-43 Play Mode checks passed in the Unity Editor. Mobile device profiling and a mobile build are not part of that validation.
+Documentation/RoadGunner/Arena1-2026-10-24/Delivery.txt
+51 actual Play Mode checks passed in Unity 6000.6.4f1, with zero Console errors/exceptions. See PlayMode.txt and Installation.txt in the same folder. Physical mobile-device profiling is not part of that validation.
+
+Web publishing:
+Use Tools / Road Gunner / Web / Build Mobile Web, or run RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/. Gzip with JavaScript decompression fallback supports static GitHub Pages hosting. Publication.txt records the final build and live URL.
+
+Arena authoring:
+Tools / Road Gunner / Arena 1 / Apply First Arena Rebalance updates the existing Greenwood scene. Adjust per-level tuning under Assets/RoadGunner/Levels/Greenwood/Arena1. The existing Level Editor supports moving and tuning all Arena 1 enemy types.
 
 Unity caches, local IDE state, logs, build outputs and historical backup archives are excluded from Git. Unity recreates its generated folders when the project is opened.

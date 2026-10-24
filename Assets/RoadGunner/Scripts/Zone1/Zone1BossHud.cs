@@ -47,12 +47,14 @@ namespace RoadGunner
         {
             if (target is WastelandMutant mutant) return mutant.Health;
             if (target is TruckArenaBoss truck) return truck.Health;
+            if (target is Raider raider) return raider.Health;
             return 0;
         }
         static float MaximumOf(CombatTarget target)
         {
             if (target is WastelandMutant mutant) return mutant.MaximumHealth;
             if (target is TruckArenaBoss truck) return truck.MaximumHealth;
+            if (target is Raider raider) return raider.MaximumHealth;
             return 1;
         }
         static string PhaseOf(CombatTarget target)
@@ -72,12 +74,18 @@ namespace RoadGunner
                 if (truck.State == TruckBossState.RamRecovery) return "RECOVERING";
                 return "ARMORED TRUCK";
             }
+            if (target is Raider raider && raider.arenaBoss)
+            {
+                if (raider.IsTelegraphing) return "HEAVY STRIKE · DODGE";
+                if (raider.IsRecovering) return "RECOVERING";
+                return "RAIDER WARLORD · FINAL BOSS";
+            }
             return string.Empty;
         }
         public void Refresh()
         {
             var source = roster ? roster : session ? session.zone1 : null;
-            if (!session || !session.vehicle || !source || source.bosses == null || session.State == SessionState.Defeated)
+            if (!session || !session.vehicle || !source || source.bosses == null || (session.State == SessionState.Defeated || session.State == SessionState.Completed))
             { Target = null; SetVisible(false); return; }
             CombatTarget closest = null; float nearest = showDistance * showDistance;
             for (int i = 0; i < source.bosses.Length; i++)

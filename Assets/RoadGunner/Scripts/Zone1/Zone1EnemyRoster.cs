@@ -27,6 +27,7 @@ namespace RoadGunner
                 var target = bosses[i]; if (!target) continue;
                 if (target is WastelandMutant mutant) { mutant.session = session; mutant.ResetEncounter(); }
                 else if (target is TruckArenaBoss truck) { truck.session = session; truck.ResetEncounter(); }
+                else if (target is Raider raider && raider.arenaBoss) { raider.session = session; raider.ResetEncounter(); }
             }
         }
         public void CancelAttacks()
@@ -37,6 +38,7 @@ namespace RoadGunner
                 var target = bosses[i]; if (!target) continue;
                 if (target is WastelandMutant mutant) mutant.CancelAttack();
                 else if (target is TruckArenaBoss truck) truck.CancelAttack();
+                else if (target is Raider raider) raider.CancelAttack();
             }
         }
         public void DespawnAll()
@@ -47,6 +49,7 @@ namespace RoadGunner
                 var target = bosses[i]; if (!target) continue;
                 if (target is WastelandMutant mutant) mutant.Despawn();
                 else if (target is TruckArenaBoss truck) truck.Despawn();
+                else if (target is Raider raider) raider.Despawn();
             }
         }
         void OnDisable() { CancelAttacks(); }

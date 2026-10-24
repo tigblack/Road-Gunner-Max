@@ -55,32 +55,59 @@ namespace RoadGunner.Editor
         public static void Wire(LevelLayout l)
         {
             if(!l||!l.session||!l.session.spawns)return;var s=l.session;var d=s.spawns;
-            var humans=l.humanEnemiesRoot?l.humanEnemiesRoot.GetComponentsInChildren<Raider>(true):Array.Empty<Raider>();
+            var humans=l.humanEnemiesRoot?l.humanEnemiesRoot.GetComponentsInChildren<Raider>(true).Where(r=>!r.arenaBoss).ToArray():Array.Empty<Raider>();
             var vehicles=l.enemyVehiclesRoot?l.enemyVehiclesRoot.GetComponentsInChildren<EnemyBuggy>(true):Array.Empty<EnemyBuggy>();
             // Unity Duplicate copies config references. Keep explicit level overrides individual.
             foreach(var r in humans)if(r && r.tuning && !(d.authoredRaiders??Array.Empty<Raider>()).Contains(r) && humans.Any(other=>other!=r && other.tuning==r.tuning) && AssetDatabase.GetAssetPath(r.tuning).Contains("/Enemy Overrides/"))MakeOverride(r);
             foreach(var b in vehicles)if(b && b.tuning && !(d.authoredBuggies??Array.Empty<EnemyBuggy>()).Contains(b) && vehicles.Any(other=>other!=b && other.tuning==b.tuning) && AssetDatabase.GetAssetPath(b.tuning).Contains("/Enemy Overrides/"))MakeOverride(b);
-            var pool=(d.pool??Array.Empty<Raider>()).Where(r=>r && !(d.authoredRaiders??Array.Empty<Raider>()).Contains(r)).Concat(humans).Distinct().ToArray();
+            var pool=(d.pool??Array.Empty<Raider>()).Where(r=>r && !r.arenaBoss && !(d.authoredRaiders??Array.Empty<Raider>()).Contains(r)).Concat(humans).Distinct().ToArray();
             var bpool=(d.buggyPool??Array.Empty<EnemyBuggy>()).Where(b=>b && !(d.authoredBuggies??Array.Empty<EnemyBuggy>()).Contains(b)).Concat(vehicles).Distinct().ToArray();
             if(!pool.SequenceEqual(d.pool??Array.Empty<Raider>())||!bpool.SequenceEqual(d.buggyPool??Array.Empty<EnemyBuggy>())||!humans.SequenceEqual(d.authoredRaiders??Array.Empty<Raider>())||!vehicles.SequenceEqual(d.authoredBuggies??Array.Empty<EnemyBuggy>())){
                 Undo.RecordObject(d,"Register authored enemies in existing pools");d.pool=pool;d.buggyPool=bpool;d.authoredRaiders=humans;d.authoredBuggies=vehicles;Dirty(d);
             }
             foreach(var r in humans)if(r.session!=s||!r.tuning){Undo.RecordObject(r,"Wire human session");r.session=s;if(!r.tuning)r.tuning=d.tuning;RecordPrefab(r);}
             foreach(var b in vehicles)if(b.session!=s){Undo.RecordObject(b,"Wire vehicle session");b.session=s;RecordPrefab(b);}
+            WireBossEncounters(l);
             if(l.playerSpawn&&(s.startPosition!=l.playerSpawn.position||s.startRotation!=l.playerSpawn.rotation)) {Undo.RecordObject(s,"Update player start");s.startPosition=l.playerSpawn.position;s.startRotation=l.playerSpawn.rotation;Dirty(s);}
+        }
+        public static bool IsBoss(CombatTarget target) => target is WastelandMutant || target is TruckArenaBoss || target is Raider r && r.arenaBoss;
+        static Transform SyncBossHome(CombatTarget target,Transform marker) {
+            if(!marker)marker=Section(target.transform.parent,target.name+" home");
+            if(marker.position!=target.transform.position||marker.rotation!=target.transform.rotation) {
+                Undo.RecordObject(marker,"Move authored boss home");marker.SetPositionAndRotation(target.transform.position,target.transform.rotation);RecordPrefab(marker);
+            }
+            return marker;
+        }
+        static void WireBossEncounters(LevelLayout l) {
+            if(!l.authoredContentRoot||EditorApplication.isPlaying)return;
+            var s=l.session;var bosses=l.authoredContentRoot.GetComponentsInChildren<CombatTarget>(true).Where(IsBoss).ToArray();
+            var roster=s.zone1?s.zone1:s.GetComponent<Zone1EnemyRoster>();
+            if(!roster&&bosses.Length==0)return;
+            if(!roster)roster=Undo.AddComponent<Zone1EnemyRoster>(s.gameObject);
+            if(roster.session!=s||!bosses.SequenceEqual(roster.bosses??Array.Empty<CombatTarget>())) {
+                Undo.RecordObject(roster,"Register authored boss encounters");roster.session=s;roster.bosses=bosses;Dirty(roster);
+            }
+            if(s.zone1!=roster){Undo.RecordObject(s,"Wire boss roster");s.zone1=roster;Dirty(s);}
+            var assignedHomes=new HashSet<Transform>();
+            foreach(var target in bosses) {
+                if(target is Raider raider){var home=SyncBossHome(target,raider.spawnPoint&&!assignedHomes.Contains(raider.spawnPoint)?raider.spawnPoint:null);assignedHomes.Add(home);if(raider.session!=s||raider.spawnPoint!=home){Undo.RecordObject(raider,"Wire boss Raider");raider.session=s;raider.spawnPoint=home;RecordPrefab(raider);}}
+                else if(target is WastelandMutant mutant){var home=SyncBossHome(target,mutant.spawnPoint&&!assignedHomes.Contains(mutant.spawnPoint)?mutant.spawnPoint:null);assignedHomes.Add(home);if(mutant.session!=s||mutant.spawnPoint!=home){Undo.RecordObject(mutant,"Wire mini-boss");mutant.session=s;mutant.spawnPoint=home;RecordPrefab(mutant);}}
+                else if(target is TruckArenaBoss truck){var home=SyncBossHome(target,truck.spawnPoint&&!assignedHomes.Contains(truck.spawnPoint)?truck.spawnPoint:null);assignedHomes.Add(home);if(truck.session!=s||truck.spawnPoint!=home){Undo.RecordObject(truck,"Wire truck encounter");truck.session=s;truck.spawnPoint=home;RecordPrefab(truck);}}
+            }
         }
         static void RecordPrefab(Object o){if(PrefabUtility.IsPartOfPrefabInstance(o))PrefabUtility.RecordPrefabInstancePropertyModifications(o);Dirty(o);}
         public static GameObject Place(LevelLayout l,GameObject prefab,Vector3 ground,Vector3 normal,float yaw,float scale,bool align,bool decoration)
         {
             if(!l||!prefab||!PrefabUtility.IsPartOfPrefabAsset(prefab))throw new InvalidOperationException("Choose a prefab asset.");
             bool human=prefab.GetComponent<Raider>(),vehicle=prefab.GetComponent<EnemyBuggy>();
-            var parent=human?l.humanEnemiesRoot:vehicle?l.enemyVehiclesRoot:decoration?l.decorationRoot:l.obstaclesRoot;
+            bool boss=IsBoss(prefab.GetComponent<CombatTarget>());
+            var parent=boss?l.authoredContentRoot:human?l.humanEnemiesRoot:vehicle?l.enemyVehiclesRoot:decoration?l.decorationRoot:l.obstaclesRoot;
             var obj=(GameObject)PrefabUtility.InstantiatePrefab(prefab,parent);Undo.RegisterCreatedObjectUndo(obj,"Place "+prefab.name);obj.name=prefab.name;obj.SetActive(true);
             obj.transform.rotation=Quaternion.Euler(0,yaw,0);obj.transform.localScale=prefab.transform.localScale*scale;
-            if(!human&&!vehicle&&align)obj.transform.rotation=Quaternion.FromToRotation(Vector3.up,normal)*obj.transform.rotation;
+            if(!human&&!vehicle&&!boss&&align)obj.transform.rotation=Quaternion.FromToRotation(Vector3.up,normal)*obj.transform.rotation;
             obj.transform.position=ground;
             if(vehicle)obj.transform.position+=Vector3.up*.65f;
-            if(!human&&!vehicle){
+            if(!human&&!vehicle&&!boss){
                 if(decoration){foreach(var collider in obj.GetComponentsInChildren<Collider>(true)){Undo.RecordObject(collider,"Make decoration nonblocking");collider.enabled=false;RecordPrefab(collider);}}
                 else if(!obj.GetComponentsInChildren<Collider>(true).Any(c=>c.enabled&&!c.isTrigger)){
                     Object.DestroyImmediate(obj);throw new InvalidOperationException("This prefab has no solid collider. Place it as Decoration or add a collider to the prefab.");}
@@ -153,7 +180,7 @@ namespace RoadGunner.Editor
             foreach(var g in children)Undo.DestroyObjectImmediate(g);Wire(l);var d=l.session.spawns;Undo.RecordObject(d,"Remove cleared spawn references");d.encounters=(d.encounters??Array.Empty<EncounterSpawn>()).Where(x=>x).ToArray();d.buggySpawnPoints=(d.buggySpawnPoints??Array.Empty<Transform>()).Where(x=>x).ToArray();l.navigationNeedsBake=true;Dirty(l);
         }
         public static GameObject[] Prefabs(bool enemies)
-        {return AssetDatabase.FindAssets("t:Prefab",new[]{Root}).Select(id=>AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(id))).Where(g=>g&&(enemies?(g.GetComponent<Raider>()||g.GetComponent<EnemyBuggy>()):g.GetComponentsInChildren<Renderer>().Length>0&&!g.GetComponent<CombatTarget>()&&!g.GetComponent<VehicleController>()&&!g.name.Contains("pickup",StringComparison.OrdinalIgnoreCase))).OrderBy(g=>g.name).ToArray();}
+        {return AssetDatabase.FindAssets("t:Prefab",new[]{Root}).Select(id=>AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(id))).Where(g=>g&&(enemies?g.GetComponent<CombatTarget>()!=null:g.GetComponentsInChildren<Renderer>().Length>0&&!g.GetComponent<CombatTarget>()&&!g.GetComponent<VehicleController>()&&!g.name.Contains("pickup",StringComparison.OrdinalIgnoreCase))).OrderBy(g=>g.name).ToArray();}
         public static void ExtractEnvironmentPalette(LevelLayout l)
         {
             string folder=Root+"/Prefabs/Environment";Directory.CreateDirectory(folder);AssetDatabase.Refresh();

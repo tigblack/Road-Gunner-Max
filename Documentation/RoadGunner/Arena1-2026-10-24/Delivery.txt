@@ -1,0 +1,100 @@
+ROAD GUNNER — ARENA 1, 24 OCTOBER 2026
+
+REFERENCE
+The intended The War / The War Idle game and its latest first-arena footage could
+not be reliably identified from the local references or public search. No exact
+reference enemy counts, ranks, positions, upgrade values or version were verified.
+The older local reference note (LEVEL01_REFERENCE_STATUS.txt, 7 October 2026)
+concerns inaccessible Butcher footage and was not used as layout/balance evidence.
+This implementation uses the user's explicitly authorized temporary fallback.
+
+ARENA 1
+Existing scene: Assets/RoadGunner/Scenes/Level01_Greenwood.unity.
+12 normal/basic Raiders in five pockets of 2 / 2 / 2 / 3 / 3.
+2 vehicle/elite Buggies; 1 Monster mini-boss; 1 final Boss Raider. Total 16 enemies.
+Finite authored encounters; random encounter groups and automatic replenishment
+are disabled in this Arena. Unused reserve pools remain available to the tools.
+Progression: southern start, early Raider pockets, central encounters, east road
+Buggy, mixed east camp encounters, Monster in northeast open yard, west boss arena.
+Monster world XYZ: (175.01, 0.06, 30.05), existing Ashmaw prefab,330 HP.
+Boss Raider world XYZ: (3.54, 0.08, 120.21),520 HP, existing Raider combat class and
+Veteran art, scaled 1.6. Committed .85s warned strike,16 damage,10 Metal Gear reward.
+Existing boss health panel shows the nearest live boss and attack state.
+Only Boss Raider death invokes completion; accumulated and pending earned gear
+is settled into the result before the existing overlay freezes the run.
+Installation.txt records every final nav-sampled enemy/station position.
+
+BALANCE
+Player max forward speed: 18 -> 6 m/s; exact multiplier 1/3.
+Reverse: 7 -> 2.333333 m/s; exact multiplier 1/3.
+Drive torque 3100 -> 2400; steering rate 125, steering curves, brakes, suspension
+and wheel friction retained. Ram activation threshold 6 -> 2 m/s.
+Base bullet damage remains 15 in tuning; central outgoing multiplier .35 produces
+5.25 damage at ATK 1. Actual gun checks:9 shots for45 HP Raider;20 shots for105 HP Buggy.
+The same central multiplier applies to player ram damage; enemy gun damage is
+independent. Configuration lives in Levels/Greenwood/Arena1 assets and Inspector.
+
+UPGRADES
+One-use proximity stations, radius 3.5 m, no extra interaction button.
+ATTACK +1: attack level 1 -> 2; +20% of reduced base damage,5.25 ->6.3 per bullet.
+HEALTH +1: health level 1 -> 2; existing VehicleHealth maximum 100 ->120 HP, granting
+the additional capacity while retaining existing damage. Existing workshop heals
+against the upgraded maximum. No parallel health or permanent progression system.
+Attack station XYZ: (-37.12, 0.06, 8.84).
+Health station XYZ: (86.62, 0.06, 19.45).
+Stations have readable labels, consumed state, pickup audio/VFX hook and HUD toast.
+Levels and stations reset on restart; ATK/HP stay visible in a compact HUD pill.
+
+MINIMAP
+Top-right 338x338 logical map, within the existing portrait/safe-area Canvas.
+Actual LevelLayout gameplayBounds normalized into UI coordinates; no extra camera
+or RenderTexture. Cached references rebuild at run reset, refresh at .08s; no
+per-frame scene searches or managed allocations in marker movement.
+Player direction, Raiders, moving Buggies, Monster, Boss Raider, Attack/Health
+stations and existing workshop have distinct procedural icons. Dead enemies and
+consumed upgrades disappear.20 live markers at the start of the saved Arena.
+Optional MAP KEY opens a readable legend; it is hidden by default and closes
+after 8 seconds, on pause/completion, and on restart, preserving the combat view.
+
+FILES
+New runtime scripts: ArenaRunStats, ArenaUpgradeStation, ArenaMinimap,
+ArenaMinimapIcon. New Editor tools: Arena1/Arena1Installer, Arena1Verification,
+WebBuild. New acceptance instrumentation: Diagnostics/Arena1PlayChecks (Editor only).
+Modified runtime: CombatTuning, GameSession, HudView, PickupPool, VehicleHealth,
+RepairWorkshop, TurretController, RamSensor, Raider, EnemyIdentity,
+Zone1EnemyRoster, Zone1BossHud.
+Modified Editor tools: RoadGunnerLevelAuthoring and RoadGunnerLevelEditorWindow.
+New per-level assets: Arena1 handling/combat/basic Raider/Buggy/Boss Raider tuning,
+Boss Raider prefab derived from existing art, simple station materials and ring mesh.
+Scene modified: Level01_Greenwood only. Existing player, companion/harpoon, ordinary
+enemy, Buggy and Monster prefabs, terrain, obstacle art and navigation retained.
+Level Editor supports placing, ranking, tuning and moving the reused Raider boss,
+including registration outside ordinary enemy pools and synchronized home markers.
+Web template: Assets/WebGLTemplates/RoadGunner. Build settings include Arena1 only.
+
+TESTING
+PlayMode.txt records the final actual Unity Play Mode acceptance run, including
+Console errors, real physics/combat, Metal Gear+harpoon, upgrades/workshop/reset,
+minimap rendered geometry/tracking, touch joystick+second-finger pause, boss warning,
+dodge, committed strike damage, completion and resource conservation.
+Portrait captures from the real gameplay camera+HUD: outputs/arena1-validation/.
+Installation.txt also records existing Level Editor validation and connected nav paths.
+Physical iOS/Android devices and device performance are not covered by Editor checks.
+
+WEB / PUBLICATION
+Unity 6000.6.4f1 / URP 17.6.0; output WebBuild/.
+Gzip with JavaScript Decompression Fallback (.unityweb), single-threaded WebGL,
+128 MB initial/512 MB maximum WASM memory, existing Mobile quality default.
+Responsive portrait canvas, dynamic viewport height, disabled page scroll/gesture
+handling on the canvas, device pixel ratio capped at 2, keyboard and touch input.
+Manual canvas resizing retains the last positive size during viewport transitions.
+APP_UI_EDITOR_ONLY is enabled for WebGL, matching the existing Android/Standalone
+configuration, so unused App UI editor tooling cannot initialize mobile touch state.
+Build entry: RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL.
+Acceptance entry: RoadGunner.Editor.Arena1Verification.Run with -buildTarget StandaloneOSX on this Mac, without -quit/-nographics.
+Final build/push/deployment/browser verification details are in Publication.txt.
+
+Technical sources checked 24 October 2026:
+https://docs.unity3d.com/6000.6/Documentation/Manual/webgl-deploying.html
+https://docs.unity3d.com/6000.6/Documentation/Manual/webgl-browsercompatibility.html
+https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages

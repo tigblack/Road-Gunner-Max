@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace RoadGunner
 {
-    public enum SessionState { Playing, Paused, Defeated }
+    public enum SessionState { Playing, Paused, Defeated, Completed }
     public sealed class GameSession : MonoBehaviour
     {
         public VehicleController vehicle;
@@ -14,6 +14,8 @@ namespace RoadGunner
         public CombatEffects effects;
         public HudView hud;
         public Zone1EnemyRoster zone1;
+        public ArenaRunStats runStats;
+        public ArenaMinimap minimap;
         public Vector3 startPosition;
         public Quaternion startRotation;
         public Vector3[] recoveryPoints;
@@ -23,6 +25,8 @@ namespace RoadGunner
         public int ScrapEarned { get; private set; }
         public event System.Action Changed;
         public bool Playing => State==SessionState.Playing;
+        public float PlayerDamage(float baseDamage) => runStats ? runStats.Damage(baseDamage) :
+            turret && turret.tuning ? turret.tuning.ScalePlayerDamage(baseDamage) : baseDamage;
         float nextRecover;
         void Awake() { Application.targetFrameRate=60; Time.timeScale=1; }
         void Start() {
@@ -32,21 +36,32 @@ namespace RoadGunner
         public void Restart() {
             Time.timeScale=1; State=SessionState.Playing; Scrap=0;Kills=0;ScrapEarned=0;nextRecover=0;
             input.testInput=false;input.testBrake=false;input.Clear();input.Enabled=true;vehicle.CanDrive=true;
-            vehicle.ResetPose(startPosition,startRotation); if(vehicle.engine)vehicle.engine.UnPause(); health.ResetHealth();turret.ResetCombat();effects.ResetPool();pickups.ResetPool();
+            vehicle.ResetPose(startPosition,startRotation); if(vehicle.engine)vehicle.engine.UnPause(); if(runStats)runStats.ResetRun(); health.ResetHealth();turret.ResetCombat();effects.ResetPool();pickups.ResetPool();
             vehicle.GetComponent<TireTracks>()?.Clear();
             if(zone1)zone1.DespawnAll();
             Physics.SyncTransforms();spawns.ResetPopulation();
             if(zone1){zone1.session=this;zone1.ResetEncounters();}
+            if(minimap)minimap.RefreshTargets();
             follow.Snap();Changed?.Invoke();
         }
-        public void TogglePause() { if(State==SessionState.Defeated)return;SetPaused(State==SessionState.Playing); }
+        public void TogglePause() { if(State==SessionState.Defeated || State==SessionState.Completed)return;SetPaused(State==SessionState.Playing); }
         public void SetPaused(bool paused) {
-            if(State==SessionState.Defeated)return;
+            if(State==SessionState.Defeated || State==SessionState.Completed)return;
             State=paused?SessionState.Paused:SessionState.Playing; input.Clear(); input.Enabled=!paused;
             spawns.CancelAttacks();turret.ResetCombat();Time.timeScale=paused?0:1;
             if(vehicle.engine) vehicle.engine.Pause();if(!paused&&vehicle.engine)vehicle.engine.UnPause();Changed?.Invoke();
         }
         void Defeat() { State=SessionState.Defeated;input.Enabled=false;input.Clear();vehicle.CanDrive=false;spawns.CancelAttacks();turret.ResetCombat();Time.timeScale=0;Changed?.Invoke(); }
+        public void CompleteArena() {
+            if(!Playing)return;
+            // Keep every resource already earned, including the boss drop and gear on a harpoon.
+            vehicle.GetComponent<HarpoonCollector>()?.ResetCollection();
+            if(pickups)pickups.CollectRemainingRewards();
+            State=SessionState.Completed;input.Enabled=false;input.Clear();vehicle.CanDrive=false;
+            health.DamageEnabled=false;spawns.CancelAttacks();turret.ResetCombat();
+            if(vehicle.engine)vehicle.engine.Pause();
+            Time.timeScale=0;Changed?.Invoke();
+        }
         public void AddScrap(int amount) { if(!Playing)return;Scrap+=amount;Changed?.Invoke(); }
         public void RaiderDefeated(Vector3 position,Vector3 direction=default) { EnemyDefeated(position,1,true,direction); }
         public void EnemyDefeated(Vector3 position,int reward,bool gear=false,Vector3 direction=default) {

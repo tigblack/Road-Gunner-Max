@@ -1,0 +1,56 @@
+Arena 1 acceptance — actual Unity Play Mode; 6000.6.4f1
+Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.
+PASS saved gameplay references: LevelLayout, stats, HUD, minimap and rear harpoon are wired on the gameplay scene
+PASS fallback roster and ranks: Authored Raiders=12, Buggies=2, Monster=1, Boss Raider=1; temporary fallback, not verified The War data
+PASS finite authored encounters: All authored enemies spawned; legacy random encounter respawn is disabled
+PASS tactical tuning: Forward=6, reverse=2.333333, steering=125, outgoing multiplier=0.35
+PASS base run stats and HUD: ATK 1   HP 1
+PASS encounters connected to start: Navigation paths reach ordinary encounters, both vehicles, Monster and Boss Raider
+PASS minimap uses actual arena and live targets: Visible markers=20/20; map UI=(338.00, 338.00); bounds=Center: (1.77, 0.00, 22.98), Extents: (245.00, 12.00, 245.00)
+PASS minimap icons produce rendered geometry: Visible CanvasRenderer meshes=20/20; vertices=340
+PASS map key opens and closes without covering default HUD: Legend starts hidden, opens on request and closes before the gameplay capture
+PASS portrait capture initial-start: outputs/arena1-validation/initial-start.png — actual gameplay camera and HUD, 540 x 960
+PASS upgrade proximity boundary: Standing outside the attack station radius grants no upgrade
+PASS ATTACK +1 changes combat and HUD: Damage 5.25 -> 6.3; HUD=ATK 2   HP 1
+PASS consumed upgrade leaves minimap: ATTACK station marker disappears after collection
+PASS portrait capture attack-upgrade: outputs/arena1-validation/attack-upgrade.png — actual gameplay camera and HUD, 540 x 960
+PASS upgrade only applies once: Remaining in radius and retrying do not increase attack again
+PASS HEALTH +1 uses existing health: Maximum=100 -> 120; current=80.00001; HUD=ATK 2   HP 2
+PASS workshop heals upgraded health: Healed=9.80; expected=9.80; current maximum=120
+PASS death retains levels until restart: Defeat uses the original session flow
+PASS restart resets run and stations: Base health/stats, station availability and map icons restored
+PASS ordinary Raider still attacks vehicle: Actual melee damage=6; configured=6
+PASS live Raider minimap marker: Marker is projected from the actual spawned Raider
+PASS roof gun needs multiple Raider hits: Actual shots=9; initial HP=45; player hit=5.25
+PASS human Metal Gear and rear harpoon: Metal Gear visible=True; launch=True; retract=True; scrap=1
+PASS dead Raider leaves minimap: Death removes the enemy marker while the corpse can remain
+PASS moving vehicle map marker follows: Cached marker follows position changes without rediscovering targets
+PASS enemy roof gun still damages player: Hostile shots=2; player HP=100 -> 90
+PASS Buggy tougher than Raider and rewards once: Raider shots=9; Buggy shots=20; reward=3
+PASS vehicle Metal Gear and rear harpoon: Metal Gear=True; launch=True; retract=True; scrap=3
+PASS dead Buggy leaves minimap: Vehicle destruction hides its map marker
+PASS tactical speed in real vehicle physics: Peak=5.37m/s; limit=6; travelled=26.6
+PASS brake remains predictable: Stop time=0.78s; speed=0.57
+PASS steering remains responsive: Heading changed=32.4 degrees; steering rate=125
+PASS phone input surface exists: Existing EventSystem and floating joystick are active
+PASS touch joystick and second-finger pause: Actual UI touch drag=True; second pointer paused=True
+PASS touch cancellation releases input: Canceled production pointer resets thumb and drive input
+PASS boss health hierarchy: Raider=45; Buggy=105; Monster=330; Boss Raider=520
+PASS both boss map markers: Mini-boss and final boss are both present on the minimap
+PASS mini-boss survives ordinary hit: Monster HP=324.75
+PASS Monster death does not finish arena: State=Playing; reward=5; kills=1
+PASS Boss Raider warns before heavy strike: Visible warning=True; HP before strike=100
+PASS gun hit does not cancel boss warning: Committed windup remains active after a player bullet
+PASS dodging locked boss strike avoids damage: Player moved outside the warned circle; HP=100
+PASS remaining in boss strike takes damage once: Actual heavy damage=16; configured=16; recovering=True
+PASS existing boss health bar identifies Raider: Title=RAIDER WARLORD · FINAL BOSS; HP=520 / 520
+PASS portrait capture boss-arena: outputs/arena1-validation/boss-arena.png — actual gameplay camera and HUD, 540 x 960
+PASS Boss Raider survives ordinary hit: Boss HP=514.75
+PASS only final boss completes and preserves rewards: State=Completed; resources=17; expected=17; overlay=ARENA CLEAR
+PASS final boss marker removed: Completed boss is absent from the map
+PASS portrait capture arena-complete: outputs/arena1-validation/arena-complete.png — actual gameplay camera and HUD, 540 x 960
+PASS completed result stays completed: Pause cannot resume a finished arena
+PASS restart restores the full arena: Ordinary encounters, both bosses, stats and run resources reset
+RESULT checks=51; failures=0; saved scene was not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

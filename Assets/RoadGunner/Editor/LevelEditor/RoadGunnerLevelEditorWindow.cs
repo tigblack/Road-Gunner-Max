@@ -94,6 +94,7 @@ namespace RoadGunner.Editor
         void StatsUI(CombatTarget c)
         {
             var r=c as Raider;var b=c as EnemyBuggy;
+            var identity=c.GetComponent<EnemyIdentity>();if(identity)EditorGUILayout.LabelField("Rank",identity.Rank.ToString());
             if(!r&&!b){EditorGUILayout.LabelField(c.name,EditorStyles.boldLabel);EditorGUILayout.HelpBox("This enemy stores its encounter settings on its component. Edit them in the Inspector.",MessageType.Info);if(GUILayout.Button("Edit enemy in Inspector")){Selection.activeObject=c;EditorGUIUtility.PingObject(c);EditorApplication.ExecuteMenuItem("Window/General/Inspector");}return;}
             var source=PrefabUtility.GetCorrespondingObjectFromSource(c);ScriptableObject tuning=r?(ScriptableObject)r.tuning:b.tuning;
             ScriptableObject defaults=source is Raider sr?(sr.tuning?sr.tuning:RoadGunnerLevelAuthoring.Current.session.spawns.tuning):source is EnemyBuggy sb?sb.tuning:null;
@@ -104,7 +105,8 @@ namespace RoadGunner.Editor
             if(!tuning)return;var so=new SerializedObject(tuning);SerializedObject def=defaults?new SerializedObject(defaults):null;so.Update();
             using(new EditorGUI.DisabledScope(!own))foreach(string name in r?HumanStats:VehicleStats){var p=so.FindProperty(name);if(p==null)continue;using(new EditorGUILayout.HorizontalScope()){EditorGUILayout.PropertyField(p);var dp=def?.FindProperty(name);if(dp!=null)GUILayout.Label("Default "+(dp.propertyType==SerializedPropertyType.Integer?dp.intValue.ToString():dp.floatValue.ToString("0.##")),EditorStyles.miniLabel,GUILayout.Width(90));}}
             if(so.ApplyModifiedProperties()) {EditorUtility.SetDirty(tuning);RoadGunnerLevelAuthoring.Dirty(c);}
-            EditorGUILayout.HelpBox(r?"Human drop is the existing fixed 1 Metal Gear. No duplicate drop chance or patrol system was added.":"Gun range is the existing shared player range; damage/fire rate and vehicle reward use BuggyTuning.",MessageType.Info);
+            if(r&&r.arenaBoss){var encounter=new SerializedObject(r);encounter.Update();foreach(var field in new[]{"bossWindup","bossStrikeRadius","bossStrikeOffset","bossRecovery","bossGearReward"})EditorGUILayout.PropertyField(encounter.FindProperty(field));if(encounter.ApplyModifiedProperties())RoadGunnerLevelAuthoring.Dirty(r);}
+            EditorGUILayout.HelpBox(r?(r.arenaBoss?"Final Boss Raider uses this health/damage tuning, a committed ground-warning strike, and the configured Metal Gear reward. Its death completes the Arena.":"Human drop is the existing fixed 1 Metal Gear. No duplicate drop chance or patrol system was added."):"Gun range is the existing shared player range; damage/fire rate and vehicle reward use BuggyTuning.",MessageType.Info);
             if(!r&&!b)return;var t=new SerializedObject(c.transform);t.Update();EditorGUILayout.PropertyField(t.FindProperty("m_LocalPosition"));t.ApplyModifiedProperties();EditorGUI.BeginChangeCheck();var euler=EditorGUILayout.Vector3Field("Rotation",c.transform.eulerAngles);if(EditorGUI.EndChangeCheck()){Undo.RecordObject(c.transform,"Rotate enemy");c.transform.eulerAngles=euler;PrefabUtility.RecordPrefabInstancePropertyModifications(c.transform);RoadGunnerLevelAuthoring.Dirty(c);}
         }
         void ObstaclesUI(LevelLayout l)
@@ -171,6 +173,7 @@ namespace RoadGunner.Editor
                 else if(c is WastelandMutant mutant){detect=mutant.aggroRadius;attack=mutant.meleeReach;}
                 else if(c is TruckArenaBoss truck){detect=truck.aggroRadius;attack=truck.playerRange;}
                 else continue;
+                if(c is Raider bossRaider&&bossRaider.arenaBoss){Handles.color=new Color(1,.65f,.1f,.8f);Handles.DrawWireDisc(c.transform.position+c.transform.forward*bossRaider.bossStrikeOffset,Vector3.up,bossRaider.bossStrikeRadius);}
                 Handles.color=new Color(1,.5f,.1f,.7f);Handles.DrawWireDisc(c.transform.position,Vector3.up,detect);Handles.color=new Color(1,.2f,.2f,.7f);Handles.DrawWireDisc(c.transform.position,Vector3.up,attack);Handles.Label(c.transform.position+Vector3.up*2,c.name+" / detection "+detect+" / attack "+attack);
             }
         }

@@ -33,7 +33,7 @@ namespace RoadGunner
             float shotLength=(Target.AimPoint-muzzle.position).magnitude+.25f;
             Vector3 endpoint=muzzle.position+muzzle.forward*shotLength;
             if(Physics.Raycast(muzzle.position,muzzle.forward,out RaycastHit hit,shotLength,hitMask,QueryTriggerInteraction.Collide)) {
-                endpoint=hit.point;var enemy=hit.collider.GetComponentInParent<CombatTarget>();if(enemy&&AttackRange.Contains(session.vehicle.transform.position,enemy.transform.position,Range))enemy.Hit(tuning.bulletDamage,muzzle.forward);
+                endpoint=hit.point;var enemy=hit.collider.GetComponentInParent<CombatTarget>();if(enemy&&AttackRange.Contains(session.vehicle.transform.position,enemy.transform.position,Range))enemy.Hit(session.PlayerDamage(tuning.bulletDamage),muzzle.forward);
                 session.effects.Spark(endpoint);
             }
             session.effects.Shot(muzzle.position,endpoint,muzzle.rotation);

@@ -116,6 +116,18 @@ namespace RoadGunner
             if(!session.Playing||!TryGetReservedGear(handle,owner,out _))return false;
             Collect(handle.Slot);return true;
         }
+        /// <summary>Settle all earned drops before the completed-run overlay freezes simulation.</summary>
+        public void CollectRemainingRewards()
+        {
+            if(!session || !session.Playing || values==null)return;
+            int reward=0;
+            for(int i=0;i<values.Length;i++)if(values[i]>0)
+            {
+                reward+=values[i];values[i]=0;reservedBy[i]=null;items[i].gameObject.SetActive(false);
+            }
+            ActiveCount=0;
+            if(reward>0){session.AddScrap(reward);if(session.effects)session.effects.Pickup();}
+        }
         void Collect(int i)
         {
             int reward=values[i];values[i]=0;reservedBy[i]=null;items[i].gameObject.SetActive(false);ActiveCount--;
