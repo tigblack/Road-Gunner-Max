@@ -1,0 +1,10 @@
+using System;using System.IO;using System.Linq;using System.Reflection;using System.Collections.Generic;using System.Threading.Tasks;using UnityEditor;using UnityEngine;using RoadGunner;using RoadGunner.Editor;
+public static class Zone1EditorAudit {
+ public static async Task<string> Main(){
+ if(EditorApplication.isPlaying)throw new Exception("Stop Play first");var errors=new List<string>();Application.LogCallback cb=(m,st,t)=>{if(t==LogType.Error||t==LogType.Exception||t==LogType.Assert)errors.Add(m);};Application.logMessageReceived+=cb;
+ var l=RoadGunnerLevelAuthoring.Current;var previous=Selection.activeObject;var existing=Resources.FindObjectsOfTypeAll<RoadGunnerLevelEditorWindow>().FirstOrDefault();var window=existing?existing:EditorWindow.GetWindow<RoadGunnerLevelEditorWindow>();var flags=BindingFlags.NonPublic|BindingFlags.Instance;var ranges=typeof(RoadGunnerLevelEditorWindow).GetField("showRanges",flags);var tab=typeof(RoadGunnerLevelEditorWindow).GetField("tab",flags);var oldRange=ranges.GetValue(window);var oldTab=tab.GetValue(window);var lines=new List<string>();
+ try{ranges.SetValue(window,true);tab.SetValue(window,1);window.Show();foreach(var boss in l.session.zone1.bosses){Selection.activeGameObject=boss.gameObject;window.Repaint();SceneView.RepaintAll();await Task.Delay(350);bool safe=RoadGunnerLevelAuthoring.MakeOverride(boss)==null;RoadGunnerLevelAuthoring.UseDefault(boss);lines.Add((safe?"PASS ":"FAIL ")+boss.name+" selected in Level Editor with ranges, safe tuning override handling");}var validation=RoadGunnerLevelAuthoring.Validate(l);foreach(var e in validation.Where(e=>e.type==MessageType.Error))errors.Add(e.text);lines.Add((errors.Count==0?"PASS ":"FAIL ")+"Level Editor repaint / scene validation: "+errors.Count+" errors");lines.AddRange(errors);}
+ finally{ranges.SetValue(window,oldRange);tab.SetValue(window,oldTab);Selection.activeObject=previous;if(!existing)window.Close();else window.Repaint();Application.logMessageReceived-=cb;}
+ string report=string.Join("\n",lines);File.WriteAllText("Documentation/RoadGunner/Zone1-Enemies-2026-10-17/EditorAudit.txt",report);return report;
+ }
+}

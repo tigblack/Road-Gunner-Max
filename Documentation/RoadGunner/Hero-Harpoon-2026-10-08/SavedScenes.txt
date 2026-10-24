@@ -1,0 +1,4 @@
+RoadGunner_Prototype: refs=True, session count=1, vehicle triangles active/all=6280/6286, shared materials=Scrap Rush chipped red paint, Bone armor, Gunmetal, Dusty tire, Oxidized steel, Hero glazed teal glass, Sunburnt skin, Raider crimson, Dust particles
+Prefab GUID retained: 1fa57ca93b4134590be9547a4add8056; wheel radius=0.481; pristine saved scene=True
+Level01_Wasteland: refs=True, session count=1, vehicle triangles active/all=6280/6286, shared materials=Scrap Rush chipped red paint, Bone armor, Gunmetal, Dusty tire, Oxidized steel, Hero glazed teal glass, Sunburnt skin, Raider crimson, Dust particles
+Prefab GUID retained: 1fa57ca93b4134590be9547a4add8056; wheel radius=0.481; pristine saved scene=True

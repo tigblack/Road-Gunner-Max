@@ -1,0 +1,3 @@
+PASS raider navigates around vehicle wreck, animated: distance=8.03 -> 3.88, detour=3.46, path corners=5, animated=True
+PASS repair frame-rate check target=30, measured=30.0 FPS, healed=16.358, expected=16.334
+PASS repair frame-rate check target=60, measured=60.0 FPS, healed=16.027, expected=16.000

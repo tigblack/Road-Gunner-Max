@@ -1,0 +1,35 @@
+PASS walkable start: sample=True, path=PathComplete, corners=1
+PASS car clearance start: 
+PASS walkable entry: sample=True, path=PathComplete, corners=2
+PASS car clearance entry: 
+PASS walkable southwest camp: sample=True, path=PathComplete, corners=2
+PASS car clearance southwest camp: 
+PASS walkable central clearing: sample=True, path=PathComplete, corners=3
+PASS car clearance central clearing: 
+PASS walkable pool recovery: sample=True, path=PathComplete, corners=2
+PASS car clearance pool recovery: 
+PASS walkable arch approach: sample=True, path=PathComplete, corners=2
+PASS car clearance arch approach: 
+PASS walkable crossroads: sample=True, path=PathComplete, corners=2
+PASS car clearance crossroads: 
+PASS walkable west arena: sample=True, path=PathComplete, corners=4
+PASS car clearance west arena: 
+PASS walkable west gate approach: sample=True, path=PathComplete, corners=3
+PASS car clearance west gate approach: 
+PASS walkable north market: sample=True, path=PathComplete, corners=2
+PASS car clearance north market: 
+PASS walkable north gate approach: sample=True, path=PathComplete, corners=2
+PASS car clearance north gate approach: 
+PASS walkable northeast camp: sample=True, path=PathComplete, corners=4
+PASS car clearance northeast camp: 
+PASS walkable sealed entrance approach: sample=True, path=PathComplete, corners=2
+PASS car clearance sealed entrance approach: 
+PASS walkable tree pocket: sample=True, path=PathComplete, corners=5
+PASS car clearance tree pocket: 
+PASS locked snow biome: outside path=PathPartial
+PASS locked orange biome: outside path=PathPartial
+PASS editor validation: Info: Authored enemies: 13; legacy encounter groups: 0; shared resource pool retained.; Info: Scenes serialize placements, prefab links and markers. Relief and override settings are separate per-level assets. Bounds are authoring/validation guides; physical perimeter stays in the scene.
+PASS 13 authored enemies: Prefab variants and existing AI linked
+PASS camera north: Existing 45 degree yaw respected
+PASS private terrain: Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Terrain.asset
+PASS saved scene: dirty=False

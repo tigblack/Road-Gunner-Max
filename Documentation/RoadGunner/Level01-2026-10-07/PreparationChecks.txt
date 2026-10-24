@@ -1,0 +1,10 @@
+PASS working systems retained: 4 grounded wheels; joystick, portrait camera, single session
+PASS reference status explicit: Existing map retained; video layout and 2x enlargement pending inspected frames.
+PASS player and recovery markers: recovery markers=40
+PASS authored group distribution: group 0=4/4; group 1=4/4; group 2=4/4; group 3=4/4; group 4=4/4; group 5=4/4; 
+PASS spawn reachability and collision: All active spawns have complete paths to start and clear capsules.
+PASS deterministic restart placement: Compared 24 indexed spawn positions across two restarts.
+PASS independent serialized group sizes: group 0=2, group 1=1
+PASS global population cap: Configured cap=5, active=5, reusable pool=30
+PASS respawn guards and delay: Offscreen distant group=1, restored=4; near start group=0
+PASS completed: Preparation checks finished; working session restored. Reference adaptation remains pending.

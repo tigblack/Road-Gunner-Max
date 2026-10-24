@@ -1,0 +1,3 @@
+Updated existing Dust Jackal prefab and both gameplay scenes. Existing turret, session, resource HUD, enemy pools, effects, input and vehicle physics retained. Nine custom low-poly meshes: 6020 triangles. Harpoon configured, pooled visuals connected.
+Assets/RoadGunner/Scenes/RoadGunner_Prototype.unity
+Assets/RoadGunner/Scenes/Level01_Wasteland.unity

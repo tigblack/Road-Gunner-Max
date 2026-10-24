@@ -1,0 +1,2 @@
+PASS PLAY LEVEL action saves, validates, bakes and enters existing game flow
+PASS Saved encounter and vehicle spawn markers spawn through existing pools

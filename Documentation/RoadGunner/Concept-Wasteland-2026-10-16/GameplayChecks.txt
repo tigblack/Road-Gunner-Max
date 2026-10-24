@@ -1,0 +1,33 @@
+Actual Unity Play Mode / Concept Wasteland
+Failures=0; elapsed=47.1s
+PASS player references and visual physics separation: 4 collider/visual pairs; independent gun/harpoon; one Rigidbody; no visual colliders
+PASS all saved and pooled art references: raiders=49, buggy reserve=3, pickups=60
+PASS authored population and cap: authored=19/19, cap=30
+PASS expanded main route initial suspension: grounded=4
+PASS expanded main route actual input, steering and suspension: waypoints=4/4, movement=75.4m, speed=9.5, steer=25.3, min wheels=4, upright=1.000
+PASS expanded main route wheel visual alignment / dust: max animated-center lag=0.003m, moving-wheel dust=True
+PASS service bay entry, clearance and exit turn initial suspension: grounded=4
+PASS service bay entry, clearance and exit turn actual input, steering and suspension: waypoints=3/3, movement=30.7m, speed=8.1, steer=28.0, min wheels=4, upright=1.000
+PASS service bay entry, clearance and exit turn wheel visual alignment / dust: max animated-center lag=0.003m, moving-wheel dust=True
+PASS three distinct raider rigs: rigs=Concept raider rig — Scavenger, Concept raider rig — Enforcer, Concept raider rig — Veteran
+PASS raider navigation / limb animation Concept raider rig — Scavenger: approach=4.24m, leg swing=32.0deg
+PASS raider navigation / limb animation Concept raider rig — Enforcer: approach=4.24m, leg swing=31.9deg
+PASS raider navigation / limb animation Concept raider rig — Veteran: approach=4.03m, leg swing=17.4deg
+PASS automatic roof gun aiming, damage and kill: shots=3, health=0, aim error=0.00, kills=1
+PASS human death drops one real gear: gears=1, stored reward=1
+PASS companion launches, retrieves and updates existing HUD: scrap=1, launched=True, retracted=True, cable error=0.0000, HUD=001
+PASS reserve buggy spawn and suspension: grounded=4, HP=105
+PASS buggy physical AI approach: distance=14.0→7.4, state=Firing
+PASS enemy mounted gun aims and damages player: shots=2, hits=2, player HP=90
+PASS buggy destruction and one reward: kills=1, stored=3, explosions=1
+PASS buggy reward and wreck pool lifecycle: scrap=3, wreck returned=True
+PASS workshop configured automatic healing rate: healed=18.333, expected=18.333, radius=10, fraction/s=0.1
+PASS repair feedback while recovering: effect and existing repairing HUD active
+PASS multiple colliders / zones do not multiply repair: healed=13.334, single-rate expected=13.333
+PASS pause stops healing and feedback: HP=69.33196
+PASS resume restarts repair: HP=71.49902
+PASS outside service radius stops repair: HP=71.49902
+PASS max HP clamps and stops active repair: HP=100
+PASS damage, defeat and no workshop revival: HP=0, state=Defeated
+PASS restart restores gameplay and updated pool visuals: state=Playing, authored=19, pickups=0, harpoon=Idle
+RESTORED normal input, AI/spawner/turret/harpoon enabled, no frozen constraints, health and pools reset.

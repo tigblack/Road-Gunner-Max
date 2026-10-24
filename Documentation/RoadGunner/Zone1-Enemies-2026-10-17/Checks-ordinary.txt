@@ -1,0 +1,17 @@
+PASS zone roster is 17 raiders + 2 authored buggies + 2 bosses: authored humans=17, buggies=2, bosses=2, total=21
+PASS authored buggy 0 restarts active with four grounded wheels: grounded=4, alive=True, constraints=None
+PASS authored buggy 1 restarts active with four grounded wheels: grounded=4, alive=True, constraints=None
+PASS whole scene / inactive pools have materials and supported shaders: renderers=1086, missing materials=0, bad/pink shaders=0, missing meshes=0
+PASS all reusable enemy actor types have actual 3D meshes: humans=47, buggies=3, bosses=2
+PASS player actually drives through existing input / suspension: distance=5.35m, speed=6.45, grounded min=4, upright=1.00
+PASS normal raider dies to real auto-aim fire: HP=0, shots=3, killsDelta=1
+PASS existing companion harpoon collects actual death gear / HUD: scrap=1, earned=1, active gear=0, harpoon completions=1
+PASS authored buggy 0 really approaches / shoots / damages: travel=6.31m, shots=1, playerHits=1, damage=5, state=Chase
+PASS authored buggy 0 receives actual player turret damage: HP 105 -> 90, player shots=1
+PASS authored buggy 0 death preserves reward once: killsDelta=1, earnedDelta=3, configured=3, stored loot=3, collected=0
+PASS authored buggy 1 really approaches / shoots / damages: travel=6.28m, shots=1, playerHits=1, damage=5, state=Chase
+PASS authored buggy 1 receives actual player turret damage: HP 105 -> 90, player shots=1
+PASS authored buggy 1 death preserves reward once: killsDelta=1, earnedDelta=3, configured=3, stored loot=3, collected=0
+PASS existing workshop heals at configured rate with feedback: healed=10.67, expected=10.67, radius=10, rate=0.1
+PASS leaving workshop stops healing / active effect: HP=50.66676
+Failures=0; elapsed=12.17 real seconds. Final state: fresh Restart.

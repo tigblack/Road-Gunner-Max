@@ -1,0 +1,6 @@
+Unity 6000.6.4f1 actual URP Play Mode
+Assets/RoadGunner/Scenes/Level01_Wasteland.unity: gear views=60, explosion slots=3, circles=1
+Assets/RoadGunner/Scenes/RoadGunner_Prototype.unity: gear views=60, explosion slots=3, circles=1
+Missing/unsupported active renderer materials=0
+Final VFX revision game/scene errors=0
+Existing SearchDatabase startup errors=1

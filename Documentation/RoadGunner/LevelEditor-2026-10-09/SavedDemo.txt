@@ -1,0 +1,1 @@
+Scene=Assets/RoadGunner/Scenes/LevelEditor_Demo.unity; clean=True; authored=4/2; obstacles=3; decoration=1; terrain triangles=20000; health overrides=60/160; window=True

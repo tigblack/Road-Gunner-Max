@@ -1,0 +1,12 @@
+PASS S reverses in chassis direction: speed=-5.42, backward travel=6.28
+PASS reverse release coasts: before=-5.42, after=-4.81
+PASS service brake stops reverse: speed=0.00
+PASS forward to reverse brakes before backing: before=7.83, first step=8.22, after=-6.11
+PASS reverse to forward brakes before accelerating: first step=-6.12, after=9.17
+PASS down arrow reverses: speed=-4.65
+PASS downward mouse joystick reverses and overrides W: held=True, speed=-5.33
+PASS joystick can steer while reversing: heading delta=34.6
+PASS joystick release clears reverse: reverse=False
+PASS reverse speed capped: speed=-5.96, limit=7
+PASS pause clears reverse input: reverse=False
+PASS restart restores normal input: state=Playing

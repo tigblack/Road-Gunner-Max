@@ -1,0 +1,90 @@
+{
+    "environment": "Mac OS X 26.6.2 / Apple M5 Max / Apple M5 Max / Unity 6000.6.4f1",
+    "checks": [
+        {
+            "check": "static suspension",
+            "passed": true,
+            "observation": "grounded=4, position=(-6.00, 0.81, -15.99)"
+        },
+        {
+            "check": "0–12 m/s acceleration",
+            "passed": true,
+            "observation": "seconds=2.55, speed=12.10"
+        },
+        {
+            "check": "12–0.5 m/s service brake",
+            "passed": true,
+            "observation": "seconds=1.42"
+        },
+        {
+            "check": "coasting after release",
+            "passed": true,
+            "observation": "2-second distance=18.59, remaining speed=7.79"
+        },
+        {
+            "check": "90-degree command makes an arc",
+            "passed": true,
+            "observation": "first-step rotation=0.00, after 2s=91.7, travel=17.3"
+        },
+        {
+            "check": "opposite stick command makes a forward U-turn",
+            "passed": true,
+            "observation": "first-step forward speed=7.13, final speed=8.98, heading error=14.8"
+        },
+        {
+            "check": "uneven lane suspension",
+            "passed": true,
+            "observation": "max left/right travel difference=0.087 m, roll=5.1"
+        },
+        {
+            "check": "hard turn tire slip",
+            "passed": true,
+            "observation": "peak lateral slip=1.386"
+        },
+        {
+            "check": "W is screen-up; diagonal normalized",
+            "passed": true,
+            "observation": "W dot screen-up=0.9999999, W magnitude=1, diagonal=1"
+        },
+        {
+            "check": "mouse joystick drag and release",
+            "passed": true,
+            "observation": "drag produced input=True, released=True"
+        },
+        {
+            "check": "pause freezes physics and clears input",
+            "passed": true,
+            "observation": "frozen=True, shots unchanged=True"
+        },
+        {
+            "check": "recovery preserves score and health",
+            "passed": true,
+            "observation": "health=76, scrap=3, grounded=4"
+        },
+        {
+            "check": "death reward exactly once",
+            "passed": true,
+            "observation": "kills delta=1, pickup value=1"
+        },
+        {
+            "check": "pickup cap preserves excess reward",
+            "passed": true,
+            "observation": "objects=60, total value=85"
+        },
+        {
+            "check": "defeat and three restarts",
+            "passed": true,
+            "observation": "state=Playing, hp=100, sessions=1, enemies=24"
+        },
+        {
+            "check": "occluder blocks actual turret hits",
+            "passed": true,
+            "observation": "protected behind obstacle=True, damaged after removal=True"
+        },
+        {
+            "check": "checks completed",
+            "passed": true,
+            "observation": "Results saved; normal session restored."
+        }
+    ]
+}

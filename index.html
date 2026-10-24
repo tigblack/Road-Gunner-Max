@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#171c1a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" href="data:,">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Road Gunner</title>
+  <style>
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none;background:#171c1a;color:#f1e5cb;font-family:system-ui,sans-serif}
+    body{display:flex;justify-content:center;align-items:center;height:100dvh}
+    #game{position:relative;width:100%;height:100%;max-width:calc(100dvh * 9 / 16);overflow:hidden;background:#171c1a}
+    #unity-canvas{display:block;width:100%;height:100%;outline:none;touch-action:none;-webkit-user-select:none;user-select:none}
+    #launch{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;padding:32px;text-align:center;background:#171c1a}
+    h1{font-size:32px;letter-spacing:3px;margin:0}p{line-height:1.5;margin:0;color:#c1c5ad}button{border:0;border-radius:8px;padding:18px 44px;background:#e8a454;color:#171c1a;font-size:20px;font-weight:750;cursor:pointer;touch-action:manipulation}
+    progress{width:80%;accent-color:#8bd7b1}#error{white-space:pre-wrap;color:#ffc293;font-size:14px}
+    @media(max-aspect-ratio:9/16){#game{max-width:100%}}
+  </style>
+</head>
+<body>
+  <main id="game">
+    <canvas id="unity-canvas" width="540" height="960" tabindex="0" aria-label="Road Gunner arena"></canvas>
+    <div id="launch"><h1>ROAD GUNNER</h1><p>ARENA 1<br>Drag the joystick to drive.<br>Your roof gun fires automatically.</p><button id="play" type="button">PLAY</button><progress id="progress" value="0" max="1" hidden></progress><p id="status"></p><p id="error" role="alert"></p></div>
+  </main>
+  <script>
+    const canvas=document.getElementById('unity-canvas'),launch=document.getElementById('launch'),play=document.getElementById('play'),progress=document.getElementById('progress'),status=document.getElementById('status');
+    const config={
+      dataUrl:'Build/WebBuild.data.unityweb',
+      frameworkUrl:'Build/WebBuild.framework.js.unityweb',
+      codeUrl:'Build/WebBuild.wasm.unityweb',
+      streamingAssetsUrl:'StreamingAssets',companyName:"Road Gunner",productName:"Road Gunner",productVersion:"0.1.0",
+      devicePixelRatio:Math.min(window.devicePixelRatio||1,2),
+      matchWebGLToCanvasSize:false,
+      showBanner:(message,type)=>{if(type==='error')document.getElementById('error').textContent=message;else console.warn(message);}
+    };
+    // Keep the last valid render size during orientation changes and browser UI resizing.
+    // A temporarily hidden/zero-sized viewport must never reach Unity's render graph.
+    function resizeCanvas(){
+      const bounds=canvas.getBoundingClientRect();
+      if(bounds.width<2||bounds.height<2)return;
+      const ratio=Math.min(window.devicePixelRatio||1,2);
+      const width=Math.max(2,Math.round(bounds.width*ratio)),height=Math.max(2,Math.round(bounds.height*ratio));
+      if(canvas.width!==width)canvas.width=width;
+      if(canvas.height!==height)canvas.height=height;
+    }
+    new ResizeObserver(resizeCanvas).observe(canvas);
+    window.addEventListener('resize',resizeCanvas);
+    if(window.visualViewport)window.visualViewport.addEventListener('resize',resizeCanvas);
+    resizeCanvas();
+    canvas.addEventListener('contextmenu',event=>event.preventDefault());
+    play.addEventListener('click',()=>{
+      play.disabled=true;play.hidden=true;progress.hidden=false;status.textContent='Loading arena…';
+      const loader=document.createElement('script');loader.src='Build/WebBuild.loader.js';
+      loader.onerror=()=>{status.textContent='Could not load the game. Reload to try again.';};
+      loader.onload=()=>createUnityInstance(canvas,config,value=>{progress.value=value;}).then(instance=>{
+        window.roadGunnerInstance=instance;launch.hidden=true;launch.style.display='none';canvas.focus();
+        document.dispatchEvent(new Event('roadgunner-ready'));
+      }).catch(error=>{status.textContent='Unable to start the game.';document.getElementById('error').textContent=String(error);});
+      document.body.appendChild(loader);
+    },{once:true});
+  </script>
+</body>
+</html>

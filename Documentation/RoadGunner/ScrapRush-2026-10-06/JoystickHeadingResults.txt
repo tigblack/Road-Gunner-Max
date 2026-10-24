@@ -1,0 +1,17 @@
+PASS stick (0.00, 1.00) points nose toward screen direction: heading error=0.0, forward speed=1.10, seconds=0.20, routed=True
+PASS stick (0.71, 0.71) points nose toward screen direction: heading error=9.6, forward speed=6.41, seconds=1.36, routed=True
+PASS stick (1.00, 0.00) points nose toward screen direction: heading error=9.5, forward speed=8.13, seconds=1.92, routed=True
+PASS stick (0.71, -0.71) points nose toward screen direction: heading error=9.4, forward speed=9.37, seconds=2.50, routed=True
+PASS stick (0.00, -1.00) points nose toward screen direction: heading error=9.3, forward speed=9.78, seconds=3.58, routed=True
+PASS stick (-0.71, -0.71) points nose toward screen direction: heading error=9.6, forward speed=9.37, seconds=2.51, routed=True
+PASS stick (-1.00, 0.00) points nose toward screen direction: heading error=9.5, forward speed=8.17, seconds=1.92, routed=True
+PASS stick (-0.71, 0.71) points nose toward screen direction: heading error=9.6, forward speed=6.41, seconds=1.36, routed=True
+PASS moving 180 degree command makes a forward arc: initial turn=0.0, initial speed=6.78, final error=0.0, position=(-9.52, 1.65, -26.42)
+PASS dead zone: magnitude=0
+PASS analog magnitude symmetric: up=0.3500468, down=0.3500468
+PASS held centered stick overrides S: magnitude=0
+PASS release clears input: held=False
+PASS S still reverses after stick release: speed=-5.43
+PASS touch down chooses forward screen heading over S: direction=(0.00, -1.00), reverse=False
+PASS touch cancellation clears heading: held=False
+PASS completed: Normal session restored. Editor pointer simulation; physical device not tested.

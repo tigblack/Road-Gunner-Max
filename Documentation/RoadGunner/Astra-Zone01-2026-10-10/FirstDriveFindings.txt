@@ -1,0 +1,15 @@
+PASS all placed enemies spawn: alive=13/13
+PASS spawn grounded: grounded=4
+PASS drive main axis: waypoints=5/5, end=(0.05, 58.70), grounded minimum=4
+PASS drive southwest camp: waypoints=2/2, end=(-22.45, -16.10), grounded minimum=4
+FAIL drive west branch and arena: waypoints=2/3, end=(-38.28, 29.67), grounded minimum=4
+FAIL drive northeast camp: waypoints=2/3, end=(26.10, 24.31), grounded minimum=4
+PASS drive sealed entrance approach: waypoints=1/1, end=(37.46, 37.97), grounded minimum=4
+FAIL drive tree pocket bypass: waypoints=1/4, end=(36.90, 43.04), grounded minimum=2
+PASS north gate blocks actual car: position=(0.35, 61.51)
+PASS west gate blocks actual car: position=(-44.51, 24.05)
+PASS existing turret kills forest enemy: shots=3
+PASS loot harpoon and HUD retained: scrap=1, pickups=0, HUD=001
+PASS sanctuary recovery marker: recovered=(10.00, -12.00)
+PASS pause preserved: state=Paused
+PASS restart repopulates level: alive=13

@@ -1,0 +1,509 @@
+scene=Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+ground local=Center: (-8.00, 0.00, 7.00), Extents: (62.00, 0.00, 73.00) world=Center: (-0.71, 0.00, 10.61), Extents: (95.46, 0.00, 95.46) transform=(0.00, 0.00, 0.00) rotation=(0.00, 45.00, 0.00)
+gameplay=Center: (0.71, 0.00, 9.19), Extents: (98.00, 12.00, 98.00)
+cap=30 authored=13 pooled=43 buggies=3 groups=0
+spawn=(-33.94, 0.70, -33.94) recovery=(-33.94, 0.70, -33.94);(-4.24, 0.70, -12.73)
+SECTION 01 · Rock boundaries and islands p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Cliff p=(-55.86, 0.00, 9.19) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-50.63, 0.00, 14.42) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-45.40, 0.00, 19.66) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-40.16, 0.00, 24.89) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-34.93, 0.00, 30.12) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-29.70, 0.00, 35.36) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-24.47, 0.00, 40.59) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-8.77, 0.00, 56.29) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-3.54, 0.00, 61.52) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(1.70, 0.00, 66.75) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(6.93, 0.00, 71.98) s=(1.16, 1.16, 1.16) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(12.02, 0.00, -55.86) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(17.39, 0.00, -50.49) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(22.77, 0.00, -45.11) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(28.14, 0.00, -39.74) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(33.52, 0.00, -34.37) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(38.89, 0.00, -28.99) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(44.26, 0.00, -23.62) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(49.64, 0.00, -18.24) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(55.01, 0.00, -12.87) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(60.39, 0.00, -7.50) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(65.76, 0.00, -2.12) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(71.13, 0.00, 3.25) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(76.51, 0.00, 8.63) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-48.79, 0.00, -26.16) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-26.16, 0.00, -48.79) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-48.08, 0.00, -19.37) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-17.89, 0.00, -49.57) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-47.38, 0.00, -12.59) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-9.62, 0.00, -50.35) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-46.67, 0.00, -5.80) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-1.34, 0.00, -51.12) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-45.96, 0.00, 0.99) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(6.93, 0.00, -51.90) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(14.85, 0.00, 77.07) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(53.74, 0.00, 39.60) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(19.80, 0.00, 72.12) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(58.83, 0.00, 34.51) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(24.75, 0.00, 67.18) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(63.92, 0.00, 29.42) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(29.70, 0.00, 62.23) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(73.96, 0.00, 29.27) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(34.65, 0.00, 57.28) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(79.05, 0.00, 24.18) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(39.60, 0.00, 52.33) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(84.15, 0.00, 19.09) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-8.49, 0.00, 28.28) s=(1.10, 1.10, 1.10) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(-19.09, 0.00, 30.41) s=(0.90, 0.90, 0.90) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(61.87, 0.00, 4.60) s=(0.85, 0.53, 0.85) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(65.05, 0.00, 4.24) s=(0.85, 0.53, 0.85) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(79.90, 0.00, 19.09) s=(0.80, 0.80, 0.80) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Outer safety collision p=(-0.71, 0.00, 10.61) s=(1.00, 1.00, 1.00) meshes=0 colliders=4 prefab=
+  Cliff p=(-21.92, 0.00, 44.55) s=(0.55, 0.55, 0.55) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+  Cliff p=(82.02, 0.00, 14.14) s=(1.15, 1.15, 1.15) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+SECTION A · South gate and entry p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Open South Gate p=(-41.01, 0.00, -41.01) s=(1.00, 1.00, 1.00) meshes=1 colliders=4 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Open South Gate.prefab
+  Palisade p=(-36.77, 0.00, -18.38) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+SECTION B · Southwest camp p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Watchtower p=(-25.10, 0.00, -11.67) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Watchtower.prefab
+  Tent p=(-39.60, 0.00, 2.83) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Tent.prefab
+  Palisade p=(-40.31, 0.00, -4.95) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Palisade p=(-37.48, 0.00, 12.02) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Palisade p=(-18.38, 0.00, 11.31) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Palisade p=(-17.68, 0.00, -6.36) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+SECTION C · Ancient sanctuary p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Stone Arch p=(12.02, 0.00, -4.95) s=(1.00, 1.00, 1.00) meshes=2 colliders=3 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Stone Arch.prefab
+  Ruin p=(23.33, 0.00, -17.68) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Ruin.prefab
+  Ruin p=(12.02, 0.00, -28.99) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Ruin.prefab
+SECTION D · Crossroads landmarks p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Ruin p=(18.38, 0.00, 4.24) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Ruin.prefab
+SECTION E · West closed gate and danger arena p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Closed West Gate p=(-16.97, 0.00, 50.91) s=(1.00, 1.00, 1.00) meshes=1 colliders=4 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Closed West Gate.prefab
+  Blue Wreck p=(12.02, 0.00, 57.28) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Blue Wreck.prefab
+  Blue Wreck p=(26.16, 0.00, 54.45) s=(0.80, 0.80, 0.80) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Blue Wreck.prefab
+SECTION F · North gate and guide p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Crystal North Gate p=(45.96, 0.00, 45.96) s=(1.00, 1.00, 1.00) meshes=1 colliders=4 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Crystal North Gate.prefab
+  Covered Cart p=(23.33, 0.00, 53.03) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Covered Cart.prefab
+  Green Haired Guide p=(28.28, 0.00, 45.25) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Green Haired Guide.prefab
+  Palisade p=(31.11, 0.00, 56.57) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+SECTION G · Northeast camp and sealed entrance p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Watchtower p=(30.41, 0.00, 13.44) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Watchtower.prefab
+  Tent p=(42.43, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Tent.prefab
+  Windmill p=(49.50, 0.00, 28.28) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Windmill.prefab
+  Covered Cart p=(55.86, 0.00, 23.33) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Covered Cart.prefab
+  Palisade p=(36.06, 0.00, 23.33) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Palisade p=(33.94, 0.00, 2.83) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Palisade p=(43.13, 0.00, 30.41) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Sealed Cliff Door p=(57.28, 0.00, -4.95) s=(1.00, 1.00, 1.00) meshes=1 colliders=3 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Sealed Cliff Door.prefab
+  Palisade p=(76.37, 0.00, 22.63) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Palisade.prefab
+  Cliff p=(67.18, 0.00, 20.51) s=(0.55, 0.55, 0.55) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cliff.prefab
+SECTION 01b · Continuous cliff foundations p=(0.00, 0.00, 0.00) r=(0.00, 45.00, 0.00) s=(1.00, 1.00, 1.00)
+  Cliff foundation p=(-50.56, 2.50, -34.29) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-48.79, 2.50, -19.09) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-48.44, 2.50, -1.77) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-52.33, 2.50, 7.78) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-36.95, 2.50, 28.11) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-34.29, 2.50, -50.56) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-21.21, 2.50, -50.91) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-4.60, 2.50, -51.27) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(7.78, 2.50, -53.74) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(49.14, 2.50, -18.74) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(79.90, 2.50, 24.75) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(67.18, 2.50, 31.82) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(55.86, 2.50, 37.48) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(0.88, 2.50, 65.94) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(27.58, 2.50, 64.35) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+  Cliff foundation p=(-44.55, 2.50, -44.55) s=(1.00, 1.00, 1.00) meshes=1 colliders=1 prefab=
+SECTION Cliff crown 1 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-56.07, 6.96, 10.11) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 2 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-50.84, 6.96, 15.34) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 3 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-45.61, 6.96, 20.58) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 4 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-40.38, 6.96, 25.81) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 5 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-35.14, 6.96, 31.04) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 6 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-29.91, 6.96, 36.27) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 7 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-24.68, 6.96, 41.51) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 8 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-8.98, 6.96, 57.20) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 9 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-3.75, 6.96, 62.44) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 10 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(1.48, 6.96, 67.67) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 11 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(6.72, 6.96, 72.90) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 12 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(11.81, 6.90, -54.94) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 13 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(17.18, 6.90, -49.57) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 14 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(22.56, 6.90, -44.19) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 15 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(27.93, 6.90, -38.82) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 16 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(33.30, 6.90, -33.45) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 17 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(38.68, 6.90, -28.07) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 18 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(44.05, 6.90, -22.70) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 19 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(49.43, 6.90, -17.32) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 20 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(54.80, 6.90, -11.95) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 21 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(60.17, 6.90, -6.58) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 22 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(65.55, 6.90, -1.20) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 23 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(70.92, 6.90, 4.17) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 24 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(76.30, 6.90, 9.55) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 25 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-49.00, 6.00, -25.24) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 26 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-26.38, 6.00, -47.87) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 27 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-48.30, 6.00, -18.46) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 28 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-18.10, 6.00, -48.65) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 29 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-47.59, 6.00, -11.67) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 30 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-9.83, 6.00, -49.43) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 31 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-46.88, 6.00, -4.88) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 32 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-1.56, 6.00, -50.20) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 33 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-46.17, 6.00, 1.91) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 34 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(6.72, 6.00, -50.98) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 35 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(14.64, 6.00, 77.99) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 36 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(53.53, 6.00, 40.52) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 37 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(19.59, 6.00, 73.04) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 38 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(58.62, 6.00, 35.43) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 39 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(24.54, 6.00, 68.09) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 40 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(63.71, 6.00, 30.33) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 41 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(29.49, 6.00, 63.14) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 42 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(73.75, 6.00, 30.19) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 43 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(34.44, 6.00, 58.19) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 44 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(78.84, 6.00, 25.10) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 45 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(39.39, 6.00, 53.25) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 46 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(83.93, 6.00, 20.01) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 47 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-8.70, 6.60, 29.20) s=(0.99, 0.99, 0.99) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 48 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(-19.30, 5.40, 31.32) s=(0.81, 0.81, 0.81) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 49 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(61.66, 3.16, 5.52) s=(0.60, 0.60, 0.60) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 50 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(64.84, 3.16, 5.16) s=(0.60, 0.60, 0.60) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION Cliff crown 51 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(79.69, 4.80, 20.01) s=(0.72, 0.72, 0.72) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION A · Entry dressing p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Lantern p=(-39.24, 0.00, -30.05) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Lantern.prefab
+  Bright Fir p=(-33.80, 0.00, -25.60) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bright Fir.prefab
+  Bush p=(-41.72, 0.00, -24.75) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-41.22, 0.00, -26.38) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-44.05, 0.00, -24.96) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-43.20, 0.00, -25.10) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-43.06, 0.00, -25.95) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-42.21, 0.00, -26.09) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(-21.92, 0.00, -38.89) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(-14.85, 0.00, -34.65) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-14.35, 0.00, -36.27) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-17.18, 0.00, -34.86) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-16.33, 0.00, -35.00) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-16.19, 0.00, -35.85) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-15.34, 0.00, -35.99) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Grass Tuft p=(-43.13, 0.00, -25.03) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-16.26, 0.00, -34.93) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION B · Camp supplies p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Crate p=(-36.06, 0.00, -0.71) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Crate.prefab
+  Barrel p=(-21.21, 0.00, 11.31) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Barrel.prefab
+  Yellow Bush p=(-31.82, 0.00, 16.26) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Bush.prefab
+  Mushroom Cluster p=(-31.32, 0.00, 14.64) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-34.15, 0.00, 16.05) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-33.30, 0.00, 15.91) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-33.16, 0.00, 15.06) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-32.31, 0.00, 14.92) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Bush p=(-31.82, 0.00, -10.61) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-31.32, 0.00, -12.23) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-34.15, 0.00, -10.82) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-33.30, 0.00, -10.96) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-33.16, 0.00, -11.81) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-32.31, 0.00, -11.95) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Grass Tuft p=(-33.23, 0.00, 15.98) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-33.23, 0.00, -10.89) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION C · Sanctuary garden p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Green Pool p=(0.00, 0.00, -16.97) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Green Pool.prefab
+  Lantern p=(1.41, 0.00, -9.90) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Lantern.prefab
+  Bush p=(15.56, 0.00, -21.21) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(16.05, 0.00, -22.84) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(13.22, 0.00, -21.43) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(14.07, 0.00, -21.57) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(14.21, 0.00, -22.42) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(15.06, 0.00, -22.56) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Bush p=(27.58, 0.00, -12.02) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(28.07, 0.00, -13.65) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(25.24, 0.00, -12.23) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(26.09, 0.00, -12.37) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(26.23, 0.00, -13.22) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(27.08, 0.00, -13.36) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Yellow Bush p=(4.95, 0.00, -31.82) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Bush.prefab
+  Mushroom Cluster p=(5.44, 0.00, -33.45) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(2.62, 0.00, -32.03) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(3.46, 0.00, -32.17) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(3.61, 0.00, -33.02) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(4.45, 0.00, -33.16) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Bush p=(16.26, 0.00, 0.71) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(16.76, 0.00, -0.92) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(13.93, 0.00, 0.49) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(14.78, 0.00, 0.35) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(14.92, 0.00, -0.49) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(15.77, 0.00, -0.64) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Boulder p=(-4.95, 0.00, -16.26) s=(0.90, 0.08, 0.77) meshes=1 colliders=0 prefab=
+  Boulder p=(2.12, 0.00, -9.19) s=(0.90, 0.08, 0.77) meshes=1 colliders=0 prefab=
+  Boulder p=(3.68, 0.00, -10.75) s=(1.10, 0.08, 0.94) meshes=1 colliders=0 prefab=
+  Boulder p=(5.23, 0.00, -12.30) s=(1.30, 0.08, 1.11) meshes=1 colliders=0 prefab=
+  Boulder p=(5.66, 0.00, -5.66) s=(0.90, 0.08, 0.77) meshes=1 colliders=0 prefab=
+  Boulder p=(7.21, 0.00, -7.21) s=(1.10, 0.08, 0.94) meshes=1 colliders=0 prefab=
+  Boulder p=(8.77, 0.00, -8.77) s=(1.30, 0.08, 1.11) meshes=1 colliders=0 prefab=
+  Fir p=(-21.21, 0.00, 19.80) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bright Fir p=(-31.11, 0.00, 16.97) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bright Fir.prefab
+  Bush p=(-20.51, 0.00, 26.16) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-20.01, 0.00, 24.54) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-22.84, 0.00, 25.95) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-21.99, 0.00, 25.81) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-21.85, 0.00, 24.96) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-21.00, 0.00, 24.82) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Grass Tuft p=(14.14, 0.00, -21.50) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(26.16, 0.00, -12.30) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(3.54, 0.00, -32.10) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(14.85, 0.00, 0.42) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-21.92, 0.00, 25.88) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION D · Crossroads dressing p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Signpost p=(14.99, 0.00, 23.19) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Signpost.prefab
+  Yellow Fir p=(21.57, 0.00, 1.06) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Fir.prefab
+  Bush p=(17.68, 0.00, 0.71) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(18.17, 0.00, -0.92) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(15.34, 0.00, 0.49) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(16.19, 0.00, 0.35) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(16.33, 0.00, -0.49) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(17.18, 0.00, -0.64) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Bush p=(-12.73, 0.00, 25.46) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-12.23, 0.00, 23.83) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-15.06, 0.00, 25.24) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-14.21, 0.00, 25.10) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-14.07, 0.00, 24.25) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-13.22, 0.00, 24.11) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(-14.85, 0.00, 36.06) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Barrel p=(-17.68, 0.00, 33.23) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Barrel.prefab
+  Grass Tuft p=(16.26, 0.00, 0.42) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-14.14, 0.00, 25.17) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION E · Bones and wreck dressing p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Skull Sign p=(4.95, 0.00, 40.31) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Skull Sign.prefab
+  Stakes p=(-2.12, 0.00, 53.03) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Stakes.prefab
+  Stakes p=(8.49, 0.00, 50.91) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Stakes.prefab
+  Bones p=(-4.95, 0.00, 45.96) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bones.prefab
+  Bones p=(7.07, 0.00, 43.84) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bones.prefab
+  Lantern p=(-9.19, 0.00, 50.20) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Lantern.prefab
+  Warm champion clearing p=(1.41, 0.01, 48.08) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Bush p=(2.83, 0.00, 59.40) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(3.32, 0.00, 57.77) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(0.49, 0.00, 59.18) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(1.34, 0.00, 59.04) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(1.48, 0.00, 58.19) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(2.33, 0.00, 58.05) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(10.61, 0.00, 65.76) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Barrel p=(-12.02, 0.00, 34.65) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Barrel.prefab
+  Grass Tuft p=(1.41, 0.00, 59.11) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION F · Market supplies p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Lantern p=(36.42, 0.00, 45.61) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Lantern.prefab
+  Crate p=(19.80, 0.00, 56.57) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Crate.prefab
+  Barrel p=(28.99, 0.00, 51.62) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Barrel.prefab
+  Barrel p=(31.11, 0.00, 50.91) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Barrel.prefab
+  Planks p=(20.51, 0.00, 48.79) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Planks.prefab
+  Planks p=(23.33, 0.00, 58.69) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Planks.prefab
+  Bush p=(22.63, 0.00, 63.64) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(23.12, 0.00, 62.01) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(20.29, 0.00, 63.43) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(21.14, 0.00, 63.29) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(21.28, 0.00, 62.44) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(22.13, 0.00, 62.30) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Guide question marker p=(28.28, 4.20, 45.25) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Grass Tuft p=(21.21, 0.00, 63.36) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION G · Camp garden and supplies p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Barrel p=(51.62, 0.00, 23.33) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Barrel.prefab
+  Crate p=(56.57, 0.00, 12.73) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Crate.prefab
+  Bush p=(44.55, 0.00, -3.54) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(45.04, 0.00, -5.16) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(42.21, 0.00, -3.75) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(43.06, 0.00, -3.89) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(43.20, 0.00, -4.74) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(44.05, 0.00, -4.88) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Yellow Bush p=(31.11, 0.00, 18.38) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Bush.prefab
+  Mushroom Cluster p=(31.61, 0.00, 16.76) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(28.78, 0.00, 18.17) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(29.63, 0.00, 18.03) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(29.77, 0.00, 17.18) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(30.62, 0.00, 17.04) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Bush p=(60.81, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(61.31, 0.00, -1.63) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(58.48, 0.00, -0.21) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(59.33, 0.00, -0.35) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(59.47, 0.00, -1.20) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(60.32, 0.00, -1.34) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Lantern p=(49.50, 0.00, -1.41) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Lantern.prefab
+  Fir p=(67.18, 3.30, 20.51) s=(0.60, 0.60, 0.60) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Fir p=(72.83, 6.20, 7.78) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(72.12, 0.00, 14.14) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(72.62, 0.00, 12.52) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(69.79, 0.00, 13.93) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(70.64, 0.00, 13.79) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(70.78, 0.00, 12.94) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(71.63, 0.00, 12.80) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Grass Tuft p=(43.13, 0.00, -3.82) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(29.70, 0.00, 18.10) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(59.40, 0.00, -0.28) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(70.71, 0.00, 13.86) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+SECTION Future biomes · visible beyond locked gates p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Snow biome glimpse p=(50.91, 0.01, 50.91) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Snow Fir p=(45.25, 0.00, 57.98) s=(0.85, 0.85, 0.85) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Snow Fir.prefab
+  Snow Fir p=(50.56, 0.00, 56.92) s=(0.85, 0.85, 0.85) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Snow Fir.prefab
+  Snow Fir p=(51.62, 0.00, 51.62) s=(0.85, 0.85, 0.85) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Snow Fir.prefab
+  Snow Fir p=(56.92, 0.00, 50.56) s=(0.85, 0.85, 0.85) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Snow Fir.prefab
+  Snow Fir p=(57.98, 0.00, 45.25) s=(0.85, 0.85, 0.85) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Snow Fir.prefab
+  Orange biome glimpse p=(-23.33, 0.01, 58.69) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Cactus p=(-31.82, 0.00, 48.79) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+  Boulder p=(-33.23, 0.00, 54.45) s=(3.50, 2.45, 2.98) meshes=1 colliders=0 prefab=
+  Cactus p=(-33.23, 0.00, 55.86) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+  Boulder p=(-28.99, 0.00, 55.86) s=(3.50, 2.45, 2.98) meshes=1 colliders=0 prefab=
+  Cactus p=(-26.16, 0.00, 54.45) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+  Boulder p=(-27.58, 0.00, 60.10) s=(3.50, 2.45, 2.98) meshes=1 colliders=0 prefab=
+  Cactus p=(-27.58, 0.00, 61.52) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+  Boulder p=(-23.33, 0.00, 61.52) s=(3.50, 2.45, 2.98) meshes=1 colliders=0 prefab=
+  Cactus p=(-20.51, 0.00, 60.10) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+  Boulder p=(-21.92, 0.00, 65.76) s=(3.50, 2.45, 2.98) meshes=1 colliders=0 prefab=
+  Cactus p=(-21.92, 0.00, 67.18) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+  Boulder p=(-17.68, 0.00, 67.18) s=(3.50, 2.45, 2.98) meshes=1 colliders=0 prefab=
+  Fir p=(-44.55, 0.00, 12.02) s=(0.98, 0.98, 0.98) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Yellow Bush p=(-47.38, 0.00, 10.89) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Bush.prefab
+  Mushroom Cluster p=(-46.88, 0.00, 9.26) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-49.71, 0.00, 10.68) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-48.86, 0.00, 10.54) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-48.72, 0.00, 9.69) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-47.87, 0.00, 9.55) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(19.09, 0.00, -40.31) s=(0.70, 0.70, 0.70) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(16.26, 0.00, -41.44) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(16.76, 0.00, -43.06) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(13.93, 0.00, -41.65) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(14.78, 0.00, -41.79) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(14.92, 0.00, -42.64) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(15.77, 0.00, -42.78) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(-33.23, 0.00, 23.33) s=(0.67, 0.67, 0.67) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(-36.06, 0.00, 22.20) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-35.57, 0.00, 20.58) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-38.40, 0.00, 21.99) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-37.55, 0.00, 21.85) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-37.41, 0.00, 21.00) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-36.56, 0.00, 20.86) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(30.41, 0.00, -28.99) s=(0.93, 0.93, 0.93) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(27.58, 0.00, -30.12) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(28.07, 0.00, -31.75) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(25.24, 0.00, -30.33) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(26.09, 0.00, -30.48) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(26.23, 0.00, -31.32) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(27.08, 0.00, -31.47) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(-21.92, 0.00, 34.65) s=(0.92, 0.92, 0.92) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Yellow Bush p=(-24.75, 0.00, 33.52) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Bush.prefab
+  Mushroom Cluster p=(-24.25, 0.00, 31.89) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-27.08, 0.00, 33.30) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-26.23, 0.00, 33.16) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-26.09, 0.00, 32.31) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-25.24, 0.00, 32.17) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(41.72, 0.00, -17.68) s=(0.83, 0.83, 0.83) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(38.89, 0.00, -18.81) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(39.39, 0.00, -20.44) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(36.56, 0.00, -19.02) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(37.41, 0.00, -19.16) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(37.55, 0.00, -20.01) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(38.40, 0.00, -20.15) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(-10.61, 0.00, 45.96) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(-13.44, 0.00, 44.83) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(-12.94, 0.00, 43.20) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-15.77, 0.00, 44.62) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-14.92, 0.00, 44.48) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-14.78, 0.00, 43.63) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-13.93, 0.00, 43.49) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(53.03, 0.00, -6.36) s=(0.86, 0.86, 0.86) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(50.20, 0.00, -7.50) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(50.70, 0.00, -9.12) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(47.87, 0.00, -7.71) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(48.72, 0.00, -7.85) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(48.86, 0.00, -8.70) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(49.71, 0.00, -8.84) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(0.71, 0.00, 57.28) s=(0.72, 0.72, 0.72) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Yellow Bush p=(-2.12, 0.00, 56.14) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Yellow Bush.prefab
+  Mushroom Cluster p=(-1.63, 0.00, 54.52) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(-4.45, 0.00, 55.93) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(-3.61, 0.00, 55.79) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(-3.46, 0.00, 54.94) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(-2.62, 0.00, 54.80) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Fir p=(64.35, 0.00, 4.95) s=(0.91, 0.91, 0.91) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+  Bush p=(61.52, 0.00, 3.82) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Bush.prefab
+  Mushroom Cluster p=(62.01, 0.00, 2.19) s=(0.90, 0.90, 0.90) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Mushroom Cluster.prefab
+  Boulder p=(59.18, 0.00, 3.61) s=(0.50, 0.35, 0.43) meshes=1 colliders=0 prefab=
+  Boulder p=(60.03, 0.00, 3.46) s=(0.65, 0.46, 0.55) meshes=1 colliders=0 prefab=
+  Boulder p=(60.17, 0.00, 2.62) s=(0.80, 0.56, 0.68) meshes=1 colliders=0 prefab=
+  Boulder p=(61.02, 0.00, 2.47) s=(0.95, 0.67, 0.81) meshes=1 colliders=0 prefab=
+  Grass Tuft p=(-48.79, 0.00, 10.61) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(14.85, 0.00, -41.72) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-37.48, 0.00, 21.92) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(26.16, 0.00, -30.41) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-26.16, 0.00, 33.23) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(37.48, 0.00, -19.09) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-14.85, 0.00, 44.55) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(48.79, 0.00, -7.78) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(-3.54, 0.00, 55.86) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Grass Tuft p=(60.10, 0.00, 3.54) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Grass Tuft.prefab
+  Green Haired Guide p=(46.67, 0.00, 52.33) s=(0.80, 0.80, 0.80) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Green Haired Guide.prefab
+  Green Haired Guide p=(55.15, 0.00, 48.08) s=(0.80, 0.80, 0.80) meshes=1 colliders=1 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Green Haired Guide.prefab
+  Cactus at west gate p=(-20.15, 0.00, 54.09) s=(0.70, 0.70, 0.70) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Cactus.prefab
+SECTION Cliff crown 1 p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  Fir p=(85.35, 6.90, 18.60) s=(1.04, 1.04, 1.04) meshes=1 colliders=0 prefab=Assets/RoadGunner/Levels/Greenwood/Prefabs/Fir.prefab
+SECTION 00 · Routes and clear ground p=(0.00, 0.00, 0.00) r=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00)
+  South to north p=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  West biome road p=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  East camp approach p=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Northeast camp entrance p=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Southwest camp spur p=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Sanctuary fragments p=(0.00, 0.00, 0.00) s=(1.00, 1.00, 1.00) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(-7.07, 0.01, 6.90) s=(5.09, 0.01, 3.47) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(-8.95, 0.01, 12.73) s=(3.77, 0.01, 2.63) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(66.56, 0.01, 14.83) s=(3.13, 0.01, 2.13) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(1.97, 0.01, -31.68) s=(5.96, 0.01, 2.04) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(4.02, 0.01, -39.52) s=(5.75, 0.01, 3.22) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(11.63, 0.01, 40.08) s=(5.80, 0.01, 2.65) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(-12.02, 0.01, 8.85) s=(3.42, 0.01, 2.04) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(44.39, 0.01, -1.66) s=(4.02, 0.01, 2.67) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(12.08, 0.01, -39.50) s=(4.41, 0.01, 2.76) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(5.14, 0.01, -40.44) s=(5.37, 0.01, 3.18) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(57.85, 0.01, 16.09) s=(2.81, 0.01, 2.44) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(7.96, 0.01, 54.88) s=(4.16, 0.01, 3.29) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(15.26, 0.01, 55.55) s=(2.99, 0.01, 2.98) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(-18.44, 0.01, 30.15) s=(4.01, 0.01, 2.10) meshes=1 colliders=0 prefab=
+  Quiet grass patch p=(-18.51, 0.01, 11.36) s=(3.50, 0.01, 3.75) meshes=1 colliders=0 prefab=

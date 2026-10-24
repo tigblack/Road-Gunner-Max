@@ -1,0 +1,8 @@
+Prepared existing map; reference not inspected
+Unity 6000.6.4f1
+Missing materials=0
+Unsupported shaders=0
+Turret shots in moving capture=2
+Vehicle forward/reverse limits=18/7
+New game/scene Console errors after preparation started=0
+Existing Unity SearchDatabase startup index exceptions=1

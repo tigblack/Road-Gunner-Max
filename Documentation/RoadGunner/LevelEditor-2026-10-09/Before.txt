@@ -1,0 +1,261 @@
+Sun • late desert afternoon children=0
+Arena • The Rust Basin children=246
+DUST JACKAL • armored muscle car children=10
+Main Camera children=0
+Soft sky fill • cartoon form children=0
+Scrap Rush • warm cartoon grading children=0
+Input • camera relative direction children=0
+HUD children=1
+EventSystem children=0
+Session • Road Gunner children=1
+Raider groups • pooled 30 children=32
+Scrap pool • capped 60 children=60
+GROUND Golden dunes • smooth drivable sand vertices=10201 parent=Arena • The Rust Basin pos=(0.00, 0.00, 0.00) scale=(1.00, 1.00, 1.00)
+WORLD Golden dunes • smooth drivable sand children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rusted corrugated barricade children=18 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rusted corrugated barricade children=18 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rusted corrugated barricade children=18 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rusted corrugated barricade children=18 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rusted corrugated barricade children=18 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=0 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Rounded sandstone children=0 collider=1 static=True
+WORLD Dry golden tuft children=14 collider=0 static=False
+WORLD Invisible perimeter safety wall children=0 collider=1 static=True
+WORLD Invisible perimeter safety wall children=0 collider=1 static=True
+WORLD Invisible perimeter safety wall children=0 collider=1 static=True
+WORLD Invisible perimeter safety wall children=0 collider=1 static=True
+WORLD Scattered pebbles and dry grass children=153 collider=0 static=False
+WORLD Suspension lane buried plank children=0 collider=0 static=False
+WORLD Suspension lane buried plank children=0 collider=0 static=False
+WORLD Suspension lane buried plank children=0 collider=0 static=False
+WORLD Suspension lane buried plank children=0 collider=0 static=False
+WORLD Suspension lane buried plank children=0 collider=0 static=False
+nav Arena • The Rust Basin collects=Children geometry=PhysicsColliders layers=Default asset=Assets/RoadGunner/Meshes/Rust basin navigation.asset
+session Session • Road Gunner pools=30/3 markers=6/3

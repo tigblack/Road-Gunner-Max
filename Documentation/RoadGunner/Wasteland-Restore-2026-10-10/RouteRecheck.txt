@@ -1,0 +1,3 @@
+PASS drive northeast camp: waypoints=2/2, end=(59.57, 99.84), minimum grounded=4, upright=1.000, maxSpeed=9.24
+PASS drive east road and camp approach: waypoints=3/3, end=(97.39, 81.91), minimum grounded=4, upright=1.000, maxSpeed=9.36
+PASS drive service bay entry turn and exit: waypoints=4/4, end=(0.54, -17.22), minimum grounded=4, upright=1.000, maxSpeed=9.16

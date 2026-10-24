@@ -1,0 +1,43 @@
+SCRAP RUSH — implemented art direction
+Completed 2026-10-06 (Asia/Yerevan), Unity 6000.6.4f1 / URP.
+
+Open Assets/RoadGunner/Scenes/RoadGunner_Prototype.unity again, then press Play.
+The art pass is saved in the actual scene, meshes, materials, textures and prefabs.
+Tools > Road Gunner > Build Prototype reproduces the Scrap Rush version.
+
+Visual changes
+- Warm golden sand and a subtle procedural wind-brushed texture.
+- Red hood, cream side armor, teal windows, paint scuffs and armor bolts.
+- Beveled hard surfaces, larger visible tires and chunky tread cleats.
+- Cartoon raiders with larger heads, red wraps/scarves, goggles, gloves,
+  harnesses, belt pouches and raised crowbars; original movement rig retained.
+- Rose sandstone clusters, corrugated metal fencing, dry grass and scrap piles.
+- Closer portrait camera, warm directional key, cool fill and URP grading.
+- Restyled rounded HUD panels and explicit Pause icon geometry.
+- Soft dust at the wheels and a fixed-capacity mesh of fading tire imprints.
+- Small environment dressing combined by material; shared mesh/material assets.
+
+Verification
+Actual batch Unity Play mode, graphics enabled, in an isolated copy of the project.
+Both suites completed with no failing checks: 16 joystick/control checks and
+16 physics/combat/session checks, plus each suite's completion marker.
+Includes all eight stick directions, moving U-turn, touch cancellation, S reverse,
+acceleration, braking, suspension, tire slip, pointer routing, pause, recovery,
+blocked shots, damage/rewards, pickup capacity, defeat and three restarts.
+The U-turn test ends when the nose reaches its requested heading, rather than
+continuing to accelerate straight into later arena obstacles after the turn.
+Two art rocks were moved away from the starting maneuver area during validation.
+No missing renderer materials, unsupported shaders, C# errors or shader errors.
+All four dust emitters played and produced particles while driving.
+Unity's cloned SearchDatabase emitted one unrelated startup index exception.
+Physical Android/iOS devices and mobile frame rate have not been verified.
+
+Evidence
+ScrapRush-2026-10-06/ contains exact check results.
+Captures/scrap-rush-gameplay.png is an actual moving gameplay render with HUD.
+Captures/scrap-rush-art-closeup.png is a staged close-up using the same real
+3D car, raiders, terrain, materials and lights. It is not generated concept art.
+
+Backup
+Backups/Before-Scrap-Rush-2026-10-05.zip preserves the pre-art-pass RoadGunner assets.
+The SampleScene and SampleScene_WorkingCopy scene files were not replaced.

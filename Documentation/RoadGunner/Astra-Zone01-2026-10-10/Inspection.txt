@@ -1,0 +1,9 @@
+Greenwood inspection · 2026-10-10
+Scene: Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Screen north: world yaw 45°. Road 7.5 m; vehicle width approximately 2.2 m.
+Authored enemies: 13
+Authored scene geometry: 85192 triangles, excluding ground / player / dormant resource pools.
+Ground: 9052 triangles.
+Reusable environment prefabs: 32; enemy variants: 3
+Info: Authored enemies: 13; legacy encounter groups: 0; shared resource pool retained.
+Info: Scenes serialize placements, prefab links and markers. Relief and override settings are separate per-level assets. Bounds are authoring/validation guides; physical perimeter stays in the scene.

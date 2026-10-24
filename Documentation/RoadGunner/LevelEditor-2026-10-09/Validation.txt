@@ -1,0 +1,2 @@
+Info: Authored enemies: 6; legacy encounter groups: 0; shared resource pool retained.
+Info: Scenes serialize placements, prefab links and markers. Relief and override settings are separate per-level assets. Bounds are authoring/validation guides; physical perimeter stays in the scene.
