@@ -1,6 +1,0 @@
-Unity 6000.6.4f1 actual Play Mode
-Missing/unsupported renderer materials=0
-Buggy pool=3
-Player speeds=18/7
-New game/scene Console errors=0
-Existing SearchDatabase index errors=1

@@ -1,1 +1,0 @@
-after connected playable NavMesh world X/Z bounds: Center: (33.30, 0.06, 29.88), Extents: (160.56, 0.18, 157.86); size=321.120 x 315.720 m; vertices=1835/7098

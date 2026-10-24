@@ -1,7 +1,0 @@
-2026-10-04
-PASS paused restart engine resumes: True (background audio enabled for unfocused MCP session)
-PASS camera finite after pause: True
-Session count: 1
-Saved scene clean: True
-Persistent UI actions: True
-Transient test components in saved scene: 0

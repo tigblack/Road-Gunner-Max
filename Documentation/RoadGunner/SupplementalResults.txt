@@ -1,4 +1,0 @@
-PASS melee attack events: events in 3.5s=3, minimum gap=1.02s, health=76
-PASS synthetic second-finger Pause: first finger drove=True, second finger paused and released input=True; physical device still unverified
-PASS touch cancellation: released=True
-PASS initial groups on reachable ground: alive=24, paths to spawn=24

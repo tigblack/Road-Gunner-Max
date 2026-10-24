@@ -1,2 +1,0 @@
-FAIL joystick backs away from northeast palisade: routed=True, stuck=(12.44, 42.00), stuck forward speed=0.00, rearward stick reverse=False, steer=0.00, escaped=(12.44, 42.00), distance east=0.00, backward speed=0.00, grounded=4
-Real Input System mouse events routed through the UI joystick; WheelCollider vehicle physics. No Recover or teleport during escape.

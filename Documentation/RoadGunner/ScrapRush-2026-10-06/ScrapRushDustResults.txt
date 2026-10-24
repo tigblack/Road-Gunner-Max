@@ -1,4 +1,0 @@
-playing=True, particles=9, rate=9.752467
-playing=True, particles=11, rate=10.59093
-playing=True, particles=11, rate=11.12766
-playing=True, particles=10, rate=10.86233

@@ -1,4 +1,0 @@
-Scene=Assets/RoadGunner/Scenes/Level01_Greenwood.unity
-Dirty=False
-Build scene 0=Assets/RoadGunner/Scenes/Level01_Greenwood.unity
-Sanctuary=True

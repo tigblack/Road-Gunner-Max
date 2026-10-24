@@ -1,7 +1,0 @@
-Unity 6000.6.4f1
-Assets/RoadGunner/Scenes/Level01_Wasteland.unity: guns=3, range=10, circleGround=True
-Assets/RoadGunner/Scenes/RoadGunner_Prototype.unity: guns=3, range=10, circleGround=True
-Missing/unsupported renderer materials=0
-Game/scene Console errors=0
-Existing SearchDatabase index errors=1
-Repeated installer: player circles=1, pooled buggies=3
