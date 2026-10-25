@@ -42,6 +42,7 @@ namespace RoadGunner.Editor
             int ordinary = 0, bosses = 0;
             foreach (var target in RoadGunnerLevelAuthoring.InScene<CombatTarget>())
             {
+                if (target is ArenaUpgradeStation station && !station.requiresDestruction) continue;
                 if (target.UsesBossHealthHud) { RemoveBar(target); bosses++; }
                 else { ConfigureTarget(target, camera); ordinary++; }
             }

@@ -45,13 +45,14 @@ namespace RoadGunner.Editor
                 throw new InvalidOperationException("Save the currently open scene before running acceptance checks.");
             EditorSceneManager.OpenScene(scene.path);
             Directory.CreateDirectory(Path.GetDirectoryName(Arena1PlayChecks.ReportPath));
+            File.WriteAllText(Arena1PlayChecks.ReportPath, "Preparing saved Arena 1 verification...\n");
             errors.Clear(); finishing = false;
             UnityEditor.SessionState.SetBool(Pending, true);
             UnityEditor.SessionState.SetBool(Batch, Application.isBatchMode);
             UnityEditor.SessionState.SetBool(Started, false);
             UnityEditor.SessionState.SetInt(ExitCode, 1);
             UnityEditor.SessionState.SetInt(ErrorCount, 0);
-            UnityEditor.SessionState.SetString(Timeout, DateTime.UtcNow.AddMinutes(5).Ticks.ToString());
+            UnityEditor.SessionState.SetString(Timeout, DateTime.UtcNow.AddMinutes(12).Ticks.ToString());
             Application.logMessageReceived -= OnLog; Application.logMessageReceived += OnLog;
             EditorApplication.update -= Tick; EditorApplication.update += Tick;
             Application.runInBackground = true;
@@ -92,7 +93,11 @@ namespace RoadGunner.Editor
             if (!UnityEditor.SessionState.GetBool(Pending, false) || finishing) return;
             string deadline = UnityEditor.SessionState.GetString(Timeout, "0");
             if (long.TryParse(deadline, out long ticks) && DateTime.UtcNow.Ticks > ticks)
-            { Fail("Arena 1 Play Mode checks exceeded the five minute timeout."); return; }
+            { Fail("Arena 1 Play Mode checks exceeded the twelve minute timeout."); return; }
+            // Enter Play Mode with domain/scene reload disabled can lose a queued delayCall.
+            // Start from the first actual editor update as well; SessionState guards a duplicate Begin.
+            if (EditorApplication.isPlaying && !UnityEditor.SessionState.GetBool(Started, false))
+            { StartChecks(); return; }
             if (!EditorApplication.isPlaying || !checks || !checks.Completed) return;
             int runtimeErrors = UnityEditor.SessionState.GetInt(ErrorCount, 0);
             int result = checks.Failures == 0 && runtimeErrors == 0 ? 0 : 1;

@@ -52,6 +52,7 @@ namespace RoadGunner.Editor
         {
             public readonly Color[] pixels;
             readonly float[] heights;
+            readonly bool[] corridorRock;
             readonly Bounds bounds;
             readonly int size;
             readonly Dictionary<Material, Surface> surfaces = new Dictionary<Material, Surface>();
@@ -62,7 +63,7 @@ namespace RoadGunner.Editor
             public Rasterizer(Bounds worldBounds, int resolution)
             {
                 bounds = worldBounds; size = resolution;
-                pixels = new Color[size * size]; heights = new float[pixels.Length];
+                pixels = new Color[size * size]; heights = new float[pixels.Length]; corridorRock = new bool[pixels.Length];
                 for (int i = 0; i < pixels.Length; i++)
                 { pixels[i] = new Color(.96f, .79f, .51f, 1); heights[i] = float.NegativeInfinity; }
             }
@@ -120,8 +121,10 @@ namespace RoadGunner.Editor
                 var world = new Vector3[data.vertices.Length];
                 for (int i = 0; i < world.Length; i++) world[i] = matrix.MultiplyPoint3x4(data.vertices[i]);
                 var materials = renderer.sharedMaterials;
-                bool road = filter.sharedMesh.name.StartsWith("Road ", StringComparison.OrdinalIgnoreCase) ||
+                bool legacyRoad = filter.sharedMesh.name.StartsWith("Road ", StringComparison.OrdinalIgnoreCase) ||
                     filter.sharedMesh.name.IndexOf("worn-track", StringComparison.OrdinalIgnoreCase) >= 0;
+                bool road = legacyRoad || filter.sharedMesh.name.StartsWith("Corridor road", StringComparison.OrdinalIgnoreCase);
+                bool rockMass = filter.sharedMesh.name.StartsWith("Corridor rock mass", StringComparison.OrdinalIgnoreCase);
                 bool drawn = false;
                 for (int submesh = 0; submesh < data.triangles.Length; submesh++)
                 {
@@ -170,9 +173,9 @@ namespace RoadGunner.Editor
                                 color *= data.colors[a] * w0 + data.colors[b] * w1 + data.colors[c] * w2;
                             if (color.a < .45f) continue;
                             // Existing road mesh footprints receive contrast for legibility at phone size.
-                            if (road) color = Color.Lerp(color, new Color(.43f, .34f, .24f, 1), .32f);
+                            if (legacyRoad) color = Color.Lerp(color, new Color(.43f, .34f, .24f, 1), .32f);
                             color.r *= shade; color.g *= shade; color.b *= shade; color.a = 1;
-                            pixels[index] = color; heights[index] = height;
+                            pixels[index] = color; heights[index] = height; corridorRock[index] = rockMass;
                         }
                     }
                 }
@@ -186,17 +189,23 @@ namespace RoadGunner.Editor
                 {
                     int i = y * size + x; float height = heights[i];
                     if (float.IsNegativeInfinity(height)) continue;
-                    float nearby = Mathf.Max(heights[i - 1], Mathf.Max(heights[i + 1], Mathf.Max(heights[i - size], heights[i + size])));
-                    if (nearby - height > 1.3f)
+                    // The merged rock landscape uses adjacent construction strips of slightly varied
+                    // heights. Their internal seams are not landmarks; shading those seams exposes
+                    // the authoring grid. Keep contact shading at the actual outside cliff edges.
+                    if (ReliefEdge(i, i - 1) || ReliefEdge(i, i + 1) || ReliefEdge(i, i - size) || ReliefEdge(i, i + size))
                     { var color = pixels[i]; color.r *= .74f; color.g *= .74f; color.b *= .74f; pixels[i] = color; }
                 }
             }
+
+            bool ReliefEdge(int lower, int upper) => heights[upper] - heights[lower] > 1.3f &&
+                !(corridorRock[lower] && corridorRock[upper]);
 
             Vector2 Pixel(Vector3 p) => new Vector2((p.x - bounds.min.x) / bounds.size.x * size, (p.z - bounds.min.z) / bounds.size.z * size);
             static float Edge(Vector2 a, Vector2 b, Vector2 p) => (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x);
         }
 
-        static bool Include(MeshFilter filter, LevelLayout layout, Bounds bounds, out MeshRenderer renderer)
+        static bool Include(MeshFilter filter, LevelLayout layout, Bounds bounds, float minimumFeatureSize,
+            float minimumProjectedThickness, Transform preservedGeometry, out MeshRenderer renderer)
         {
             renderer = filter.GetComponent<MeshRenderer>();
             if (!filter.sharedMesh || !filter.sharedMesh.isReadable || !renderer || !renderer.enabled || !filter.gameObject.activeInHierarchy) return false;
@@ -207,25 +216,63 @@ namespace RoadGunner.Editor
             if (meshName.IndexOf("radius", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 meshName.IndexOf("telegraph", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 meshName.IndexOf("shockwave", StringComparison.OrdinalIgnoreCase) >= 0) return false;
-            if (filter != layout.ground && Mathf.Max(renderer.bounds.size.x, renderer.bounds.size.z) < .65f) return false;
+            if (filter != layout.ground && Mathf.Max(renderer.bounds.size.x, renderer.bounds.size.z) < minimumFeatureSize) return false;
             var box = renderer.bounds;
-            return box.max.x >= bounds.min.x && box.min.x <= bounds.max.x && box.max.z >= bounds.min.z && box.min.z <= bounds.max.z;
+            if (box.max.x < bounds.min.x || box.min.x > bounds.max.x || box.max.z < bounds.min.z || box.min.z > bounds.max.z) return false;
+            // Use the actual horizontal minor axis, rather than a world-axis AABB: a long, thin
+            // diagonal rod has large X and Z bounds but is still subpixel detail on a phone map.
+            bool preserve = filter == layout.ground || preservedGeometry && filter.transform.IsChildOf(preservedGeometry) ||
+                filter.GetComponentInParent<RepairWorkshop>();
+            return preserve || minimumProjectedThickness <= 0 || ProjectedThickness(filter) >= minimumProjectedThickness;
+        }
+
+        static float ProjectedThickness(MeshFilter filter)
+        {
+            var vertices = filter.sharedMesh.vertices;
+            if (vertices.Length < 3) return 0;
+            var matrix = filter.transform.localToWorldMatrix;
+            Vector2 center = Vector2.zero;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                var point = matrix.MultiplyPoint3x4(vertices[i]); center += new Vector2(point.x, point.z);
+            }
+            center /= vertices.Length;
+            double xx = 0, xz = 0, zz = 0;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                var point = matrix.MultiplyPoint3x4(vertices[i]);
+                double x = point.x - center.x, z = point.z - center.y;
+                xx += x * x; xz += x * z; zz += z * z;
+            }
+            float angle = .5f * Mathf.Atan2((float)(2 * xz), (float)(xx - zz));
+            var minor = new Vector2(-Mathf.Sin(angle), Mathf.Cos(angle));
+            float min = float.PositiveInfinity, max = float.NegativeInfinity;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                var point = matrix.MultiplyPoint3x4(vertices[i]);
+                float distance = Vector2.Dot(new Vector2(point.x, point.z) - center, minor);
+                min = Mathf.Min(min, distance); max = Mathf.Max(max, distance);
+            }
+            return max - min;
         }
 
         public static Texture2D BakeAndConfigure(LevelLayout layout, ArenaMinimap map,
-            string assetPath = DefaultAssetPath, int resolution = 512)
+            string assetPath = DefaultAssetPath, int resolution = 512, Bounds? viewBounds = null, float minimumFeatureSize = .65f,
+            float minimumProjectedThickness = 0)
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Bake the static map outside Play Mode.");
             if (!layout || !layout.ground || !map || !map.mapRect) throw new InvalidOperationException("Minimap bake requires the existing arena layout, ground and UI map rectangle.");
             if (!assetPath.StartsWith("Assets/", StringComparison.Ordinal) || !assetPath.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException("Use an Assets/...png destination.", nameof(assetPath));
-            Bounds bounds = layout.gameplayBounds;
+            Bounds bounds = viewBounds ?? layout.gameplayBounds;
             if (bounds.size.x <= 0 || bounds.size.z <= 0) throw new InvalidOperationException("Arena bounds must have positive X/Z extents.");
             resolution = Mathf.Clamp(Mathf.NextPowerOfTwo(resolution), 128, 1024);
             var rasterizer = new Rasterizer(bounds, resolution);
+            var corridor = layout.GetComponent<ArenaCorridorLayout>();
+            Transform preservedGeometry = corridor ? corridor.geometryRoot : null;
             foreach (var root in layout.gameObject.scene.GetRootGameObjects())
                 foreach (var filter in root.GetComponentsInChildren<MeshFilter>(false))
-                    if (Include(filter, layout, bounds, out var renderer)) rasterizer.Draw(filter, renderer);
+                    if (Include(filter, layout, bounds, minimumFeatureSize, minimumProjectedThickness, preservedGeometry, out var renderer)) rasterizer.Draw(filter, renderer);
             if (rasterizer.meshCount == 0) throw new InvalidOperationException("No readable static arena meshes were found.");
             rasterizer.AddReliefEdges();
             var image = new Texture2D(resolution, resolution, TextureFormat.RGB24, false);

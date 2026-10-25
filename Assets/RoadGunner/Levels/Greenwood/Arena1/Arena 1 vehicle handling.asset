@@ -22,6 +22,8 @@ MonoBehaviour:
   driveResponseSpeed: 3
   turnBeforeDriveAngle: 100
   fullDriveAngle: 25
+  coastDeceleration: 11.5
+  coastStopSpeed: 0.08
   maxReverseSpeed: 2.3333333
   reverseTorqueMultiplier: 0.7
   rearTorqueShare: 0.62

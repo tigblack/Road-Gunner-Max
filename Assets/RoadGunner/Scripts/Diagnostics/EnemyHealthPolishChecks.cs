@@ -11,6 +11,9 @@ namespace RoadGunner
     {
         IEnumerator EnemyHealthUi()
         {
+            // Each section restores its own live population; earlier route/physics sections isolate it.
+            s.Restart(); s.turret.enabled = false; s.health.DamageEnabled = false;
+            yield return null; yield return null;
             // Cache components before Isolate deactivates their pooled gameplay roots.
             var raiderBar = human.GetComponent<EnemyHealthBar>();
             var buggyBar = buggy.GetComponent<EnemyHealthBar>();

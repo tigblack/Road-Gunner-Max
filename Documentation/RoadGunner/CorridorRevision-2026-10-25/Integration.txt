@@ -1,0 +1,5 @@
+Obstacle collision policy: 312 solid props, 0 fitted primitive colliders added; 281 small/decorative props remain nonblocking.
+Existing scene/pools/enemy health/gun/harpoon/music/UI retained. Main road14m, branches16m, broad combat pockets.
+Three independent Health +1 station targets; durability10.5, two base5.25 gun hits each; no enemy kill reward.
+Speed limit11.7m/s retained; explicit planar no-input deceleration11.5m/s2, settle.08m/s; vertical physics unchanged.
+Static512px focused actual-terrain/road map, circular stencil, soft grey rim, ordinary16px red dots.

@@ -1,0 +1,10 @@
+Existing Arena 1 reauthored with Road Gunner Level Editor, terrain/art/enemy systems retained.
+Spawn=(-84.85, 0.70, -84.85)
+Three Health +1 sites=(-83.79, 0.00, -78.84); (-80.43, 0.00, -80.43); (-81.49, 0.00, -86.44)
+Main: 50m straight start, winding north14m road. Branches16m; boss48m clearing; Monster40m clearing.
+Workshop=(-33.59, 0.00, -61.87)
+Boss=(-7.07, 0.03, 113.14)
+Monster=(144.96, 0.20, 7.07)
+North closed gate=(107.83, 0.00, 100.76); no pre-existing runtime unlock condition found.
+Primitive rock-band colliders=207; preserved/relocated legacy props=46
+Saved navigation rebaked; scene saving remains the caller's responsibility.

@@ -55,6 +55,9 @@ namespace RoadGunner.Editor
             CasualMinimapInstaller.Configure(s.minimap);
             EnemyHealthBarAuthoring.Configure(layout);
             ArenaMusicBuilder.Configure(s);
+            var corridor = layout.GetComponent<ArenaCorridorLayout>();
+            if (corridor && corridor.mapFootprint != null && corridor.mapFootprint.Length > 2)
+                CorridorMinimapStyler.Configure(layout, s.minimap, corridor.mapFootprint);
         }
     }
 }

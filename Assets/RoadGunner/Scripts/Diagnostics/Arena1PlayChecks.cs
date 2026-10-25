@@ -19,8 +19,9 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/CasualPolish-2026-10-25/PlayMode.txt";
-        public const string CaptureFolder = "outputs/casual-polish-validation";
+        public static bool OnboardingOnly => Array.IndexOf(Environment.GetCommandLineArgs(), "-roadGunnerOnboardingOnly") >= 0;
+        public static string ReportPath => "Documentation/RoadGunner/CorridorRevision-2026-10-25/" + (OnboardingOnly ? "Onboarding.txt" : "PlayMode.txt");
+        public const string CaptureFolder = "outputs/corridor-revision-validation";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -57,7 +58,7 @@ namespace RoadGunner
             running = true; Completed = false; Failures = Checks = 0; report.Clear();
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(CaptureFolder);
-            report.Add("Arena 1 casual combat polish acceptance — actual Unity Play Mode; " + Application.unityVersion);
+            report.Add("Arena 1 corridor and collision acceptance — actual Unity Play Mode; " + Application.unityVersion);
             report.Add("Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.");
             File.WriteAllLines(ReportPath, report);
             StartCoroutine(RunGuarded());
@@ -74,7 +75,7 @@ namespace RoadGunner
         {
             // Let the real GameSession.Start initialize its run and HUD first.
             yield return null; yield return null;
-            var sections = new Func<IEnumerator>[] { SceneAndMap, EnemyHealthUi, CircularMapAndWhiteRange, ArenaMusicChecks, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, BossAndCompletion };
+            var sections = OnboardingOnly ? new Func<IEnumerator>[] { SceneAndMap, CorridorUpgradeOnboarding } : new Func<IEnumerator>[] { SceneAndMap, CorridorUpgradeOnboarding, CorridorRouteChecks, CorridorPhysicsChecks, EnemyHealthUi, CircularMapAndWhiteRange, ArenaMusicChecks, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, BossAndCompletion };
             foreach (var factory in sections)
             {
                 IEnumerator section = factory();
@@ -113,18 +114,18 @@ namespace RoadGunner
                 "LevelLayout, stats, HUD, minimap and rear harpoon are wired on the gameplay scene");
             int raiders = s.spawns.authoredRaiders.Count(r => r && !r.arenaBoss);
             int buggies = s.spawns.authoredBuggies.Count(b => b);
-            Check("fallback roster and ranks", raiders >= 10 && raiders <= 14 && buggies >= 2 && buggies <= 3 &&
+            Check("authored corridor roster and ranks", raiders >= 10 && raiders <= 14 && buggies >= 2 && buggies <= 3 &&
                 s.zone1.ExtraTargets.Length == 2 && !s.zone1.ExtraTargets.OfType<TruckArenaBoss>().Any() &&
                 human.GetComponent<EnemyIdentity>().Rank == EnemyRank.Normal && buggy.GetComponent<EnemyIdentity>().Rank == EnemyRank.VehicleElite &&
                 monster.GetComponent<EnemyIdentity>().Rank == EnemyRank.MiniBoss && boss.GetComponent<EnemyIdentity>().Rank == EnemyRank.Boss,
-                "Authored Raiders=" + raiders + ", Buggies=" + buggies + ", Monster=1, Boss Raider=1; temporary fallback, not verified The War data");
+                "Authored Raiders=" + raiders + ", Buggies=" + buggies + ", Monster=1, Boss Raider=1; retained roster, corridor placements follow the current written brief, not a verified The War export");
             Check("finite authored encounters", !s.spawns.repeatAuthoredEnemies && s.spawns.GroupCount == 0 &&
                 s.spawns.authoredRaiders.All(r => r.Alive && r.agent.isOnNavMesh) && s.spawns.authoredBuggies.All(b => b.Alive),
                 "All authored enemies spawned; legacy random encounter respawn is disabled");
-            Check("current speed increased by thirty percent", Mathf.Abs(s.vehicle.tuning.maxSpeed - 9f * 1.30f) < .05f &&
+            Check("current increased speed is preserved", Mathf.Abs(s.vehicle.tuning.maxSpeed - 9f * 1.30f) < .05f &&
                 s.vehicle.tuning.maxSpeed < 18 && s.vehicle.tuning.steeringRate >= 120 &&
                 s.turret.tuning.playerDamageMultiplier >= .33f && s.turret.tuning.playerDamageMultiplier <= .4f,
-                "Previous forward=9; current=" + s.vehicle.tuning.maxSpeed + "; multiplier=" + s.vehicle.tuning.maxSpeed / 9 +
+                "Previous revision/current limit=11.7/" + s.vehicle.tuning.maxSpeed + "; historical multiplier over9=" + s.vehicle.tuning.maxSpeed / 9 +
                 ", steering=" + s.vehicle.tuning.steeringRate + ", outgoing multiplier=" + s.turret.tuning.playerDamageMultiplier);
             Check("base run stats and HUD", s.runStats.AttackLevel == 1 && s.runStats.HealthLevel == 1 &&
                 s.hud.statsText.text.Contains("ATK 1") && s.hud.statsText.text.Contains("HP 1") &&
@@ -227,10 +228,10 @@ namespace RoadGunner
             var player = icons.Single(i => i.kind == MinimapMarkerKind.Player);
             int ordinaryVertices = ordinary.Min(i => i.canvasRenderer.GetMesh().vertexCount);
             bool skullGeometry = HasSkullFeatures(mini) && HasSkullFeatures(final);
-            bool interactiveShape = interactive.All(i => i.canvasRenderer.GetMesh().vertexCount != ordinaryVertices);
-            Check("normal enemies and distinct reward objects are red", ordinary.Length == 14 && ordinary.All(i => IsRed(i.color)) &&
-                interactive.Length == 2 && interactive.All(i => IsRed(i.color)) && interactiveShape,
-                "Red ordinary markers=" + ordinary.Count(i => IsRed(i.color)) + "; red interactive markers=" + interactive.Count(i => IsRed(i.color)) + "; distinct geometry=" + interactiveShape);
+            bool interactiveShape = interactive.All(i => i.canvasRenderer.GetMesh().vertexCount == ordinaryVertices);
+            Check("normal enemies and upgrade objects share simple red dots", ordinary.Length == 14 && ordinary.All(i => IsRed(i.color)) &&
+                interactive.Length == s.runStats.stations.Length && interactive.All(i => IsRed(i.color)) && interactiveShape,
+                "Red ordinary markers=" + ordinary.Count(i => IsRed(i.color)) + "; red interactive markers=" + interactive.Count(i => IsRed(i.color)) + "; same dot geometry=" + interactiveShape);
             bool greenWrenches = workshops.All(icon => icon.color.g >= .65f && icon.color.r < .4f && icon.color.b < .5f &&
                 icon.canvasRenderer.GetMesh().colors.Count(c => c.r > .95f && c.g > .95f && c.b > .95f) > 48 &&
                 icon.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width));
@@ -241,8 +242,9 @@ namespace RoadGunner
                 mini.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width) &&
                 final.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width),
                 "Mini color=" + mini.color + "; boss color=" + final.color + "; complex skull geometry=" + skullGeometry);
-            Check("player marker stays unique and map stays north-up", !IsRed(player.color) && player.color.g >= .7f && player.color.b >= .7f &&
-                player.rectTransform.rect.width >= final.rectTransform.rect.width && Mathf.Abs(Mathf.DeltaAngle(0, map.mapRect.localEulerAngles.z)) < .01f,
+            float expectedNorth = layout.GetComponentInChildren<ArenaCorridorLayout>(true) ? 45 : 0;
+            Check("player marker stays unique and map stays fixed to level north", !IsRed(player.color) && player.color.g >= .7f && player.color.b >= .7f &&
+                player.rectTransform.rect.width >= final.rectTransform.rect.width && Mathf.Abs(Mathf.DeltaAngle(expectedNorth, map.mapRect.localEulerAngles.z)) < .01f,
                 "Player color=" + player.color + "; player width=" + player.rectTransform.rect.width + "; boss width=" + final.rectTransform.rect.width);
         }
 
@@ -273,6 +275,8 @@ namespace RoadGunner
             s.zone1.DespawnAll();
             s.input.testInput = true; s.input.testDirection = Vector2.zero; s.input.testBrake = true;
             s.vehicle.Body.constraints = RigidbodyConstraints.FreezeAll;
+            if (s.runStats) foreach (var station in s.runStats.stations)
+                if (station && station.requiresDestruction && station.hitbox) station.hitbox.enabled = false;
             PlaceCar(testOrigin, testRotation); Physics.SyncTransforms();
         }
 
@@ -310,6 +314,7 @@ namespace RoadGunner
             s.health.DamageEnabled = true; s.health.Damage(previousMax * .4f, false); s.health.DamageEnabled = false;
             float damagedHP = s.health.Current;
             PlaceCar(health.transform.position + Vector3.up * .7f, testRotation);
+            if (health.requiresDestruction) health.Hit(health.MaxHealth + 1, Vector3.forward);
             yield return new WaitForSecondsRealtime(.25f);
             Check("HEALTH +1 uses existing health", health.Consumed && s.runStats.HealthLevel == 2 && s.health.Maximum > previousMax &&
                 Mathf.Abs(s.health.Current - (damagedHP + s.health.Maximum - previousMax)) < .1f &&

@@ -111,8 +111,9 @@ namespace RoadGunner.Editor
         }
         void ObstaclesUI(LevelLayout l)
         {
-            EditorGUILayout.HelpBox("Blocking props use the existing Default-layer solid colliders; decorations disable their colliders. Both remain static, with no added runtime scripts.",MessageType.Info);
+            EditorGUILayout.HelpBox("Large rocks, walls, wrecks and barricades receive solid Default-layer collision automatically; missing shapes use fitted BoxColliders. Existing compound openings are preserved. Grass, tiny stones and shoulder dressing remain nonblocking.",MessageType.Info);
             Palette(propPalette);PlacementOptions(true);
+            if(GUILayout.Button("Repair gameplay obstacle collision"))Act(()=>Debug.Log(GameplayObstacleAuthoring.ConfigureLevel(l)));
             if(GUILayout.Button("Extract palette from existing environment"))Act(()=>RoadGunnerLevelAuthoring.ExtractEnvironmentPalette(l));
             using(new EditorGUILayout.HorizontalScope()){
                 if(GUILayout.Button("Delete selection"))Act(()=>{foreach(var g in SelectedAuthored(l))Undo.DestroyObjectImmediate(g);RoadGunnerLevelAuthoring.Wire(l);l.navigationNeedsBake=true;RoadGunnerLevelAuthoring.Dirty(l);});

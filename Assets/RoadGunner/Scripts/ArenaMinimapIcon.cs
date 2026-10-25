@@ -5,7 +5,7 @@ namespace RoadGunner
 {
     public enum MinimapMarkerKind { Raider, Buggy, MiniBoss, Boss, Attack, Health, Workshop, Player }
 
-    /// <summary>Outlined geometry glyphs: red hostiles/diamonds, orange/red skulls and a white/cyan player.</summary>
+    /// <summary>Friendly geometry glyphs: ordinary red dots, orange/red skulls, a green spanner and white/cyan player.</summary>
     [RequireComponent(typeof(CanvasRenderer))]
     public sealed class ArenaMinimapIcon : MaskableGraphic
     {
@@ -40,36 +40,17 @@ namespace RoadGunner
                 Quad(mesh, c + new Vector2(-x * .15f, -y * .61f), x * .035f, y * .15f, Outline);
                 Quad(mesh, c + new Vector2(x * .15f, -y * .61f), x * .035f, y * .15f, Outline);
             }
-            else if (kind == MinimapMarkerKind.Attack || kind == MinimapMarkerKind.Health)
-            {
-                Diamond(mesh, c, x, y, Outline);
-                Diamond(mesh, c, x * .76f, y * .76f, color);
-                if (kind == MinimapMarkerKind.Health)
-                {
-                    Quad(mesh, c, x * .10f, y * .39f, Color.white);
-                    Quad(mesh, c, x * .39f, y * .10f, Color.white);
-                }
-                else
-                {
-                    Triangle(mesh, c + new Vector2(x * .3f, y * .45f), c + new Vector2(-x * .36f, -y * .08f), c + new Vector2(x * .12f, -y * .08f), Color.white);
-                    Triangle(mesh, c + new Vector2(-x * .12f, y * .08f), c + new Vector2(-x * .3f, -y * .45f), c + new Vector2(x * .36f, y * .08f), Color.white);
-                }
-            }
             else if (kind == MinimapMarkerKind.Workshop)
             {
                 Circle(mesh, c, x, y, new Color(.025f, .32f, .10f, 1));
                 Circle(mesh, c, x * .88f, y * .88f, color);
                 Wrench(mesh, c, Mathf.Min(x, y) * .88f);
             }
-            else if (kind == MinimapMarkerKind.Raider)
-            {
-                Circle(mesh, c, x, y, Outline);
-                Circle(mesh, c, x * .70f, y * .70f, color);
-            }
             else
             {
-                Quad(mesh, c, x, y, Outline);
-                Quad(mesh, c, x * .72f, y * .78f, color);
+                // All regular enemies and reward objects intentionally share one simple red dot.
+                Circle(mesh, c, x, y, new Color(.47f, .035f, .055f, 1));
+                Circle(mesh, c, x * .84f, y * .84f, color);
             }
         }
 
@@ -104,12 +85,6 @@ namespace RoadGunner
         {
             Triangle(mesh, c + new Vector2(0, y), c + new Vector2(-x, -y), c + new Vector2(0, -y * .45f), tint);
             Triangle(mesh, c + new Vector2(0, y), c + new Vector2(0, -y * .45f), c + new Vector2(x, -y), tint);
-        }
-
-        static void Diamond(VertexHelper mesh, Vector2 c, float x, float y, Color tint)
-        {
-            Triangle(mesh, c + new Vector2(0, y), c + new Vector2(-x, 0), c + new Vector2(0, -y), tint);
-            Triangle(mesh, c + new Vector2(0, y), c + new Vector2(0, -y), c + new Vector2(x, 0), tint);
         }
 
         static void Circle(VertexHelper mesh, Vector2 c, float x, float y, Color tint)

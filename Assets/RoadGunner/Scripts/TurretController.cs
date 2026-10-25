@@ -43,6 +43,7 @@ namespace RoadGunner
             foreach(var r in session.spawns.pool){if(!r.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,r.transform.position);if(d<nearest&&CanAttack(r)){nearest=d;best=r;}}
             if(session.spawns.buggyPool!=null)foreach(var buggy in session.spawns.buggyPool){if(!buggy||!buggy.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,buggy.transform.position);if(d<nearest&&CanAttack(buggy)){nearest=d;best=buggy;}}
             if(session.zone1&&session.zone1.ExtraTargets!=null)foreach(var extra in session.zone1.ExtraTargets){if(!extra||!extra.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,extra.transform.position);if(d<nearest&&CanAttack(extra)){nearest=d;best=extra;}}
+            if(session.runStats && session.runStats.stations!=null)foreach(var station in session.runStats.stations){if(!station||!station.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,station.transform.position);if(d<nearest&&CanAttack(station)){nearest=d;best=station;}}
             Target=best;
         }
         public void ResetCombat(){Target=null;searchAt=Time.time+.1f;fireAt=Time.time+.2f;}
