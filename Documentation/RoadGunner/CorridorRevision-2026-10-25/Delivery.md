@@ -79,7 +79,7 @@ Authoring: CorridorArenaInstaller, CorridorRevisionInstaller, UpgradeOnboardingI
 
 Сохранены и проверены world HP UI/пулы, белая10м граница во время движения/боя, музыка/громкость/пауза/Restart, InputSystem touch/мышь/WASD и поворот180° носом, Attack +1, ремонт, Metal Gear/гарпун, оба босса и Arena Clear. GPU-проверка подтверждает круговую обрезку карты и значков.
 
-Подробный результат фактического Play Mode: PlayMode.txt. Сохранённая интеграция и координаты: Integration.txt, Layout.txt. Результаты WebGL и GitHub Pages: Publication.txt.
+Подробный результат фактического Play Mode: PlayMode.txt. Сохранённая интеграция и координаты: Integration.txt, Layout.txt. WebGL собран и опубликован: https://tigblack.github.io/Road-Gunner-Max/ . GitHub Pages run40234991608 завершён успешно; шесть публичных файлов совпадают с локальной сборкой побайтно/SHA256. Изменения: `dec03cd`, сборка: `e3962ca`, Pages: `209e534`. Подробности: Publication.txt, Browser.txt, BuildManifest.json, LiveManifest.json.
 
 ![Три Health +1 и новая мини-карта в настоящем Play Mode](Start.png)
 

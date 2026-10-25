@@ -1,0 +1,46 @@
+CORRIDOR REVISION — ACTUAL BROWSER VERIFICATION
+Date:26 October2026 Asia/Yerevan.
+Local release:http://127.0.0.1:8765/?revision=corridor-20261026
+Public release:https://tigblack.github.io/Road-Gunner-Max/?build=209e534
+Native Google Chrome UI through cua_repl; iPhone16 preset393x852.
+This is desktop browser emulation, not a physical iPhone or iOS Safari.
+
+LOCAL
+PLAY initialized the real WebGL2/PhysX scene. Observed new winding lavender/gold
+round map, white/cyan player, red dots, green wrench, orange/red skulls, roof gun,
+driver/companion, three independently consumed Health objects, HP4 and160/160.
+Native W held4s moved the car up the actual road; captured22km/h during release
+and00km/h in the subsequent observation. Precise stopping times come from native
+Unity physics measurements in PlayMode.txt, not inferred from screenshot spacing.
+A sustained synthetic DOM TouchEvent test drove up the road and ended at client
+(360,400), outside its original(80,630) touch origin; the stick disappeared and
+speed reached00. Actual ordinary enemy health bars/damage were visible.
+
+PUBLIC
+Fresh navigation loaded the newly deployed scene and HP4 after auto-gun onboarding.
+Sustained DOM touch from(80,630) to(80,500) visibly showed the floating joystick at
+its original phone position and drove north. Holding into the corridor rock face
+left the car physically in front of the barrier; it did not pass through it.
+Ending that touch outside the original activation zone produced touches=0,
+defaultPrevented=true and no stuck input. The helper's interval was explicitly
+cleared. Public own-page query:ready=true, viewport393x852, canvas786x1704,
+scroll[0,0]. Native emulated touch press/release also produced balanced trusted
+start/end events(2/2) and a prevented final end with zero active touches; sustained
+motion was exercised separately by synthetic DOM touch, not claimed as hardware.
+Ordinary combat continued in the same public run:enemy HP bars, kills and Scrap
+appeared. Pause/music30%/Resume/Restart UI remained available.
+The final public page was left paused with DevTools closed, preserving user tabs.
+
+CONSOLE
+Final fresh public Console showed no Uncaught, RuntimeError or gameplay Exception.
+Existing optional stripped URP postprocess/upscaling warning, initial audio metadata
+messages and gzip-fallback server advice remain. Native Play Mode Console recorded
+zero errors/exceptions/asserts. One initial local diagnostic command typed through
+native keystrokes was truncated and produced a QA-only SyntaxError; the diagnostic
+was re-entered correctly via paste. That command was not game/build code and is
+absent from the fresh public navigation.
+
+LIMITS
+No physical phone, Android/iOS Safari, thermal/FPS or hardware input profiling.
+No subjective listening or new AAC loop-seam audit; current original music and
+native playback/loop/fades/persistence checks are preserved and passed.

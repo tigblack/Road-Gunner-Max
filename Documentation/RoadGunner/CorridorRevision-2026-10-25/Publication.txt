@@ -1,0 +1,62 @@
+CORRIDOR ARENA1 REVISION — VERIFIED PUBLICATION
+Playable:https://tigblack.github.io/Road-Gunner-Max/
+Repository:https://github.com/tigblack/Road-Gunner-Max
+Source branch:main, existing remote. History preserved; no force push.
+Feature commit:dec03cd
+WebGL artifact commit:e3962cabef18e07d8f592df74f7065d5057f1e5f
+Both pushed successfully to origin/main.
+Pages commit:209e534320d2d3710b58255391a287d618ea648f
+Pushed successfully to existing origin/gh-pages.
+GitHub Pages remains gh-pages / via built-in Pages deployment.
+Run40234991608 completed SUCCESS:
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/40234991608
+Pages API:built; commit209e534; error.message=null.
+
+RELEASE
+Unity6000.6.4f1; existing Level01_Greenwood scene; outputWebBuild/.
+Build UTC2026-10-25T21:17:44.1825770Z; Unity reported55,871,791bytes raw.
+Actual7-file transport21,693,645bytes(~20.69MiB), original music included.
+Gzip with JavaScript decompression fallback works on static GitHub Pages.
+Validator passed gzip CRC/decompression, UnityWebData archive entries, wasmv1,
+loader/framework/inline JavaScript syntax and current mobile HTML configuration.
+BuildManifest.json records exact SHA256 values and payload checks.
+All6 nonhidden published files downloaded with normal certificate-verified HTTPS,
+HTTP200, curl ssl_verify_result0. Every file matches local release byte-for-byte
+and by SHA256. LiveManifest.json records URLs, sizes, hashes and verification time.
+
+VERIFICATION
+Full actual Play Mode:187checks,0failures,Console0errors/exceptions/asserts.
+After the final visual-only label height/contrast adjustment:27 focused startup/
+onboarding checks,0failures,Console0. Reports:PlayMode.txt and Onboarding.txt.
+Continuous driving passed main285.3m, repair spur22.6m, boss101.4m, Monster111.7m.
+All12 Raiders have complete NavMesh paths. Existing workshop heals upgraded HP.
+Three shootable Health+1 stations give exactly HP1->4 / maximum100->160, no kill
+or Scrap reward, no proximity award and no repeat collection. Restart resets them.
+Actual driven stopping:low2.894m/s->near0 in.221s; cruise10.202 in.871s;
+full-input natural plateau10.474 in.902s. Commanded speed ceiling11.7m/s retained.
+Real turn release and real resume while decelerating passed. Global damping0.
+All20 representative impacts passed:rock,wreck,barricade,concretewall,boundary
+at low/normal/maximum/diagonal. Ceiling setup11.7 yielded actual11.18m/s impacts;
+diagonal11.16. Saved gate and existing Buggy also physically blocked. CCD retained.
+Browser:actual local and public WebGL2 gameplay initialized at iPhone393x852;
+native keyboard, synthetic sustained browser touch and native emulated touch end,
+no scroll/stuck touch, new map/upgrades/combat and pause UI observed. See Browser.txt.
+
+FILES/DETAILS
+Delivery.md:final coordinates/topology, vehicle, minimap, collider cause/policy,
+changed scripts/prefabs/scene/assets, full verification scope and remaining limits.
+Start.png:actual saved-scene portrait capture with three readable HEALTH+1 labels.
+Integration.txt/Layout.txt:saved authoring references and placements.
+
+LIMITS
+No physical mobile-device or Safari/Android hardware profiling; no new subjective
+music balance/seam listening. Existing optional URP/audio startup notices remain.
+No pre-existing quest/unlock system was found:the north future arena is intentionally
+visibly and physically closed; no invented runtime unlock condition is claimed.
+Current topology follows the latest supplied brief. Exact The War placements are
+not presented as independently verified reference data.
+
+HYGIENE
+Initial source tree was clean. Only this revision's source/assets/reports and
+requested WebBuild release committed. Generated URP prefilter/resource metadata,
+Burst intermediates, Unity caches/Logs/Temp and local outputs were excluded.
