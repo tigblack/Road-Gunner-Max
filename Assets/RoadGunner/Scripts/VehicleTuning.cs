@@ -10,6 +10,20 @@ namespace RoadGunner
     public sealed class VehicleTuning : ScriptableObject
     {
         public float mass = 1400, maxSpeed = 18, totalDriveTorque = 3100;
+        [Header("Camera-relative directional driving")]
+        [Min(.1f), Tooltip("Maximum requested wheel-drive acceleration in metres per second squared.")]
+        public float acceleration = 4;
+        [Min(1), Tooltip("Maximum assisted chassis turn rate in degrees per second.")]
+        public float rotationSpeed = 150;
+        [Min(1), Tooltip("Limits the change in assisted Rigidbody yaw rate; rotation remains smooth from rest.")]
+        public float rotationAcceleration = 540;
+        [Min(.1f), Tooltip("Response of the bounded Rigidbody yaw assist to the desired heading.")]
+        public float steeringResponse = 4;
+        [Min(.1f), Tooltip("Speed error over which wheel torque rises to full output.")]
+        public float driveResponseSpeed = 3;
+        [Range(30,170), Tooltip("Brake and turn first while the nose is farther than this angle from the requested travel direction.")]
+        public float turnBeforeDriveAngle = 100;
+        [Range(0,60)] public float fullDriveAngle = 25;
         [Min(1)] public float maxReverseSpeed = 7;
         [Range(.1f,1)] public float reverseTorqueMultiplier = .7f;
         [Range(0,1)] public float rearTorqueShare = .62f;

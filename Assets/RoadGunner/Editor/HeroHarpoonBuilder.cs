@@ -111,7 +111,7 @@ namespace RoadGunner.Editor
             var tipRoot=Group("HarpoonTip",rear,Vector3.zero);projectile.SetParent(tipRoot,false);projectile.localRotation=Quaternion.Euler(90,0,0);collector.projectile=tipRoot;tipRoot.gameObject.SetActive(false);
             var cableRoot=Group("HarpoonCable",rear,Vector3.zero);var line=cableRoot.gameObject.AddComponent<LineRenderer>();line.sharedMaterial=Material("Bone armor");
             line.useWorldSpace=true;line.positionCount=2;line.widthMultiplier=.065f;line.numCapVertices=2;line.shadowCastingMode=ShadowCastingMode.Off;line.receiveShadows=false;line.enabled=false;collector.cable=line;
-            collector.collectionRadius=8;collector.harpoonLaunchSpeed=18;collector.harpoonRetractSpeed=12;collector.delayBetweenCollections=.3f;collector.maxTetherLength=20;
+            collector.collectionRadius=8;collector.harpoonLaunchSpeed=36;collector.harpoonRetractSpeed=30;collector.delayBetweenCollections=.08f;collector.searchInterval=.05f;collector.aimSpeed=960;collector.maxTetherLength=20;
             car.wheelVisuals=new Transform[4];string[] suffix={"fl","fr","rl","rr"};
             for(int i=0;i<4;i++)
             {

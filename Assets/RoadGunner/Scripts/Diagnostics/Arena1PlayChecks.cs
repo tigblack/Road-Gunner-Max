@@ -16,10 +16,11 @@ using Object = UnityEngine.Object;
 namespace RoadGunner
 {
     /// <summary>Opt-in acceptance checks against the saved Arena 1, using real gameplay components.</summary>
+    [DefaultExecutionOrder(10000)]
     public sealed class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/Arena1-2026-10-24/PlayMode.txt";
-        public const string CaptureFolder = "outputs/arena1-validation";
+        public const string ReportPath = "Documentation/RoadGunner/MobileRevision-2026-10-25/PlayMode.txt";
+        public const string CaptureFolder = "outputs/mobile-revision-validation";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -36,6 +37,19 @@ namespace RoadGunner
         RigidbodyConstraints carConstraints;
         int humanShots;
         bool running;
+        bool trackRange;
+        AttackRangeIndicator trackedRange;
+        int rangeTrackingFrames;
+        float maximumRangeCentreError;
+
+        void LateUpdate()
+        {
+            // Observe the production indicator after its own LateUpdate has followed physics.
+            if (!trackRange || !trackedRange || !s || !s.vehicle) return;
+            rangeTrackingFrames++;
+            maximumRangeCentreError = Mathf.Max(maximumRangeCentreError,
+                AttackRange.SquaredDistance(trackedRange.Centre, s.vehicle.transform.position));
+        }
 
         public void Begin()
         {
@@ -43,7 +57,7 @@ namespace RoadGunner
             running = true; Completed = false; Failures = Checks = 0; report.Clear();
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(CaptureFolder);
-            report.Add("Arena 1 acceptance — actual Unity Play Mode; " + Application.unityVersion);
+            report.Add("Arena 1 mobile revision acceptance — actual Unity Play Mode; " + Application.unityVersion);
             report.Add("Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.");
             File.WriteAllLines(ReportPath, report);
             StartCoroutine(RunGuarded());
@@ -60,7 +74,7 @@ namespace RoadGunner
         {
             // Let the real GameSession.Start initialize its run and HUD first.
             yield return null; yield return null;
-            var sections = new Func<IEnumerator>[] { SceneAndMap, UpgradesAndRepair, CombatAndLoot, DrivingAndTouch, BossAndCompletion };
+            var sections = new Func<IEnumerator>[] { SceneAndMap, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, BossAndCompletion };
             foreach (var factory in sections)
             {
                 IEnumerator section = factory();
@@ -107,10 +121,10 @@ namespace RoadGunner
             Check("finite authored encounters", !s.spawns.repeatAuthoredEnemies && s.spawns.GroupCount == 0 &&
                 s.spawns.authoredRaiders.All(r => r.Alive && r.agent.isOnNavMesh) && s.spawns.authoredBuggies.All(b => b.Alive),
                 "All authored enemies spawned; legacy random encounter respawn is disabled");
-            Check("tactical tuning", Mathf.Abs(s.vehicle.tuning.maxSpeed - 18f / 3) < .05f &&
-                Mathf.Abs(s.vehicle.tuning.maxReverseSpeed - 7f / 3) < .05f && s.vehicle.tuning.steeringRate >= 120 &&
+            Check("current speed increased by 1.5x", Mathf.Abs(s.vehicle.tuning.maxSpeed - 6f * 1.5f) < .05f &&
+                s.vehicle.tuning.maxSpeed < 18 && s.vehicle.tuning.steeringRate >= 120 &&
                 s.turret.tuning.playerDamageMultiplier >= .33f && s.turret.tuning.playerDamageMultiplier <= .4f,
-                "Forward=" + s.vehicle.tuning.maxSpeed + ", reverse=" + s.vehicle.tuning.maxReverseSpeed +
+                "Previous forward=6; current=" + s.vehicle.tuning.maxSpeed + "; multiplier=" + s.vehicle.tuning.maxSpeed / 6 +
                 ", steering=" + s.vehicle.tuning.steeringRate + ", outgoing multiplier=" + s.turret.tuning.playerDamageMultiplier);
             Check("base run stats and HUD", s.runStats.AttackLevel == 1 && s.runStats.HealthLevel == 1 &&
                 s.hud.statsText.text.Contains("ATK 1") && s.hud.statsText.text.Contains("HP 1") &&
@@ -140,6 +154,8 @@ namespace RoadGunner
             }
             Check("minimap icons produce rendered geometry", renderedIcons == expected && vertices > expected * 3,
                 "Visible CanvasRenderer meshes=" + renderedIcons + "/" + expected + "; vertices=" + vertices);
+            VerifyMapBackgroundAndStyles(icons);
+            VerifyRangeVisualization();
             bool legendInitiallyHidden = s.minimap.legendPanel && !s.minimap.legendPanel.activeSelf;
             s.minimap.ToggleLegend();
             bool legendOpened = s.minimap.legendPanel && s.minimap.legendPanel.activeSelf;
@@ -148,6 +164,88 @@ namespace RoadGunner
                 s.minimap.legendPanel && !s.minimap.legendPanel.activeSelf,
                 "Legend starts hidden, opens on request and closes before the gameplay capture");
             Capture("initial-start");
+        }
+
+        static bool IsRed(Color color) => color.r >= .75f && color.g <= .35f && color.b <= .4f && color.a > .8f;
+
+        static bool HasSkullFeatures(ArenaMinimapIcon icon)
+        {
+            var mesh = icon.canvasRenderer.GetMesh(); var points = mesh.vertices; var colors = mesh.colors;
+            float x = icon.rectTransform.rect.width * .5f, y = icon.rectTransform.rect.height * .5f;
+            bool leftEye = false, rightEye = false, nose = false;
+            for (int i = 0; i < points.Length; i++)
+            {
+                if (colors[i].r > .15f || colors[i].g > .15f || colors[i].b > .15f) continue;
+                Vector3 point = points[i];
+                leftEye |= point.x < -x * .1f && point.x > -x * .6f && point.y > y * .05f && point.y < y * .5f;
+                rightEye |= point.x > x * .1f && point.x < x * .6f && point.y > y * .05f && point.y < y * .5f;
+                nose |= Mathf.Abs(point.x) < x * .2f && point.y < -y * .05f && point.y > -y * .4f;
+            }
+            return leftEye && rightEye && nose;
+        }
+
+        void VerifyMapBackgroundAndStyles(ArenaMinimapIcon[] icons)
+        {
+            var map = s.minimap; var texture = map.BackgroundTexture;
+            int distinctColors = 0;
+            if (texture)
+            {
+                // Read the actual GPU texture; the production asset need not be CPU-readable.
+                var target = RenderTexture.GetTemporary(128, 128, 0);
+                var previous = RenderTexture.active; var sampled = new Texture2D(128, 128, TextureFormat.RGB24, false);
+                try
+                {
+                    Graphics.Blit(texture, target); RenderTexture.active = target;
+                    sampled.ReadPixels(new Rect(0, 0, 128, 128), 0, 0); sampled.Apply();
+                    var colors = new HashSet<int>();
+                    foreach (var pixel in sampled.GetPixels32()) colors.Add((pixel.r / 16 << 8) | (pixel.g / 16 << 4) | pixel.b / 16);
+                    distinctColors = colors.Count;
+                }
+                finally { RenderTexture.active = previous; RenderTexture.ReleaseTemporary(target); Destroy(sampled); }
+            }
+            Bounds bounds = map.WorldBounds; Rect rect = map.mapRect.rect;
+            bool aligned = Vector2.Distance(map.Project(bounds.min), new Vector2(rect.xMin, rect.yMin)) < .02f &&
+                Vector2.Distance(map.Project(bounds.max), new Vector2(rect.xMax, rect.yMax)) < .02f;
+            Check("minimap renders baked Arena terrain and roads", texture && map.backgroundImage && map.backgroundImage.texture == texture &&
+                map.hasBakedWorldBounds && map.bakedEnvironmentMeshCount > 0 && map.bakedRoadMeshCount > 0 &&
+                map.bakedTriangleCount > 0 && texture.width >= 256 && texture.width <= 1024 && texture.height >= 256 &&
+                distinctColors >= 12 && aligned,
+                "Texture=" + (texture ? texture.width + "x" + texture.height : "missing") + "; sampled palette=" + distinctColors +
+                "; environment meshes=" + map.bakedEnvironmentMeshCount + "; roads=" + map.bakedRoadMeshCount +
+                "; triangles=" + map.bakedTriangleCount + "; background/icon bounds aligned=" + aligned);
+            var ordinary = icons.Where(i => i.kind == MinimapMarkerKind.Raider || i.kind == MinimapMarkerKind.Buggy).ToArray();
+            var interactive = icons.Where(i => i.kind == MinimapMarkerKind.Attack || i.kind == MinimapMarkerKind.Health || i.kind == MinimapMarkerKind.Workshop).ToArray();
+            var mini = icons.Single(i => i.kind == MinimapMarkerKind.MiniBoss);
+            var final = icons.Single(i => i.kind == MinimapMarkerKind.Boss);
+            var player = icons.Single(i => i.kind == MinimapMarkerKind.Player);
+            int ordinaryVertices = ordinary.Min(i => i.canvasRenderer.GetMesh().vertexCount);
+            bool skullGeometry = HasSkullFeatures(mini) && HasSkullFeatures(final);
+            bool interactiveShape = interactive.All(i => i.canvasRenderer.GetMesh().vertexCount != ordinaryVertices);
+            Check("normal enemies and distinct reward objects are red", ordinary.Length == 14 && ordinary.All(i => IsRed(i.color)) &&
+                interactive.Length == 2 + map.workshops.Length && interactive.All(i => IsRed(i.color)) && interactiveShape,
+                "Red ordinary markers=" + ordinary.Count(i => IsRed(i.color)) + "; red interactive markers=" + interactive.Count(i => IsRed(i.color)) + "; distinct geometry=" + interactiveShape);
+            Check("orange mini skull and red boss skull are prominent", mini.color.r >= .9f && mini.color.g >= .3f && mini.color.g <= .75f &&
+                mini.color.b < .25f && IsRed(final.color) && skullGeometry &&
+                mini.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width) &&
+                final.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width),
+                "Mini color=" + mini.color + "; boss color=" + final.color + "; complex skull geometry=" + skullGeometry);
+            Check("player marker stays unique and map stays north-up", !IsRed(player.color) && player.color.g >= .7f && player.color.b >= .7f &&
+                player.rectTransform.rect.width >= final.rectTransform.rect.width && Mathf.Abs(Mathf.DeltaAngle(0, map.mapRect.localEulerAngles.z)) < .01f,
+                "Player color=" + player.color + "; player width=" + player.rectTransform.rect.width + "; boss width=" + final.rectTransform.rect.width);
+        }
+
+        void VerifyRangeVisualization()
+        {
+            var range = s.vehicle.GetComponent<AttackRangeIndicator>();
+            if (!range || !range.Mesh) { Check("visible range geometry", false, "Existing AttackRangeIndicator or mesh is missing"); return; }
+            Color[] colors = range.Mesh.colors;
+            Color materialTint = range.material && range.material.HasProperty("_BaseColor") ? range.material.GetColor("_BaseColor") : Color.clear;
+            Check("enhanced range retains actual ten metre radius", Mathf.Abs(s.turret.Range - 10) < .001f && Mathf.Abs(range.Radius - 10) < .001f &&
+                range.Visible && range.outlineWidth >= .15f && range.contrastWidth >= .13f &&
+                range.fillColor.a >= .06f && range.fillColor.a < .2f && range.outlineColor.a >= .9f &&
+                colors.Length > 128 && colors.Max(c => c.a) * materialTint.a >= .9f && colors[0].a * materialTint.a >= .06f,
+                "Weapon/ring=" + s.turret.Range + "/" + range.Radius + "m; outline=" + range.outlineWidth +
+                "; contrast=" + range.contrastWidth + "; fill alpha=" + range.fillColor.a + "; outline alpha=" + range.outlineColor.a + "; material alpha=" + materialTint.a);
         }
 
         void Isolate()
@@ -330,57 +428,252 @@ namespace RoadGunner
             s.input.testDirection = new Vector2(Vector3.Dot(worldDirection, right), Vector3.Dot(worldDirection, forward)) * magnitude;
         }
 
+        IEnumerator FastHarpoon()
+        {
+            float launch = harpoon.harpoonLaunchSpeed, retract = harpoon.harpoonRetractSpeed;
+            float search = harpoon.searchInterval, delay = harpoon.delayBetweenCollections, aim = harpoon.aimSpeed;
+            Quaternion pivotPose = harpoon.pivot.localRotation;
+            Check("harpoon has faster configurable cycle", launch >= 36 && retract >= 30 && search <= .05f && delay <= .08f && aim >= 960,
+                "Launch18->" + launch + "; retract/pull12->" + retract + "; search.15->" + search + "; cooldown.3->" + delay + "; aim480->" + aim);
+            float baseline = 0, current = 0; bool newLaunch = false, newRetract = false; int maxReservations = 0;
+            try
+            {
+                for (int pass = 0; pass < 2; pass++)
+                {
+                    if (pass == 0)
+                    {
+                        harpoon.harpoonLaunchSpeed = 18; harpoon.harpoonRetractSpeed = 12;
+                        harpoon.searchInterval = .15f; harpoon.delayBetweenCollections = .3f; harpoon.aimSpeed = 480;
+                    }
+                    else
+                    {
+                        harpoon.harpoonLaunchSpeed = launch; harpoon.harpoonRetractSpeed = retract;
+                        harpoon.searchInterval = search; harpoon.delayBetweenCollections = delay; harpoon.aimSpeed = aim;
+                    }
+                    Isolate();
+                    harpoon.pivot.localRotation = pivotPose;
+                    var right = testRotation * Vector3.right;
+                    s.pickups.DropGear(testOrigin + right * 4.5f + Vector3.up, Vector3.zero, 1);
+                    s.pickups.DropGear(testOrigin - right * 4.5f + Vector3.up, Vector3.zero, 1);
+                    float began = Time.realtimeSinceStartup, deadline = began + 8;
+                    while (s.Scrap < 2 && Time.realtimeSinceStartup < deadline)
+                    {
+                        if (pass == 1)
+                        {
+                            newLaunch |= harpoon.State == HarpoonState.Launching;
+                            newRetract |= harpoon.State == HarpoonState.Retracting;
+                            maxReservations = Mathf.Max(maxReservations, s.pickups.ReservedGearCount);
+                        }
+                        yield return null;
+                    }
+                    float elapsed = Time.realtimeSinceStartup - began;
+                    if (pass == 0) baseline = elapsed; else current = elapsed;
+                    Check(pass == 0 ? "previous harpoon baseline measured" : "faster harpoon collects consecutive gear exactly once",
+                        s.Scrap == 2 && s.pickups.ActiveCount == 0 && harpoon.CollectionsCompleted == 2,
+                        "Two identical 4.5m drops; elapsed=" + elapsed.ToString("F2") + "s; resources=" + s.Scrap + "; collections=" + harpoon.CollectionsCompleted);
+                }
+                Check("collection is faster while animation remains visible", current < baseline * .85f && current > PickupPool.GearFlightTime &&
+                    newLaunch && newRetract && maxReservations == 1,
+                    "Previous/current two-drop cycles=" + baseline.ToString("F2") + "/" + current.ToString("F2") + "s; improvement=" +
+                    (baseline / Mathf.Max(.01f, current)).ToString("F2") + "x; visible launch/retract=" + newLaunch + "/" + newRetract + "; maximum reservations=" + maxReservations);
+            }
+            finally
+            {
+                harpoon.harpoonLaunchSpeed = launch; harpoon.harpoonRetractSpeed = retract;
+                harpoon.searchInterval = search; harpoon.delayBetweenCollections = delay; harpoon.aimSpeed = aim;
+                harpoon.pivot.localRotation = pivotPose;
+            }
+        }
+
+        Vector2 ControlPoint(float x, float y)
+        {
+            var rect = (RectTransform)s.input.joystick.transform;
+            return RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(new Vector2(
+                Mathf.Lerp(rect.rect.xMin, rect.rect.xMax, x), Mathf.Lerp(rect.rect.yMin, rect.rect.yMax, y))));
+        }
+
+        void Touch(int id, UnityEngine.InputSystem.TouchPhase phase, Vector2 position)
+        {
+            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = id, phase = phase, position = position });
+        }
+
+        Vector3 DrivingPad()
+        {
+            // The existing final arena is deliberately open. Test actual wheel movement there,
+            // after isolating its enemies, rather than steering into the narrow starting road.
+            Vector3[] centers = { boss.spawnPoint ? boss.spawnPoint.position : boss.transform.position,
+                monster.spawnPoint ? monster.spawnPoint.position : monster.transform.position, testOrigin };
+            foreach (var center in centers)
+            {
+                if (!NavMesh.SamplePosition(center, out var point, 3, NavMesh.AllAreas)) continue;
+                bool clear = true;
+                for (int i = 0; i < 16; i++)
+                {
+                    var direction = Quaternion.Euler(0, i * 22.5f, 0) * Vector3.forward;
+                    if (Physics.Linecast(point.position + Vector3.up * 1.3f,
+                        point.position + direction * 7 + Vector3.up * 1.3f, 1, QueryTriggerInteraction.Ignore)) { clear = false; break; }
+                }
+                if (clear) return Ground(point.position) + Vector3.up * .7f;
+            }
+            throw new InvalidOperationException("No clear authored arena pad available for directional driving checks.");
+        }
+
         IEnumerator DrivingAndTouch()
         {
             Isolate(); s.vehicle.Body.constraints = carConstraints;
             yield return new WaitForSecondsRealtime(.7f);
             Vector3 start = s.vehicle.transform.position; float peak = 0;
+            trackedRange = s.vehicle.GetComponent<AttackRangeIndicator>();
+            rangeTrackingFrames = 0; maximumRangeCentreError = 0; trackRange = true;
             Drive(testRotation * Vector3.forward);
             float end = Time.realtimeSinceStartup + 6;
             while (Time.realtimeSinceStartup < end) { peak = Mathf.Max(peak, s.vehicle.Speed); yield return null; }
-            Check("tactical speed in real vehicle physics", peak > s.vehicle.tuning.maxSpeed * .45f && peak <= s.vehicle.tuning.maxSpeed * 1.15f &&
+            trackRange = false;
+            Check("increased speed in real vehicle physics", peak > 6 && peak <= s.vehicle.tuning.maxSpeed * 1.15f &&
                 Vector3.Distance(start, s.vehicle.transform.position) > 5 && s.vehicle.GroundedWheels >= 3,
                 "Peak=" + peak.ToString("F2") + "m/s; limit=" + s.vehicle.tuning.maxSpeed + "; travelled=" + Vector3.Distance(start, s.vehicle.transform.position).ToString("F1"));
+            Check("visible range follows the moving player", trackedRange && trackedRange.Visible && Mathf.Abs(trackedRange.Radius - s.turret.Range) < .001f &&
+                rangeTrackingFrames > 2 && maximumRangeCentreError < .01f,
+                "Observed after production LateUpdate; frames=" + rangeTrackingFrames + "; maximum centre error squared=" + maximumRangeCentreError.ToString("F6") +
+                "; actual weapon radius=" + s.turret.Range);
             s.input.testBrake = true; float began = Time.realtimeSinceStartup; end = began + 3;
             while (s.vehicle.Speed > .65f && Time.realtimeSinceStartup < end) yield return null;
             Check("brake remains predictable", s.vehicle.Speed <= .65f, "Stop time=" + (Time.realtimeSinceStartup - began).ToString("F2") + "s; speed=" + s.vehicle.Speed.ToString("F2"));
-            Isolate(); s.vehicle.Body.constraints = carConstraints;
-            yield return new WaitForSecondsRealtime(.6f);
-            Quaternion heading = s.vehicle.transform.rotation;
-            Drive(Quaternion.Euler(0, 45, 0) * (testRotation * Vector3.forward), .8f);
-            yield return new WaitForSecondsRealtime(2);
-            Check("steering remains responsive", Quaternion.Angle(heading, s.vehicle.transform.rotation) > 8 && s.vehicle.Speed > .5f,
-                "Heading changed=" + Quaternion.Angle(heading, s.vehicle.transform.rotation).ToString("F1") + " degrees; steering rate=" + s.vehicle.tuning.steeringRate);
-
             Isolate(); s.input.testInput = false; Canvas.ForceUpdateCanvases();
             var joystick = s.input.joystick;
             Check("phone input surface exists", EventSystem.current && joystick && joystick.gameObject.activeInHierarchy,
                 "Existing EventSystem and floating joystick are active");
             syntheticTouch = InputSystem.AddDevice<Touchscreen>();
-            Vector2 point = RectTransformUtility.WorldToScreenPoint(null, joystick.ring.position);
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 101, phase = UnityEngine.InputSystem.TouchPhase.Began, position = point });
+            if (Keyboard.current != null) InputSystem.QueueStateEvent(Keyboard.current, new KeyboardState());
+            Check("floating joystick hides before a touch", !joystick.IsHeld && !joystick.ring.gameObject.activeInHierarchy && joystick.Value == Vector2.zero,
+                "Activation zone stays available while its ring/thumb are hidden");
+            Vector2 point = ControlPoint(.04f, .08f);
+            Touch(101, UnityEngine.InputSystem.TouchPhase.Began, point);
+            yield return null; yield return null; yield return null;
+            float originError = Vector2.Distance(point, RectTransformUtility.WorldToScreenPoint(null, joystick.ring.position));
+            Check("TEST A origin is exactly the lower-left touch", joystick.IsHeld && joystick.ring.gameObject.activeInHierarchy &&
+                originError < 1 && Vector2.Distance(point, joystick.OriginScreenPosition) < 1 && s.input.Magnitude == 0,
+                "Touch=" + point + "; displayed origin error=" + originError.ToString("F3") + "px; centered magnitude=" + s.input.Magnitude);
+            float screenRadius = Vector2.Distance(point, RectTransformUtility.WorldToScreenPoint(null, joystick.ring.TransformPoint(Vector3.right * joystick.radius)));
+            Touch(101, UnityEngine.InputSystem.TouchPhase.Moved, point + Vector2.up * screenRadius * .06f);
             yield return null; yield return null;
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 101, phase = UnityEngine.InputSystem.TouchPhase.Moved, position = point + Vector2.up * 100 });
+            Check("joystick dead zone remains configurable", s.input.joystickDeadZone > 0 && s.input.joystickDeadZone <= .2f && s.input.Magnitude == 0,
+                "Configured dead zone=" + s.input.joystickDeadZone + "; small touch delta generates no motion");
+            Touch(101, UnityEngine.InputSystem.TouchPhase.Ended, point);
             yield return null; yield return null;
-            bool dragged = joystick.IsHeld && s.input.Magnitude > .1f && s.input.UsesHeadingSteering;
+
+            Vector3 pad = DrivingPad();
+            var directions = new[] { Vector2.up, Vector2.left, Vector2.down, new Vector2(1, -1).normalized };
+            var names = new[] { "TEST B screen UP", "TEST C screen LEFT", "TEST D screen DOWN turns around", "TEST E screen DOWN-RIGHT diagonal" };
+            for (int index = 0; index < directions.Length; index++)
+            {
+                Isolate(); s.input.testInput = false;
+                Vector3 screenUp = Vector3.ProjectOnPlane(s.input.view.transform.forward, Vector3.up).normalized;
+                PlaceCar(pad, Quaternion.LookRotation(screenUp)); s.vehicle.Body.constraints = carConstraints;
+                yield return new WaitForSecondsRealtime(.5f);
+                point = ControlPoint(index % 2 == 0 ? .2f : .75f, .35f);
+                int touchId = 110 + index;
+                Touch(touchId, UnityEngine.InputSystem.TouchPhase.Began, point);
+                yield return null; yield return null;
+                screenRadius = Vector2.Distance(point, RectTransformUtility.WorldToScreenPoint(null, joystick.ring.TransformPoint(Vector3.right * joystick.radius)));
+                Vector2 direction = directions[index]; Quaternion before = s.vehicle.transform.rotation;
+                Touch(touchId, UnityEngine.InputSystem.TouchPhase.Moved, point + direction * screenRadius);
+                yield return null; yield return null;
+                Vector3 cameraRight = Vector3.ProjectOnPlane(s.input.view.transform.right, Vector3.up).normalized;
+                Vector3 expected = (cameraRight * direction.x + screenUp * direction.y).normalized;
+                bool routed = joystick.IsHeld && s.input.UsesHeadingSteering && s.input.Magnitude > .9f &&
+                    Vector3.Dot(s.input.WorldDirection, expected) > .999f;
+                float firstTurn = Quaternion.Angle(before, s.vehicle.transform.rotation), headingError = 180;
+                bool reversed = false; float minimumForward = 0; end = Time.realtimeSinceStartup + 7;
+                do
+                {
+                    reversed |= s.input.Reverse; minimumForward = Mathf.Min(minimumForward, s.vehicle.ForwardSpeed);
+                    headingError = Vector3.Angle(Vector3.ProjectOnPlane(s.vehicle.transform.forward, Vector3.up), expected);
+                    if (headingError < 12 && s.vehicle.ForwardSpeed > 1.5f) break;
+                    yield return null;
+                } while (Time.realtimeSinceStartup < end);
+                Vector3 alignedPosition = s.vehicle.transform.position;
+                end = Time.realtimeSinceStartup + .45f;
+                while (Time.realtimeSinceStartup < end) { reversed |= s.input.Reverse; yield return null; }
+                Vector3 travel = Vector3.ProjectOnPlane(s.vehicle.transform.position - alignedPosition, Vector3.up);
+                Vector3 visualTravel = s.input.view.WorldToViewportPoint(s.vehicle.transform.position) - s.input.view.WorldToViewportPoint(alignedPosition);
+                Check(names[index] + " uses forward directional driving", routed && !reversed && minimumForward > -.4f &&
+                    firstTurn < 25 && headingError < 12 && s.vehicle.ForwardSpeed > 1 &&
+                    Vector3.Dot(travel, expected) > .35f && Vector2.Dot(((Vector2)visualTravel).normalized, direction) > .8f &&
+                    Vector3.Dot(s.vehicle.transform.up, Vector3.up) > .85f,
+                    "Routed=" + routed + "; reverse ever=" + reversed + "; first-frame turn=" + firstTurn.ToString("F1") +
+                    "; heading error=" + headingError.ToString("F1") + "; forward speed=" + s.vehicle.ForwardSpeed.ToString("F2") +
+                    "; travel along request=" + Vector3.Dot(travel, expected).ToString("F2") + "m; minimum signed speed=" + minimumForward.ToString("F2"));
+                if (index == 2) Capture("joystick-down-forward");
+                s.vehicle.Body.constraints = RigidbodyConstraints.FreezeAll;
+                Vector2 outside = new Vector2(Screen.width * .95f, Screen.height * .85f);
+                Touch(touchId, UnityEngine.InputSystem.TouchPhase.Moved, outside);
+                yield return null; yield return null;
+                bool capturedOutside = joystick.IsHeld;
+                Touch(touchId, UnityEngine.InputSystem.TouchPhase.Ended, outside);
+                yield return null; yield return null; yield return null;
+                Check(index == 0 ? "TEST F release outside control area clears input" : names[index] + " release clears input",
+                    capturedOutside && !joystick.IsHeld && s.input.Magnitude == 0 && joystick.Value == Vector2.zero &&
+                    !joystick.ring.gameObject.activeInHierarchy && !s.input.Reverse,
+                    "Pointer remained captured outside=" + capturedOutside + "; release hides ring and clears input");
+            }
+
+            Isolate(); s.input.testInput = false;
+            point = ControlPoint(.78f, .65f);
+            Touch(120, UnityEngine.InputSystem.TouchPhase.Began, point);
+            yield return null; yield return null;
+            Check("TEST G origin respawns at a different touch", joystick.IsHeld &&
+                Vector2.Distance(joystick.OriginScreenPosition, point) < 1 &&
+                Vector2.Distance(RectTransformUtility.WorldToScreenPoint(null, joystick.ring.position), point) < 1,
+                "New touch/origin=" + point + "; fixed prior origin was not reused");
+            Touch(120, UnityEngine.InputSystem.TouchPhase.Moved, point + Vector2.up * 80);
+            yield return null; yield return null;
+            bool dragged = joystick.IsHeld && s.input.Magnitude > .1f;
             Vector2 pause = RectTransformUtility.WorldToScreenPoint(null, s.hud.pause.transform.position);
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 102, phase = UnityEngine.InputSystem.TouchPhase.Began, position = pause });
+            Touch(121, UnityEngine.InputSystem.TouchPhase.Began, pause);
             yield return null; yield return null;
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 102, phase = UnityEngine.InputSystem.TouchPhase.Ended, position = pause });
+            Touch(121, UnityEngine.InputSystem.TouchPhase.Ended, pause);
             yield return null; yield return null;
             Check("touch joystick and second-finger pause", dragged && s.State == SessionState.Paused && !joystick.IsHeld && s.input.Magnitude == 0,
                 "Actual UI touch drag=" + dragged + "; second pointer paused=" + (s.State == SessionState.Paused));
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 101, phase = UnityEngine.InputSystem.TouchPhase.Ended, position = point + Vector2.up * 100 });
+            Touch(120, UnityEngine.InputSystem.TouchPhase.Ended, point + Vector2.up * 80);
             yield return null; s.SetPaused(false);
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 103, phase = UnityEngine.InputSystem.TouchPhase.Began, position = point });
+            Touch(122, UnityEngine.InputSystem.TouchPhase.Began, point);
             yield return null; yield return null;
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 103, phase = UnityEngine.InputSystem.TouchPhase.Moved, position = point + Vector2.up * 80 });
+            Touch(122, UnityEngine.InputSystem.TouchPhase.Moved, point + Vector2.up * 80);
             yield return null; yield return null;
-            InputSystem.QueueStateEvent(syntheticTouch, new TouchState { touchId = 103, phase = UnityEngine.InputSystem.TouchPhase.Canceled, position = point + Vector2.up * 80 });
+            Touch(122, UnityEngine.InputSystem.TouchPhase.Canceled, point + Vector2.up * 80);
             yield return null; yield return null;
-            Check("touch cancellation releases input", !joystick.IsHeld && joystick.Value == Vector2.zero && s.input.Magnitude == 0,
+            Check("touch cancellation releases input", !joystick.IsHeld && joystick.Value == Vector2.zero && s.input.Magnitude == 0 && !joystick.ring.gameObject.activeInHierarchy,
                 "Canceled production pointer resets thumb and drive input");
             InputSystem.RemoveDevice(syntheticTouch); syntheticTouch = null;
+            if (Keyboard.current != null)
+            {
+                foreach (var key in new[] { Key.W, Key.A, Key.S, Key.D })
+                {
+                    InputSystem.QueueStateEvent(Keyboard.current, new KeyboardState(key));
+                    yield return null; yield return null;
+                    Vector2 expected = key == Key.W ? Vector2.up : key == Key.A ? Vector2.left : key == Key.S ? Vector2.down : Vector2.right;
+                    Check("desktop " + key + " preserves screen direction", !s.input.Reverse && s.input.Magnitude > .99f &&
+                        Vector3.Dot(s.input.WorldDirection, s.input.ScreenToWorldDirection(expected)) > .999f,
+                        "Direction=" + s.input.Direction + "; reverse=" + s.input.Reverse);
+                }
+                InputSystem.QueueStateEvent(Keyboard.current, new KeyboardState());
+                yield return null; yield return null;
+            }
+            if (Mouse.current != null)
+            {
+                point = ControlPoint(.45f, .42f);
+                InputSystem.QueueStateEvent(Mouse.current, new MouseState { position = point, buttons = 1 });
+                yield return null; yield return null;
+                InputSystem.QueueStateEvent(Mouse.current, new MouseState { position = point + Vector2.right * 80, buttons = 1 });
+                yield return null; yield return null;
+                bool held = joystick.IsHeld && s.input.Direction.x > .99f && !s.input.Reverse;
+                InputSystem.QueueStateEvent(Mouse.current, new MouseState { position = point + Vector2.right * 80 });
+                yield return null; yield return null;
+                Check("desktop mouse can drag and release floating stick", held && !joystick.IsHeld && s.input.Magnitude == 0,
+                    "Mouse drag routes through the existing UI and release clears input");
+            }
         }
 
         IEnumerator BossAndCompletion()

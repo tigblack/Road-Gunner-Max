@@ -16,9 +16,8 @@ namespace RoadGunner
         public int GroundedWheels { get; private set; }
         public float LargestSlip { get; private set; }
         public bool CanDrive { get; set; } = true;
-        float steering;
+        float steering,assistedYawRate;
         void Awake() {
-            input.BindVehicle(transform);
             Body=GetComponent<Rigidbody>(); Body.mass=tuning.mass; Body.centerOfMass=tuning.centerOfMass;
             Body.interpolation=RigidbodyInterpolation.Interpolate; Body.collisionDetectionMode=CollisionDetectionMode.ContinuousDynamic;
             foreach(var w in wheels) {
@@ -33,41 +32,50 @@ namespace RoadGunner
             GroundedWheels=0; LargestSlip=0;
             for(int i=0;i<4;i++) if(wheels[i].GetGroundHit(out WheelHit h)) { GroundedWheels++; LargestSlip=Mathf.Max(LargestSlip,Mathf.Abs(h.sidewaysSlip)); }
             float magnitude=CanDrive&&input.Enabled?input.Magnitude:0;
-            bool reverse=magnitude>0 && input.Reverse;
-            float driveSign=reverse?-1:1;
-            float speedLimit=reverse?tuning.maxReverseSpeed:tuning.maxSpeed;
+            if(magnitude<=0||input.Brake||!CanDrive)assistedYawRate=0;
+            float speedLimit=Mathf.Max(1,tuning.maxSpeed);
             float heading=magnitude>0?Vector3.SignedAngle(Vector3.ProjectOnPlane(transform.forward,Vector3.up),input.WorldDirection,Vector3.up):0;
-            float speed01=Mathf.Clamp01(Mathf.Abs(ForwardSpeed)/tuning.maxSpeed);
+            float speed01=Mathf.Clamp01(Mathf.Abs(ForwardSpeed)/speedLimit);
             float limit=tuning.steeringBySpeed.Evaluate(speed01);
-            float targetSteer=0;
-            if(magnitude>0) {
-                if(reverse && input.UsesHeadingSteering) {
-                    float reverseHeading=Vector3.SignedAngle(Vector3.ProjectOnPlane(-transform.forward,Vector3.up),input.WorldDirection,Vector3.up);
-                    // Reversing flips steering response; guide the tail toward the stick.
-                    targetSteer=Mathf.Clamp(-reverseHeading*.85f,-limit,limit);
-                } else targetSteer=reverse?input.Direction.x*limit:Mathf.Clamp(heading*.85f,-limit,limit);
-            }
+            float targetSteer=magnitude>0?Mathf.Clamp(heading*.85f,-limit,limit):0;
             steering=Mathf.MoveTowards(steering,targetSteer,tuning.steeringRate*Time.fixedDeltaTime);
-            // Reverse follows the chassis backward. It must not steer into a U-turn.
-            float turnSpeed=reverse?speedLimit:Mathf.Lerp(speedLimit,4.2f,Mathf.InverseLerp(25,135,Mathf.Abs(heading)));
-            float desiredSpeed=Mathf.Min(speedLimit*magnitude,turnSpeed);
+            // A rearward screen command means turn the nose around, then travel forward. Never select reverse.
+            float turnAngle=Mathf.Clamp(tuning.turnBeforeDriveAngle,30,170);
+            float fullAngle=Mathf.Clamp(tuning.fullDriveAngle,0,turnAngle-1);
+            float alignment=Mathf.InverseLerp(turnAngle,fullAngle,Mathf.Abs(heading));
+            float desiredSpeed=speedLimit*magnitude*alignment;
             float motor=0,brake=0;
-            if(!CanDrive || input.Brake) brake=tuning.serviceBrakeTorque;
+            if(!CanDrive || input.Brake)brake=tuning.serviceBrakeTorque;
             else if(magnitude>0) {
-                float directedSpeed=ForwardSpeed*driveSign;
-                // Brake out existing momentum before engaging the opposite gear.
-                if(directedSpeed<-.25f) brake=tuning.serviceBrakeTorque;
+                // Wheel steering needs forward motion. Bounded Rigidbody yaw also turns the nose at rest,
+                // retaining the dynamic body, collision response, suspension and all four WheelColliders.
+                ApplyHeadingAssist(heading,speed01);
+                if(ForwardSpeed<-.25f)brake=tuning.serviceBrakeTorque;
                 else {
-                    float error=desiredSpeed-directedSpeed;
-                    float power=tuning.torqueBySpeed.Evaluate(Mathf.Clamp01(Mathf.Abs(ForwardSpeed)/Mathf.Max(1,speedLimit)));
-                    motor=driveSign*tuning.totalDriveTorque*(reverse?tuning.reverseTorqueMultiplier:1)*power*Mathf.Clamp01(error/3);
-                    if(error<-.5f) brake=tuning.serviceBrakeTorque*Mathf.Clamp01(-error/6)*.65f;
+                    float error=desiredSpeed-ForwardSpeed;
+                    float power=tuning.torqueBySpeed.Evaluate(Mathf.Clamp01(Mathf.Abs(ForwardSpeed)/speedLimit));
+                    float availableTorque=Mathf.Min(tuning.totalDriveTorque,Mathf.Max(.1f,tuning.acceleration)*tuning.mass*tuning.wheelRadius);
+                    motor=availableTorque*power*Mathf.Clamp01(error/Mathf.Max(.1f,tuning.driveResponseSpeed));
+                    if(error<-.3f)brake=tuning.serviceBrakeTorque*Mathf.Clamp01(-error/3);
+                    if(desiredSpeed<.02f&&Speed<.3f)brake=tuning.holdBrakeTorque*.15f;
                 }
             } else brake=Speed<.65f?tuning.holdBrakeTorque:tuning.coastBrakeTorque;
             for(int i=0;i<4;i++) { wheels[i].steerAngle=i<2?steering:0; wheels[i].motorTorque=motor*(i<2?(1-tuning.rearTorqueShare):tuning.rearTorqueShare)*.5f; wheels[i].brakeTorque=brake; }
             AntiRoll(0,1); AntiRoll(2,3);
             // Small rolling/air resistance preserves momentum, with no lateral velocity replacement.
             if(GroundedWheels>0) Body.AddForce(-Body.linearVelocity*(18+Speed*1.5f),ForceMode.Force);
+        }
+        void ApplyHeadingAssist(float heading,float speed01) {
+            if(GroundedWheels<2){assistedYawRate=0;return;}
+            float response=Mathf.Max(.1f,tuning.steeringResponse);
+            float turnLimit=Mathf.Max(1,tuning.rotationSpeed)*Mathf.Lerp(1,.7f,speed01);
+            float desiredRate=Mathf.Clamp(heading*response,-turnLimit,turnLimit);
+            assistedYawRate=Mathf.MoveTowards(assistedYawRate,desiredRate,Mathf.Max(1,tuning.rotationAcceleration)*Time.fixedDeltaTime);
+            float yawStep=assistedYawRate*Time.fixedDeltaTime;
+            if(Mathf.Sign(yawStep)==Mathf.Sign(heading)&&Mathf.Abs(yawStep)>Mathf.Abs(heading))yawStep=heading;
+            // Static wheel friction can pin a force-only pivot. Apply a small, rate-limited yaw step through
+            // the Rigidbody; world-up multiplication preserves its physical pitch/roll instead of flattening it.
+            Body.MoveRotation(Quaternion.AngleAxis(yawStep,Vector3.up)*Body.rotation);
         }
         void AntiRoll(int a,int b) {
             bool ga=wheels[a].GetGroundHit(out WheelHit ha),gb=wheels[b].GetGroundHit(out WheelHit hb);
@@ -87,7 +95,7 @@ namespace RoadGunner
         }
         public void ResetPose(Vector3 position,Quaternion rotation) {
             Body.position=position; Body.rotation=rotation; Body.linearVelocity=Vector3.zero; Body.angularVelocity=Vector3.zero;
-            transform.SetPositionAndRotation(position,rotation); steering=0; ForwardSpeed=0;
+            transform.SetPositionAndRotation(position,rotation); steering=0; assistedYawRate=0; ForwardSpeed=0;
             foreach(var w in wheels) { w.motorTorque=0; w.brakeTorque=tuning.holdBrakeTorque; w.steerAngle=0; }
             if(dust!=null) foreach(var p in dust) if(p) p.Clear();
         }

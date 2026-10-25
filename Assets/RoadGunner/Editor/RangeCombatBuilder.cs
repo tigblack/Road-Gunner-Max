@@ -42,7 +42,7 @@ namespace RoadGunner.Editor
             string path = Root + "/Materials/Player attack range.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (!mat) { mat = new Material(Shader.Find("RoadGunner/Sand Tracks")); AssetDatabase.CreateAsset(mat, path); }
-            mat.SetColor("_BaseColor", Color.white); mat.renderQueue = 3001; EditorUtility.SetDirty(mat);
+            mat.SetColor("_BaseColor", Color.white); mat.renderQueue = 2995; EditorUtility.SetDirty(mat);
             indicator.material = mat;
             if (session.spawns.buggyPool != null) foreach (var buggy in session.spawns.buggyPool) if (buggy)
             {

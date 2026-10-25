@@ -1,0 +1,6 @@
+Current Greenwood scene revised in place; enemy positions, roster and progression retained.
+Player max speed6 ->9 m/s; torque2400 ->2700; brakes and wheel/suspension settings retained.
+Harpoon launch18 ->36 m/s, retract/pull12 ->30, search.15 ->.05s, cooldown.3 ->.08s, aim480 ->960deg/s.
+10m actual attack range retained; cyan fill and bright boundary with dark contrasting stroke.
+Static512px top-down world mesh/texture bake, north-up;394x394 logical UI map.
+Enemy/upgrade colors and legend updated; reward icons are distinct diamonds; mini/boss skulls.

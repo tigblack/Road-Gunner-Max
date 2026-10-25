@@ -10,10 +10,10 @@ namespace RoadGunner
         public LineRenderer cable;
         [Header("Automatic Metal Gear collection")]
         [Min(0)] public float collectionRadius=8;
-        [Min(.1f)] public float harpoonLaunchSpeed=18, harpoonRetractSpeed=12;
-        [Min(0)] public float delayBetweenCollections=.3f;
-        [Min(.02f)] public float searchInterval=.15f;
-        [Min(1)] public float aimSpeed=480, maxTetherLength=20;
+        [Min(.1f)] public float harpoonLaunchSpeed=36, harpoonRetractSpeed=30;
+        [Min(0)] public float delayBetweenCollections=.08f;
+        [Min(.02f)] public float searchInterval=.05f;
+        [Min(1)] public float aimSpeed=960, maxTetherLength=20;
         public HarpoonState State { get; private set; }
         public Transform Target { get; private set; }
         public int CollectionsCompleted { get; private set; }

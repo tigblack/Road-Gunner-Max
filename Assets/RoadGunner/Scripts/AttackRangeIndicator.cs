@@ -8,6 +8,12 @@ namespace RoadGunner
         public TurretController turret;
         public Collider ground;
         public Material material;
+        [Header("Readable weapon boundary (actual weapon range is unchanged)")]
+        public Color fillColor = new Color(.3f, .86f, 1, .07f);
+        public Color outlineColor = new Color(.65f, .97f, 1, .98f);
+        public Color contrastColor = new Color(.025f, .11f, .14f, .65f);
+        [Min(.02f)] public float outlineWidth = .16f;
+        [Min(.02f)] public float contrastWidth = .14f;
         const int Segments = 128, FillRings = 4, EdgeRows = 6;
         const float Lift = .045f;
         readonly Vector3[] vertices = new Vector3[1 + Segments * (FillRings + EdgeRows)];
@@ -27,7 +33,7 @@ namespace RoadGunner
             ringRenderer.shadowCastingMode = ShadowCastingMode.Off; ringRenderer.receiveShadows = false;
             var colors = new Color[vertices.Length]; var uv = new Vector2[vertices.Length];
             var triangles = new int[Segments * (3 + (FillRings - 1 + EdgeRows - 1) * 6)]; int t = 0;
-            var fill = new Color(1, .97f, .83f, .035f); colors[0] = fill;
+            var fill = fillColor; colors[0] = fill;
             for (int row = 0; row < FillRings + EdgeRows; row++) for (int i = 0; i < Segments; i++)
             {
                 int index = 1 + row * Segments + i, next = 1 + row * Segments + (i + 1) % Segments;
@@ -35,7 +41,8 @@ namespace RoadGunner
                 if (row >= FillRings)
                 {
                     int edge = row - FillRings;
-                    c = edge == 2 || edge == 3 ? new Color(1, .97f, .83f, .78f) : new Color(.23f, .15f, .08f, edge == 1 || edge == 4 ? .30f : 0);
+                    c = edge == 2 || edge == 3 ? outlineColor : contrastColor;
+                    if (edge == 0 || edge == 5) c.a = 0;
                 }
                 colors[index] = c;
                 if (row == 0) { triangles[t++] = 0; triangles[t++] = next; triangles[t++] = index; }
@@ -62,7 +69,12 @@ namespace RoadGunner
             float radius = Radius; builtRadius = radius; vertices[0] = Point(centre.x, centre.z);
             for (int row = 0; row < FillRings + EdgeRows; row++)
             {
-                float r = row < FillRings ? radius * (row + 1) / FillRings : radius + (row - FillRings - 2.5f) * .06f;
+                int edge = row - FillRings;
+                float half = Mathf.Max(.02f, outlineWidth) * .5f;
+                float contrast = Mathf.Max(.02f, contrastWidth);
+                float offset = edge == 0 ? -half - contrast - .06f : edge == 1 ? -half - contrast :
+                    edge == 2 ? -half : edge == 3 ? half : edge == 4 ? half + contrast : half + contrast + .06f;
+                float r = row < FillRings ? radius * (row + 1) / FillRings : radius + offset;
                 for (int i = 0; i < Segments; i++)
                 {
                     float a = i * Mathf.PI * 2 / Segments;

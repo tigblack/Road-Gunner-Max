@@ -669,7 +669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -750}
+  m_AnchoredPosition: {x: 0, y: -815}
   m_SizeDelta: {x: -70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &16678382
@@ -6597,7 +6597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.22, b: 0.28, a: 1}
+  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10717,6 +10717,78 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2123004028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &175951679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 175951682}
+  - component: {fileID: 175951681}
+  - component: {fileID: 175951680}
+  m_Layer: 0
+  m_Name: Baked arena terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &175951680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175951679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 22bbe0bd538ba4fa6a681694ecdb6264, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &175951681
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175951679}
+  m_CullTransparentMesh: 1
+--- !u!224 &175951682
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175951679}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 533672359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &177742148
 GameObject:
   m_ObjectHideFlags: 0
@@ -16776,6 +16848,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.DriveInput
   joystick: {fileID: 754458502}
   view: {fileID: 109874602}
+  joystickDeadZone: 0.12
+  inputResponseExponent: 1.25
 --- !u!4 &299235532
 Transform:
   m_ObjectHideFlags: 0
@@ -17917,8 +17991,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -199.5, y: -355}
-  m_SizeDelta: {x: -469, y: 70}
+  m_AnchoredPosition: {x: -231.5, y: -355}
+  m_SizeDelta: {x: -533, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &320299650
 MonoBehaviour:
@@ -20039,8 +20113,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -181, y: -24}
-  m_SizeDelta: {x: 338, y: 35}
+  m_AnchoredPosition: {x: -213, y: -24}
+  m_SizeDelta: {x: 394, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365330571
 MonoBehaviour:
@@ -31390,13 +31464,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 175951682}
   m_Father: {fileID: 764878550}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -16}
-  m_SizeDelta: {x: 338, y: 338}
+  m_SizeDelta: {x: 394, y: 394}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &533672360
 MonoBehaviour:
@@ -33350,7 +33425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 0.83, g: 0.43, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.48, b: 0.07, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -36346,7 +36421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.43, b: 0.16, a: 1}
+  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -48355,8 +48430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -217, y: -515}
-  m_SizeDelta: {x: 362, y: 390}
+  m_AnchoredPosition: {x: -249, y: -547}
+  m_SizeDelta: {x: 426, y: 454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764878551
 MonoBehaviour:
@@ -53951,7 +54026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8, b: 0.27, a: 1}
+  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -54968,7 +55043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.75, b: 0.48, a: 1}
+  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -66406,7 +66481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 0.29, g: 0.88, b: 0.91, a: 1}
+  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -125792,7 +125867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35, g: 1, b: 0.51, a: 1}
+  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -136453,6 +136528,14 @@ MonoBehaviour:
   session: {fileID: 45168794}
   layout: {fileID: 1530873826}
   mapRect: {fileID: 533672359}
+  backgroundImage: {fileID: 175951680}
+  hasBakedWorldBounds: 1
+  bakedWorldBounds:
+    m_Center: {x: 1.7677684, y: 0, z: 22.980972}
+    m_Extent: {x: 245, y: 12, z: 245}
+  bakedEnvironmentMeshCount: 565
+  bakedRoadMeshCount: 6
+  bakedTriangleCount: 919952
   legendPanel: {fileID: 18959374}
   legendVisibleDuration: 8
   upgrades:
@@ -136475,9 +136558,9 @@ RectTransform:
   m_Children:
   - {fileID: 320299649}
   - {fileID: 1381315395}
-  - {fileID: 18959375}
   - {fileID: 16678381}
   - {fileID: 764878550}
+  - {fileID: 18959375}
   m_Father: {fileID: 517201029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -136928,6 +137011,11 @@ MonoBehaviour:
   turret: {fileID: 9033761664128615775}
   ground: {fileID: 1274128682}
   material: {fileID: 2100000, guid: ea1c59f65cbf24d76874701eb6e2a547, type: 2}
+  fillColor: {r: 0.3, g: 0.86, b: 1, a: 0.07}
+  outlineColor: {r: 0.65, g: 0.97, b: 1, a: 0.98}
+  contrastColor: {r: 0.025, g: 0.11, b: 0.14, a: 0.65}
+  outlineWidth: 0.16
+  contrastWidth: 0.14
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

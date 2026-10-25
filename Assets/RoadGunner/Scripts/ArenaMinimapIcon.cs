@@ -5,11 +5,18 @@ namespace RoadGunner
 {
     public enum MinimapMarkerKind { Raider, Buggy, MiniBoss, Boss, Attack, Health, Workshop, Player }
 
-    /// <summary>Small procedural UI glyphs. Geometry changes only when built, never per frame.</summary>
+    /// <summary>Outlined geometry glyphs: red hostiles/diamonds, orange/red skulls and a white/cyan player.</summary>
     [RequireComponent(typeof(CanvasRenderer))]
     public sealed class ArenaMinimapIcon : MaskableGraphic
     {
         public MinimapMarkerKind kind;
+        static readonly Color Outline = new Color(.035f, .045f, .04f, 1);
+        static readonly Color PlayerCyan = new Color(.15f, .92f, 1, 1);
+        static readonly Vector2[] Skull = {
+            new Vector2(-.58f,.90f), new Vector2(.58f,.90f), new Vector2(.9f,.52f),
+            new Vector2(.9f,-.20f), new Vector2(.47f,-.48f), new Vector2(.47f,-.88f),
+            new Vector2(-.47f,-.88f), new Vector2(-.47f,-.48f), new Vector2(-.9f,-.20f), new Vector2(-.9f,.52f)
+        };
 
         protected override void OnPopulateMesh(VertexHelper mesh)
         {
@@ -19,38 +26,73 @@ namespace RoadGunner
             Vector2 c = rect.center;
             if (kind == MinimapMarkerKind.Player)
             {
-                Triangle(mesh, c + new Vector2(0, y), c + new Vector2(-x, -y), c + new Vector2(0, -y * .45f), color);
-                Triangle(mesh, c + new Vector2(0, y), c + new Vector2(0, -y * .45f), c + new Vector2(x, -y), color);
-            }
-            else if (kind == MinimapMarkerKind.Attack)
-            {
-                Triangle(mesh, c + new Vector2(x * .65f, y), c + new Vector2(-x, -y * .18f), c + new Vector2(x * .22f, -y * .18f), color);
-                Triangle(mesh, c + new Vector2(-x * .22f, y * .18f), c + new Vector2(-x * .65f, -y), c + new Vector2(x, y * .18f), color);
-            }
-            else if (kind == MinimapMarkerKind.Health)
-            {
-                Quad(mesh, c, x * .3f, y, color);
-                Quad(mesh, c, x, y * .3f, color);
+                Arrow(mesh, c, x, y, Outline);
+                Arrow(mesh, c, x * .82f, y * .82f, color);
+                Arrow(mesh, c, x * .52f, y * .59f, PlayerCyan);
             }
             else if (kind == MinimapMarkerKind.MiniBoss || kind == MinimapMarkerKind.Boss)
             {
-                Triangle(mesh, c + new Vector2(0, y), c + new Vector2(-x, 0), c + new Vector2(0, -y), color);
-                Triangle(mesh, c + new Vector2(0, y), c + new Vector2(0, -y), c + new Vector2(x, 0), color);
-                if (kind == MinimapMarkerKind.Boss) Quad(mesh, c, x * .25f, y * .25f, Color.white);
+                Polygon(mesh, c, x, y, Skull, Outline);
+                Polygon(mesh, c, x * .83f, y * .83f, Skull, color);
+                Quad(mesh, c + new Vector2(-x * .34f, y * .17f), x * .21f, y * .20f, Outline);
+                Quad(mesh, c + new Vector2(x * .34f, y * .17f), x * .21f, y * .20f, Outline);
+                Triangle(mesh, c + new Vector2(0, -y * .05f), c + new Vector2(-x * .13f, -y * .29f), c + new Vector2(x * .13f, -y * .29f), Outline);
+                Quad(mesh, c + new Vector2(-x * .15f, -y * .61f), x * .035f, y * .15f, Outline);
+                Quad(mesh, c + new Vector2(x * .15f, -y * .61f), x * .035f, y * .15f, Outline);
+            }
+            else if (kind == MinimapMarkerKind.Attack || kind == MinimapMarkerKind.Health)
+            {
+                Diamond(mesh, c, x, y, Outline);
+                Diamond(mesh, c, x * .76f, y * .76f, color);
+                if (kind == MinimapMarkerKind.Health)
+                {
+                    Quad(mesh, c, x * .10f, y * .39f, Color.white);
+                    Quad(mesh, c, x * .39f, y * .10f, Color.white);
+                }
+                else
+                {
+                    Triangle(mesh, c + new Vector2(x * .3f, y * .45f), c + new Vector2(-x * .36f, -y * .08f), c + new Vector2(x * .12f, -y * .08f), Color.white);
+                    Triangle(mesh, c + new Vector2(-x * .12f, y * .08f), c + new Vector2(-x * .3f, -y * .45f), c + new Vector2(x * .36f, y * .08f), Color.white);
+                }
             }
             else if (kind == MinimapMarkerKind.Raider)
             {
-                for (int i = 0; i < 8; i++)
-                {
-                    float a = i * Mathf.PI / 4, b = (i + 1) * Mathf.PI / 4;
-                    Triangle(mesh, c, c + new Vector2(Mathf.Cos(a) * x, Mathf.Sin(a) * y), c + new Vector2(Mathf.Cos(b) * x, Mathf.Sin(b) * y), color);
-                }
+                Circle(mesh, c, x, y, Outline);
+                Circle(mesh, c, x * .70f, y * .70f, color);
             }
             else
             {
-                Quad(mesh, c, x, y, color);
-                if (kind == MinimapMarkerKind.Workshop) Quad(mesh, c, x * .55f, y * .55f, new Color(.08f, .15f, .15f));
+                Quad(mesh, c, x, y, Outline);
+                Quad(mesh, c, x * .72f, y * .78f, color);
+                if (kind == MinimapMarkerKind.Workshop) Quad(mesh, c, x * .38f, y * .42f, Outline);
             }
+        }
+
+        static void Arrow(VertexHelper mesh, Vector2 c, float x, float y, Color tint)
+        {
+            Triangle(mesh, c + new Vector2(0, y), c + new Vector2(-x, -y), c + new Vector2(0, -y * .45f), tint);
+            Triangle(mesh, c + new Vector2(0, y), c + new Vector2(0, -y * .45f), c + new Vector2(x, -y), tint);
+        }
+
+        static void Diamond(VertexHelper mesh, Vector2 c, float x, float y, Color tint)
+        {
+            Triangle(mesh, c + new Vector2(0, y), c + new Vector2(-x, 0), c + new Vector2(0, -y), tint);
+            Triangle(mesh, c + new Vector2(0, y), c + new Vector2(0, -y), c + new Vector2(x, 0), tint);
+        }
+
+        static void Circle(VertexHelper mesh, Vector2 c, float x, float y, Color tint)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                float a = i * Mathf.PI / 6, b = (i + 1) * Mathf.PI / 6;
+                Triangle(mesh, c, c + new Vector2(Mathf.Cos(a) * x, Mathf.Sin(a) * y), c + new Vector2(Mathf.Cos(b) * x, Mathf.Sin(b) * y), tint);
+            }
+        }
+
+        static void Polygon(VertexHelper mesh, Vector2 c, float x, float y, Vector2[] points, Color tint)
+        {
+            for (int i = 0; i < points.Length; i++)
+                Triangle(mesh, c, c + Vector2.Scale(points[i], new Vector2(x, y)), c + Vector2.Scale(points[(i + 1) % points.Length], new Vector2(x, y)), tint);
         }
 
         static void Quad(VertexHelper mesh, Vector2 center, float x, float y, Color tint)
@@ -67,7 +109,8 @@ namespace RoadGunner
         {
             int i = mesh.currentVertCount;
             mesh.AddVert(a, tint, Vector2.zero); mesh.AddVert(b, tint, Vector2.zero); mesh.AddVert(c, tint, Vector2.zero);
-            mesh.AddTriangle(i, i + 2, i + 1);
+            float winding = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+            if (winding > 0) mesh.AddTriangle(i, i + 2, i + 1); else mesh.AddTriangle(i, i + 1, i + 2);
         }
     }
 }

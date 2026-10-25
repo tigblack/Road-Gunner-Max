@@ -1,0 +1,83 @@
+Arena 1 mobile revision acceptance — actual Unity Play Mode; 6000.6.4f1
+Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.
+PASS saved gameplay references: LevelLayout, stats, HUD, minimap and rear harpoon are wired on the gameplay scene
+PASS fallback roster and ranks: Authored Raiders=12, Buggies=2, Monster=1, Boss Raider=1; temporary fallback, not verified The War data
+PASS finite authored encounters: All authored enemies spawned; legacy random encounter respawn is disabled
+PASS current speed increased by 1.5x: Previous forward=6; current=9; multiplier=1.5, steering=125, outgoing multiplier=0.35
+PASS base run stats and HUD: ATK 1   HP 1
+PASS encounters connected to start: Navigation paths reach ordinary encounters, both vehicles, Monster and Boss Raider
+PASS minimap uses actual arena and live targets: Visible markers=20/20; map UI=(394.00, 394.00); bounds=Center: (1.77, 0.00, 22.98), Extents: (245.00, 12.00, 245.00)
+PASS minimap icons produce rendered geometry: Visible CanvasRenderer meshes=20/20; vertices=1106
+PASS minimap renders baked Arena terrain and roads: Texture=512x512; sampled palette=55; environment meshes=565; roads=6; triangles=919952; background/icon bounds aligned=True
+PASS normal enemies and distinct reward objects are red: Red ordinary markers=14; red interactive markers=3; distinct geometry=True
+PASS orange mini skull and red boss skull are prominent: Mini color=RGBA(1.000, 0.480, 0.070, 1.000); boss color=RGBA(1.000, 0.130, 0.190, 1.000); complex skull geometry=True
+PASS player marker stays unique and map stays north-up: Player color=RGBA(1.000, 1.000, 1.000, 1.000); player width=29; boss width=27
+PASS enhanced range retains actual ten metre radius: Weapon/ring=10/10m; outline=0.16; contrast=0.14; fill alpha=0.07; outline alpha=0.98; material alpha=1
+PASS map key opens and closes without covering default HUD: Legend starts hidden, opens on request and closes before the gameplay capture
+PASS portrait capture initial-start: outputs/mobile-revision-validation/initial-start.png — actual gameplay camera and HUD, 540 x 960
+PASS upgrade proximity boundary: Standing outside the attack station radius grants no upgrade
+PASS ATTACK +1 changes combat and HUD: Damage 5.25 -> 6.3; HUD=ATK 2   HP 1
+PASS consumed upgrade leaves minimap: ATTACK station marker disappears after collection
+PASS portrait capture attack-upgrade: outputs/mobile-revision-validation/attack-upgrade.png — actual gameplay camera and HUD, 540 x 960
+PASS upgrade only applies once: Remaining in radius and retrying do not increase attack again
+PASS HEALTH +1 uses existing health: Maximum=100 -> 120; current=80.00001; HUD=ATK 2   HP 2
+PASS workshop heals upgraded health: Healed=9.80; expected=9.80; current maximum=120
+PASS death retains levels until restart: Defeat uses the original session flow
+PASS restart resets run and stations: Base health/stats, station availability and map icons restored
+PASS ordinary Raider still attacks vehicle: Actual melee damage=6; configured=6
+PASS live Raider minimap marker: Marker is projected from the actual spawned Raider
+PASS roof gun needs multiple Raider hits: Actual shots=9; initial HP=45; player hit=5.25
+PASS human Metal Gear and rear harpoon: Metal Gear visible=True; launch=True; retract=True; scrap=1
+PASS dead Raider leaves minimap: Death removes the enemy marker while the corpse can remain
+PASS moving vehicle map marker follows: Cached marker follows position changes without rediscovering targets
+PASS enemy roof gun still damages player: Hostile shots=2; player HP=100 -> 90
+PASS Buggy tougher than Raider and rewards once: Raider shots=9; Buggy shots=20; reward=3
+PASS vehicle Metal Gear and rear harpoon: Metal Gear=True; launch=True; retract=True; scrap=3
+PASS dead Buggy leaves minimap: Vehicle destruction hides its map marker
+PASS harpoon has faster configurable cycle: Launch18->36; retract/pull12->30; search.15->0.05; cooldown.3->0.08; aim480->960
+PASS previous harpoon baseline measured: Two identical 4.5m drops; elapsed=2.38s; resources=2; collections=2
+PASS faster harpoon collects consecutive gear exactly once: Two identical 4.5m drops; elapsed=1.35s; resources=2; collections=2
+PASS collection is faster while animation remains visible: Previous/current two-drop cycles=2.38/1.35s; improvement=1.77x; visible launch/retract=True/True; maximum reservations=1
+PASS increased speed in real vehicle physics: Peak=8.05m/s; limit=9; travelled=38.1
+PASS visible range follows the moving player: Observed after production LateUpdate; frames=361; maximum centre error squared=0.000400; actual weapon radius=10
+PASS brake remains predictable: Stop time=1.18s; speed=0.57
+PASS phone input surface exists: Existing EventSystem and floating joystick are active
+PASS floating joystick hides before a touch: Activation zone stays available while its ring/thumb are hidden
+PASS TEST A origin is exactly the lower-left touch: Touch=(12.10, 24.58); displayed origin error=0.000px; centered magnitude=0
+PASS joystick dead zone remains configurable: Configured dead zone=0.12; small touch delta generates no motion
+PASS TEST B screen UP uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=0.0; forward speed=3.09; travel along request=1.08m; minimum signed speed=0.00
+PASS TEST F release outside control area clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST C screen LEFT uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.2; heading error=11.5; forward speed=3.66; travel along request=1.36m; minimum signed speed=0.00
+PASS TEST C screen LEFT release clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST D screen DOWN turns around uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.2; heading error=11.7; forward speed=3.51; travel along request=1.25m; minimum signed speed=0.00
+PASS portrait capture joystick-down-forward: outputs/mobile-revision-validation/joystick-down-forward.png — actual gameplay camera and HUD, 540 x 960
+PASS TEST D screen DOWN turns around release clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST E screen DOWN-RIGHT diagonal uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.2; heading error=11.7; forward speed=3.58; travel along request=1.31m; minimum signed speed=0.00
+PASS TEST E screen DOWN-RIGHT diagonal release clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST G origin respawns at a different touch: New touch/origin=(235.87, 199.68); fixed prior origin was not reused
+PASS touch joystick and second-finger pause: Actual UI touch drag=True; second pointer paused=True
+PASS touch cancellation releases input: Canceled production pointer resets thumb and drive input
+PASS desktop W preserves screen direction: Direction=(0.00, 1.00); reverse=False
+PASS desktop A preserves screen direction: Direction=(-1.00, 0.00); reverse=False
+PASS desktop S preserves screen direction: Direction=(0.00, -1.00); reverse=False
+PASS desktop D preserves screen direction: Direction=(1.00, 0.00); reverse=False
+PASS desktop mouse can drag and release floating stick: Mouse drag routes through the existing UI and release clears input
+PASS boss health hierarchy: Raider=45; Buggy=105; Monster=330; Boss Raider=520
+PASS both boss map markers: Mini-boss and final boss are both present on the minimap
+PASS mini-boss survives ordinary hit: Monster HP=324.75
+PASS Monster death does not finish arena: State=Playing; reward=5; kills=1
+PASS Boss Raider warns before heavy strike: Visible warning=True; HP before strike=100
+PASS gun hit does not cancel boss warning: Committed windup remains active after a player bullet
+PASS dodging locked boss strike avoids damage: Player moved outside the warned circle; HP=100
+PASS remaining in boss strike takes damage once: Actual heavy damage=16; configured=16; recovering=True
+PASS existing boss health bar identifies Raider: Title=RAIDER WARLORD · FINAL BOSS; HP=520 / 520
+PASS portrait capture boss-arena: outputs/mobile-revision-validation/boss-arena.png — actual gameplay camera and HUD, 540 x 960
+PASS Boss Raider survives ordinary hit: Boss HP=514.75
+PASS only final boss completes and preserves rewards: State=Completed; resources=17; expected=17; overlay=ARENA CLEAR
+PASS final boss marker removed: Completed boss is absent from the map
+PASS portrait capture arena-complete: outputs/mobile-revision-validation/arena-complete.png — actual gameplay camera and HUD, 540 x 960
+PASS completed result stays completed: Pause cannot resume a finished arena
+PASS restart restores the full arena: Ordinary encounters, both bosses, stats and run resources reset
+RESULT checks=78; failures=0; saved scene was not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

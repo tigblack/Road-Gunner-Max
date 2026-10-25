@@ -9143,6 +9143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.VehicleHealth
   tuning: {fileID: 11400000, guid: 8c455090cc5c9402e9a76df1a9f55620, type: 2}
+  runStats: {fileID: 0}
   bodyPanels:
   - {fileID: 2527144002734630033}
 --- !u!114 &8320186182068765091
@@ -9282,11 +9283,11 @@ MonoBehaviour:
   projectile: {fileID: 873291663895299748}
   cable: {fileID: 128195754181112264}
   collectionRadius: 8
-  harpoonLaunchSpeed: 18
-  harpoonRetractSpeed: 12
-  delayBetweenCollections: 0.3
-  searchInterval: 0.15
-  aimSpeed: 480
+  harpoonLaunchSpeed: 36
+  harpoonRetractSpeed: 30
+  delayBetweenCollections: 0.08
+  searchInterval: 0.05
+  aimSpeed: 960
   maxTetherLength: 20
 --- !u!1 &6502794426851277667
 GameObject:

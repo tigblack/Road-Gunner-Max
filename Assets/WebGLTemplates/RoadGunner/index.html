@@ -12,7 +12,7 @@
     *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none;background:#171c1a;color:#f1e5cb;font-family:system-ui,sans-serif}
     body{display:flex;justify-content:center;align-items:center;height:100dvh}
     #game{position:relative;width:100%;height:100%;max-width:calc(100dvh * 9 / 16);overflow:hidden;background:#171c1a}
-    #unity-canvas{display:block;width:100%;height:100%;outline:none;touch-action:none;-webkit-user-select:none;user-select:none}
+    #unity-canvas{display:block;width:100%;height:100%;outline:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
     #launch{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;padding:32px;text-align:center;background:#171c1a}
     h1{font-size:32px;letter-spacing:3px;margin:0}p{line-height:1.5;margin:0;color:#c1c5ad}button{border:0;border-radius:8px;padding:18px 44px;background:#e8a454;color:#171c1a;font-size:20px;font-weight:750;cursor:pointer;touch-action:manipulation}
     progress{width:80%;accent-color:#8bd7b1}#error{white-space:pre-wrap;color:#ffc293;font-size:14px}
@@ -52,6 +52,15 @@
     if(window.visualViewport)window.visualViewport.addEventListener('resize',resizeCanvas);
     resizeCanvas();
     canvas.addEventListener('contextmenu',event=>event.preventDefault());
+    canvas.addEventListener('dragstart',event=>event.preventDefault());
+    // Retain a drag when its finger/mouse leaves the canvas. Pointer up/cancel
+    // releases capture automatically; Unity still receives its native input events.
+    canvas.addEventListener('pointerdown',event=>{
+      if(event.pointerType==='mouse'&&event.button!==0)return;
+      if(canvas.setPointerCapture)canvas.setPointerCapture(event.pointerId);
+    });
+    canvas.addEventListener('touchstart',event=>event.preventDefault(),{passive:false});
+    canvas.addEventListener('touchmove',event=>event.preventDefault(),{passive:false});
     play.addEventListener('click',()=>{
       play.disabled=true;play.hidden=true;progress.hidden=false;status.textContent='Loading arena…';
       const loader=document.createElement('script');loader.src='Build/{{{ LOADER_FILENAME }}}';

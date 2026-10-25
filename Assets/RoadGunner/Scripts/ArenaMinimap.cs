@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace RoadGunner
 {
@@ -11,6 +12,12 @@ namespace RoadGunner
         public GameSession session;
         public LevelLayout layout;
         public RectTransform mapRect;
+        [Header("Offline top-down arena bake")]
+        public RawImage backgroundImage;
+        public bool hasBakedWorldBounds;
+        public Bounds bakedWorldBounds;
+        [HideInInspector] public int bakedEnvironmentMeshCount, bakedRoadMeshCount, bakedTriangleCount;
+        public Texture2D BackgroundTexture => backgroundImage ? backgroundImage.texture as Texture2D : null;
         [Tooltip("Optional map key, opened by the HUD button and hidden during ordinary combat.")]
         public GameObject legendPanel;
         [Min(1)] public float legendVisibleDuration = 8;
@@ -18,7 +25,7 @@ namespace RoadGunner
         public RepairWorkshop[] workshops = Array.Empty<RepairWorkshop>();
         [Min(.03f)] public float refreshInterval = .08f;
         public int VisibleMarkerCount { get; private set; }
-        public Bounds WorldBounds => layout ? layout.gameplayBounds : new Bounds(Vector3.zero, new Vector3(100, 20, 100));
+        public Bounds WorldBounds => hasBakedWorldBounds ? bakedWorldBounds : layout ? layout.gameplayBounds : new Bounds(Vector3.zero, new Vector3(100, 20, 100));
         sealed class Marker
         {
             public Transform world;
@@ -26,11 +33,12 @@ namespace RoadGunner
             public ArenaUpgradeStation station;
             public RectTransform icon;
             public MinimapMarkerKind kind;
-            public bool visible;
+            public bool visible, projected;
         }
         readonly List<Marker> markers = new List<Marker>(32);
         Transform markerRoot;
         float nextRefresh, legendHideAt;
+        Vector2 lastMapSize;
 
         void Start() { if (legendPanel) legendPanel.SetActive(false); if (!markerRoot) RefreshTargets(); }
 
@@ -68,9 +76,7 @@ namespace RoadGunner
                 for (int i = 0; i < bosses.Length; i++)
                 {
                     var target = bosses[i]; if (!target) continue;
-                    var identity = target.GetComponent<EnemyIdentity>();
-                    bool miniBoss = target is WastelandMutant || identity && identity.role == EnemyRole.MutantMiniBoss;
-                    Add(target.transform, miniBoss ? MinimapMarkerKind.MiniBoss : MinimapMarkerKind.Boss, target);
+                    Add(target.transform, KindOf(target), target);
                 }
             }
             if (session.vehicle) Add(session.vehicle.transform, MinimapMarkerKind.Player);
@@ -84,20 +90,46 @@ namespace RoadGunner
             go.transform.SetParent(markerRoot, false);
             var icon = go.GetComponent<ArenaMinimapIcon>(); icon.kind = kind; icon.raycastTarget = false;
             var rect = (RectTransform)go.transform; rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
-            float size = 7;
+            float size = MarkerSize(kind); icon.color = MarkerColor(kind);
+            rect.sizeDelta = kind == MinimapMarkerKind.Buggy ? new Vector2(size * .8f, size * 1.2f) : new Vector2(size, size);
+            markers.Add(new Marker { world = target, enemy = enemy, station = station, icon = rect, kind = kind, visible = true });
+        }
+
+        public static MinimapMarkerKind KindOf(CombatTarget target)
+        {
+            var identity = target ? target.GetComponent<EnemyIdentity>() : null;
+            if (identity)
+            {
+                if (identity.Rank == EnemyRank.Boss) return MinimapMarkerKind.Boss;
+                if (identity.Rank == EnemyRank.MiniBoss) return MinimapMarkerKind.MiniBoss;
+                if (identity.Rank == EnemyRank.VehicleElite) return MinimapMarkerKind.Buggy;
+                return MinimapMarkerKind.Raider;
+            }
+            if (target is WastelandMutant) return MinimapMarkerKind.MiniBoss;
+            if (target is TruckArenaBoss || target is Raider raider && raider.arenaBoss) return MinimapMarkerKind.Boss;
+            return target is EnemyBuggy ? MinimapMarkerKind.Buggy : MinimapMarkerKind.Raider;
+        }
+
+        public static Color MarkerColor(MinimapMarkerKind kind)
+        {
+            if (kind == MinimapMarkerKind.Player) return Color.white;
+            if (kind == MinimapMarkerKind.MiniBoss) return new Color(1, .48f, .07f);
+            return new Color(1, .13f, .19f);
+        }
+
+        public static float MarkerSize(MinimapMarkerKind kind)
+        {
             switch (kind)
             {
-                case MinimapMarkerKind.Player: size = 20; icon.color = Color.white; break;
-                case MinimapMarkerKind.Boss: size = 19; icon.color = new Color(1, .22f, .28f); break;
-                case MinimapMarkerKind.MiniBoss: size = 15; icon.color = new Color(.83f, .43f, 1); break;
-                case MinimapMarkerKind.Buggy: size = 11; icon.color = new Color(1, .43f, .16f); break;
-                case MinimapMarkerKind.Attack: size = 13; icon.color = new Color(1, .8f, .27f); break;
-                case MinimapMarkerKind.Health: size = 13; icon.color = new Color(.35f, 1, .51f); break;
-                case MinimapMarkerKind.Workshop: size = 13; icon.color = new Color(.29f, .88f, .91f); break;
-                default: icon.color = new Color(1, .75f, .48f); break;
+                case MinimapMarkerKind.Player: return 29;
+                case MinimapMarkerKind.Boss: return 27;
+                case MinimapMarkerKind.MiniBoss: return 24;
+                case MinimapMarkerKind.Attack:
+                case MinimapMarkerKind.Health: return 17;
+                case MinimapMarkerKind.Workshop: return 15;
+                case MinimapMarkerKind.Buggy: return 12;
+                default: return 11;
             }
-            rect.sizeDelta = kind == MinimapMarkerKind.Buggy ? new Vector2(size * .8f, size * 1.25f) : new Vector2(size, size);
-            markers.Add(new Marker { world = target, enemy = enemy, station = station, icon = rect, kind = kind, visible = true });
         }
 
         void LateUpdate()
@@ -115,8 +147,8 @@ namespace RoadGunner
             Rect rect = mapRect.rect;
             float x = Mathf.InverseLerp(bounds.min.x, bounds.max.x, worldPosition.x);
             float y = Mathf.InverseLerp(bounds.min.z, bounds.max.z, worldPosition.z);
-            // Keep edge markers fully on the map while retaining the actual arena extent.
-            return new Vector2(Mathf.Lerp(rect.xMin + 10, rect.xMax - 10, x), Mathf.Lerp(rect.yMin + 10, rect.yMax - 10, y));
+            // Background pixels and dynamic icons use exactly the same world extents.
+            return new Vector2(Mathf.Lerp(rect.xMin, rect.xMax, x), Mathf.Lerp(rect.yMin, rect.yMax, y));
         }
 
         public bool TryGetMarker(Transform target, out Vector2 position)
@@ -132,6 +164,8 @@ namespace RoadGunner
         {
             if (!mapRect) return;
             VisibleMarkerCount = 0;
+            Vector2 mapSize = mapRect.rect.size;
+            bool resized = mapSize != lastMapSize; lastMapSize = mapSize;
             for (int i = 0; i < markers.Count; i++)
             {
                 var marker = markers[i];
@@ -140,7 +174,8 @@ namespace RoadGunner
                 if (visible != marker.visible) { marker.icon.gameObject.SetActive(visible); marker.visible = visible; }
                 if (!visible) continue;
                 VisibleMarkerCount++;
-                marker.icon.anchoredPosition = Project(marker.world.position);
+                if (marker.enemy || marker.kind == MinimapMarkerKind.Player || !marker.projected || resized)
+                { marker.icon.anchoredPosition = Project(marker.world.position); marker.projected = true; }
                 if (marker.kind == MinimapMarkerKind.Player || marker.kind == MinimapMarkerKind.Buggy)
                     marker.icon.localRotation = Quaternion.Euler(0, 0, -marker.world.eulerAngles.y);
             }

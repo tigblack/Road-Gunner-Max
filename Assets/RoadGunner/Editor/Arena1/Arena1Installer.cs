@@ -65,10 +65,10 @@ namespace RoadGunner.Editor
             var lines=new List<string>{"Arena 1 fallback layout; these placements are authored Road Gunner values, not verified The War reference data.","Scene: "+ScenePath};
             var oldVehicle=s.vehicle.tuning;
             var handling=Setting("Arena 1 vehicle handling",oldVehicle);
-            handling.maxSpeed=6;handling.maxReverseSpeed=7f/3f;handling.totalDriveTorque=2400;
+            handling.maxSpeed=9;handling.maxReverseSpeed=7f/3f;handling.totalDriveTorque=2700;
             // Original steering curves/rate, brakes, wheel suspension and friction remain responsive.
             s.vehicle.tuning=handling;Record(handling);Record(s.vehicle);
-            lines.Add("Vehicle: original serialized maxSpeed18 ->6 m/s (1/3); reverse7 ->"+handling.maxReverseSpeed+"; drive torque3100 ->2400. Steering rate125 and brake torques retained.");
+            lines.Add("Vehicle: current playable maxSpeed6 ->9 m/s (1.5x), half the original18; reverse configuration="+handling.maxReverseSpeed+"; drive torque2400 ->2700. Steering rate125 and brake torques retained; directional drive uses forward only.");
             var playerCombat=Setting("Arena 1 player combat",s.turret.tuning);
             playerCombat.playerDamageMultiplier=.35f;playerCombat.attackLevelBonus=.2f;playerCombat.healthLevelBonus=.2f;playerCombat.ramMinimumSpeed=2;playerCombat.activeCap=30;
             s.turret.tuning=playerCombat;s.health.tuning=playerCombat;d.tuning=playerCombat;Record(playerCombat);Record(s.turret);Record(s.health);
@@ -116,6 +116,7 @@ namespace RoadGunner.Editor
             foreach(var bossHud in RoadGunnerLevelAuthoring.InScene<Zone1BossHud>()){bossHud.session=s;bossHud.roster=roster;Record(bossHud);}
             lines.Add("Monster mini-boss world="+monster.transform.position+"; final Boss Raider world="+boss.transform.position);
             ConfigureUpgradesAndHud(layout,lines);
+            MobileRevisionInstaller.ConfigureScene(layout);
             layout.referenceInspected=false;layout.authoringNotes="Arena 1 / 24 October 2026. Exact latest The War first-arena count/placement unavailable: explicit fallback, 12 basic Raiders in five pockets2/2/2/3/3,2 elite Buggies,1 Monster mini-boss,1 Boss Raider final encounter. Existing terrain, navigation, environment, vehicle, Metal Gear and harpoon systems retained. Attack/Health station objects are scene-authored and reusable.";
             Record(layout);Record(d);Record(s);RoadGunnerLevelAuthoring.Save(layout,false);
             foreach(var issue in RoadGunnerLevelAuthoring.Validate(layout))lines.Add(issue.type+": "+issue.text);
