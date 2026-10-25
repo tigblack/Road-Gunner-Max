@@ -33,6 +33,7 @@
       streamingAssetsUrl:'StreamingAssets',companyName:"Road Gunner",productName:"Road Gunner",productVersion:"0.1.0",
       devicePixelRatio:Math.min(window.devicePixelRatio||1,2),
       matchWebGLToCanvasSize:false,
+      autoSyncPersistentDataPath:true,
       showBanner:(message,type)=>{if(type==='error')document.getElementById('error').textContent=message;else console.warn(message);}
     };
     // Keep the last valid render size during orientation changes and browser UI resizing.
