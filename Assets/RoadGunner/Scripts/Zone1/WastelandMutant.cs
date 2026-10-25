@@ -37,6 +37,9 @@ namespace RoadGunner
 
         public float Health { get; private set; }
         public float MaximumHealth => Mathf.Max(1, maximumHealth);
+        public override float CurrentHealth => Health;
+        public override float MaxHealth => MaximumHealth;
+        public override bool UsesBossHealthHud => true;
         public MutantState State { get; private set; } = MutantState.Dead;
         public override bool Alive => gameObject.activeInHierarchy && Health > 0 && State != MutantState.Dead;
         public bool IsAlive => Alive;
@@ -133,14 +136,14 @@ namespace RoadGunner
             warningStartedAt = strikeAt = recoverAt = despawnAt = 0; wasPlaying = session && session.Playing;
             if (hitbox) hitbox.enabled = true;
             playerCollider = session && session.vehicle ? session.vehicle.GetComponent<Collider>() : null;
-            RestorePose(); SetWarning(false); ClearFlash(); PlaceOnNavigation(position); Changed?.Invoke();
+            RestorePose(); SetWarning(false); ClearFlash(); PlaceOnNavigation(position); Changed?.Invoke(); NotifyHealthChanged();
         }
         public void Despawn()
         {
             SetWarning(false); StopAgent(true);
             if (agent) agent.enabled = false;
             if (hitbox) hitbox.enabled = false;
-            Health = 0; State = MutantState.Dead; ClearFlash(); gameObject.SetActive(false);
+            Health = 0; State = MutantState.Dead; ClearFlash(); NotifyHealthChanged(); gameObject.SetActive(false);
         }
         public void CancelAttack()
         {
@@ -287,7 +290,7 @@ namespace RoadGunner
         {
             if (!Alive || !session || !session.Playing || damage <= 0 || (ram && Time.time < nextRam)) return;
             if (ram) nextRam = Time.time + Mathf.Max(.1f, playerRamCooldown);
-            Health = Mathf.Max(0, Health - damage); Changed?.Invoke();
+            Health = Mathf.Max(0, Health - damage); Changed?.Invoke(); NotifyHealthChanged();
             if (Health <= 0)
             {
                 State = MutantState.Dead; SetWarning(false); StopAgent(true);

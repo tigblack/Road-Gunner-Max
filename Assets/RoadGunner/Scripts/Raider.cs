@@ -12,6 +12,9 @@ namespace RoadGunner
         public RaiderState State { get; private set; }
         public float Health { get; private set; }
         public float MaximumHealth => tuning ? Mathf.Max(1,tuning.enemyHealth) : 1;
+        public override float CurrentHealth => Health;
+        public override float MaxHealth => MaximumHealth;
+        public override bool UsesBossHealthHud => arenaBoss;
         public override bool Alive => gameObject.activeInHierarchy && State!=RaiderState.Dead && Health>0;
         public int Group { get; private set; }
         public override Vector3 AimPoint => transform.TransformPoint(new Vector3(0,1.05f,0));
@@ -43,7 +46,7 @@ namespace RoadGunner
             transform.position=point;transform.rotation=Quaternion.Euler(0,index*137.5f,0);visual.localRotation=Quaternion.identity;visual.localPosition=Vector3.zero;
             gameObject.SetActive(true);hitbox.enabled=true;agent.enabled=true;agent.Warp(point);agent.speed=tuning.moveSpeed;
             if(AgentReady){agent.isStopped=true;agent.ResetPath();}nextDestination=Time.time+(index%5)*.04f;
-            block??=new MaterialPropertyBlock();torso.SetPropertyBlock(null);Pose(0);SetWarning(false);
+            block??=new MaterialPropertyBlock();torso.SetPropertyBlock(null);Pose(0);SetWarning(false);NotifyHealthChanged();
         }
         public void ResetEncounter() {
             CaptureHome();var point=spawnPoint?spawnPoint.position:homePosition;var rotation=spawnPoint?spawnPoint.rotation:homeRotation;
@@ -51,7 +54,7 @@ namespace RoadGunner
             if(NavMesh.SamplePosition(point,out var hit,3,NavMesh.AllAreas))point=hit.position;
             Spawn(point,-1000,0);transform.rotation=rotation;
         }
-        public void Despawn() { pendingAttack=false;SetWarning(false);if(AgentReady)agent.ResetPath();agent.enabled=false;hitbox.enabled=false;State=RaiderState.Dead;Health=0;gameObject.SetActive(false); }
+        public void Despawn() { pendingAttack=false;SetWarning(false);if(AgentReady)agent.ResetPath();agent.enabled=false;hitbox.enabled=false;State=RaiderState.Dead;Health=0;NotifyHealthChanged();gameObject.SetActive(false); }
         public void CancelAttack() { pendingAttack=false;SetWarning(false);recoverUntil=0;nextAttack=Time.time+.65f;if(Alive){State=RaiderState.Chase;if(AgentReady)agent.isStopped=true;} }
         void OnDisable() {SetWarning(false);}
         void Update() {
@@ -101,7 +104,7 @@ namespace RoadGunner
         public override void Hit(float damage,Vector3 direction,bool ram=false) {
             if(!Alive || !session.Playing || (ram&&Time.time<nextRam))return;
             if(ram)nextRam=Time.time+tuning.ramCooldown;
-            Health=Mathf.Max(0,Health-damage);
+            Health=Mathf.Max(0,Health-damage);NotifyHealthChanged();
             if(Health<=0) {
                 pendingAttack=false;SetWarning(false);State=RaiderState.Dead;hitbox.enabled=false;if(AgentReady){agent.isStopped=true;agent.ResetPath();}agent.enabled=false;deathAt=Time.time+.8f;torso.SetPropertyBlock(null);
                 RewardGranted=true;

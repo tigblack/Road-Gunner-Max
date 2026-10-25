@@ -1,0 +1,39 @@
+DUSTLIGHT ROAD — ORIGINAL ROAD GUNNER ARENA MUSIC
+Created for this Road Gunner project on 25 October 2026.
+
+Source/composition: Tools/Audio/generate_dustlight_road.py in this repository.
+Authoring: original procedural composition and sound design produced by Codex
+for the project owner's requested Arena soundtrack. No external recordings,
+sample libraries, soundfonts, third-party scores, movie melodies or AI music
+service outputs are used. The generator reads no third-party media.
+
+Rights/provenance: this is a newly generated project asset, not an external
+licensed recording. No third-party music license or attribution is required by
+any incorporated source asset because none is incorporated. This note does not
+claim that the project owner's asset was released under CC0 or public domain.
+It remains part of the Road Gunner project's own materials and rights policy.
+
+Track: 48-second musical cycle, stereo, 32000 Hz, 16-bit PCM WAV.
+Mood: open suspended/add-nine pads, gentle wind, sparse warm plucks and quiet
+mechanical percussion; restrained wasteland atmosphere without horror textures.
+Mastering target: RMS0.085, peak at most0.60; runtime music volume starts at0.30.
+Musical frequencies and crossfades are periodic; note/echo tails wrap around the
+cycle. Seeded circular-filter wind does not fade to silence at the loop boundary.
+
+Reproduce: python3 Tools/Audio/generate_dustlight_road.py
+Python standard library only; fixed random seed20261025. The script prints final
+PCM peak/RMS, musical seam delta and SHA256, and validates the generated WAV.
+
+WebGL loop compatibility: the source includes2048 initial silent guard samples
+and a RIFF smpl chunk with loop start2048 and inclusive loop end1538047. This
+follows Unity6000.6's documented AAC encoder-loop workaround. The intended musical
+cycle is48 seconds; the raw file duration including guard is48.064 seconds.
+https://docs.unity3d.com/6000.6/Documentation/Manual/webgl-audio.html#loop-issues
+
+Playback: one ArenaMusic component and one dedicated2D AudioSource on the existing
+GameSession, using AudioSource.loop and unscaled volume fades. Scrap/health/stat
+notifications do not restart the track. The pause-overlay MUSIC slider persists
+independently from untouched SFX via RoadGunner.Audio.MusicVolume PlayerPrefs.
+Browser playback still follows the browser's user-gesture policy; the project's
+existing PLAY loading screen supplies that interaction. Actual browser audibility
+and the encoded loop boundary must be verified in the final WebGL build.

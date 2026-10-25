@@ -1,0 +1,49 @@
+WEBGL BROWSER CHECK — 25 OCTOBER 2026
+Fresh local Unity WebGL release, served by standard Python HTTP at127.0.0.1:8765.
+Chrome native UI automation through CUA; DevTools iPhone16 preset393x852.
+This is desktop Chrome device emulation, not a physical iPhone/Safari test.
+
+PASS PLAY starts real Arena1 with round framed actual-level map, white contour,
+white/cyan player, red normal/upgrade markers, orange/red skulls and green wrench.
+PASS UI/canvas: viewport393x852; render target786x1704 at DPR2; scroll[0,0].
+PASS WASD: W held4.5s produced36km/h; actual moving map, combat and HP bars observed.
+PASS native emulated touch: upward/left/down CUA drags delivered trusted browser
+TouchEvents. Balanced start/end counts observed5/5 then11/11, touchmove2, cancel0;
+page scroll remained[0,0], text selection empty. Ring hides between gestures.
+PASS sustained SYNTHETIC DOM TouchEvent route (distinct from the native drags):
+UP from exact page origin[80,630] showed floating ring centred there, car nose-up,
+forward road travel and38km/h. Touchend sent outside activation area[360,400].
+DOWN from[80,600]→[80,730] turned car nose-down and drove toward the south boundary;
+the car then stopped against the existing start gate. This is not a speed sample.
+The rigorous forward-only turn/release/cancel/multitouch checks are in PlayMode.txt.
+PASS actual browser combat: several live/damaged Raider bars visible above enemies,
+shots, Metal Gear drops, resource collection and death removal observed.
+PASS Music pause slider responds to native touch:30%→65%; after full page reload and
+PLAY the pause menu retained65%. Restored30% afterwards.
+PASS portrait→landscape→portrait: valid render size, no fatal errors; portrait game
+stays centred in landscape. No claim of a redesigned landscape gameplay layout.
+
+ACTUAL BROWSER AUDIO SIGNAL OBSERVATION
+Observed real AudioBufferSourceNodes using a temporary DevTools start wrapper.
+The actual decoded AAC music buffer is48.0639791667s at48000Hz; looping node uses
+loopStart0.064 and loopEnd48.06396875, excluding the WAV encoder guard as intended.
+Decoded first/last loop sample difference.0035581;50ms RMS windows after loop start
+.0692347 and before loop end.0623679. There is no encoded silence plateau there.
+Audio context state running; Chrome marked the tab Audio playing.
+There was one48s looping node. Unity's initialization recorded2 starts of48s buffers
+(one initially nonlooping, one looping); that count stayed2 after resource/combat
+notifications, defeat, pause and several Arena Restart operations. No new music
+start records were produced by those events. Native PlayMode independently confirms
+one dedicated AudioSource, one PlaybackStarts, loop wrap, fades and SFX separation.
+Signal/playback checks do not establish subjective listening comfort or audible
+quality on a physical phone. Those listening/device checks remain unverified.
+
+CONSOLE / LAST HTML FIX
+No browser fatal error/exception observed. Existing URP FSR-upscaling warning,
+stripped optional postprocess notices, initial sound-metadata-not-loaded messages
+and gzip-fallback startup advice remain informational/nonfatal; game renders/plays.
+The first Music Save exposed Unity's deprecated manual filesystem-sync warning.
+Enabled config.autoSyncPersistentDataPath=true in source template and output HTML,
+reloaded, changed Music again, verified persistence and absence of that warning.
+Source: https://docs.unity3d.com/6000.6/Documentation/Manual/web-templates-build-configuration.html
+No browser probes or diagnostic input scripts were added to shipped production code.

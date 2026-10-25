@@ -2184,6 +2184,8 @@ GameObject:
   - component: {fileID: 45168794}
   - component: {fileID: 45168796}
   - component: {fileID: 45168797}
+  - component: {fileID: 45168799}
+  - component: {fileID: 45168798}
   m_Layer: 0
   m_Name: "Session \u2022 Road Gunner"
   m_TagString: Untagged
@@ -2307,6 +2309,125 @@ MonoBehaviour:
   stations:
   - {fileID: 1532168107}
   - {fileID: 1296919659}
+--- !u!82 &45168798
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45168793}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 730d1c420d804f1fa6fda47e06ec0d0b, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 192
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &45168799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45168793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc4035fcad24a899e55d7faa7844652, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMusic
+  session: {fileID: 45168794}
+  source: {fileID: 45168798}
+  loopClip: {fileID: 8300000, guid: 730d1c420d804f1fa6fda47e06ec0d0b, type: 3}
+  musicVolume: 0.3
+  fadeSeconds: 1.2
+  pausedVolumeMultiplier: 0
+  endedVolumeMultiplier: 0
+  volumeControl: {fileID: 255377865}
+  volumeSlider: {fileID: 118423993}
+  volumeValueLabel: {fileID: 718310235}
 --- !u!1 &45881230
 GameObject:
   m_ObjectHideFlags: 0
@@ -2429,9 +2550,29 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 3 \xB7 Raider 06"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.4184863
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.1951434
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.8039049
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.37486702
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -2441,6 +2582,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.374367
@@ -5405,6 +5550,30 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6354604011064981603, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886681559595137242, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6255,6 +6424,136 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6232392042820178277, guid: 06ffe34a95d9248f8960e55a405c68a4, type: 3}
   m_PrefabInstance: {fileID: 118192392}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &118423991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118423992}
+  - component: {fileID: 118423995}
+  - component: {fileID: 118423994}
+  - component: {fileID: 118423993}
+  m_Layer: 0
+  m_Name: Music slider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &118423992
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118423991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1979430873}
+  - {fileID: 2103101591}
+  - {fileID: 2087837439}
+  m_Father: {fileID: 255377866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.25, y: 0.5}
+  m_AnchorMax: {x: 0.84, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 64}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &118423993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118423991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 769964478}
+  m_FillRect: {fileID: 1400773604}
+  m_HandleRect: {fileID: 769964477}
+  m_Direction: 0
+  m_MinValue: 0
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 0.3
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &118423994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118423991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.005}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &118423995
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118423991}
+  m_CullTransparentMesh: 1
 --- !u!1 &119843989
 GameObject:
   m_ObjectHideFlags: 0
@@ -10784,10 +11083,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 533672359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 357.34576, y: 357.34576}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &177742148
 GameObject:
@@ -12115,6 +12414,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 20
@@ -12122,6 +12425,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -12131,6 +12450,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13487,6 +13810,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 15
@@ -13494,6 +13821,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -13503,6 +13846,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13995,6 +14342,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239795916}
   m_Mesh: {fileID: 4300000, guid: 948abeaa8c3214279a2e16387deb09c0, type: 2}
+--- !u!1 &241584309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 241584310}
+  - component: {fileID: 241584312}
+  - component: {fileID: 241584311}
+  m_Layer: 0
+  m_Name: Casual map rim highlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &241584310
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241584309}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 764878550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 416, y: 416}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &241584311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241584309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ec298e5fa4244b5153a9b29dcb9e9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapCircle
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.98, b: 0.86, a: 0.5}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  innerRadius: 0.977
+  softness: 0
+--- !u!222 &241584312
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241584309}
+  m_CullTransparentMesh: 1
 --- !u!1 &241616364
 GameObject:
   m_ObjectHideFlags: 0
@@ -14562,6 +14976,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 286833495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &255377865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 255377866}
+  m_Layer: 0
+  m_Name: Arena music volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &255377866
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255377865}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 613266359}
+  - {fileID: 118423992}
+  - {fileID: 718310234}
+  m_Father: {fileID: 281005338}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.425}
+  m_AnchorMax: {x: 0.5, y: 0.425}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 640, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &256018486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15877,6 +16329,7 @@ RectTransform:
   - {fileID: 630791207}
   - {fileID: 1131070706}
   - {fileID: 1724707950}
+  - {fileID: 255377866}
   m_Father: {fileID: 517201029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -16024,6 +16477,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 01
@@ -16031,6 +16488,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -16040,6 +16513,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18359,9 +18836,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 2 \xB7 Raider 03"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6181004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.288225
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.66283154
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30908346
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -18371,6 +18876,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -68.94291
@@ -20096,7 +20605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &365330570
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20228,6 +20737,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 10
@@ -20235,6 +20748,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -20244,6 +20773,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -21226,6 +21759,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 16
@@ -21233,6 +21770,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -21242,6 +21795,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -21997,9 +22554,29 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 4 \xB7 Raider 09"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.8974877
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.41850543
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.12613356
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.05881706
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -22009,6 +22586,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 79.549515
@@ -23160,6 +23741,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 04
@@ -23167,6 +23752,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -23176,6 +23777,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -25481,9 +26086,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 5 \xB7 Raider 11"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.519837
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.24240397
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.74240375
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.3461886
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -25493,6 +26126,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 113.137085
@@ -29429,6 +30066,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 09
@@ -29436,6 +30077,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -29445,6 +30102,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -30682,6 +31343,140 @@ Transform:
   - {fileID: 1481637495}
   m_Father: {fileID: 1936335056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &518079543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518079544}
+  - component: {fileID: 518079546}
+  - component: {fileID: 518079545}
+  m_Layer: 0
+  m_Name: Casual map cream surround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &518079544
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518079543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 764878550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 416, y: 416}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &518079545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518079543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ec298e5fa4244b5153a9b29dcb9e9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapCircle
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.91, b: 0.65, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  innerRadius: 0
+  softness: 0
+--- !u!222 &518079546
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518079543}
+  m_CullTransparentMesh: 1
+--- !u!1 &519116273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 519116274}
+  - component: {fileID: 519116276}
+  - component: {fileID: 519116275}
+  m_Layer: 0
+  m_Name: Casual map warm rim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &519116274
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519116273}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 764878550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 426, y: 426}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &519116275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519116273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ec298e5fa4244b5153a9b29dcb9e9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapCircle
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.52, g: 0.34, b: 0.16, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  innerRadius: 0
+  softness: 0
+--- !u!222 &519116276
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519116273}
+  m_CullTransparentMesh: 1
 --- !u!1 &520825860
 GameObject:
   m_ObjectHideFlags: 0
@@ -31445,7 +32240,8 @@ GameObject:
   m_Component:
   - component: {fileID: 533672359}
   - component: {fileID: 533672361}
-  - component: {fileID: 533672360}
+  - component: {fileID: 533672363}
+  - component: {fileID: 533672362}
   m_Layer: 0
   m_Name: Actual arena map
   m_TagString: Untagged
@@ -31465,44 +32261,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1237476450}
   - {fileID: 175951682}
   m_Father: {fileID: 764878550}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -16}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 394, y: 394}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &533672360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533672358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.13, g: 0.18, b: 0.18, a: 0.96}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &533672361
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31511,6 +32278,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533672358}
   m_CullTransparentMesh: 1
+--- !u!114 &533672362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533672358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 0
+--- !u!114 &533672363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533672358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ec298e5fa4244b5153a9b29dcb9e9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapCircle
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  innerRadius: 0
+  softness: 0
 --- !u!1 &534629823
 GameObject:
   m_ObjectHideFlags: 0
@@ -34421,6 +35223,85 @@ Transform:
   m_Children: []
   m_Father: {fileID: 181411246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &613266358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613266359}
+  - component: {fileID: 613266361}
+  - component: {fileID: 613266360}
+  m_Layer: 0
+  m_Name: Music label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &613266359
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613266358}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 255377866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.23, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &613266360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613266358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.1, g: 0.2, b: 0.17, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 25
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: MUSIC
+--- !u!222 &613266361
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613266358}
+  m_CullTransparentMesh: 1
 --- !u!1 &613697039
 GameObject:
   m_ObjectHideFlags: 0
@@ -34522,6 +35403,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 06
@@ -34529,6 +35414,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -34538,6 +35439,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -36104,9 +37009,29 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 1 \xB7 Raider 02"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.83113873
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3875664
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.36138934
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.16851863
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -36116,6 +37041,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -49.49748
@@ -36298,9 +37227,25 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 1 \xB7 Raider 01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9063078
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.42261833
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000029802326
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -36310,6 +37255,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -58.336315
@@ -36594,6 +37543,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 12
@@ -36601,6 +37554,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -36610,6 +37579,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -36791,6 +37764,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 27
@@ -36798,6 +37775,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -36807,6 +37800,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -37384,9 +38381,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 4 \xB7 Raider 07"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7043334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.3284361
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.570358
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.2659623
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -37396,6 +38421,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 68.94292
@@ -37651,6 +38680,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 30
@@ -37658,6 +38691,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -37667,6 +38716,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -45777,6 +46830,85 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716750008}
   m_Mesh: {fileID: 4300000, guid: 3c81b81684c2843f7ae7c3d679c80f76, type: 2}
+--- !u!1 &718310233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718310234}
+  - component: {fileID: 718310236}
+  - component: {fileID: 718310235}
+  m_Layer: 0
+  m_Name: Music value
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &718310234
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718310233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 255377866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.86, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &718310235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718310233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.1, g: 0.2, b: 0.17, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 25
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 30%
+--- !u!222 &718310236
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718310233}
+  m_CullTransparentMesh: 1
 --- !u!1 &723147930
 GameObject:
   m_ObjectHideFlags: 0
@@ -48424,14 +49556,18 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1969072544}
+  - {fileID: 519116274}
+  - {fileID: 518079544}
   - {fileID: 365330570}
   - {fileID: 533672359}
+  - {fileID: 241584310}
   m_Father: {fileID: 2143228342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -249, y: -547}
-  m_SizeDelta: {x: 426, y: 454}
+  m_AnchoredPosition: {x: -249, y: -533}
+  m_SizeDelta: {x: 426, y: 426}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764878551
 MonoBehaviour:
@@ -48440,7 +49576,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764878549}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -48619,6 +49755,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5772423095786278567, guid: e0e64fd2683ce40409d69bde25e9922f, type: 3}
   m_PrefabInstance: {fileID: 769509972}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &769964476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 769964477}
+  - component: {fileID: 769964479}
+  - component: {fileID: 769964478}
+  m_Layer: 0
+  m_Name: Music handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &769964477
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769964476}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2087837439}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 24, y: 44}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &769964478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769964476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.18, g: 0.42, b: 0.37, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &769964479
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769964476}
+  m_CullTransparentMesh: 1
 --- !u!1 &770280329
 GameObject:
   m_ObjectHideFlags: 0
@@ -56323,6 +57534,30 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6354604011064981603, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886681559595137242, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -65637,6 +66872,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 25
@@ -65644,6 +66883,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -65653,6 +66908,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -66481,7 +67740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapIcon
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.13, b: 0.19, a: 1}
+  m_Color: {r: 0.12, g: 0.82, b: 0.32, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -67770,11 +69029,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 329598572196652545, guid: ece325d4867a746df945641fa8b6643e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
-      value: 
+      value:
       objectReference: {fileID: 2100000, guid: 5f47b7193de624d9faee9c659eaddc35, type: 2}
     - target: {fileID: 329598572196652545, guid: ece325d4867a746df945641fa8b6643e, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
-      value: 
+      value:
       objectReference: {fileID: 2100000, guid: 6ecfeb47166374fdd81899632d8557f4, type: 2}
     - target: {fileID: 6384621043204962397, guid: ece325d4867a746df945641fa8b6643e, type: 3}
       propertyPath: m_Name
@@ -67850,9 +69109,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 5 \xB7 Raider 10"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.99999976
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.99999976
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7727546
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.36034143
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.4735443
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.22081736
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -67862,6 +69149,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 98.99495
@@ -68267,6 +69558,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 29
@@ -68274,6 +69569,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -68283,6 +69594,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -70749,6 +72064,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 19
@@ -70756,6 +72075,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -70765,6 +72100,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -71058,6 +72397,30 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6354604011064981603, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886681559595137242, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -76257,6 +77620,10 @@ PrefabInstance:
       propertyPath: title
       value: "BUGGY \xB7 VEHICLE ELITE"
       objectReference: {fileID: 0}
+    - target: {fileID: 5547769885341052101, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 6200420948148515969, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
       propertyPath: tuning
       value: 
@@ -76265,6 +77632,22 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9063078
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.4226183
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017944823801512807, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -77815,6 +79198,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1752845888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1237476449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1237476450}
+  - component: {fileID: 1237476452}
+  - component: {fileID: 1237476451}
+  m_Layer: 0
+  m_Name: Warm sand behind arena
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1237476450
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237476449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 533672359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 394, y: 394}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1237476451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237476449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ec298e5fa4244b5153a9b29dcb9e9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapCircle
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.96, g: 0.79, b: 0.51, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  innerRadius: 0
+  softness: 0
+--- !u!222 &1237476452
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237476449}
+  m_CullTransparentMesh: 1
 --- !u!1 &1238477888
 GameObject:
   m_ObjectHideFlags: 0
@@ -79973,9 +81423,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 2 \xB7 Raider 04"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.30253184
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.1410729
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.8543233
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.39837754
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -79985,6 +81463,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -61.871845
@@ -81476,6 +82958,10 @@ PrefabInstance:
       propertyPath: title
       value: "BUGGY \xB7 VEHICLE ELITE"
       objectReference: {fileID: 0}
+    - target: {fileID: 5547769885341052101, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 6200420948148515969, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
       propertyPath: tuning
       value: 
@@ -81484,6 +82970,26 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.3099755
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.14454398
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.8516507
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.3971313
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017944823801512807, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -82307,6 +83813,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 11
@@ -82314,6 +83824,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -82323,6 +83849,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -83339,6 +84869,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 05
@@ -83346,6 +84880,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -83355,6 +84905,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -84083,6 +85637,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 26
@@ -84090,6 +85648,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -84099,6 +85673,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -84789,9 +86367,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 3 \xB7 Raider 05"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.06322071
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.029480308
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9041001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.42158884
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -84801,6 +86407,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.516502
@@ -85584,6 +87194,10 @@ PrefabInstance:
       propertyPath: title
       value: "BUGGY \xB7 VEHICLE ELITE"
       objectReference: {fileID: 0}
+    - target: {fileID: 5547769885341052101, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 6200420948148515969, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
       propertyPath: tuning
       value: 
@@ -85592,6 +87206,22 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9063078
+      objectReference: {fileID: 0}
+    - target: {fileID: 6953850441763648878, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.4226183
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017944823801512807, guid: b3a6456e829ba46eca84bec1fa0e684c, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -86439,6 +88069,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1379202465122253334, guid: 6f6a156c221a14aa39bab2d527a4959c, type: 3}
   m_PrefabInstance: {fileID: 1400584002}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1400773603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1400773604}
+  - component: {fileID: 1400773606}
+  - component: {fileID: 1400773605}
+  m_Layer: 0
+  m_Name: Music fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1400773604
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400773603}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103101591}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1400773605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400773603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.28, g: 0.6, b: 0.44, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1400773606
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400773603}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1401383504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99644,6 +101349,30 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6354604011064981603, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886681559595137242, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -100761,6 +102490,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 24
@@ -100768,6 +102501,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -100777,6 +102526,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -101056,6 +102809,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 17
@@ -101063,6 +102820,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -101072,6 +102845,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -103964,6 +105741,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 14
@@ -103971,6 +105752,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -103980,6 +105777,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -119248,6 +121049,30 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6354604011064981603, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886681559595137242, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -120303,6 +122128,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 21
@@ -120310,6 +122139,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -120319,6 +122164,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -120821,9 +122670,37 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 5 \xB7 Raider 12"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.18068887
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.084256604
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.8881134
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.4141341
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -120833,6 +122710,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 125.51146
@@ -125914,6 +127795,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1530873827}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1969072543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969072544}
+  - component: {fileID: 1969072546}
+  - component: {fileID: 1969072545}
+  m_Layer: 0
+  m_Name: Casual map soft shadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1969072544
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969072543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 764878550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -10}
+  m_SizeDelta: {x: 444, y: 444}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1969072545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969072543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ec298e5fa4244b5153a9b29dcb9e9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaMinimapCircle
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19, g: 0.11, b: 0.055, a: 0.28}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  innerRadius: 0
+  softness: 0.12
+--- !u!222 &1969072546
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969072543}
+  m_CullTransparentMesh: 1
 --- !u!1 &1970016379
 GameObject:
   m_ObjectHideFlags: 0
@@ -126292,6 +128240,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 181411246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1979430872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1979430873}
+  - component: {fileID: 1979430875}
+  - component: {fileID: 1979430874}
+  m_Layer: 0
+  m_Name: Track
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1979430873
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979430872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 118423992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1979430874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979430872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.13, g: 0.19, b: 0.18, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1979430875
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979430872}
+  m_CullTransparentMesh: 1
 --- !u!1 &1979674723
 GameObject:
   m_ObjectHideFlags: 0
@@ -127383,6 +129406,30 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 6354604011064981603, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725771913579284930, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886681559595137242, guid: 5461e2bbfa2184568893f8c932a7611d, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -127434,6 +129481,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 22
@@ -127441,6 +129492,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -127450,6 +129517,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -127845,6 +129916,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 07
@@ -127852,6 +129927,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -127861,6 +129952,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -133103,6 +135198,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018648153}
     m_Modifications:
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Raider 02
@@ -133110,6 +135209,22 @@ PrefabInstance:
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8373192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3904484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34682903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16172904
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -133119,6 +135234,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -133979,6 +136098,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1752845888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2087837438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2087837439}
+  m_Layer: 0
+  m_Name: Handle area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2087837439
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087837438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 769964477}
+  m_Father: {fileID: 118423992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2089331154
 GameObject:
   m_ObjectHideFlags: 0
@@ -134424,6 +136579,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2107978589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2103101590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2103101591}
+  m_Layer: 0
+  m_Name: Fill area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2103101591
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103101590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1400773604}
+  m_Father: {fileID: 118423992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2104738626
 GameObject:
   m_ObjectHideFlags: 0
@@ -135571,9 +137762,29 @@ PrefabInstance:
       propertyPath: title
       value: "RAIDER \xB7 BASIC"
       objectReference: {fileID: 0}
+    - target: {fileID: 2174036070618955720, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: gameplayCamera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: "Arena 1 \xB7 Encounter 4 \xB7 Raider 08"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.8733458
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.40724787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.24220039
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734309090196560216, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.11293991
       objectReference: {fileID: 0}
     - target: {fileID: 5156873252112423943, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: tuning
@@ -135583,6 +137794,10 @@ PrefabInstance:
       propertyPath: session
       value: 
       objectReference: {fileID: 45168794}
+    - target: {fileID: 5527174212886860782, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: m_Camera
+      value:
+      objectReference: {fileID: 109874602}
     - target: {fileID: 7051281321904890291, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 79.549515
@@ -136528,6 +138743,8 @@ MonoBehaviour:
   session: {fileID: 45168794}
   layout: {fileID: 1530873826}
   mapRect: {fileID: 533672359}
+  circularMask: {fileID: 533672362}
+  contentScale: 0.90696895
   backgroundImage: {fileID: 175951680}
   hasBakedWorldBounds: 1
   bakedWorldBounds:
@@ -137011,11 +139228,11 @@ MonoBehaviour:
   turret: {fileID: 9033761664128615775}
   ground: {fileID: 1274128682}
   material: {fileID: 2100000, guid: ea1c59f65cbf24d76874701eb6e2a547, type: 2}
-  fillColor: {r: 0.3, g: 0.86, b: 1, a: 0.07}
-  outlineColor: {r: 0.65, g: 0.97, b: 1, a: 0.98}
-  contrastColor: {r: 0.025, g: 0.11, b: 0.14, a: 0.65}
+  fillColor: {r: 1, g: 1, b: 1, a: 0.025}
+  outlineColor: {r: 1, g: 1, b: 1, a: 0.92}
+  contrastColor: {r: 0.09, g: 0.08, b: 0.06, a: 0.5}
   outlineWidth: 0.16
-  contrastWidth: 0.14
+  contrastWidth: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

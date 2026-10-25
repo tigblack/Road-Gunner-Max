@@ -35,6 +35,7 @@
       streamingAssetsUrl:'StreamingAssets',companyName:{{{ JSON.stringify(COMPANY_NAME) }}},productName:{{{ JSON.stringify(PRODUCT_NAME) }}},productVersion:{{{ JSON.stringify(PRODUCT_VERSION) }}},
       devicePixelRatio:Math.min(window.devicePixelRatio||1,2),
       matchWebGLToCanvasSize:false,
+      autoSyncPersistentDataPath:true,
       showBanner:(message,type)=>{if(type==='error')document.getElementById('error').textContent=message;else console.warn(message);}
     };
     // Keep the last valid render size during orientation changes and browser UI resizing.

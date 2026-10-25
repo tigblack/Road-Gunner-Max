@@ -57,6 +57,9 @@ namespace RoadGunner
         public Rigidbody Body { get; private set; }
         public float Health { get; private set; }
         public float MaximumHealth => Mathf.Max(1, maximumHealth);
+        public override float CurrentHealth => Health;
+        public override float MaxHealth => MaximumHealth;
+        public override bool UsesBossHealthHud => true;
         public TruckBossState State { get; private set; } = TruckBossState.Wrecked;
         public override bool Alive => gameObject.activeInHierarchy && Health > 0 && State != TruckBossState.Wrecked;
         public bool IsAlive => Alive;
@@ -195,7 +198,7 @@ namespace RoadGunner
             if (wheelVisuals != null) for (int i = 0; i < wheelVisuals.Length; i++) if (wheelVisuals[i]) wheelVisuals[i].localRotation = wheelRest[i];
             if (dust) dust.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             if (smoke) smoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            PlaceOnNavigation(transform.position); Changed?.Invoke();
+            PlaceOnNavigation(transform.position); Changed?.Invoke(); NotifyHealthChanged();
         }
         public void Despawn()
         {
@@ -203,7 +206,7 @@ namespace RoadGunner
             SetBodyCollision(false); Health = 0; State = TruckBossState.Wrecked;
             if (dust) dust.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             if (smoke) smoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            ClearFlash(); gameObject.SetActive(false);
+            ClearFlash(); NotifyHealthChanged(); gameObject.SetActive(false);
         }
         public void CancelAttack()
         {
@@ -495,7 +498,7 @@ namespace RoadGunner
         {
             if (!Alive || !session || !session.Playing || damage <= 0 || (ram && Time.time < nextPlayerRam)) return;
             if (ram) nextPlayerRam = Time.time + Mathf.Max(.1f, playerRamCooldown);
-            Health = Mathf.Max(0, Health - damage); Changed?.Invoke();
+            Health = Mathf.Max(0, Health - damage); Changed?.Invoke(); NotifyHealthChanged();
             if (Health <= 0)
             {
                 State = TruckBossState.Wrecked; wreckUntil = Time.time + Mathf.Max(.1f, wreckLifetime);

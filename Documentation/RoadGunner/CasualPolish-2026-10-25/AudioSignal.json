@@ -1,0 +1,18 @@
+{
+  "track": "Dustlight Road",
+  "source": "Assets/RoadGunner/Audio/Music/Dustlight Road.wav",
+  "sha256": "7ad177b5e3062b316249c086c48e58e4db2fadad2d0bd1882c0be17bb5088491",
+  "bytes": 6152304,
+  "channels": 2,
+  "sample_rate": 32000,
+  "bits": 16,
+  "file_seconds": 48.064,
+  "musical_seconds": 48.0,
+  "loop_start_sample": 2048,
+  "loop_end_sample_inclusive": 1538047,
+  "peak": 0.33697509765625,
+  "rms": 0.08494079475025121,
+  "seam_delta": 0.014068603515625,
+  "external_samples": false,
+  "listening_verified": false
+}

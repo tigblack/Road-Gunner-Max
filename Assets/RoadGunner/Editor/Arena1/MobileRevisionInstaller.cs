@@ -94,6 +94,7 @@ namespace RoadGunner.Editor
             // The optional key may overlap the map on tall phones; keep every label readable.
             map.legendPanel.transform.SetAsLastSibling();
             Dirty(map); Dirty(frame); Dirty(map.mapRect); Dirty(s.hud);
+            CasualPolishInstaller.ConfigureScene(layout);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace RoadGunner.Editor
                 bounds = worldBounds; size = resolution;
                 pixels = new Color[size * size]; heights = new float[pixels.Length];
                 for (int i = 0; i < pixels.Length; i++)
-                { pixels[i] = new Color(.085f, .12f, .12f, 1); heights[i] = float.NegativeInfinity; }
+                { pixels[i] = new Color(.96f, .79f, .51f, 1); heights[i] = float.NegativeInfinity; }
             }
 
             SampleTexture ReadTexture(Texture2D source)

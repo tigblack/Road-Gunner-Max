@@ -1,0 +1,59 @@
+{
+  "build": {
+    "unityVersion": "6000.6.4f1",
+    "scene": "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+    "builtAtUtc": "2026-10-25T18:07:24.7731860Z",
+    "compression": "Gzip with JavaScript decompression fallback",
+    "bytes": 55258946
+  },
+  "transport_bytes": 21079418,
+  "files": [
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "Build/WebBuild.data.unityweb",
+      "bytes": 11064364,
+      "sha256": "eaca0075641a08d525999a757c7be5b23ac95de3429649a1f6392acbf80086d9",
+      "decompressed_bytes": 20477620
+    },
+    {
+      "path": "Build/WebBuild.framework.js.unityweb",
+      "bytes": 74863,
+      "sha256": "db06f365ec347008289fb57dc3ad13745445e9ba9cb75e6472daaaedd7803f7b",
+      "decompressed_bytes": 330905
+    },
+    {
+      "path": "Build/WebBuild.loader.js",
+      "bytes": 48779,
+      "sha256": "11cf5af71ad9b53c239ca945a0214ab56b711db641bcbeef5694431477cc3484"
+    },
+    {
+      "path": "Build/WebBuild.wasm.unityweb",
+      "bytes": 9886067,
+      "sha256": "b128e096fed2d2adeda97e6efe0e351454823b4bb77227ac59e9dc5bfe03d3c7",
+      "decompressed_bytes": 36803746
+    },
+    {
+      "path": "build-info.json",
+      "bytes": 240,
+      "sha256": "25151cb1d154e011b79be7293cb1d84997bd095648dd2440d4251bd667325706"
+    },
+    {
+      "path": "index.html",
+      "bytes": 5105,
+      "sha256": "70b744427114c847d4b43bda1f488030e5c2a0d7fb6052c2c5132dd949fb77b5"
+    }
+  ],
+  "checks": [
+    "gzip decompression",
+    "WebAssembly v1 magic",
+    "UnityWebData header",
+    "loader/framework/inline JS syntax",
+    "all local HTTP files byte-identical",
+    "responsive viewport, touch-action, selection/scroll prevention and pointer capture",
+    "autoSyncPersistentDataPath enabled for music preference durability"
+  ]
+}

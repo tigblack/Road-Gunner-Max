@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Arena 1 vehicle handling
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.VehicleTuning
   mass: 1400
-  maxSpeed: 9
+  maxSpeed: 11.7
   totalDriveTorque: 2700
-  acceleration: 4
+  acceleration: 4.4
   rotationSpeed: 150
   rotationAcceleration: 540
   steeringResponse: 4

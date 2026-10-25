@@ -17,10 +17,10 @@ namespace RoadGunner
 {
     /// <summary>Opt-in acceptance checks against the saved Arena 1, using real gameplay components.</summary>
     [DefaultExecutionOrder(10000)]
-    public sealed class Arena1PlayChecks : MonoBehaviour
+    public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/MobileRevision-2026-10-25/PlayMode.txt";
-        public const string CaptureFolder = "outputs/mobile-revision-validation";
+        public const string ReportPath = "Documentation/RoadGunner/CasualPolish-2026-10-25/PlayMode.txt";
+        public const string CaptureFolder = "outputs/casual-polish-validation";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -57,7 +57,7 @@ namespace RoadGunner
             running = true; Completed = false; Failures = Checks = 0; report.Clear();
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(CaptureFolder);
-            report.Add("Arena 1 mobile revision acceptance — actual Unity Play Mode; " + Application.unityVersion);
+            report.Add("Arena 1 casual combat polish acceptance — actual Unity Play Mode; " + Application.unityVersion);
             report.Add("Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.");
             File.WriteAllLines(ReportPath, report);
             StartCoroutine(RunGuarded());
@@ -74,7 +74,7 @@ namespace RoadGunner
         {
             // Let the real GameSession.Start initialize its run and HUD first.
             yield return null; yield return null;
-            var sections = new Func<IEnumerator>[] { SceneAndMap, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, BossAndCompletion };
+            var sections = new Func<IEnumerator>[] { SceneAndMap, EnemyHealthUi, CircularMapAndWhiteRange, ArenaMusicChecks, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, BossAndCompletion };
             foreach (var factory in sections)
             {
                 IEnumerator section = factory();
@@ -121,10 +121,10 @@ namespace RoadGunner
             Check("finite authored encounters", !s.spawns.repeatAuthoredEnemies && s.spawns.GroupCount == 0 &&
                 s.spawns.authoredRaiders.All(r => r.Alive && r.agent.isOnNavMesh) && s.spawns.authoredBuggies.All(b => b.Alive),
                 "All authored enemies spawned; legacy random encounter respawn is disabled");
-            Check("current speed increased by 1.5x", Mathf.Abs(s.vehicle.tuning.maxSpeed - 6f * 1.5f) < .05f &&
+            Check("current speed increased by thirty percent", Mathf.Abs(s.vehicle.tuning.maxSpeed - 9f * 1.30f) < .05f &&
                 s.vehicle.tuning.maxSpeed < 18 && s.vehicle.tuning.steeringRate >= 120 &&
                 s.turret.tuning.playerDamageMultiplier >= .33f && s.turret.tuning.playerDamageMultiplier <= .4f,
-                "Previous forward=6; current=" + s.vehicle.tuning.maxSpeed + "; multiplier=" + s.vehicle.tuning.maxSpeed / 6 +
+                "Previous forward=9; current=" + s.vehicle.tuning.maxSpeed + "; multiplier=" + s.vehicle.tuning.maxSpeed / 9 +
                 ", steering=" + s.vehicle.tuning.steeringRate + ", outgoing multiplier=" + s.turret.tuning.playerDamageMultiplier);
             Check("base run stats and HUD", s.runStats.AttackLevel == 1 && s.runStats.HealthLevel == 1 &&
                 s.hud.statsText.text.Contains("ATK 1") && s.hud.statsText.text.Contains("HP 1") &&
@@ -203,9 +203,15 @@ namespace RoadGunner
                 }
                 finally { RenderTexture.active = previous; RenderTexture.ReleaseTemporary(target); Destroy(sampled); }
             }
-            Bounds bounds = map.WorldBounds; Rect rect = map.mapRect.rect;
-            bool aligned = Vector2.Distance(map.Project(bounds.min), new Vector2(rect.xMin, rect.yMin)) < .02f &&
-                Vector2.Distance(map.Project(bounds.max), new Vector2(rect.xMax, rect.yMax)) < .02f;
+            Bounds bounds = map.WorldBounds;
+            bool aligned = false;
+            if (map.backgroundImage)
+            {
+                var imageRect = map.backgroundImage.rectTransform;
+                Vector2 imageMin = map.mapRect.InverseTransformPoint(imageRect.TransformPoint(new Vector3(imageRect.rect.xMin, imageRect.rect.yMin, 0)));
+                Vector2 imageMax = map.mapRect.InverseTransformPoint(imageRect.TransformPoint(new Vector3(imageRect.rect.xMax, imageRect.rect.yMax, 0)));
+                aligned = Vector2.Distance(map.Project(bounds.min), imageMin) < .02f && Vector2.Distance(map.Project(bounds.max), imageMax) < .02f;
+            }
             Check("minimap renders baked Arena terrain and roads", texture && map.backgroundImage && map.backgroundImage.texture == texture &&
                 map.hasBakedWorldBounds && map.bakedEnvironmentMeshCount > 0 && map.bakedRoadMeshCount > 0 &&
                 map.bakedTriangleCount > 0 && texture.width >= 256 && texture.width <= 1024 && texture.height >= 256 &&
@@ -214,7 +220,8 @@ namespace RoadGunner
                 "; environment meshes=" + map.bakedEnvironmentMeshCount + "; roads=" + map.bakedRoadMeshCount +
                 "; triangles=" + map.bakedTriangleCount + "; background/icon bounds aligned=" + aligned);
             var ordinary = icons.Where(i => i.kind == MinimapMarkerKind.Raider || i.kind == MinimapMarkerKind.Buggy).ToArray();
-            var interactive = icons.Where(i => i.kind == MinimapMarkerKind.Attack || i.kind == MinimapMarkerKind.Health || i.kind == MinimapMarkerKind.Workshop).ToArray();
+            var interactive = icons.Where(i => i.kind == MinimapMarkerKind.Attack || i.kind == MinimapMarkerKind.Health).ToArray();
+            var workshops = icons.Where(i => i.kind == MinimapMarkerKind.Workshop).ToArray();
             var mini = icons.Single(i => i.kind == MinimapMarkerKind.MiniBoss);
             var final = icons.Single(i => i.kind == MinimapMarkerKind.Boss);
             var player = icons.Single(i => i.kind == MinimapMarkerKind.Player);
@@ -222,8 +229,13 @@ namespace RoadGunner
             bool skullGeometry = HasSkullFeatures(mini) && HasSkullFeatures(final);
             bool interactiveShape = interactive.All(i => i.canvasRenderer.GetMesh().vertexCount != ordinaryVertices);
             Check("normal enemies and distinct reward objects are red", ordinary.Length == 14 && ordinary.All(i => IsRed(i.color)) &&
-                interactive.Length == 2 + map.workshops.Length && interactive.All(i => IsRed(i.color)) && interactiveShape,
+                interactive.Length == 2 && interactive.All(i => IsRed(i.color)) && interactiveShape,
                 "Red ordinary markers=" + ordinary.Count(i => IsRed(i.color)) + "; red interactive markers=" + interactive.Count(i => IsRed(i.color)) + "; distinct geometry=" + interactiveShape);
+            bool greenWrenches = workshops.All(icon => icon.color.g >= .65f && icon.color.r < .4f && icon.color.b < .5f &&
+                icon.canvasRenderer.GetMesh().colors.Count(c => c.r > .95f && c.g > .95f && c.b > .95f) > 48 &&
+                icon.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width));
+            Check("workshop has a prominent green white-wrench marker", workshops.Length == map.workshops.Length && workshops.Length > 0 && greenWrenches,
+                "Green repair markers=" + workshops.Length + "; white spanner geometry=" + greenWrenches);
             Check("orange mini skull and red boss skull are prominent", mini.color.r >= .9f && mini.color.g >= .3f && mini.color.g <= .75f &&
                 mini.color.b < .25f && IsRed(final.color) && skullGeometry &&
                 mini.rectTransform.rect.width > ordinary.Max(i => i.rectTransform.rect.width) &&
@@ -240,11 +252,15 @@ namespace RoadGunner
             if (!range || !range.Mesh) { Check("visible range geometry", false, "Existing AttackRangeIndicator or mesh is missing"); return; }
             Color[] colors = range.Mesh.colors;
             Color materialTint = range.material && range.material.HasProperty("_BaseColor") ? range.material.GetColor("_BaseColor") : Color.clear;
-            Check("enhanced range retains actual ten metre radius", Mathf.Abs(s.turret.Range - 10) < .001f && Mathf.Abs(range.Radius - 10) < .001f &&
-                range.Visible && range.outlineWidth >= .15f && range.contrastWidth >= .13f &&
-                range.fillColor.a >= .06f && range.fillColor.a < .2f && range.outlineColor.a >= .9f &&
-                colors.Length > 128 && colors.Max(c => c.a) * materialTint.a >= .9f && colors[0].a * materialTint.a >= .06f,
-                "Weapon/ring=" + s.turret.Range + "/" + range.Radius + "m; outline=" + range.outlineWidth +
+            bool white = range.fillColor.r > .98f && range.fillColor.g > .98f && range.fillColor.b > .98f &&
+                range.outlineColor.r > .98f && range.outlineColor.g > .98f && range.outlineColor.b > .98f &&
+                materialTint.r > .98f && materialTint.g > .98f && materialTint.b > .98f;
+            Check("white range retains actual ten metre radius", Mathf.Abs(s.turret.Range - 10) < .001f && Mathf.Abs(range.Radius - 10) < .001f &&
+                range.Visible && range.outlineWidth >= .15f && Mathf.Abs(range.contrastWidth - .10f) < .005f && white &&
+                Mathf.Abs(range.fillColor.a - .025f) < .002f && Mathf.Abs(range.outlineColor.a - .92f) < .002f &&
+                range.contrastColor.r < .2f && range.contrastColor.g < .2f && range.contrastColor.b < .2f &&
+                colors.Length > 128 && colors.Max(c => c.a) * materialTint.a >= .9f && Mathf.Abs(colors[0].a * materialTint.a - .025f) < .002f,
+                "Weapon/ring=" + s.turret.Range + "/" + range.Radius + "m; white=" + white + "; outline=" + range.outlineWidth +
                 "; contrast=" + range.contrastWidth + "; fill alpha=" + range.fillColor.a + "; outline alpha=" + range.outlineColor.a + "; material alpha=" + materialTint.a);
         }
 
@@ -362,8 +378,9 @@ namespace RoadGunner
             float end = Time.realtimeSinceStartup + 10; bool survivedHit = false, sawGear = false, sawLaunch = false, sawRetract = false;
             while (human.Alive && Time.realtimeSinceStartup < end)
             {
-                survivedHit |= human.Health > 0 && human.Health < hp;
                 yield return null;
+                if (!survivedHit && human.Health > 0 && human.Health < hp)
+                { survivedHit = true; Capture("white-range-combat"); }
             }
             humanShots = s.turret.ShotsFired - shots; s.turret.enabled = false;
             int earned = s.ScrapEarned, kills = s.Kills; human.Hit(hp * 10, Vector3.forward);
@@ -560,6 +577,36 @@ namespace RoadGunner
             Check("joystick dead zone remains configurable", s.input.joystickDeadZone > 0 && s.input.joystickDeadZone <= .2f && s.input.Magnitude == 0,
                 "Configured dead zone=" + s.input.joystickDeadZone + "; small touch delta generates no motion");
             Touch(101, UnityEngine.InputSystem.TouchPhase.Ended, point);
+            yield return null; yield return null;
+
+            // Hold a real UI touch along the clear authored starting road, with no test-input override.
+            Isolate(); s.input.testInput = false; s.vehicle.Body.constraints = carConstraints;
+            yield return new WaitForSecondsRealtime(.7f);
+            point = ControlPoint(.2f, .25f);
+            Touch(105, UnityEngine.InputSystem.TouchPhase.Began, point);
+            yield return null; yield return null;
+            screenRadius = Vector2.Distance(point, RectTransformUtility.WorldToScreenPoint(null, joystick.ring.TransformPoint(Vector3.right * joystick.radius)));
+            Vector3 roadDirection = Vector3.ProjectOnPlane(testRotation * Vector3.forward, Vector3.up).normalized;
+            Vector3 touchRight = Vector3.ProjectOnPlane(s.input.view.transform.right, Vector3.up).normalized;
+            Vector3 touchForward = Vector3.ProjectOnPlane(s.input.view.transform.forward, Vector3.up).normalized;
+            Vector2 roadDrag = new Vector2(Vector3.Dot(roadDirection, touchRight), Vector3.Dot(roadDirection, touchForward)).normalized;
+            Touch(105, UnityEngine.InputSystem.TouchPhase.Moved, point + roadDrag * screenRadius * 1.15f);
+            float touchPeak = 0, sustainedFast = 0;
+            end = Time.realtimeSinceStartup + 12;
+            while (Time.realtimeSinceStartup < end && sustainedFast < .4f)
+            {
+                yield return null;
+                touchPeak = Mathf.Max(touchPeak, s.vehicle.ForwardSpeed);
+                if (s.vehicle.ForwardSpeed > 9 && s.vehicle.GroundedWheels >= 3 && joystick.IsHeld && s.input.Magnitude > .98f && !s.input.Reverse)
+                    sustainedFast += Time.unscaledDeltaTime;
+                else sustainedFast = 0;
+            }
+            Check("sustained touch exceeds the previous nine metre speed", !s.input.testInput && joystick.IsHeld &&
+                Mathf.Abs(s.vehicle.tuning.maxSpeed - 11.7f) < .05f && touchPeak > 9 && touchPeak <= s.vehicle.tuning.maxSpeed * 1.15f && sustainedFast >= .4f,
+                "Production Touchscreen/UI peak=" + touchPeak.ToString("F2") + "m/s; configured=" + s.vehicle.tuning.maxSpeed +
+                "; continuously above9 with grounded wheels=" + sustainedFast.ToString("F2") + "s");
+            s.vehicle.Body.constraints = RigidbodyConstraints.FreezeAll;
+            Touch(105, UnityEngine.InputSystem.TouchPhase.Ended, point + roadDrag * screenRadius * 1.15f);
             yield return null; yield return null;
 
             Vector3 pad = DrivingPad();

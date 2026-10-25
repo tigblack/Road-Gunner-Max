@@ -1,0 +1,73 @@
+CURRENT BUILD REVISION — CASUAL COMBAT UI AND MUSIC
+Baseline main: 172a9386f89a3f3e2208f510d4078237613e6216. Working tree was clean.
+Existing Level01_Greenwood scene, terrain, navigation and encounter positions retained.
+12 ordinary Raiders, 2 Buggies, 1 Monster mini-boss, 1 Boss Raider; previous documented
+reference-data fallback remains in effect. No new reference screenshot was attached.
+
+ENEMY HEALTH
+CombatTarget exposes read-only CurrentHealth / MaxHealth and HealthChanged.
+Raider, EnemyBuggy, WastelandMutant and TruckArenaBoss expose existing gameplay HP.
+EnemyHealthBar subscribes to health notifications, caches the gameplay camera and
+reuses its prebuilt HealthBarAnchor / WorldSpaceCanvas / background / track / fill.
+LateUpdate only positions and billboards active bars; no recurring camera search,
+UI hierarchy construction, health polling or per-frame allocations in this path.
+Raider bars are 2.1m x0.28m at height2.45m; Buggy bars2.6m x0.28m at height2.9m.
+Dark track, coral fill, cream rim and shadow; no tiny numbers or GraphicRaycaster.
+Normal reusable prefabs and existing scene/pool targets are wired by authoring.
+Monster/Boss Raider keep the existing Zone1BossHud; inherited world bars disabled.
+Future CombatTarget prefabs can use the same generic authoring and health contract.
+
+VEHICLE
+Current previous forward maximum9m/s ->11.7m/s, exactly9*1.30 (+30%).
+Acceleration4 ->4.4m/s2; torque2700, steering, yaw response, brakes, friction and
+drag remain unchanged. Actual wheel physics speed is measured separately in PlayMode.txt.
+Floating touch origin, pointer capture, release/cancel, camera-relative desired
+heading and smooth forward-facing turns including screen DOWN are preserved.
+
+MINIMAP
+Existing512x512 offline baked actual terrain/road/environment texture; no extra
+camera, RenderTexture, shadows, postprocessing or realtime terrain-rendering cost.
+ArenaMinimapCircle creates a128-segment filled circle for UGUI stencil Mask.
+Terrain RawImage and cached dynamic icons are maskable children of the same mapRect.
+394px circular viewport,426px chunky warm/cream frame and444px soft shadow in
+1080px-reference HUD. Content fit uses actual ground vertices and authored markers,
+including distant workshops, with padding for the largest icon. Fixed north-up.
+Only unused background pixels of the texture changed to warm sand; actual terrain
+material colors, paths and major static structures are retained in the bake.
+Player: white/cyan directional arrow32px. Raider: red round marker.
+Buggy: red vehicle rectangle. Attack/Health objects: red diamonds with white glyph.
+Monster: orange skull24px. Boss Raider: red skull27px.
+Workshop: green round marker28px with a white open-jaw spanner silhouette.
+
+SHOOTING RANGE
+Existing ground-conforming reusable mesh still uses the turret's actual10m range.
+Previous cyan/blue increased-opacity fill replaced by neutral white .92-alpha edge,
+.025-alpha white interior and .10m thin neutral dark contrast beside .16m white edge.
+Shared material alpha1; no new collider, targeting radius or combat behavior.
+
+MUSIC
+Existing project contained engine/gun/impact/pickup/explosion SFX, no suitable music,
+AudioManager, mixer or audio settings. ArenaMusic adds one dedicated2D AudioSource
+on the existing GameSession and a MUSIC slider in its existing pause overlay.
+Original track: Dustlight Road;48-second stereo procedural composition, no external
+recordings/samples/soundfonts/film music. Source generator and full provenance:
+Tools/Audio/generate_dustlight_road.py
+Assets/RoadGunner/Audio/Music/Dustlight Road - source.txt
+New project-owned generated asset; no external music license is being claimed.
+No third-party source audio incorporated, and no CC0/public-domain dedication made.
+Default source volume.30; compressed/preloaded. Unscaled fades, continuous single
+playhead across ordinary session events and Restart; paused/ended volume fades0.
+Music preference key RoadGunner.Audio.MusicVolume, independently of existing SFX.
+Web template enables autoSyncPersistentDataPath for browser preference durability.
+WAV includes2048 guard samples plus RIFF smpl loop markers as recommended for Web AAC:
+https://docs.unity3d.com/6000.6/Documentation/Manual/webgl-audio.html#loop-issues
+PCM source:32000Hz16-bit stereo; RMS.085, peak.337, musical seam difference.01408;
+48.064s raw file duration including guard,48s intended musical loop.
+This signal analysis is not a subjective listening or browser audio-gap assessment.
+
+AUTHORING
+Tools / Road Gunner / Arena1 / Apply Casual Combat UI And Music Polish
+Batch: RoadGunner.Editor.CasualPolishInstaller.ApplyBatch
+Existing older mobile/full Arena authoring paths apply the latest polish as well.
+Acceptance: RoadGunner.Editor.Arena1Verification.Run (without -quit).
+Build: RoadGunner.EditorTools.WebBuild.Build, output WebBuild/, existing gh-pages process.

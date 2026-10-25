@@ -13,7 +13,7 @@ Play the published Web version:
 https://tigblack.github.io/Road-Gunner-Max/
 Tap PLAY, then touch and drag anywhere in the lower-left control area. The site is published from gh-pages through GitHub's built-in Pages deployment. See Documentation/RoadGunner/MobileRevision-2026-10-25/Publication.txt for verification and browser/device testing limits.
 
-Arena 1 contains 12 basic Raiders, two Rust Vulture Buggies, the Ashmaw Monster miniboss, and a final Boss Raider. Drive speed is 9 m/s (1.5x the previous 6 m/s build, half the original 18 m/s); outgoing damage remains multiplied by 0.35. A true floating joystick and WASD choose camera-relative travel direction, with smooth nose-first turning. One-use ATTACK +1 and HEALTH +1 stations, run stats, a baked top-down terrain/road minimap, faster companion harpoon collection and an Arena Clear result preserve the existing gameplay loop. Exact The War reference data was unavailable; the first-arena layout remains an explicitly documented fallback.
+Arena 1 contains 12 basic Raiders, two Rust Vulture Buggies, the Ashmaw Monster miniboss, and a final Boss Raider. Drive speed is 11.7 m/s (+30% over the previous 9 m/s build); outgoing damage remains multiplied by 0.35. A true floating joystick and WASD choose camera-relative travel direction, with smooth nose-first turning. One-use ATTACK +1 and HEALTH +1 stations, run stats, a circular baked top-down terrain/road minimap with a green workshop wrench, normal-enemy world health bars, existing boss health HUD, white 10 m weapon boundary, original looping Arena music with a saved pause-menu volume control, faster companion harpoon collection and an Arena Clear result preserve the existing gameplay loop. Exact The War reference data was unavailable; the first-arena layout remains an explicitly documented fallback.
 
 Assets/            Game assets, scenes, editor tools and runtime code
 Packages/          Dependency manifest and lockfile
@@ -30,6 +30,6 @@ Use Tools / Road Gunner / Web / Build Mobile Web, or run RoadGunner.EditorTools.
 
 Arena authoring:
 Tools / Road Gunner / Arena 1 / Apply First Arena Rebalance updates the existing Greenwood scene. Adjust per-level tuning under Assets/RoadGunner/Levels/Greenwood/Arena1. The existing Level Editor supports moving and tuning all Arena 1 enemy types.
-Tools / Road Gunner / Arena 1 / Apply Mobile Driving And Map Revision updates the current scene's controls/feedback/map without relocating encounters. Run it again after changing terrain or roads to refresh the static minimap image.
+Tools / Road Gunner / Arena 1 / Apply Casual Combat UI And Music Polish updates the current scene's controls/feedback/map without relocating encounters. Run it again after changing terrain or roads to refresh the static minimap image.
 
 Unity caches, local IDE state, logs, build outputs and historical backup archives are excluded from Git. Unity recreates its generated folders when the project is opened.

@@ -43,20 +43,8 @@ namespace RoadGunner
             panelGroup.alpha = visible ? 1 : 0;
             if (visible && !panel.activeSelf) panel.SetActive(true);
         }
-        static float HealthOf(CombatTarget target)
-        {
-            if (target is WastelandMutant mutant) return mutant.Health;
-            if (target is TruckArenaBoss truck) return truck.Health;
-            if (target is Raider raider) return raider.Health;
-            return 0;
-        }
-        static float MaximumOf(CombatTarget target)
-        {
-            if (target is WastelandMutant mutant) return mutant.MaximumHealth;
-            if (target is TruckArenaBoss truck) return truck.MaximumHealth;
-            if (target is Raider raider) return raider.MaximumHealth;
-            return 1;
-        }
+        static float HealthOf(CombatTarget target) => target ? target.CurrentHealth : 0;
+        static float MaximumOf(CombatTarget target) => target ? target.MaxHealth : 1;
         static string PhaseOf(CombatTarget target)
         {
             if (target is WastelandMutant mutant)

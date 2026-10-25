@@ -1,0 +1,6 @@
+Current Greenwood arena retained; no encounter/navigation/layout reconstruction.
+Player maximum speed9 ->11.7m/s (+30%); acceleration4 ->4.4m/s2; torque2700/brakes/steering/drag retained.
+Existing10m weapon boundary now white (.92 edge/.025 fill) with neutral dark contrast, material alpha1.
+Normal enemies use existing-health world UI; Monster/Boss retain the existing boss HUD.
+Static512px terrain/roads retained, circular stencil mask, chunky frame, green repair wrench.
+Original Arena music loop and one session music source are configured.

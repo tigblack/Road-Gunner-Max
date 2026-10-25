@@ -55,6 +55,12 @@ namespace RoadGunner
                     Triangle(mesh, c + new Vector2(-x * .12f, y * .08f), c + new Vector2(-x * .3f, -y * .45f), c + new Vector2(x * .36f, y * .08f), Color.white);
                 }
             }
+            else if (kind == MinimapMarkerKind.Workshop)
+            {
+                Circle(mesh, c, x, y, new Color(.025f, .32f, .10f, 1));
+                Circle(mesh, c, x * .88f, y * .88f, color);
+                Wrench(mesh, c, Mathf.Min(x, y) * .88f);
+            }
             else if (kind == MinimapMarkerKind.Raider)
             {
                 Circle(mesh, c, x, y, Outline);
@@ -64,7 +70,33 @@ namespace RoadGunner
             {
                 Quad(mesh, c, x, y, Outline);
                 Quad(mesh, c, x * .72f, y * .78f, color);
-                if (kind == MinimapMarkerKind.Workshop) Quad(mesh, c, x * .38f, y * .42f, Outline);
+            }
+        }
+
+        static Vector2 ToolPoint(Vector2 point, Vector2 center, float scale) =>
+            center + new Vector2(point.x + point.y, point.y - point.x) * (.70710678f * scale);
+
+        static void Wrench(VertexHelper mesh, Vector2 center, float scale)
+        {
+            // A real open spanner silhouette: broad diagonal handle and open U-shaped jaws.
+            Vector2 a = ToolPoint(new Vector2(-.105f, -.64f), center, scale);
+            Vector2 b = ToolPoint(new Vector2(-.105f, .10f), center, scale);
+            Vector2 c = ToolPoint(new Vector2(.105f, .10f), center, scale);
+            Vector2 d = ToolPoint(new Vector2(.105f, -.64f), center, scale);
+            Triangle(mesh, a, b, c, Color.white); Triangle(mesh, a, c, d, Color.white);
+            var baseCenter = ToolPoint(new Vector2(0, -.64f), center, scale);
+            Circle(mesh, baseCenter, scale * .105f, scale * .105f, Color.white);
+            const int steps = 16;
+            for (int i = 0; i < steps; i++)
+            {
+                float angleA = (135 + i * 270f / steps) * Mathf.Deg2Rad;
+                float angleB = (135 + (i + 1) * 270f / steps) * Mathf.Deg2Rad;
+                Vector2 outerA = new Vector2(Mathf.Cos(angleA), Mathf.Sin(angleA)) * .34f + new Vector2(0, .27f);
+                Vector2 outerB = new Vector2(Mathf.Cos(angleB), Mathf.Sin(angleB)) * .34f + new Vector2(0, .27f);
+                Vector2 innerA = new Vector2(Mathf.Cos(angleA), Mathf.Sin(angleA)) * .16f + new Vector2(0, .27f);
+                Vector2 innerB = new Vector2(Mathf.Cos(angleB), Mathf.Sin(angleB)) * .16f + new Vector2(0, .27f);
+                Triangle(mesh, ToolPoint(outerA, center, scale), ToolPoint(innerA, center, scale), ToolPoint(outerB, center, scale), Color.white);
+                Triangle(mesh, ToolPoint(outerB, center, scale), ToolPoint(innerA, center, scale), ToolPoint(innerB, center, scale), Color.white);
             }
         }
 

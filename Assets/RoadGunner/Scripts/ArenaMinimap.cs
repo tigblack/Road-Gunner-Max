@@ -12,6 +12,10 @@ namespace RoadGunner
         public GameSession session;
         public LevelLayout layout;
         public RectTransform mapRect;
+        [Header("Circular casual viewport")]
+        public Mask circularMask;
+        [Range(.1f, 1)] public float contentScale = 1;
+        public float CircleRadius => mapRect ? Mathf.Min(mapRect.rect.width, mapRect.rect.height) * .5f : 0;
         [Header("Offline top-down arena bake")]
         public RawImage backgroundImage;
         public bool hasBakedWorldBounds;
@@ -88,7 +92,7 @@ namespace RoadGunner
             for (int i = 0; i < markers.Count; i++) if (markers[i].world == target) return;
             var go = new GameObject(kind + " marker", typeof(RectTransform), typeof(CanvasRenderer), typeof(ArenaMinimapIcon));
             go.transform.SetParent(markerRoot, false);
-            var icon = go.GetComponent<ArenaMinimapIcon>(); icon.kind = kind; icon.raycastTarget = false;
+            var icon = go.GetComponent<ArenaMinimapIcon>(); icon.kind = kind; icon.raycastTarget = false; icon.maskable = true;
             var rect = (RectTransform)go.transform; rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
             float size = MarkerSize(kind); icon.color = MarkerColor(kind);
             rect.sizeDelta = kind == MinimapMarkerKind.Buggy ? new Vector2(size * .8f, size * 1.2f) : new Vector2(size, size);
@@ -113,6 +117,7 @@ namespace RoadGunner
         public static Color MarkerColor(MinimapMarkerKind kind)
         {
             if (kind == MinimapMarkerKind.Player) return Color.white;
+            if (kind == MinimapMarkerKind.Workshop) return new Color(.12f, .82f, .32f);
             if (kind == MinimapMarkerKind.MiniBoss) return new Color(1, .48f, .07f);
             return new Color(1, .13f, .19f);
         }
@@ -121,12 +126,12 @@ namespace RoadGunner
         {
             switch (kind)
             {
-                case MinimapMarkerKind.Player: return 29;
+                case MinimapMarkerKind.Player: return 32;
                 case MinimapMarkerKind.Boss: return 27;
                 case MinimapMarkerKind.MiniBoss: return 24;
                 case MinimapMarkerKind.Attack:
                 case MinimapMarkerKind.Health: return 17;
-                case MinimapMarkerKind.Workshop: return 15;
+                case MinimapMarkerKind.Workshop: return 28;
                 case MinimapMarkerKind.Buggy: return 12;
                 default: return 11;
             }
@@ -147,8 +152,15 @@ namespace RoadGunner
             Rect rect = mapRect.rect;
             float x = Mathf.InverseLerp(bounds.min.x, bounds.max.x, worldPosition.x);
             float y = Mathf.InverseLerp(bounds.min.z, bounds.max.z, worldPosition.z);
-            // Background pixels and dynamic icons use exactly the same world extents.
-            return new Vector2(Mathf.Lerp(rect.xMin, rect.xMax, x), Mathf.Lerp(rect.yMin, rect.yMax, y));
+            // The background and icons share the same fitted content rectangle inside the mask.
+            return rect.center + new Vector2((x - .5f) * rect.width, (y - .5f) * rect.height) * contentScale;
+        }
+
+        public bool IsInsideCircle(Vector2 position, float inset = 0)
+        {
+            if (!mapRect) return false;
+            float radius = Mathf.Max(0, CircleRadius - inset);
+            return (position - mapRect.rect.center).sqrMagnitude <= radius * radius + .001f;
         }
 
         public bool TryGetMarker(Transform target, out Vector2 position)

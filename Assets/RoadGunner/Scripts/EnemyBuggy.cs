@@ -17,6 +17,9 @@ namespace RoadGunner
         public BuggyGun gun;
         public Rigidbody Body { get; private set; }
         public float Health { get; private set; }
+        public float MaximumHealth => tuning ? Mathf.Max(1,tuning.health) : 1;
+        public override float CurrentHealth => Health;
+        public override float MaxHealth => MaximumHealth;
         public BuggyState State { get; private set; }
         public override bool Alive => gameObject.activeInHierarchy && Health > 0 && State != BuggyState.Wrecked;
         public override Vector3 AimPoint => transform.TransformPoint(new Vector3(0, .55f, 0));
@@ -54,6 +57,7 @@ namespace RoadGunner
             foreach (var panel in armor) panel.SetPropertyBlock(null);
             if (dust) dust.Clear(); if (smoke) { smoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); }
             if (gun) { gun.CanShoot = true; gun.ResetCombat(); }
+            NotifyHealthChanged();
         }
         public void Despawn()
         {
@@ -63,7 +67,7 @@ namespace RoadGunner
             if (Body) { if(!Body.isKinematic){Body.linearVelocity = Vector3.zero; Body.angularVelocity = Vector3.zero;} Body.isKinematic = true; }
             if (dust) dust.Clear(); if (smoke) smoke.Clear();
             if (gun) gun.ResetCombat();
-            gameObject.SetActive(false);
+            NotifyHealthChanged(); gameObject.SetActive(false);
         }
         public void CancelAttack() { if (gun) gun.ResetCombat(); }
         void FixedUpdate()
@@ -174,7 +178,7 @@ namespace RoadGunner
         {
             if (!Alive || !session.Playing || (ram && Time.time < nextPlayerRam)) return;
             if (ram) nextPlayerRam = Time.time + session.turret.tuning.ramCooldown;
-            Health = Mathf.Max(0, Health - damage); flashUntil = Time.time + .13f;
+            Health = Mathf.Max(0, Health - damage); NotifyHealthChanged(); flashUntil = Time.time + .13f;
             if (Health > 0) return;
             State = BuggyState.Wrecked; wreckUntil = Time.time + tuning.wreckLifetime;
             if (gun) gun.ResetCombat();

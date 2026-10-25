@@ -9,11 +9,11 @@ namespace RoadGunner
         public Collider ground;
         public Material material;
         [Header("Readable weapon boundary (actual weapon range is unchanged)")]
-        public Color fillColor = new Color(.3f, .86f, 1, .07f);
-        public Color outlineColor = new Color(.65f, .97f, 1, .98f);
-        public Color contrastColor = new Color(.025f, .11f, .14f, .65f);
+        public Color fillColor = new Color(1, 1, 1, .025f);
+        public Color outlineColor = new Color(1, 1, 1, .92f);
+        public Color contrastColor = new Color(.09f, .08f, .06f, .5f);
         [Min(.02f)] public float outlineWidth = .16f;
-        [Min(.02f)] public float contrastWidth = .14f;
+        [Min(.02f)] public float contrastWidth = .10f;
         const int Segments = 128, FillRings = 4, EdgeRows = 6;
         const float Lift = .045f;
         readonly Vector3[] vertices = new Vector3[1 + Segments * (FillRings + EdgeRows)];
