@@ -11,7 +11,7 @@ Press Play. Drive with the on-screen joystick or WASD / arrow keys; Space brakes
 
 Play the published Web version:
 https://tigblack.github.io/Road-Gunner-Max/
-Tap PLAY, then touch and drag anywhere in the lower-left control area. The site is published from gh-pages through GitHub's built-in Pages deployment. See Documentation/RoadGunner/MobileRevision-2026-10-25/Publication.txt for verification and browser/device testing limits.
+Tap PLAY, then touch and drag anywhere in the lower-left control area. The site is published from gh-pages through GitHub's built-in Pages deployment. See Documentation/RoadGunner/CasualPolish-2026-10-25/Publication.txt for verification and browser/device testing limits.
 
 Arena 1 contains 12 basic Raiders, two Rust Vulture Buggies, the Ashmaw Monster miniboss, and a final Boss Raider. Drive speed is 11.7 m/s (+30% over the previous 9 m/s build); outgoing damage remains multiplied by 0.35. A true floating joystick and WASD choose camera-relative travel direction, with smooth nose-first turning. One-use ATTACK +1 and HEALTH +1 stations, run stats, a circular baked top-down terrain/road minimap with a green workshop wrench, normal-enemy world health bars, existing boss health HUD, white 10 m weapon boundary, original looping Arena music with a saved pause-menu volume control, faster companion harpoon collection and an Arena Clear result preserve the existing gameplay loop. Exact The War reference data was unavailable; the first-arena layout remains an explicitly documented fallback.
 

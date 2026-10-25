@@ -47,3 +47,11 @@ Enabled config.autoSyncPersistentDataPath=true in source template and output HTM
 reloaded, changed Music again, verified persistence and absence of that warning.
 Source: https://docs.unity3d.com/6000.6/Documentation/Manual/web-templates-build-configuration.html
 No browser probes or diagnostic input scripts were added to shipped production code.
+
+PUBLIC URL CHECK
+After successful Pages run40220507762, opened actual published20a1ab4 release.
+PLAY initialized real Arena1; round map, white ring, green wrench and damaged
+Raider bars visible. W4s/native touch drag showed34km/h and live marker movement.
+Final browser query: ready=true, autoSync=true, viewport393x852,
+canvas786x1704, scroll[0,0]. No fatal error observed, one existing URP warning.
+Public and local release bytes match for all6nonhidden files (LiveManifest.json).

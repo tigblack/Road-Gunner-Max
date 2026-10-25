@@ -1,0 +1,59 @@
+CASUAL COMBAT POLISH — VERIFIED PUBLICATION
+Playable URL: https://tigblack.github.io/Road-Gunner-Max/
+Repository: https://github.com/tigblack/Road-Gunner-Max
+Branch: main. No force push or history rewrite.
+Feature commit: d5ae23831f542e044ca8108a568505d20d3186f0
+WebGL artifact commit: 9a3a38c9c935df3ba1194a6535472b573e6e1d2f
+Both pushed successfully to existing origin/main.
+Pages commit: 20a1ab4fa14b25dff35e9708dc22e7d4beb2ec48
+Pushed successfully to existing origin/gh-pages, preserving its previous history.
+GitHub Pages source remains gh-pages /, using built-in pages build and deployment.
+Run40220507762 completed SUCCESS:
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/40220507762
+Pages API: built; commit20a1ab4; error.message null.
+
+RELEASE
+Unity6000.6.4f1; existing Level01_Greenwood scene; output WebBuild/.
+Built UTC2026-10-25T18:07:24.7731860Z; Unity reported55,258,946bytes uncompressed.
+Actual7-file static transport21,079,418bytes (~20.1MiB), including original music.
+Gzip with JavaScript decompression fallback; no custom Content-Encoding needed.
+Final HTML enables autoSyncPersistentDataPath; source template matches.
+
+VERIFICATION
+Integration compiled and saved actual scene/prefabs successfully.
+Final Play Mode122checks,0failures; runtime Console0errors/exceptions/asserts.
+Coverage includes healthA–E, multiple bars/camera/pooling/events, actual GPU circular
+stencil pixel clipping, all marker styles/alignment, real terrain/road captures,
+white10m range while moving/shooting, original music playback/loop/fades/preferences,
+WASD/mouse and production InputSystem touch including180-degree forward turns,
+upgrades, workshop, Metal Gear/harpoon, both bosses, completion and restart.
+Native wheel-physics peak10.41m/s; sustained production touch sample9.58m/s.
+Configured limit9→11.7m/s is exactly+30%, not a claimed measured physics multiplier.
+
+All6public nonhidden files downloaded over ordinary certificate-verified HTTPS,
+including data/framework/wasm/loader/index/build-info, match the local release
+byte-for-byte/SHA256. Details and hashes: LiveManifest.json and BuildManifest.json.
+Gzip, WASM magic, UnityWebData header, loader/framework/inline JS syntax passed.
+Fresh published URL opened in Chrome, iPhone16 preset393x852, PLAY initialized
+real Arena1; observed round map/green wrench/white ring and damaged Raider bars,
+WASD motion34km/h and native emulated touch drag. No fatal browser Console errors.
+Browser report: ready=true; autoSync=true; canvas786x1704; scroll[0,0].
+The final public page remains open in the QA tab, paused, with DevTools closed.
+Full local browser/music signal/persistence/orientation notes: Browser.txt.
+
+LIMITS / REMAINING OBSERVATIONS
+No physical phone, iOS Safari or Android hardware performance measurement.
+No subjective listening check of music comfort/SFX balance or physical-device
+loop seam; source PCM and browser-decoded AAC continuity were numerically checked.
+Existing nonfatal optional URP postprocess/upscaling warning, initial audio metadata
+messages and decompression-fallback advice remain; these do not block gameplay.
+Exact The War reference placement remains unverified from the earlier revision;
+this task preserved the existing authored12Raiders/2Buggies/Monster/Boss layout.
+No screenshot file accompanied this revision; casual style follows the written brief.
+
+HYGIENE
+Initial working tree was clean. Only this revision's source/assets/config/reports
+and requested tracked WebBuild output committed. Build-generated URP prefilter/
+resource metadata and Data/Plugins Burst intermediates removed from the diff.
+Unity caches/Temp/Logs and local screenshot outputs remain excluded.
+All committed diffs pass git diff --check. Temporary publishing worktree removed.
