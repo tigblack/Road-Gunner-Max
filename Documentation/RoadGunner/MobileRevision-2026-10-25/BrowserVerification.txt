@@ -1,0 +1,61 @@
+ROAD GUNNER — LOCAL CHROME VERIFICATION, 25 OCTOBER 2026
+
+SCOPE
+Final local WebGL build tested in Chrome by the root agent before publication.
+This report records actual browser observations, separately from Unity Editor
+checks. It does not claim that the live GitHub Pages version was tested here.
+Build completed at 04:13:37 Asia/Yerevan on 25 October 2026.
+
+PHONE EMULATION AND DISPLAY
+Chrome iPhone 16 emulation: 393x852 CSS pixels; Unity canvas786x1704 render pixels.
+PLAY successfully initialized Unity and the actual Arena 1.
+The minimap displayed terrain, roads, enemy/upgrade markers and orange/red boss
+skulls. The range circle was visible and readable over the actual gameplay.
+The MAP KEY legend rendered in the foreground and was readable when opened.
+Computed canvas touch-action was none; user-select was none.
+The page had no scrolling; document position remained[0,0] and selection was empty.
+These DOM observations were captured before the synthetic touch probe below.
+
+NATIVE COMPUTER-USE INPUT
+Native computer-use drags produced browser events with isTrusted=true.
+The recorded event totals were9 pointerdown,9 touchstart,9 pointerup,9 touchend
+and5 touchmove. Pointer capture was false after pointerup.
+The page remained at scroll[0,0], with no selected text.
+These native gestures verify browser touch delivery and release handling; they
+are not a native fifteen-second held-DOWN test.
+
+ADDITIONAL SYNTHETIC DOM TOUCH PROBE
+A separate DevTools probe dispatched synthetic DOM TouchEvents with touch ID999.
+It held a DOWN gesture for15 seconds. Unity visibly turned the vehicle nose
+toward screen-down and drove forward; the HUD showed13km/h.
+The floating ring appeared at the initial client point(80,630), with the thumb
+displaced downward. An off-area TouchEnd at(360,400) ended the gesture: the ring
+hid and movement input cleared.
+This was a synthetic DOM event probe. It was not trusted native touch and was not
+performed on a physical phone.
+
+DESKTOP CONTROLS AND GAMEPLAY
+Holding W for2500ms produced an observed26km/h.
+Holding S for3000ms then turned the vehicle front toward screen-down and produced
+an observed26km/h while driving in that direction.
+Automatic enemy combat and resource collection were observed: one enemy killed,
+one scrap collected. The existing roof gun and Metal Gear loop remained active.
+
+RESIZING AND LOG OBSERVATIONS
+Viewport rotation393x852 ->852x393 ->393x852 completed without an observed error.
+There was no numeric browser error counter available, so this report makes no
+claim of a measured zero browser-console error count.
+One optional URP FSR warning and existing informational audio/postprocessing
+messages were present. Unity continued rendering and responding to controls.
+
+OTHER FINAL VALIDATION
+The final Unity Editor acceptance run passed all78 checks, with0 failures and
+0 runtime Console errors/exceptions/asserts; see PlayMode.txt.
+The final local WebGL package passed JavaScript syntax, Gzip decompression and
+WASM-header validation. Browser initialization exercised that local package.
+
+LIMITS
+Chrome device emulation is not physical iPhone/Android testing or Safari testing.
+No physical mobile-device performance result is asserted.
+Live publication and live-download verification are recorded separately after
+deployment; the observations above concern the final local build only.

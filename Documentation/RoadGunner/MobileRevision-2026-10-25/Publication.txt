@@ -1,0 +1,57 @@
+ROAD GUNNER — MOBILE REVISION PUBLICATION, 25 OCTOBER 2026
+
+PLAY
+https://tigblack.github.io/Road-Gunner-Max/
+
+DEPLOYMENT SUCCEEDED
+Existing repository: https://github.com/tigblack/Road-Gunner-Max
+Source main; static publication gh-pages, root folder. Existing branch-based
+GitHub Pages deployment reused, with no new repository or credential permissions.
+Pages reports built for3f30f93e7e50a488d92d50a79bb2ac98b4ac65ff.
+Built-in Pages Actions run40146138480 completed successfully:
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/40146138480
+
+PUSHED COMMITS
+main gameplay: 00e8ebba66f7d16ca13a1e7976c6478bdac8beed
+feat: improve mobile driving minimap and harpoon feedback
+main WebGL: 9b68c278bc10adaf563d3d674de78a81fd2dcee8
+build: refresh mobile WebGL revision for Pages
+gh-pages site: 3f30f93e7e50a488d92d50a79bb2ac98b4ac65ff
+deploy: publish mobile driving and terrain minimap revision
+All pushes succeeded through the existing origin. No force pushes/history rewrites.
+Initial working tree was clean. Only known Unity-generated build/prefilter metadata
+was restored/removed afterward; no unrelated user changes were discarded.
+
+FINAL BUILD
+Unity6000.6.4f1; scene Assets/RoadGunner/Scenes/Level01_Greenwood.unity.
+Output WebBuild/. Completed2026-10-25T00:13:37.8285530Z,
+04:13:37 Asia/Yerevan on25 October2026.
+Static payload20,070,649bytes (about20.1MB /19.1MiB),7files including.nojekyll.
+Gzip with JavaScript Decompression Fallback; all3payloads decode successfully,
+WASM header verified, processed page JavaScript syntax verified.
+Single-threaded, initial WASM memory128MB /maximum512MB, Mobile quality default,
+APP_UI_EDITOR_ONLY retained. Responsive portrait canvas, capped pixel ratio2,
+manual positive-size resize, pointer capture and touch/selection protections.
+The site branch contains only static publishing files and.gitattributes.
+
+TESTING
+Final real Unity Play Mode:78checks passed, failures0, Console errors/exceptions/
+asserts0. See PlayMode.txt. Integration.txt records the connected saved scene.
+Actual540x960 gameplay captures were inspected, including the nose-forward DOWN
+turn, terrain/road map, marker hierarchy and bright cyan10m weapon boundary.
+BrowserVerification.txt records the actual final local Chrome iPhone16-emulation
+checks, native trusted touch delivery, additional synthetic browser TouchEvents,
+W/Sdirectional driving, resource collection, legend and orientation changes.
+WebVerification.txt records live HTTPS payload comparisons against the local build.
+All6required public files returned HTTP200 and matched byte for byte, including
+SHA256. Remote Gzip/WASM and downloaded JavaScript syntax checks passed.
+The public URL was also freshly launched through PLAY in Chrome iPhone16 emulation
+at393x852: Unity initialized and rendered the new terrain/road map, skull markers,
+compact HUD and bright cyan weapon circle. No AppUI/zero-width RenderGraph errors
+were observed. This fresh public launch is separate from the local input checks.
+
+LIMITS
+Chrome phone emulation and synthetic input are not physical-device validation.
+No physical iPhone/Android/Safari or on-device performance test was performed.
+One nonfatal optional URP upscaling shader warning and existing informational
+audio/postprocessing messages appeared in Chrome; gameplay continued normally.

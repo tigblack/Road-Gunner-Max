@@ -1,0 +1,25 @@
+ROAD GUNNER — LIVE WEB VERIFICATION, 25 OCTOBER 2026
+
+URL: https://tigblack.github.io/Road-Gunner-Max/
+Published gh-pages commit: 3f30f93e7e50a488d92d50a79bb2ac98b4ac65ff
+Six required files downloaded over HTTPS with curl normal CA validation; no insecure option.
+Each downloaded response was compared byte for byte with the final local WebBuild.
+
+PASS index.html: HTTP 200, TLS verify 0, 5066 bytes, SHA256 d3808a66218975998998670a7a7294484009ebea917689afb5cbb8023adfa21d, byte-for-byte identical to local build
+PASS build-info.json: HTTP 200, TLS verify 0, 240 bytes, SHA256 2d9d1abaa603534837d1fe0373f89aef7f7e723dec89ad46a65a90474d634eae, byte-for-byte identical to local build
+PASS Build/WebBuild.loader.js: HTTP 200, TLS verify 0, 48779 bytes, SHA256 11cf5af71ad9b53c239ca945a0214ab56b711db641bcbeef5694431477cc3484, byte-for-byte identical to local build
+PASS Build/WebBuild.data.unityweb: HTTP 200, TLS verify 0, 10063053 bytes, SHA256 4e06b63d22ebb58d45b07c7ac243a175507272fb171c93987f65937e8a6946dd, byte-for-byte identical to local build
+PASS Build/WebBuild.framework.js.unityweb: HTTP 200, TLS verify 0, 74863 bytes, SHA256 c41226c2f89fd517e92876966b1719af34f96cdb2d01d4bf2c95f890d915c6a7, byte-for-byte identical to local build
+PASS Build/WebBuild.wasm.unityweb: HTTP 200, TLS verify 0, 9878648 bytes, SHA256 529c76b99d332eec2dd541784d5e465213a461470e1c0881cb12d7b45aca304c, byte-for-byte identical to local build
+
+PASS Gzip decompression Build/WebBuild.data.unityweb: 19457011 decoded bytes
+PASS Gzip decompression Build/WebBuild.framework.js.unityweb: 330905 decoded bytes
+PASS Gzip decompression Build/WebBuild.wasm.unityweb: 36784863 decoded bytes; WASM magic 00 61 73 6d valid
+PASS JavaScript syntax: downloaded loader, downloaded/decompressed framework and all processed index.html inline scripts (node --check).
+PASS live build metadata: Unity 6000.6.4f1; builtAtUtc 2026-10-25T00:13:37.8285530Z; Gzip with JavaScript decompression fallback.
+
+Downloaded six-file total: 20,070,649 bytes.
+Final local static site: 7 files including zero-byte .nojekyll; total 20,070,649 bytes.
+All required live files match the final local build.
+
+This is a network/package-integrity check. It does not itself establish browser initialization, mobile gesture behavior or physical-device performance; browser observations are recorded separately.
