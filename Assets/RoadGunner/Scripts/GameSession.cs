@@ -23,6 +23,7 @@ namespace RoadGunner
         public int Scrap { get; private set; }
         public int Kills { get; private set; }
         public int ScrapEarned { get; private set; }
+        public int RunSerial { get; private set; }
         public event System.Action Changed;
         public bool Playing => State==SessionState.Playing;
         public float PlayerDamage(float baseDamage) => runStats ? runStats.Damage(baseDamage) :
@@ -34,6 +35,7 @@ namespace RoadGunner
             health.Died+=Defeat; Restart();
         }
         public void Restart() {
+            RunSerial++;
             Time.timeScale=1; State=SessionState.Playing; Scrap=0;Kills=0;ScrapEarned=0;nextRecover=0;
             input.testInput=false;input.testBrake=false;input.Clear();input.Enabled=true;vehicle.CanDrive=true;
             vehicle.ResetPose(startPosition,startRotation); if(vehicle.engine)vehicle.engine.UnPause(); if(runStats)runStats.ResetRun(); health.ResetHealth();turret.ResetCombat();effects.ResetPool();pickups.ResetPool();

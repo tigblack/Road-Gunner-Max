@@ -1,0 +1,49 @@
+{
+  "http": [
+    {
+      "path": "Build/WebBuild.data.unityweb",
+      "status": 200,
+      "contentType": "application/vnd.unity",
+      "bytes": 11066529,
+      "matchesLocalSha256": true
+    },
+    {
+      "path": "Build/WebBuild.framework.js.unityweb",
+      "status": 200,
+      "contentType": "application/vnd.unity",
+      "bytes": 74863,
+      "matchesLocalSha256": true
+    },
+    {
+      "path": "Build/WebBuild.loader.js",
+      "status": 200,
+      "contentType": "text/javascript",
+      "bytes": 48779,
+      "matchesLocalSha256": true
+    },
+    {
+      "path": "Build/WebBuild.wasm.unityweb",
+      "status": 200,
+      "contentType": "application/vnd.unity",
+      "bytes": 9890264,
+      "matchesLocalSha256": true
+    },
+    {
+      "path": "build-info.json",
+      "status": 200,
+      "contentType": "application/json",
+      "bytes": 240,
+      "matchesLocalSha256": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "contentType": "text/html",
+      "bytes": 5105,
+      "matchesLocalSha256": true
+    }
+  ],
+  "inlineTemplateJavascriptSyntaxVerified": true,
+  "wasmValidation": "WASM valid=true",
+  "browserVisualRun": "NOT VERIFIED: CUA returned cgWindowNotFound for Unity, Chrome and Safari after successful build; browser provider unavailable. Native Unity runtime and captures verified separately."
+}

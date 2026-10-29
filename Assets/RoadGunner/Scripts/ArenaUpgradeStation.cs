@@ -22,6 +22,32 @@ namespace RoadGunner
         Color labelColor;
         bool capturedColor;
 
+        public string UpgradeLabel
+        {
+            get
+            {
+                var source = stats ? stats : session ? session.runStats : null;
+                var combat = source ? source.tuning : null;
+                if (kind == ArenaUpgradeKind.Attack)
+                {
+                    if (!combat) return "ATTACK\nUPGRADE";
+                    float bonus = Mathf.Max(0, combat.attackLevelBonus);
+                    int level = source.AttackLevel;
+                    float currentMultiplier = 1 + Mathf.Max(0, level - 1) * bonus;
+                    float percent = bonus / currentMultiplier * 100;
+                    return "ATTACK\n+" + percent.ToString("0.#") + "%";
+                }
+                var health = session ? session.health : source && source.session ? source.session.health : null;
+                if (!health || !health.tuning || !combat) return "HEALTH\nUPGRADE";
+                float baseHealth = health.tuning.vehicleHealth;
+                float healthBonus = Mathf.Max(0, combat.healthLevelBonus);
+                int healthLevel = source.HealthLevel;
+                float currentMaximum = Mathf.Max(1, baseHealth * (1 + Mathf.Max(0, healthLevel - 1) * healthBonus));
+                float nextMaximum = Mathf.Max(1, baseHealth * (1 + healthLevel * healthBonus));
+                return "HEALTH\n+" + Mathf.Max(0, nextMaximum - currentMaximum).ToString("0.#") + " HP";
+            }
+        }
+
         public void ResetStation()
         {
             Consumed = false; nextCheck = 0; highlightUntil = 0;
@@ -31,8 +57,9 @@ namespace RoadGunner
             if (displayText)
             {
                 if (!capturedColor) { labelColor = displayText.color; capturedColor = true; }
+                displayText.gameObject.SetActive(true);
                 displayText.color = labelColor;
-                displayText.text = kind == ArenaUpgradeKind.Attack ? "ATTACK\n+1" : "HEALTH\n+1";
+                displayText.text = UpgradeLabel;
             }
         }
 
@@ -56,8 +83,7 @@ namespace RoadGunner
             if (highlight) { highlightUntil = Time.time + .8f; highlight.SetActive(true); }
             if (displayText)
             {
-                displayText.text = kind == ArenaUpgradeKind.Attack ? "ATTACK\nINSTALLED" : "HEALTH\nINSTALLED";
-                displayText.color = new Color(.55f, .63f, .55f, 1);
+                displayText.gameObject.SetActive(false);
             }
             if (session.effects) session.effects.Pickup();
             onCollected?.Invoke();

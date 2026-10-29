@@ -1,0 +1,6 @@
+AntonSkill feedback applied to the restored open Unity arena.
+Presentation only: goal/tutorial/score/upgrade feedback, compact boss HUD and readable Pause/Defeat/Clear.
+World geometry, navigation, roster, speed/inertia, HP/damage/rewards and free terminals/repair retained.
+HUD is authored at1080x1920 and fitted into the actual safe area without stretching.
+RunSerial resets presentation once per Restart. Pause/Resume preserves tutorial progress.
+WebGL must be rebuilt after saving this scene.

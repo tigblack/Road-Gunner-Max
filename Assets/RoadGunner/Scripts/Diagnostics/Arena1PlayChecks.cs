@@ -19,8 +19,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/CasualPolish-2026-10-25/PlayMode.txt";
-        public const string CaptureFolder = "outputs/casual-polish-validation";
+        public const string ReportPath = "Documentation/RoadGunner/AntonFeedback-2026-10-29/PlayMode.txt";
+        public const string CaptureFolder = "outputs/anton-feedback-validation";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -57,7 +57,7 @@ namespace RoadGunner
             running = true; Completed = false; Failures = Checks = 0; report.Clear();
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(CaptureFolder);
-            report.Add("Arena 1 casual combat polish acceptance — actual Unity Play Mode; " + Application.unityVersion);
+            report.Add("Arena 1 Anton feedback acceptance — actual Unity Play Mode; " + Application.unityVersion);
             report.Add("Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.");
             File.WriteAllLines(ReportPath, report);
             StartCoroutine(RunGuarded());
@@ -74,7 +74,7 @@ namespace RoadGunner
         {
             // Let the real GameSession.Start initialize its run and HUD first.
             yield return null; yield return null;
-            var sections = new Func<IEnumerator>[] { SceneAndMap, EnemyHealthUi, CircularMapAndWhiteRange, ArenaMusicChecks, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, BossAndCompletion };
+            var sections = new Func<IEnumerator>[] { SceneAndMap, EnemyHealthUi, CircularMapAndWhiteRange, ArenaMusicChecks, UpgradesAndRepair, CombatAndLoot, FastHarpoon, DrivingAndTouch, AntonFeedback, BossAndCompletion };
             foreach (var factory in sections)
             {
                 IEnumerator section = factory();
@@ -298,9 +298,10 @@ namespace RoadGunner
             Check("upgrade proximity boundary", !attack.Consumed && s.runStats.AttackLevel == 1, "Standing outside the attack station radius grants no upgrade");
             PlaceCar(attack.transform.position + Vector3.up * .7f, testRotation);
             yield return new WaitForSecondsRealtime(.25f);
-            Check("ATTACK +1 changes combat and HUD", attack.Consumed && s.runStats.AttackLevel == 2 &&
-                s.PlayerDamage(s.turret.tuning.bulletDamage) > baseDamage && s.hud.statsText.text.Contains("ATK 2") &&
-                s.hud.upgradeFeedbackText.gameObject.activeSelf && s.hud.upgradeFeedbackText.text == "ATTACK +1",
+            Check("damage upgrade explains its actual run effect", attack.Consumed && s.runStats.AttackLevel == 2 &&
+                Mathf.Abs(baseDamage - 5.25f) < .001f && Mathf.Abs(s.PlayerDamage(s.turret.tuning.bulletDamage) - 6.3f) < .001f &&
+                s.hud.statsText.text.Contains("ATK 2") && s.hud.upgradeFeedbackText.gameObject.activeSelf &&
+                s.hud.upgradeFeedbackText.text.Contains("DAMAGE +20%") && s.hud.upgradeFeedbackText.text.Contains("THIS RUN"),
                 "Damage " + baseDamage + " -> " + s.PlayerDamage(s.turret.tuning.bulletDamage) + "; HUD=" + s.hud.statsText.text);
             Check("consumed upgrade leaves minimap", !s.minimap.TryGetMarker(attack.transform, out _), "ATTACK station marker disappears after collection");
             Capture("attack-upgrade");
@@ -315,6 +316,10 @@ namespace RoadGunner
                 Mathf.Abs(s.health.Current - (damagedHP + s.health.Maximum - previousMax)) < .1f &&
                 s.hud.statsText.text.Contains("HP 2") && Mathf.Abs(s.hud.healthFill.fillAmount - s.health.Current / s.health.Maximum) < .001f,
                 "Maximum=" + previousMax + " -> " + s.health.Maximum + "; current=" + s.health.Current + "; HUD=" + s.hud.statsText.text);
+            Check("health upgrade explains its actual run effect", Mathf.Abs(s.health.Maximum - previousMax - 20) < .001f &&
+                s.hud.upgradeFeedbackText.gameObject.activeSelf && s.hud.upgradeFeedbackText.text.Contains("MAX HP +20") && s.hud.upgradeFeedbackText.text.Contains("CURRENT +20") &&
+                s.hud.upgradeFeedbackText.text.Contains("THIS RUN"),
+                "Actual max HP increase=" + (s.health.Maximum - previousMax) + "; toast=" + s.hud.upgradeFeedbackText.text);
             var workshop = s.minimap.workshops.First(w => w && w.session == s);
             PlaceCar(workshop.transform.position + Vector3.up * .7f, testRotation);
             float before = s.health.Current, began = Time.time;
@@ -325,11 +330,17 @@ namespace RoadGunner
             s.health.DamageEnabled = true; s.health.Damage(s.health.Maximum + 1, false);
             Check("death retains levels until restart", s.State == SessionState.Defeated && s.runStats.AttackLevel == 2 && s.runStats.HealthLevel == 2,
                 "Defeat uses the original session flow");
+            Check("defeat overlay shows real run effects and reset consequence", s.hud.overlayTitle.text == "WRECKED" &&
+                s.hud.overlayDetails && s.hud.overlayDetails.text.Contains("6.3") && s.hud.overlayDetails.text.Contains("MAX HP 120") &&
+                s.hud.restartHint && s.hud.restartHint.text.Contains("RESET") && !s.hud.resume.gameObject.activeSelf,
+                "Defeat keeps upgraded damage/maximum in the result and offers a disclosed fresh run");
+            Capture("anton-defeated");
             s.Restart(); s.turret.enabled = false; s.health.DamageEnabled = false;
             yield return new WaitForSecondsRealtime(.15f);
             Check("restart resets run and stations", s.Playing && s.runStats.AttackLevel == 1 && s.runStats.HealthLevel == 1 &&
                 s.runStats.stations.All(station => !station.Consumed) && Mathf.Approximately(s.health.Maximum, previousMax) &&
-                Mathf.Approximately(s.health.Current, previousMax) && s.minimap.TryGetMarker(attack.transform, out _),
+                Mathf.Approximately(s.health.Current, previousMax) && s.minimap.TryGetMarker(attack.transform, out _) &&
+                Mathf.Approximately(s.PlayerDamage(s.turret.tuning.bulletDamage), baseDamage) && !s.hud.upgradeFeedbackText.gameObject.activeSelf,
                 "Base health/stats, station availability and map icons restored");
         }
 
@@ -781,6 +792,15 @@ namespace RoadGunner
                 !s.vehicle.CanDrive && !s.input.Enabled && Time.timeScale == 0 && s.hud.overlay.activeSelf && s.hud.overlayTitle.text == "ARENA CLEAR",
                 "State=" + s.State + "; resources=" + s.Scrap + "; expected=" + (collected + remaining + boss.bossGearReward) + "; overlay=" + s.hud.overlayTitle.text);
             Check("final boss marker removed", !s.minimap.TryGetMarker(boss.transform, out _), "Completed boss is absent from the map");
+            Check("victory result identifies the goal and actual settled score", s.hud.overlayKicker && s.hud.overlayKicker.text == "WARLORD DEFEATED" &&
+                s.hud.overlayScore.text == "SCRAP SCORE  " + s.Scrap + "\nKILLS  " + s.Kills &&
+                s.hud.resultBadge && s.hud.resultBadge.gameObject.activeSelf && !s.hud.resume.gameObject.activeSelf,
+                "Victory names the defeated objective, celebrates it and reports only this run's actual score/kills");
+            var completedGuidance = s.GetComponent<ArenaGuidance>();
+            Check("completion hides onboarding and navigation prompts", completedGuidance && completedGuidance.CurrentHint == "" &&
+                !completedGuidance.hintPanel.activeSelf && !completedGuidance.gestureRoot.activeSelf &&
+                !completedGuidance.directionArrow.gameObject.activeSelf && !completedGuidance.directionLabel.gameObject.activeSelf,
+                "Terminal result has no live driving/combat prompt");
             Capture("arena-complete");
             s.TogglePause();
             Check("completed result stays completed", s.State == SessionState.Completed && Time.timeScale == 0, "Pause cannot resume a finished arena");
@@ -795,9 +815,9 @@ namespace RoadGunner
             public Canvas canvas; public RenderMode mode; public Camera camera; public float plane;
         }
 
-        void Capture(string name)
+        void Capture(string name, int width = 540, int height = 960)
         {
-            var camera = s.input.view; const int width = 540, height = 960;
+            var camera = s.input.view;
             var target = RenderTexture.GetTemporary(width, height, 24);
             var previousTarget = camera.targetTexture; var previousActive = RenderTexture.active; float previousAspect = camera.aspect;
             var texture = new Texture2D(width, height, TextureFormat.RGB24, false);
@@ -817,7 +837,7 @@ namespace RoadGunner
                 RenderPipeline.SubmitRenderRequest(camera, new UniversalRenderPipeline.SingleCameraRequest { destination = target });
                 RenderTexture.active = target; texture.ReadPixels(new Rect(0, 0, width, height), 0, 0); texture.Apply();
                 File.WriteAllBytes(path, texture.EncodeToPNG());
-                Check("portrait capture " + name, File.Exists(path) && new FileInfo(path).Length > 5000, path + " — actual gameplay camera and HUD, 540 x 960");
+                Check("gameplay capture " + name, File.Exists(path) && new FileInfo(path).Length > 5000, path + " — actual gameplay camera and HUD, " + width + " x " + height);
             }
             finally
             {

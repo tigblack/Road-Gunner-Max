@@ -38,8 +38,8 @@ namespace RoadGunner
             {
                 boundPanel = panel; panelGroup = panel.GetComponent<CanvasGroup>();
                 if (!panelGroup) panelGroup = panel.AddComponent<CanvasGroup>();
-                panelGroup.blocksRaycasts = false; panelGroup.interactable = false;
             }
+            panelGroup.blocksRaycasts = false; panelGroup.interactable = false;
             panelGroup.alpha = visible ? 1 : 0;
             if (visible && !panel.activeSelf) panel.SetActive(true);
         }
@@ -51,7 +51,7 @@ namespace RoadGunner
             {
                 if (mutant.IsTelegraphing) return "HEAVY SMASH · DODGE";
                 if (mutant.State == MutantState.SmashRecovery) return "RECOVERING";
-                return "MELEE MUTANT";
+                return "OPTIONAL MINI-BOSS";
             }
             if (target is TruckArenaBoss truck)
             {
@@ -66,7 +66,7 @@ namespace RoadGunner
             {
                 if (raider.IsTelegraphing) return "HEAVY STRIKE · DODGE";
                 if (raider.IsRecovering) return "RECOVERING";
-                return "RAIDER WARLORD · FINAL BOSS";
+                return string.Empty;
             }
             return string.Empty;
         }
@@ -99,7 +99,15 @@ namespace RoadGunner
                 if (healthText) healthText.text = integerHealth + " / " + integerMaximum;
             }
             string phase = session.Playing ? PhaseOf(closest) : "PAUSED";
-            if (phase != displayedPhase) { displayedPhase = phase; if (phaseText) phaseText.text = phase; }
+            if (phase != displayedPhase)
+            {
+                displayedPhase = phase;
+                if (phaseText)
+                {
+                    phaseText.text = phase;
+                    phaseText.gameObject.SetActive(!string.IsNullOrEmpty(phase));
+                }
+            }
             SetVisible(true);
         }
     }

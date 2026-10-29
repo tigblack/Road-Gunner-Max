@@ -55,6 +55,7 @@ namespace RoadGunner.Editor
             CasualMinimapInstaller.Configure(s.minimap);
             EnemyHealthBarAuthoring.Configure(layout);
             ArenaMusicBuilder.Configure(s);
+            AntonFeedbackInstaller.ConfigureScene(layout);
         }
     }
 }

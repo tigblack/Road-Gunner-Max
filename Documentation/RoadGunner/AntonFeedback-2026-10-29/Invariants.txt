@@ -1,0 +1,22 @@
+Saved-scene audit against aaf2fcf (restored open arena / inertial Unity baseline).
+
+Unity YAML compared by fileID block, ignoring trailing whitespace only.
+45 semantically changed existing blocks are presentation:
+24 RectTransform, 11 UI MonoBehaviour, 8 GameObject, 2 terminal TextMesh labels.
+New objectivePanel and directionRow bindings resolve to the authored UI hierarchy.
+
+Unchanged:
+- 1926 ordinary Transform blocks
+- 238 MeshRenderer and 236 MeshFilter blocks
+- 27 direct collider blocks
+- Camera, NavMeshSettings and LightmapSettings blocks
+- all 501 PrefabInstance blocks, including their gameplay overrides
+- 98 gameplay MonoBehaviour blocks, including LevelLayout, SpawnDirector,
+  roster, player controller, FollowCamera and combat components
+- external level, prefab, geometry and navigation assets
+- VehicleController.cs, VehicleTuning.cs and both saved handling assets
+
+Saved scene SHA256 before final runtime acceptance/build:
+5ba281b151417d61bde512c352e2b831ad369e41b62838887a9f0aee93b141e0
+
+Runtime acceptance uses the saved scene without persisting its diagnostic changes.
