@@ -190,6 +190,8 @@ WebBuild/ has been rebuilt for the wheel-physics revision and passed gzip,
 JavaScript, WASM and Unity data checks. Building locally does not publish the
 GitHub Pages demo; the publication record is separate. Pages build 2310eee is
 the earlier Anton release with the old handling; its evidence is historical.
+Current published wheel-physics release: d6a9ba3, with successful Pages deployment
+and matching public-file hashes. See WheelPhysics-2026-10-30/Publication.txt.
 
 Opt-in acceptance tools are under Tools > Road Gunner > Validate. Diagnostic
 runners can stage actors, feed the Input System and exercise gameplay systems;

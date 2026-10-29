@@ -79,7 +79,7 @@ Legacy rebalance/prototype/polish commands have their own authoring scopes and
 may replace presentation or tuning; apply the Anton feedback installer last
 when retaining the current HUD. See Assets/RoadGunner/README.txt for details.
 
-WEB BUILD AND PREVIOUS PUBLISHED DEMO
+WEB BUILD AND PUBLISHED DEMO
 Use Tools / Road Gunner / Web / Build Mobile Web, or batch entry
 RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/.
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
@@ -88,8 +88,12 @@ decompression fallback supports static hosting.
 WebBuild/ has been rebuilt with the new wheel-physics revision. Its gzip,
 JavaScript, WASM and Unity data checks passed. Publication is recorded separately
 under Documentation/RoadGunner/WheelPhysics-2026-10-30/Publication.txt.
-Previous demo: https://tigblack.github.io/Road-Gunner-Max/?build=2310eee
-That release contains the restored open arena and Anton HUD with the earlier
+Current wheel-physics demo: https://tigblack.github.io/Road-Gunner-Max/?build=d6a9ba3
+Published on 30 October 2026 (Asia/Yerevan). Pages deployment succeeded and all
+six public files match the verified local player. Details:
+Documentation/RoadGunner/WheelPhysics-2026-10-30/Publication.txt
+Previous demo revision: 2310eee. That release contains the open arena and Anton
+HUD with the earlier
 handling. Its 30 October 2026 (Asia/Yerevan) Pages deployment, artifact identity
 and hashes are historical evidence for that build:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/Publication.txt

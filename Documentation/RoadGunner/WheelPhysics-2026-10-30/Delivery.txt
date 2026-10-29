@@ -78,6 +78,8 @@ WebGL Build Finished: Success, Unity6000.6.4f1.
 GzipCRC, UnityWebData header, WASM header+WebAssembly.validate иJS syntax
 (loader/framework/inline template) проверены. Manifest и sourceSHA:WebBuild.json.
 Публичная доставка этой сборки фиксируется отдельно в Publication.txt.
+Опубликовано: https://tigblack.github.io/Road-Gunner-Max/?build=d6a9ba3
+Pages deployment успешен, все шесть публичных файлов совпали поSHA256.
 Для сборки: Tools / Road Gunner / Web / Build Mobile Web;
 batch: RoadGunner.EditorTools.WebBuild.Build, -buildTarget WebGL.
 Производительность физического телефона и субъективное ощущение управления

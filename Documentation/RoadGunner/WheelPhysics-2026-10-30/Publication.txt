@@ -1,0 +1,47 @@
+ROAD GUNNER — WHEEL PHYSICS WEBGL, 30 OCTOBER 2026 (ASIA/YEREVAN)
+
+PLAY
+https://tigblack.github.io/Road-Gunner-Max/?build=d6a9ba3
+
+RELEASE
+Source commit: e46d7fa736eb6e86e71de89c72ddca26a3401bee
+Restore wheel-driven player physics and refresh WebGL.
+Pages commit: d6a9ba30cbcf4d9cd83dfa90dec0095cfe8e3151
+deploy: publish wheel-driven vehicle physics.
+Normal pushes to the existing origin/main and origin/gh-pages, no force push.
+Existing Pages source retained: gh-pages, root folder.
+
+DEPLOYMENT
+GitHub Actions 40970047842 completed successfully:
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/40970047842
+Pages builds/latest: status=built, matching commit, error.message=null.
+Updated UTC2026-10-29T23:00:44Z, or30October03:00:44 Asia/Yerevan.
+
+BUILD AND VERIFICATION
+Unity6000.6.4f1, saved Level01_Greenwood, WebBuild/.
+Built UTC2026-10-29T22:58:37.2699970Z; seven static files21090728bytes.
+All three gzip payloads passed CRC/decompression, WASM header/validation,
+UnityWebData header and loader/framework/inline-template JavaScript syntax.
+WebBuild.json records artifact and production controller/tuning/scene hashes.
+
+All six nonhidden public files were downloaded at their ordinary HTTPS URLs,
+with certificate verification enabled, and returned HTTP200 with exact matching
+SHA256: data, framework, WASM, loader, index and build-info. LiveManifest.json
+records URLs, sizes, hashes and response metadata.
+
+The player is the same wheel-driven revision that passed20 physical checks and
+204 Arena1 gameplay checks, zero failures and zero Console errors/exceptions/
+asserts. Physical forces, real turning arcs, release/Space, impacts, suspension,
+airborne behavior and solver30/60/120Hz were measured, alongside the existing
+production touch/combat/upgrades/harpoon/result/reset regression.
+
+This verifies publication/file identity and native Unity behavior. A fresh
+browser playthrough and physical-phone performance were not measured for this
+release. The physical timestep comparison is not a display-FPS benchmark.
+Open arena, world geometry, camera, combat balance and the Anton HUD remain.
+
+HYGIENE
+Only the intended source/tuning/tests/docs and tracked WebBuild artifacts were
+committed. User-local AntonSkill, _anton and Unreal/Godot summary files remain
+untracked. Unity/Burst/render-pipeline build metadata is kept outside the source
+diff. Temporary publishing checkout removed after verification.
