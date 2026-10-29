@@ -9,16 +9,17 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. Arena 1 uses the restored open layout and inertial driving baseline
-from 7c8b54c, before the corridor/release-braking revision. The Anton feedback
-pass updates guidance, HUD and feedback; its scope is this Unity game.
+Press Play. Arena 1 keeps the restored open geography from 7c8b54c and the Anton
+feedback HUD. The 30 October wheel-physics revision drives and turns the player
+through WheelCollider tyre forces. The current work concerns this Unity game.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
-a camera-relative travel direction. The car turns its nose toward that direction
-and drives forward. S / Down turns toward screen-bottom; it does not select
-reverse. Joystick magnitude controls speed; a held joystick takes priority.
-Release input to coast. Space applies the brake. Escape / II pauses the run.
+a camera-relative travel direction. The car steers toward that direction while
+rolling forward. S / Down requests a forward U-turn toward screen-bottom; allow
+room for its turning arc. It does not select reverse. Joystick magnitude controls
+speed; a held joystick takes priority. Release input to coast. Space applies the
+brake. Escape / II pauses the run.
 
 DEFEAT WARLORD to clear Arena 1. The Ashmaw Monster mini-boss is optional; a
 16/16 enemy clear is not required. The goal card first points toward a nearby
@@ -64,24 +65,33 @@ Documentation/RoadGunner/AntonFeedback-2026-10-29/Implementation.txt
 ARENA AUTHORING AND TUNING
 Tools / Road Gunner / Level Editor opens the existing scene-based authoring
 tools. Per-level settings live under Assets/RoadGunner/Levels/Greenwood/Arena1.
-Configured player maxSpeed is 11.7 m/s; outgoing base damage uses multiplier
-0.35. The feedback installer does not change these values or driving inertia.
+Configured player maxSpeed is 11.7 m/s. Tight turns request a manoeuvring speed
+of 4.2 m/s at full input, rather than pivoting the body in place. Ackermann
+steering uses the actual 3.05 m wheelbase and 2.07 m front track. Yaw countersteer
+acts through front-wheel angles. Ordinary driving does not directly set body
+rotation or velocity; Recover/Restart still reset pose explicitly. Outgoing base
+damage uses multiplier 0.35. The feedback installer authors presentation only.
+Wheel-physics revision notes and subsequent evidence belong under:
+Documentation/RoadGunner/WheelPhysics-2026-10-30/
 After editing terrain or roads, refresh the static map through the existing
 minimap authoring workflow and rebake navigation as required by the Level Editor.
 Legacy rebalance/prototype/polish commands have their own authoring scopes and
 may replace presentation or tuning; apply the Anton feedback installer last
 when retaining the current HUD. See Assets/RoadGunner/README.txt for details.
 
-WEB BUILD AND PUBLISHED DEMO
+WEB BUILD AND PREVIOUS PUBLISHED DEMO
 Use Tools / Road Gunner / Web / Build Mobile Web, or batch entry
 RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/.
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-Published demo: https://tigblack.github.io/Road-Gunner-Max/?build=2310eee
-The restored open arena and Anton feedback HUD were published on 30 October
-2026 (Asia/Yerevan), Pages commit 2310eee. All six public release files match
-the verified local WebGL build. Publication details and hashes:
+WebBuild/ has been rebuilt with the new wheel-physics revision. Its gzip,
+JavaScript, WASM and Unity data checks passed. Publication is recorded separately
+under Documentation/RoadGunner/WheelPhysics-2026-10-30/Publication.txt.
+Previous demo: https://tigblack.github.io/Road-Gunner-Max/?build=2310eee
+That release contains the restored open arena and Anton HUD with the earlier
+handling. Its 30 October 2026 (Asia/Yerevan) Pages deployment, artifact identity
+and hashes are historical evidence for that build:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/Publication.txt
 The Anton feedback installer itself does not publish a Web build.
 
@@ -96,13 +106,16 @@ _anton/            AntonSkill review and its evidence
 The pre-change feedback review is:
 _anton/road-gunner-unity-2026-10-29/РАЗБОР.md
 Historical validation reports describe their named snapshots; diagnostic
-captures are not natural playthroughs. This feedback revision passed 204 Unity
-runtime checks with zero failures and zero Console errors/exceptions/asserts:
+captures are not natural playthroughs. The earlier Anton feedback revision
+recorded 204 Unity runtime checks, zero failures and zero Console errors:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/PlayMode.txt
-The local WebGL build passed archive, JavaScript, WASM and HTTP-file checks.
-Its post-build visual browser run was unavailable (CUA cgWindowNotFound).
-Device performance and retention were not measured. Delivery notes and actual
-runtime screenshots are in the same Documentation folder.
+Its archive/JavaScript/WASM/HTTP checks and unavailable post-build visual browser
+run (CUA cgWindowNotFound) also concern that earlier build. They do not establish
+acceptance of the new wheel physics. The current revision passed 20 dedicated
+physics checks plus 204 full Arena 1 regression checks, with zero failures and
+zero Console errors/exceptions/asserts. Reports: WheelPhysics-2026-10-30/PlayMode.txt
+and Gameplay.txt. No FPS, retention or cross-platform physics determinism is
+asserted here.
 Exact The War reference data was unavailable; Arena 1 remains the documented
 authored fallback layout. Unity caches, local IDE state and generated build
 folders can be recreated by the editor.

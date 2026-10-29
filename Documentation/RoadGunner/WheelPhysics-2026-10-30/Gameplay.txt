@@ -1,0 +1,210 @@
+Arena 1 wheel-driven handling regression — actual Unity Play Mode; 6000.6.4f1
+Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.
+PASS saved gameplay references: LevelLayout, stats, HUD, minimap and rear harpoon are wired on the gameplay scene
+PASS fallback roster and ranks: Authored Raiders=12, Buggies=2, Monster=1, Boss Raider=1; temporary fallback, not verified The War data
+PASS finite authored encounters: All authored enemies spawned; legacy random encounter respawn is disabled
+PASS current speed increased by thirty percent: Previous forward=9; current=11.7; multiplier=1.3, steering=125, outgoing multiplier=0.35
+PASS base run stats and HUD: ATK 1    HP 1
+PASS encounters connected to start: Navigation paths reach ordinary encounters, both vehicles, Monster and Boss Raider
+PASS minimap uses actual arena and live targets: Visible markers=20/20; map UI=(394.00, 394.00); bounds=Center: (1.77, 0.00, 22.98), Extents: (245.00, 12.00, 245.00)
+PASS minimap icons produce rendered geometry: Visible CanvasRenderer meshes=20/20; vertices=1304
+PASS minimap renders baked Arena terrain and roads: Texture=512x512; sampled palette=53; environment meshes=565; roads=6; triangles=919952; background/icon bounds aligned=True
+PASS normal enemies and distinct reward objects are red: Red ordinary markers=14; red interactive markers=2; distinct geometry=True
+PASS workshop has a prominent green white-wrench marker: Green repair markers=1; white spanner geometry=True
+PASS orange mini skull and red boss skull are prominent: Mini color=RGBA(1.000, 0.480, 0.070, 1.000); boss color=RGBA(1.000, 0.130, 0.190, 1.000); complex skull geometry=True
+PASS player marker stays unique and map stays north-up: Player color=RGBA(1.000, 1.000, 1.000, 1.000); player width=32; boss width=27
+PASS white range retains actual ten metre radius: Weapon/ring=10/10m; white=True; outline=0.16; contrast=0.1; fill alpha=0.025; outline alpha=0.92; material alpha=1
+PASS map key opens and closes without covering default HUD: Legend starts hidden, opens on request and closes before the gameplay capture
+PASS gameplay capture initial-start: outputs/wheel-physics-regression/initial-start.png — actual gameplay camera and HUD, 540 x 960
+PASS enemy health UI reuses actual combat targets: Cached normal/pool targets=45; live=14; Raider/Buggy bars configured before isolation
+PASS HEALTH D multiple compact bars remain available: All living ordinary enemies have one compact world bar; no per-frame fill polling is required
+PASS HEALTH A Raider damage updates actual HP ratio: HP=29.25/45; fill=0.65; one health notification
+PASS damaged enemy bar produces visible UI geometry: Bright fill, rounded contrast track and camera-rendered world canvas precede screen HUD
+PASS gameplay capture raider-health-bar: outputs/wheel-physics-regression/raider-health-bar.png — actual gameplay camera and HUD, 540 x 960
+PASS health fill updates only on health changes: Refresh count remained 14 while the live bar followed the enemy for multiple frames
+PASS HEALTH E bar follows enemy and cached camera: Moved/rotated real gameplay camera; anchor error=0; angle error=0; fill unchanged
+PASS gameplay capture multiple-enemy-health-bars: outputs/wheel-physics-regression/multiple-enemy-health-bars.png — actual gameplay camera and HUD, 540 x 960
+PASS several damaged health bars share normal gameplay view: Three neighbouring existing Raiders plus primary target; persistent cached canvases and distinct real HP fractions
+PASS HEALTH C Raider death and despawn hide its bar: The cached component survives deactivation; no corpse health UI remains
+PASS Raider pooled bar returns full without rebuilding: Same component/canvas restored on the existing pool object
+PASS pool reuse keeps one health subscription: Exactly one fill update after a despawn/spawn cycle
+PASS HEALTH B Buggy damage updates actual HP ratio: HP=63/105; fill=0.6
+PASS gameplay capture buggy-health-bar: outputs/wheel-physics-regression/buggy-health-bar.png — actual gameplay camera and HUD, 540 x 960
+PASS HEALTH C Buggy wreck and despawn hide its bar: Actual vehicle destruction hides UI before the pooled root deactivates
+PASS Buggy pooled bar returns full without rebuilding: Same vehicle health UI restored from existing tuning HP
+PASS bosses keep dedicated health HUD without duplicate world bars: Monster and Boss Raider retain the existing dedicated UI; any inherited world bar stays disabled
+PASS existing boss HUD uses the same actual health ratio: Boss Raider HP=416/520; existing boss bar fraction=0.8
+PASS round map uses real stencil clipping: Solid circular Graphic + UGUI Mask, terrain RawImage and marker hierarchy inside; viewport=(394.00, 394.00)
+PASS whole arena and distant repair fit round map: Projected outer ground radius=177; viewport radius=197; content scale=0.906969; all workshops inside with marker margin=True
+PASS terrain pixels are clipped outside circular mask: Actual portrait GPU readback magenta RawImage pixels: centre=134; square corner outside circle=0
+PASS custom icon pixels are clipped outside circular mask: Actual portrait GPU readback magenta Buggy marker pixels: centre=77; square corner outside circle=0
+PASS white boundary has no blue tint and stays subtle: White edge=RGBA(1.000, 1.000, 1.000, 0.920); neutral dark edge=RGBA(0.090, 0.080, 0.060, 0.500); fill=RGBA(1.000, 1.000, 1.000, 0.025); combat radius=10
+PASS gameplay capture round-map-white-range: outputs/wheel-physics-regression/round-map-white-range.png — actual gameplay camera and HUD, 540 x 960
+PASS gameplay capture white-range-sand: outputs/wheel-physics-regression/white-range-sand.png — actual gameplay camera and HUD, 540 x 960
+PASS gameplay capture white-range-road: outputs/wheel-physics-regression/white-range-road.png — actual gameplay camera and HUD, 540 x 960
+PASS gameplay capture white-range-dark-terrain: outputs/wheel-physics-regression/white-range-dark-terrain.png — actual gameplay camera and HUD, 540 x 960
+PASS gameplay capture white-range-bright-terrain: outputs/wheel-physics-regression/white-range-bright-terrain.png — actual gameplay camera and HUD, 540 x 960
+PASS white ring captured over varied actual terrain: Actual road mesh found=True; navigable baked terrain luminance dark=0.4137138; bright=0.7934392; screenshots retain real terrain, lighting, white contour and thin dark contrast
+PASS one original Arena music source is connected: One dedicated music AudioSource on the existing GameSession; gun/impact/pickup source remains separate
+PASS Arena music automatically plays the loaded loop: Playing=True; loop=True; starts=1; clip=Dustlight Road; length=48.064s; load=Loaded
+PASS music reaches moderate volume without changing SFX: Music source volume=0.300; SFX volume retained=1
+PASS small gameplay notifications do not restart music: Playhead=2.11 -> 2.43s; starts=1
+PASS Arena restart keeps one continuous music voice: Restart playhead=2.43 -> 2.75s; starts=1
+PASS music playback wraps the loop without a second source: Playhead across native loop=47.664 -> 0.773s; starts=1; audible encoded seam requires browser/listening verification
+PASS pause smoothly fades music using unscaled time: Volume=0.300 -> 0.161 -> 0.000; pause Music control visible=True
+PASS pause Music slider persists separately from SFX: Saved/reloaded music=0.17; key=RoadGunner.Audio.MusicVolume; SFX unchanged
+PASS gameplay capture pause-music-control: outputs/wheel-physics-regression/pause-music-control.png — actual gameplay camera and HUD, 540 x 960
+PASS resume restores chosen music level without restarting: Resumed volume=0.170; starts=1
+PASS defeat fades the same music voice: Defeat volume=0.000; sources remain one
+PASS music test restores the original volume preference: Original preference presence/value restored; test creates no permanent settings change
+PASS upgrade proximity boundary: Standing outside the attack station radius grants no upgrade
+PASS damage upgrade explains its actual run effect: Damage 5.25 -> 6.3; HUD=ATK 2    HP 1
+PASS consumed upgrade leaves minimap: ATTACK station marker disappears after collection
+PASS gameplay capture attack-upgrade: outputs/wheel-physics-regression/attack-upgrade.png — actual gameplay camera and HUD, 540 x 960
+PASS upgrade only applies once: Remaining in radius and retrying do not increase attack again
+PASS HEALTH +1 uses existing health: Maximum=100 -> 120; current=80.00001; HUD=ATK 2    HP 2
+PASS health upgrade explains its actual run effect: Actual max HP increase=20.00001; toast=MAX HP +20 · CURRENT +20
+<size=27>THIS RUN</size>
+PASS workshop heals upgraded health: Healed=9.80; expected=9.80; current maximum=120
+PASS death retains levels until restart: Defeat uses the original session flow
+PASS defeat overlay shows real run effects and reset consequence: Defeat keeps upgraded damage/maximum in the result and offers a disclosed fresh run
+PASS gameplay capture anton-defeated: outputs/wheel-physics-regression/anton-defeated.png — actual gameplay camera and HUD, 540 x 960
+PASS restart resets run and stations: Base health/stats, station availability and map icons restored
+PASS ordinary Raider still attacks vehicle: Actual melee damage=6; configured=6
+PASS live Raider minimap marker: Marker is projected from the actual spawned Raider
+PASS gameplay capture white-range-combat: outputs/wheel-physics-regression/white-range-combat.png — actual gameplay camera and HUD, 540 x 960
+PASS roof gun needs multiple Raider hits: Actual shots=9; initial HP=45; player hit=5.25
+PASS human Metal Gear and rear harpoon: Metal Gear visible=True; launch=True; retract=True; scrap=1
+PASS dead Raider leaves minimap: Death removes the enemy marker while the corpse can remain
+PASS moving vehicle map marker follows: Cached marker follows position changes without rediscovering targets
+PASS enemy roof gun still damages player: Hostile shots=2; player HP=100 -> 90
+PASS Buggy tougher than Raider and rewards once: Raider shots=9; Buggy shots=20; reward=3
+PASS vehicle Metal Gear and rear harpoon: Metal Gear=True; launch=True; retract=True; scrap=3
+PASS dead Buggy leaves minimap: Vehicle destruction hides its map marker
+PASS harpoon has faster configurable cycle: Launch18->36; retract/pull12->30; search.15->0.05; cooldown.3->0.08; aim480->960
+PASS previous harpoon baseline measured: Two identical 4.5m drops; elapsed=2.36s; resources=2; collections=2
+PASS faster harpoon collects consecutive gear exactly once: Two identical 4.5m drops; elapsed=1.35s; resources=2; collections=2
+PASS collection is faster while animation remains visible: Previous/current two-drop cycles=2.36/1.35s; improvement=1.75x; visible launch/retract=True/True; maximum reservations=1
+PASS increased speed in real vehicle physics: Peak=10.41m/s; limit=11.7; travelled=46.2
+PASS visible range follows the moving player: Observed after production LateUpdate; frames=361; maximum centre error squared=0.000364; actual weapon radius=10
+PASS brake remains predictable: Stop time=1.55s; speed=0.58
+PASS phone input surface exists: Existing EventSystem and floating joystick are active
+PASS floating joystick hides before a touch: Activation zone stays available while its ring/thumb are hidden
+PASS TEST A origin is exactly the lower-left touch: Touch=(12.10, 24.58); displayed origin error=0.000px; centered magnitude=0
+PASS joystick dead zone remains configurable: Configured dead zone=0.12; small touch delta generates no motion
+PASS sustained touch exceeds the previous nine metre speed: Production Touchscreen/UI peak=9.56m/s; configured=11.7; continuously above9 with grounded wheels=0.40s
+PASS TEST B screen UP uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=0.0; forward speed=3.14; travel along request=1.09m; minimum signed speed=0.00
+PASS TEST F release outside control area clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST C screen LEFT uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.9; forward speed=9.64; travel along request=4.18m; minimum signed speed=0.00
+PASS TEST C screen LEFT release clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST D screen DOWN turns around uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.9; forward speed=9.78; travel along request=4.27m; minimum signed speed=0.00
+PASS gameplay capture joystick-down-forward: outputs/wheel-physics-regression/joystick-down-forward.png — actual gameplay camera and HUD, 540 x 960
+PASS TEST D screen DOWN turns around release clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST E screen DOWN-RIGHT diagonal uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=12.0; forward speed=9.77; travel along request=4.26m; minimum signed speed=0.00
+PASS TEST E screen DOWN-RIGHT diagonal release clears input: Pointer remained captured outside=True; release hides ring and clears input
+PASS TEST G origin respawns at a different touch: New touch/origin=(235.87, 199.68); fixed prior origin was not reused
+PASS touch joystick and second-finger pause: Actual UI touch drag=True; second pointer paused=True
+PASS touch cancellation releases input: Canceled production pointer resets thumb and drive input
+PASS desktop W preserves screen direction: Direction=(0.00, 1.00); reverse=False
+PASS desktop A preserves screen direction: Direction=(-1.00, 0.00); reverse=False
+PASS desktop S preserves screen direction: Direction=(0.00, -1.00); reverse=False
+PASS desktop D preserves screen direction: Direction=(1.00, 0.00); reverse=False
+PASS desktop mouse can drag and release floating stick: Mouse drag routes through the existing UI and release clears input
+PASS onboarding is bound to the saved gameplay HUD: Saved scene must contain the presentation component and its actual UI references
+PASS first-run hint explains drag and automatic fire: Hint=DRAG TO DRIVE Your gun fires automatically
+PASS arena goal distinguishes mandatory Warlord from optional Monster: DEFEAT WARLORD / Defeat Warlord to clear Arena 1 • Monster optional
+PASS guidance adds no buttons or raycast blockers: Selectable controls=0; every guidance Graphic ignores pointer raycasts=True
+PASS hint does not intercept the real EventSystem hit path: Raycast under the visible hint resolves only to the existing gameplay/UI layers; hits=0
+PASS real touch dismisses onboarding without an acknowledgement button: Production InputSystem touch magnitude=1; HasDriven=True
+PASS driving compacts the objective card: Objective reference height=148; introductory detail hidden
+PASS pause hides transient guidance and clears its input: Pause preserves tutorial progress while all transient prompts and captured input are hidden
+PASS resume preserves completed onboarding: Resume is the same run
+PASS restart restores the initial hint once for the new run: Run serial=26 -> 27
+PASS range tutorial waits for an actual auto-gun target: An empty isolated arena does not fabricate a combat prompt
+PASS real target triggers the white ten metre range explanation: Actual gun acquired target=True; hint=WHITE RING · 10 m gun range Your gun fires at enemies inside the ring
+PASS pause preserves the remaining combat explanation: Paused time does not consume or restart the shown range hint
+PASS earned combat reward explains scrap as score: Actual auto-gun kill=1; shots=38; hint=GEAR ADDS TO YOUR SCRAP SCORE Your harpoon collects drops · Upgrade terminals are free
+PASS HUD identifies collected scrap as score: Label=SCRAP SCORE; displayed=007
+PASS free run upgrade does not spend the displayed score: Proximity upgrade collected; score remains=7
+PASS real HUD viewport 540x960: Actual Screen=540x960
+PASS boss HUD uses the fitted safe frame 540x960: Frame=(x:0.00, y:0.00, width:540.00, height:960.00); actual boss visible=True
+PASS boss encounter compacts the objective card 540x960: Objective reference height=148; introductory detail hidden during combat
+PASS boss, objective, map and controls do not overlap 540x960: Boss=(x:16.00, y:807.50, width:280.00, height:75.00); objective=(x:27.00, y:763.00, width:258.00, height:26.00); detail=(x:27.00, y:709.00, width:258.00, height:50.00); map=(x:317.00, y:670.50, width:197.00, height:197.00); ordinary counters hidden
+PASS initial hint stays clear of boss and objective 540x960: Hint=(x:16.00, y:132.00, width:508.00, height:95.00)
+PASS gameplay capture anton-boss-hud-540x960: outputs/wheel-physics-regression/anton-boss-hud-540x960.png — actual gameplay camera and HUD, 540 x 960
+PASS pause overlay keeps content and controls separate 540x960: Card=(x:40.00, y:120.00, width:460.00, height:720.00); visible title/score/details/reset note/Resume/Restart bounds contained=True; no overlap=True
+PASS overlay text contrasts with a bright game world 540x960: Worst normal-text contrast over white game scene=10.64:1; backdrop alpha=0.94
+PASS restart explicitly discloses run reset 540x960: NEW RUN: SCORE, KILLS AND UPGRADES RESET
+PASS pause exposes the existing Music slider 540x960: Real saved music control, fill and handle are visible during pause
+PASS fitted Music slider routes actual seventy percent touch 540x960: Touch=(323.20, 389.00); chosen volume=0.700; label=70%; music sources=1
+PASS Music fill and handle remain thin inside the fitted frame 540x960: Actual reference-unit heights: fill=8.0; handle=44.0; visible bounds=(x:172.00, y:387.00, width:151.20, height:4.00) / (x:317.20, y:378.00, width:12.00, height:22.00)
+PASS gameplay capture anton-pause-540x960: outputs/wheel-physics-regression/anton-pause-540x960.png — actual gameplay camera and HUD, 540 x 960
+PASS fitted overlay routes actual Resume touch 540x960: Production touch at rendered button centre=(270.00, 320.00)
+PASS fitted overlay routes actual Restart touch 540x960: Rendered Restart starts a fresh normal run; serial=30
+PASS real HUD viewport 360x640: Actual Screen=360x640
+PASS boss HUD uses the fitted safe frame 360x640: Frame=(x:0.00, y:0.00, width:360.00, height:640.00); actual boss visible=True
+PASS boss encounter compacts the objective card 360x640: Objective reference height=148; introductory detail hidden during combat
+PASS boss, objective, map and controls do not overlap 360x640: Boss=(x:10.67, y:538.33, width:186.67, height:50.00); objective=(x:18.00, y:508.67, width:172.00, height:17.33); detail=(x:18.00, y:472.67, width:172.00, height:33.33); map=(x:211.33, y:447.00, width:131.33, height:131.33); ordinary counters hidden
+PASS initial hint stays clear of boss and objective 360x640: Hint=(x:10.67, y:88.00, width:338.67, height:63.33)
+PASS gameplay capture anton-boss-hud-360x640: outputs/wheel-physics-regression/anton-boss-hud-360x640.png — actual gameplay camera and HUD, 360 x 640
+PASS pause overlay keeps content and controls separate 360x640: Card=(x:26.67, y:80.00, width:306.67, height:480.00); visible title/score/details/reset note/Resume/Restart bounds contained=True; no overlap=True
+PASS overlay text contrasts with a bright game world 360x640: Worst normal-text contrast over white game scene=10.64:1; backdrop alpha=0.94
+PASS restart explicitly discloses run reset 360x640: NEW RUN: SCORE, KILLS AND UPGRADES RESET
+PASS pause exposes the existing Music slider 360x640: Real saved music control, fill and handle are visible during pause
+PASS fitted Music slider routes actual seventy percent touch 360x640: Touch=(215.47, 259.33); chosen volume=0.700; label=70%; music sources=1
+PASS Music fill and handle remain thin inside the fitted frame 360x640: Actual reference-unit heights: fill=8.0; handle=44.0; visible bounds=(x:114.67, y:258.00, width:100.80, height:2.67) / (x:211.47, y:252.00, width:8.00, height:14.67)
+PASS gameplay capture anton-pause-360x640: outputs/wheel-physics-regression/anton-pause-360x640.png — actual gameplay camera and HUD, 360 x 640
+PASS fitted overlay routes actual Resume touch 360x640: Production touch at rendered button centre=(180.00, 213.33)
+PASS fitted overlay routes actual Restart touch 360x640: Rendered Restart starts a fresh normal run; serial=32
+PASS real HUD viewport 540x1170: Actual Screen=540x1170
+PASS boss HUD uses the fitted safe frame 540x1170: Frame=(x:0.00, y:105.00, width:540.00, height:960.00); actual boss visible=True
+PASS boss encounter compacts the objective card 540x1170: Objective reference height=148; introductory detail hidden during combat
+PASS boss, objective, map and controls do not overlap 540x1170: Boss=(x:16.00, y:912.50, width:280.00, height:75.00); objective=(x:27.00, y:868.00, width:258.00, height:26.00); detail=(x:27.00, y:814.00, width:258.00, height:50.00); map=(x:317.00, y:775.50, width:197.00, height:197.00); ordinary counters hidden
+PASS initial hint stays clear of boss and objective 540x1170: Hint=(x:16.00, y:237.00, width:508.00, height:95.00)
+PASS gameplay capture anton-boss-hud-540x1170: outputs/wheel-physics-regression/anton-boss-hud-540x1170.png — actual gameplay camera and HUD, 540 x 1170
+PASS pause overlay keeps content and controls separate 540x1170: Card=(x:40.00, y:225.00, width:460.00, height:720.00); visible title/score/details/reset note/Resume/Restart bounds contained=True; no overlap=True
+PASS overlay text contrasts with a bright game world 540x1170: Worst normal-text contrast over white game scene=10.64:1; backdrop alpha=0.94
+PASS restart explicitly discloses run reset 540x1170: NEW RUN: SCORE, KILLS AND UPGRADES RESET
+PASS pause exposes the existing Music slider 540x1170: Real saved music control, fill and handle are visible during pause
+PASS fitted Music slider routes actual seventy percent touch 540x1170: Touch=(323.20, 494.00); chosen volume=0.700; label=70%; music sources=1
+PASS Music fill and handle remain thin inside the fitted frame 540x1170: Actual reference-unit heights: fill=8.0; handle=44.0; visible bounds=(x:172.00, y:492.00, width:151.20, height:4.00) / (x:317.20, y:483.00, width:12.00, height:22.00)
+PASS gameplay capture anton-pause-540x1170: outputs/wheel-physics-regression/anton-pause-540x1170.png — actual gameplay camera and HUD, 540 x 1170
+PASS fitted overlay routes actual Resume touch 540x1170: Production touch at rendered button centre=(270.00, 425.00)
+PASS fitted overlay routes actual Restart touch 540x1170: Rendered Restart starts a fresh normal run; serial=34
+PASS real HUD viewport 960x540: Actual Screen=960x540
+PASS boss HUD uses the fitted safe frame 960x540: Frame=(x:328.13, y:0.00, width:303.75, height:540.00); actual boss visible=True
+PASS boss encounter compacts the objective card 960x540: Objective reference height=148; introductory detail hidden during combat
+PASS boss, objective, map and controls do not overlap 960x540: Boss=(x:337.13, y:454.22, width:157.50, height:42.19); objective=(x:343.31, y:429.19, width:145.13, height:14.63); detail=(x:343.31, y:398.81, width:145.13, height:28.13); map=(x:506.44, y:377.16, width:110.81, height:110.81); ordinary counters hidden
+PASS initial hint stays clear of boss and objective 960x540: Hint=(x:337.13, y:74.25, width:285.75, height:53.44)
+PASS gameplay capture anton-boss-hud-960x540: outputs/wheel-physics-regression/anton-boss-hud-960x540.png — actual gameplay camera and HUD, 960 x 540
+PASS pause overlay keeps content and controls separate 960x540: Card=(x:350.63, y:67.50, width:258.75, height:405.00); visible title/score/details/reset note/Resume/Restart bounds contained=True; no overlap=True
+PASS overlay text contrasts with a bright game world 960x540: Worst normal-text contrast over white game scene=10.64:1; backdrop alpha=0.94
+PASS restart explicitly discloses run reset 960x540: NEW RUN: SCORE, KILLS AND UPGRADES RESET
+PASS pause exposes the existing Music slider 960x540: Real saved music control, fill and handle are visible during pause
+PASS fitted Music slider routes actual seventy percent touch 960x540: Touch=(509.93, 218.81); chosen volume=0.700; label=70%; music sources=1
+PASS Music fill and handle remain thin inside the fitted frame 960x540: Actual reference-unit heights: fill=8.0; handle=44.0; visible bounds=(x:424.88, y:217.69, width:85.05, height:2.25) / (x:506.55, y:212.63, width:6.75, height:12.38)
+PASS gameplay capture anton-pause-960x540: outputs/wheel-physics-regression/anton-pause-960x540.png — actual gameplay camera and HUD, 960 x 540
+PASS fitted overlay routes actual Resume touch 960x540: Production touch at rendered button centre=(480.00, 180.00)
+PASS fitted overlay routes actual Restart touch 960x540: Rendered Restart starts a fresh normal run; serial=36
+PASS fitted Music touch checks restore the original setting: Original runtime volume, persisted preference value and preference presence are restored
+PASS boss health hierarchy: Raider=45; Buggy=105; Monster=330; Boss Raider=520
+PASS both boss map markers: Mini-boss and final boss are both present on the minimap
+PASS mini-boss survives ordinary hit: Monster HP=324.75
+PASS Monster death does not finish arena: State=Playing; reward=5; kills=1
+PASS Boss Raider warns before heavy strike: Visible warning=True; HP before strike=100
+PASS gun hit does not cancel boss warning: Committed windup remains active after a player bullet
+PASS dodging locked boss strike avoids damage: Player moved outside the warned circle; HP=100
+PASS remaining in boss strike takes damage once: Actual heavy damage=16; configured=16; recovering=True
+PASS existing boss health bar identifies Raider: Title=RAIDER WARLORD · FINAL BOSS; HP=520 / 520
+PASS gameplay capture boss-arena: outputs/wheel-physics-regression/boss-arena.png — actual gameplay camera and HUD, 540 x 960
+PASS Boss Raider survives ordinary hit: Boss HP=514.75
+PASS only final boss completes and preserves rewards: State=Completed; resources=17; expected=17; overlay=ARENA CLEAR
+PASS final boss marker removed: Completed boss is absent from the map
+PASS victory result identifies the goal and actual settled score: Victory names the defeated objective, celebrates it and reports only this run's actual score/kills
+PASS completion hides onboarding and navigation prompts: Terminal result has no live driving/combat prompt
+PASS gameplay capture arena-complete: outputs/wheel-physics-regression/arena-complete.png — actual gameplay camera and HUD, 540 x 960
+PASS completed result stays completed: Pause cannot resume a finished arena
+PASS restart restores the full arena: Ordinary encounters, both bosses, stats and run resources reset
+RESULT checks=204; failures=0; saved scene was not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

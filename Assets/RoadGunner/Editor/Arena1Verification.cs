@@ -45,7 +45,7 @@ namespace RoadGunner.Editor
                 throw new InvalidOperationException("Save the currently open scene before running acceptance checks.");
             EditorSceneManager.OpenScene(scene.path);
             Directory.CreateDirectory(Path.GetDirectoryName(Arena1PlayChecks.ReportPath));
-            File.WriteAllText(Arena1PlayChecks.ReportPath, "Preparing saved Arena 1 Anton feedback verification...\n");
+            File.WriteAllText(Arena1PlayChecks.ReportPath, "Preparing saved Arena 1 wheel-driven handling verification...\n");
             errors.Clear(); finishing = false;
             UnityEditor.SessionState.SetBool(Pending, true);
             UnityEditor.SessionState.SetBool(Batch, Application.isBatchMode);

@@ -7,10 +7,12 @@ Use this saved Arena 1 scene for the current game. RoadGunner_Prototype.unity,
 Level01_Wasteland.unity and LevelEditor_Demo.unity are earlier reusable scenes
 and examples, with different layouts/tuning; their old notes are historical.
 
-Arena 1 retains the open pre-corridor geography and inertial handling baseline
-from Unity revision 7c8b54c. The Anton feedback changes concern guidance, HUD,
-texts and visual feedback. Arena geometry, navigation, enemy roster, damage,
-rewards, free terminals and repair remain the existing gameplay systems.
+Arena 1 retains the open pre-corridor geography from Unity revision 7c8b54c and
+the Anton guidance/HUD. The 30 October wheel-physics revision replaces the
+player's assisted body yaw with steering, drive and brake forces through the
+four WheelColliders. Arena geometry, navigation, enemy roster, damage, rewards,
+free terminals and repair remain the existing gameplay systems. This scope is
+the Unity player vehicle.
 
 PLAYING THE ARENA
 DEFEAT WARLORD to clear Arena 1. Monster Ashmaw is an optional mini-boss.
@@ -30,9 +32,11 @@ has a compact panel with health and attack state in the upper HUD area.
 
 CONTROLS
 WASD / arrow keys: requested travel direction relative to the fixed camera.
-All eight keyboard directions and the floating joystick use nose-first travel.
-S / Down means turn toward the bottom of the screen and drive forward; it does
-not select reverse. A held joystick takes priority over keyboard direction.
+All eight keyboard directions and the floating joystick request nose-first
+travel. The wheels turn the car along an arc while it rolls; it does not pivot
+its body in place. S / Down requests a forward U-turn toward screen-bottom, not
+reverse. Leave room for that manoeuvre. A held joystick takes priority over
+keyboard direction.
 Touch/mouse drag in the lower-left control region: floating analog joystick;
 its magnitude controls desired speed. Release to coast; Space is service brake.
 Escape / II: Pause. Resume keeps the run, upgrades and tutorial progress.
@@ -99,25 +103,41 @@ restore this HUD. The normal saved scene does not execute authoring builders.
 TUNING AND PHYSICS
 Current per-level assets: Levels/Greenwood/Arena1/, especially
 Arena 1 vehicle handling.asset and Arena 1 player combat.asset.
-Configured maxSpeed is 11.7 m/s, mass 1400 kg, totalDriveTorque 2700,
-acceleration 4.4, rotationSpeed 150 and steeringResponse 4. These are tuning
-settings, not a claim of measured device speed or performance.
+Configured maxSpeed is 11.7 m/s, mass 1400 kg, totalDriveTorque 2700 and requested
+acceleration 4.4 m/s2. Tight turns request turningSpeed 4.2 m/s at full input;
+analogue magnitude scales the speed request. These are controller settings,
+not measured acceleration, turn speed or device performance.
 Player outgoing base damage is multiplied by 0.35. The base 15-damage bullet
 therefore deals 5.25 before attack upgrades. Shared horizontal gun range is 10 m.
 
-VehicleController uses one interpolated Rigidbody, four WheelColliders, bounded
-anti-roll, rear-biased drive torque, wheel steering and assisted nose turning.
-Physical collision, suspension, gravity and inertial coasting remain active.
-Service brake torque is 1100, coast brake torque 50 and hold torque 450 in the
-current Arena asset. The later explicit release-to-stop revision is not applied.
+VehicleController uses one interpolated dynamic Rigidbody, four WheelColliders,
+bounded anti-roll and rear-biased drive torque. Front-wheel Ackermann angles are
+calculated from the actual wheel transforms: wheelbase 3.05 m and track 2.07 m
+on Dust Jackal. headingSteerGain maps requested heading to steering;
+yawCounterSteer .4 feeds actual yaw rate back into the front-wheel angle.
+It does not add a body-yaw rotation or artificial yaw torque.
+
+Ordinary driving does not call MoveRotation, set the transform or replace linear
+or angular velocity. Wheel steering and forces produce the turn; tyre braking
+reduces speed into tight manoeuvres. Release retains inertial coasting, with
+rolling/air resistance applied in the horizontal plane. Vertical suspension,
+gravity and impact motion remain with the Rigidbody. Service brake torque is
+1100, coast brake torque 50 and low-speed hold torque 450 per wheel. The coast
+brake blends toward hold torque near rest. Recover/Restart use ResetPose to
+place the car safely and clear its velocities deliberately.
 Wheel radius is 0.481 m, suspension travel 0.3 m, spring 35000 and damper 4500.
 Edit the per-level settings rather than assuming Settings/Vehicle handling.asset
 or other older prototype assets control this Arena's player.
 
-Useful Inspector fields include torqueBySpeed / driveResponseSpeed;
-steeringBySpeed / steeringRate / rotationAcceleration;
+Useful Inspector fields include torqueBySpeed / driveResponseSpeed / turningSpeed;
+steeringBySpeed / steeringRate / headingSteerGain / yawCounterSteer /
+ackermannStrength; rollingResistance / aerodynamicDrag;
 centerOfMass / spring / damper / suspensionTravel / antiRoll; and independent
 forwardFriction / sidewaysFriction WheelCollider curves.
+rotationSpeed, rotationAcceleration and steeringResponse remain hidden legacy
+serialization fields for older installers; they no longer rotate the body.
+Revision documentation and subsequent verification belong under:
+Documentation/RoadGunner/WheelPhysics-2026-10-30/
 
 PLAYER, LOOT AND ART
 Dust Jackal is the existing muscle pickup: long hood, enclosed glazed cabin,
@@ -166,17 +186,24 @@ Use Tools > Road Gunner > Web > Build Mobile Web or batch entry
 RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/.
 Save/apply the feedback scene before rebuilding. The template supports portrait
 input and static hosting with gzip / JavaScript decompression fallback.
-Building locally does not publish the GitHub Pages demo.
+WebBuild/ has been rebuilt for the wheel-physics revision and passed gzip,
+JavaScript, WASM and Unity data checks. Building locally does not publish the
+GitHub Pages demo; the publication record is separate. Pages build 2310eee is
+the earlier Anton release with the old handling; its evidence is historical.
 
 Opt-in acceptance tools are under Tools > Road Gunner > Validate. Diagnostic
 runners can stage actors, feed the Input System and exercise gameplay systems;
 their screenshots are not natural full playthroughs. Consult the report for
-the exact snapshot, method and limitations. The Anton feedback revision passed
-204 runtime checks, zero failures and zero Console errors/exceptions/asserts:
+the exact snapshot, method and limitations. The earlier Anton feedback revision
+recorded 204 runtime checks, zero failures and zero Console errors/asserts:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/PlayMode.txt
-The local WebGL package passed gzip/JS/WASM/HTTP-file validation. Post-build
-visual browser verification was unavailable (CUA cgWindowNotFound).
-No FPS or retention result is asserted for this revision.
+Those native results and the earlier WebGL gzip/JS/WASM/HTTP checks do not
+validate the new wheel model. The unavailable post-build visual browser run
+(CUA cgWindowNotFound) also belongs to that earlier release. Use the new
+WheelPhysics-2026-10-30/PlayMode.txt and Gameplay.txt for the current results:
+20 dedicated physics checks and 204 full gameplay regression checks passed,
+with zero failures and zero Console errors/exceptions/asserts. No FPS,
+retention or cross-platform physics determinism is asserted here.
 Physical-device touch, performance and platform builds need their own evidence.
 
 HISTORICAL REFERENCES

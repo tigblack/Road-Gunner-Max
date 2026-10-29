@@ -15,6 +15,12 @@ MonoBehaviour:
   mass: 1400
   maxSpeed: 18
   totalDriveTorque: 3100
+  turningSpeed: 4.2
+  headingSteerGain: 0.85
+  yawCounterSteer: 0.4
+  ackermannStrength: 1
+  rollingResistance: 18
+  aerodynamicDrag: 1.5
   maxReverseSpeed: 7
   reverseTorqueMultiplier: 0.7
   rearTorqueShare: 0.62

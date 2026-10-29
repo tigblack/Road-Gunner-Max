@@ -22,6 +22,12 @@ MonoBehaviour:
   driveResponseSpeed: 3
   turnBeforeDriveAngle: 100
   fullDriveAngle: 25
+  turningSpeed: 4.2
+  headingSteerGain: 0.85
+  yawCounterSteer: 0.4
+  ackermannStrength: 1
+  rollingResistance: 18
+  aerodynamicDrag: 1.5
   maxReverseSpeed: 2.3333333
   reverseTorqueMultiplier: 0.7
   rearTorqueShare: 0.62

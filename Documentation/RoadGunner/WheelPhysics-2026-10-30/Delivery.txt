@@ -1,0 +1,91 @@
+ROAD GUNNER — КОЛЁСНАЯ АВТОМОБИЛЬНАЯ ФИЗИКА, 30 ОКТЯБРЯ 2026
+
+Unity 6000.6.4f1; существующая открытая Arena 1, Level01_Greenwood.
+Запрос: вернуть около реалистичное поведение машины как основную особенность
+игры и сразу собрать WebGL.
+
+ЧТО ВОССТАНОВЛЕНО
+VehicleController снова ведёт динамический Rigidbody силами четырёх WheelCollider.
+ApplyHeadingAssist и Body.MoveRotation удалены. Во время езды контроллер
+не присваивает rotation, linearVelocity или angularVelocity кузова.
+Непосредственное размещение и обнуление скорости остаются только в ResetPose
+для стартового положения, Recover и Restart.
+
+Стик/WASD сохраняют направление относительно камеры. Ввод задаёт угол передних
+колёс, тягу и тормозные моменты. Назад по экрану — физический U-turn по дуге;
+для разворота нужна поступательная скорость. Профиль tight-turn запрашивает
+до4.2м/с при полном стике, вместо нулевой тяги и принудительного вращения.
+Контроль yaw реализован корректировкой угла колёс по реальной angularVelocity.
+
+Передние колёса используют геометрию Ackermann из реальных центров:
+база3.05м, колея2.07м. Внутреннее колесо поворачивает сильнее внешнего.
+Центральный угол ограничен speed curve34→14°, перекладка125°/с.
+Параметры turningSpeed/headingSteerGain/yawCounterSteer/ackermannStrength,
+rollingResistance и aerodynamicDrag доступны в VehicleTuning assets.
+Старые rotationSpeed/rotationAcceleration/steeringResponse сохранены для
+совместимости старых installers, скрыты в Inspector и больше не вращают кузов.
+
+Отпускание ввода оставляет накат с физическим wheel brake torque50Нм.
+Space включает прежний служебный тормоз1100Нм на колесо. Удерживающий тормоз
+плавно подключается только около остановки. Сопротивление действует в плоскости
+земли при наличии контакта, сохраняя вертикальную динамику подвески/прыжка.
+Подвеска, anti-roll, tire slip, dust по контакту и визуальное движение колёс
+используют существующую физическую конфигурацию. Скорость кузова не заменяется
+желаемым вектором; столкновения сохраняют своё физическое действие.
+
+СОХРАНЕНО
+Масса1400кг; maxSpeed11.7м/с; drive torque2700Нм; acceleration4.4м/с²;
+rearTorqueShare.62; радиус.481м; подвеска.30м; spring35000/damper4500;
+COM(0,.05,-.1); реальные коллайдеры и открытая география, камера и враги.
+Боевой баланс, HP/ATK, Scrap, гарпун, ремонт и Anton feedback HUD не изменялись.
+Обновлены активный Arena1 tuning и общий prefab tuning. Scene не переавторилась.
+
+ПРОВЕРКА ФИЗИКИ
+Run Wheel Physics Acceptance Checks / RoadGunner.Editor.WheelPhysicsVerification.Run.
+20 проверок пройдены, failures=0, Console errors/exceptions/asserts=0.
+Используется сохранённая машина, временная площадка/стена/неровность в Play Mode;
+движение — production DriveInput/WheelCollider. Данные: PlayMode.txt, Metrics.json,
+Samples.csv. Fixtures удаляются, сцена и tuning не сохраняются тестом.
+После перемещения fixture в воздух тест ждёт два физических шага для обновления
+контактов WheelCollider и отдельно проверяет нулевые контакты перед измерением.
+
+Измерено на ровной тестовой поверхности:
+- отпускание с6.023м/с: примерно через1.5с скорость5.427м/с, путь8.790м;
+- Space с6.023м/с: примерно через1.5с скорость.002м/с, путь2.842м;
+- команда90°: доошибки≤20° —2.433с/10.164м по дуге;
+- команда180°: доошибки≤20° —4.883с/20.252м по дуге;
+- XZ-закреплённый кузов при steering за1с: yaw1.140°, перемещение.002м;
+- airborne input:0контактов, yaw0°, горизонтальная скорость0, свободное падение;
+- внешний боковой импульс: скорость3м/с не стирается, есть yaw и tire slip;
+- стена: зарегистрирован collision impulse12492.740Нс, прохождения насквозь нет;
+- неровность: tilt3.191°, ход колеса.138м, затем кузов успокаивается;
+- solver30/60/120Гц: отклонение пути от60Гц≤.767%, скорости≤.172%, yaw≤.228°.
+Это проверки частоты физического шага, не замеры displayFPS и не обещание
+детерминизма или идентичных траекторий на любом устройстве.
+
+ПОЛНЫЙ ГЕЙМПЛЕЙ И WEBGL
+Общий regression:204 проверки пройдены, failures=0, Console errors/exceptions/
+asserts=0. Gameplay.txt проверяет актуальный контроллер: production touch,
+кнопки, бой, улучшения, состояния и победу. В сумме20 физических+204 игровых.
+Directional touch LEFT/DOWN/DIAGONAL достигает ошибки≤12° без reverse;
+измеренная скорость после физической дуги9.64–9.78м/с.
+Скриншоты реального regression-прогона — Screenshots/.
+
+WebGL Build Finished: Success, Unity6000.6.4f1.
+Время build-info UTC:2026-10-29T22:58:37.2699970Z,
+то есть30октября02:58:37 Asia/Yerevan. Семь static files:21090728байт;
+55232341байт — размер Unity build report, другая величина.
+GzipCRC, UnityWebData header, WASM header+WebAssembly.validate иJS syntax
+(loader/framework/inline template) проверены. Manifest и sourceSHA:WebBuild.json.
+Публичная доставка этой сборки фиксируется отдельно в Publication.txt.
+Для сборки: Tools / Road Gunner / Web / Build Mobile Web;
+batch: RoadGunner.EditorTools.WebBuild.Build, -buildTarget WebGL.
+Производительность физического телефона и субъективное ощущение управления
+требуют отдельной проверки; численные результаты выше относятся к этому прогону.
+
+API REFERENCE
+WheelCollider steering/motor/brake, slip-based wheel simulation:
+https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/wheelcollider
+Vehicle-wide wheel substeps:
+https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/wheelcollider/configurevehiclesubsteps
+Code/API compiled and verified using the installed6000.6.4f1 editor.

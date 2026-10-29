@@ -19,8 +19,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/AntonFeedback-2026-10-29/PlayMode.txt";
-        public const string CaptureFolder = "outputs/anton-feedback-validation";
+        public const string ReportPath = "Documentation/RoadGunner/WheelPhysics-2026-10-30/Gameplay.txt";
+        public const string CaptureFolder = "outputs/wheel-physics-regression";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -57,7 +57,7 @@ namespace RoadGunner
             running = true; Completed = false; Failures = Checks = 0; report.Clear();
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(CaptureFolder);
-            report.Add("Arena 1 Anton feedback acceptance — actual Unity Play Mode; " + Application.unityVersion);
+            report.Add("Arena 1 wheel-driven handling regression — actual Unity Play Mode; " + Application.unityVersion);
             report.Add("Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.");
             File.WriteAllLines(ReportPath, report);
             StartCoroutine(RunGuarded());

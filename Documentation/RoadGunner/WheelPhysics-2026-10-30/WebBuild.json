@@ -1,0 +1,67 @@
+{
+  "build": {
+    "unityVersion": "6000.6.4f1",
+    "scene": "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+    "builtAtUtc": "2026-10-29T22:58:37.2699970Z",
+    "compression": "Gzip with JavaScript decompression fallback",
+    "bytes": 55232341
+  },
+  "files": [
+    {
+      "path": "WebBuild/.nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.data.unityweb",
+      "bytes": 11071657,
+      "sha256": "84bfdba949d1f50bb365a402d7dc9e157e3b3b31d1d03ea28cc8298be51672d4",
+      "gzipCrcVerified": true,
+      "decodedBytes": 20490771,
+      "unityDataHeaderVerified": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.framework.js.unityweb",
+      "bytes": 74863,
+      "sha256": "63bc43ec49c1592892818f805d7f48ab001223d34c9b17dad70a2cd53d46f01e",
+      "gzipCrcVerified": true,
+      "decodedBytes": 330905,
+      "javascriptSyntaxVerified": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.loader.js",
+      "bytes": 48779,
+      "sha256": "a3796906b187a8fa4df22d53d930a42af8b7d819c60dcba27c0cc0fc03b89003",
+      "javascriptSyntaxVerified": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.wasm.unityweb",
+      "bytes": 9890084,
+      "sha256": "e860d5ca4944690e767ff0bf0f361d69293613664c66a64bb9c4642bead907d0",
+      "gzipCrcVerified": true,
+      "decodedBytes": 36821884,
+      "wasmHeaderAndValidationVerified": true
+    },
+    {
+      "path": "WebBuild/build-info.json",
+      "bytes": 240,
+      "sha256": "b8ffdda1b94e4d821b58505eca4f5258fea1f5789621f7fc95177b3a715f74b5"
+    },
+    {
+      "path": "WebBuild/index.html",
+      "bytes": 5105,
+      "sha256": "70b744427114c847d4b43bda1f488030e5c2a0d7fb6052c2c5132dd949fb77b5"
+    }
+  ],
+  "compressedTotalBytes": 21090728,
+  "inlineTemplateJavascriptSyntaxVerified": true,
+  "sourceSha256": {
+    "Assets/RoadGunner/Scripts/VehicleController.cs": "38f238ffc325978824eaff1b8609fdc76d81619254f08ed1e685a1a1c229403b",
+    "Assets/RoadGunner/Scripts/VehicleTuning.cs": "c62fa159faf608235652e244f6f95ea18c235a2d99a99b590fd3783ee80cd54a",
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 vehicle handling.asset": "c63f5333ba826fff51fdbb54dfe090092e6a9f4786303e166e05eb2748d83b7a",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood.unity": "5ba281b151417d61bde512c352e2b831ad369e41b62838887a9f0aee93b141e0"
+  },
+  "nativePhysicsChecks": 20,
+  "nativeGameplayChecks": 204,
+  "browserVisualRun": "Not performed for this release; native Unity physics/gameplay verified; publication file identity checked separately."
+}
