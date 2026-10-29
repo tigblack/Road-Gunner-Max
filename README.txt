@@ -72,16 +72,18 @@ Legacy rebalance/prototype/polish commands have their own authoring scopes and
 may replace presentation or tuning; apply the Anton feedback installer last
 when retaining the current HUD. See Assets/RoadGunner/README.txt for details.
 
-WEB BUILD AND HISTORICAL DEMO
+WEB BUILD AND PUBLISHED DEMO
 Use Tools / Road Gunner / Web / Build Mobile Web, or batch entry
 RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/.
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-Historical published demo: https://tigblack.github.io/Road-Gunner-Max/
-That URL's deployment history is separate from the current local Unity changes.
-The Anton feedback installer does not publish a Web build. Earlier publication
-notes are under Documentation/RoadGunner/CasualPolish-2026-10-25/Publication.txt.
+Published demo: https://tigblack.github.io/Road-Gunner-Max/?build=2310eee
+The restored open arena and Anton feedback HUD were published on 30 October
+2026 (Asia/Yerevan), Pages commit 2310eee. All six public release files match
+the verified local WebGL build. Publication details and hashes:
+Documentation/RoadGunner/AntonFeedback-2026-10-29/Publication.txt
+The Anton feedback installer itself does not publish a Web build.
 
 PROJECT CONTENTS AND EVIDENCE
 Assets/            Game assets, scenes, editor tools and runtime code

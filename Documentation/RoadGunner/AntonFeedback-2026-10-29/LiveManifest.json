@@ -1,0 +1,68 @@
+{
+  "verifiedAtUtc": "2026-10-29T20:36:49.349166+00:00",
+  "pagesCommit": "2310eeee2f0c133d8fb6a4f245272860c6c4b0a8",
+  "baseUrl": "https://tigblack.github.io/Road-Gunner-Max/",
+  "httpsCertificateVerification": "system curl, verification enabled",
+  "files": [
+    {
+      "path": "Build/WebBuild.data.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb",
+      "status": 200,
+      "contentType": "application/vnd.unity",
+      "bytes": 11066529,
+      "sha256": "667bdb1e05eb84d6c81c1479826bba3e840df43a42d774a9b07a18d8d7ff4d86",
+      "matchesRelease": true,
+      "etag": "\"6ae3ae30-a8dca1\""
+    },
+    {
+      "path": "Build/WebBuild.framework.js.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb",
+      "status": 200,
+      "contentType": "application/vnd.unity",
+      "bytes": 74863,
+      "sha256": "da87a14d8c437fbe07399234c6ec1a98775c14f9aed9d2366036e460d9f46666",
+      "matchesRelease": true,
+      "etag": "\"6ae3ae30-1246f\""
+    },
+    {
+      "path": "Build/WebBuild.loader.js",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "bytes": 48779,
+      "sha256": "471af8c068bab201a94cbce76d509e07246b84fb846e42741b2065bab8d19b82",
+      "matchesRelease": true,
+      "etag": "\"6ae3ae30-be8b\""
+    },
+    {
+      "path": "Build/WebBuild.wasm.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb",
+      "status": 200,
+      "contentType": "application/vnd.unity",
+      "bytes": 9890264,
+      "sha256": "da525f168371e97cabb248596325b2907fd3768fa14e32fcebce6db94cf379f3",
+      "matchesRelease": true,
+      "etag": "\"6ae3ae30-96e9d8\""
+    },
+    {
+      "path": "build-info.json",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/build-info.json",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 240,
+      "sha256": "5cd9d691e1d1d91e615f05ed6eee3d30c979598ebf894122e41b779b4d5e0b8d",
+      "matchesRelease": true,
+      "etag": "\"6ae3ae30-f0\""
+    },
+    {
+      "path": "index.html",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/index.html",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 5105,
+      "sha256": "70b744427114c847d4b43bda1f488030e5c2a0d7fb6052c2c5132dd949fb77b5",
+      "matchesRelease": true,
+      "etag": "\"6ae3ae30-13f1\""
+    }
+  ]
+}

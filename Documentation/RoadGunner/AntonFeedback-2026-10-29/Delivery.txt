@@ -93,3 +93,8 @@ cgWindowNotFound для Unity, Chrome и Safari; browser provider недосту
 Локальный HTTP-сервер после технической проверки остановлен. Для ручного запуска
 из корня проекта: python3 -m http.server 8765 --bind 127.0.0.1 --directory WebBuild
 Затем открыть http://127.0.0.1:8765/ и нажать PLAY.
+
+По последующей просьбе пользователя сборка опубликована 30 октября 2026
+(Asia/Yerevan): https://tigblack.github.io/Road-Gunner-Max/?build=2310eee
+Pages deployment успешен; все шесть публичных файлов совпали с этой сборкой
+по SHA256. Подробности — Publication.txt и LiveManifest.json.

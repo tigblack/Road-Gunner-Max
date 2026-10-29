@@ -1,0 +1,49 @@
+ROAD GUNNER — PUBLISHED WEBGL, 30 OCTOBER 2026 (ASIA/YEREVAN)
+
+PLAY
+https://tigblack.github.io/Road-Gunner-Max/?build=2310eee
+
+PUSH AND DEPLOYMENT
+Existing repository: https://github.com/tigblack/Road-Gunner-Max
+main: bfb3053 -> 3790a6919c35d62eee9762db4ffab7d3c2959840
+Includes restored open Arena 1 / inertial handling (aaf2fcf) and Anton feedback
+presentation improvements (3790a69), with the verified WebBuild/ artifacts.
+gh-pages: 209e534 -> 2310eeee2f0c133d8fb6a4f245272860c6c4b0a8
+Existing branch-based Pages source retained: gh-pages, root folder.
+Normal fast-forward pushes; no force push or rewritten remote history.
+
+GitHub Actions run 40950412796: completed, success, matching Pages commit above.
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/40950412796
+Pages builds/latest: status=built, commit=2310eeee2f0c133d8fb6a4f245272860c6c4b0a8,
+error.message=null. Deployment updated at 2026-10-29T20:36:00Z,
+which is 30 October 2026 at 00:36 Asia/Yerevan.
+
+PUBLISHED ARTIFACT
+Unity 6000.6.4f1; Assets/RoadGunner/Scenes/Level01_Greenwood.unity.
+Build UTC: 2026-10-29T20:01:22.7110880Z.
+Seven static files including .nojekyll: 21,085,780 bytes.
+Unity build report size: 55,208,918 bytes (a different size measure).
+Gzip with JavaScript decompression fallback; existing PLAY/audio initialization.
+The site branch contains only the static player files and its .gitattributes.
+
+VERIFICATION
+Prepared publication copied byte-for-byte from WebBuild.json's seven files.
+The six nonhidden public files returned HTTP200 at their ordinary HTTPS URLs
+and match the local release byte-for-byte/SHA256: data, framework, WASM, loader,
+index and build-info. Certificate verification stayed enabled (system curl).
+Exact URLs, sizes, hashes and HTTP metadata: LiveManifest.json.
+Local Gzip CRC, WASM, UnityWebData and JavaScript checks: WebBuild.json and
+LocalWebVerification.json. No new Unity compilation was needed for publication.
+
+The published payload is the same revision that passed 204 native Unity runtime
+checks, with zero failures and zero Console errors/exceptions/asserts. Details:
+PlayMode.txt, Delivery.txt and Screenshots/.
+This publication check verifies deployment and file identity, not a fresh visual
+browser playthrough. The earlier post-build CUA window failure is documented in
+LocalWebVerification.json. No physical-phone performance result is claimed.
+
+HYGIENE
+AntonSkill/, _anton/ and the local Unreal/Godot summary files remain untracked
+and were not included in either push. No unrelated user files were changed.
+Temporary publishing worktree is removed after verification; site history and
+the gh-pages branch remain available in Git.
