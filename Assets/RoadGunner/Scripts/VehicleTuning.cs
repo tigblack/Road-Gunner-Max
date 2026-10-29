@@ -24,11 +24,6 @@ namespace RoadGunner
         [Range(30,170), Tooltip("Brake and turn first while the nose is farther than this angle from the requested travel direction.")]
         public float turnBeforeDriveAngle = 100;
         [Range(0,60)] public float fullDriveAngle = 25;
-        [Header("Release-to-stop")]
-        [Min(.1f), Tooltip("Planar speed removed each second after directional input is released. 11.5 stops normal 10–11.7 m/s travel in about one second without increasing Rigidbody drag.")]
-        public float coastDeceleration = 11.5f;
-        [Range(.01f,.3f), Tooltip("Planar speed below which released input settles to rest; vertical velocity is preserved.")]
-        public float coastStopSpeed = .08f;
         [Min(1)] public float maxReverseSpeed = 7;
         [Range(.1f,1)] public float reverseTorqueMultiplier = .7f;
         [Range(0,1)] public float rearTorqueShare = .62f;

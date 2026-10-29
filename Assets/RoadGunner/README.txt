@@ -1,11 +1,3 @@
-CURRENT PLAYABLE BUILD — 26 October 2026
-Open Assets/RoadGunner/Scenes/Level01_Greenwood.unity (first in Build Settings).
-The current game uses directional floating joystick/WASD, forward-facing turns,
-release braking, winding Arena1 routes and three destructible HEALTH +1 objects.
-Current instructions and reports: README.txt at repository root and
-Documentation/RoadGunner/CorridorRevision-2026-10-25/Delivery.md.
-The notes below document earlier prototypes and historical control behavior.
-
 ROAD GUNNER — SCRAP RUSH
 Unity 6000.6.4f1 • URP • cartoon desert vehicle combat
 

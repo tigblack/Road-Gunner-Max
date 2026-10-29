@@ -95,11 +95,7 @@ namespace RoadGunner
             var icon = go.GetComponent<ArenaMinimapIcon>(); icon.kind = kind; icon.raycastTarget = false; icon.maskable = true;
             var rect = (RectTransform)go.transform; rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
             float size = MarkerSize(kind); icon.color = MarkerColor(kind);
-            rect.sizeDelta = new Vector2(size, size);
-            // Terrain uses fixed level north; skulls and the repair wrench remain upright on the HUD.
-            // The player arrow receives its actual world heading in RefreshMarkers instead.
-            if (kind != MinimapMarkerKind.Player)
-                rect.localRotation = Quaternion.Euler(0, 0, -mapRect.eulerAngles.z);
+            rect.sizeDelta = kind == MinimapMarkerKind.Buggy ? new Vector2(size * .8f, size * 1.2f) : new Vector2(size, size);
             markers.Add(new Marker { world = target, enemy = enemy, station = station, icon = rect, kind = kind, visible = true });
         }
 
@@ -130,14 +126,14 @@ namespace RoadGunner
         {
             switch (kind)
             {
-                case MinimapMarkerKind.Player: return 36;
-                case MinimapMarkerKind.Boss: return 32;
-                case MinimapMarkerKind.MiniBoss: return 29;
+                case MinimapMarkerKind.Player: return 32;
+                case MinimapMarkerKind.Boss: return 27;
+                case MinimapMarkerKind.MiniBoss: return 24;
                 case MinimapMarkerKind.Attack:
-                case MinimapMarkerKind.Health: return 16;
-                case MinimapMarkerKind.Workshop: return 30;
-                case MinimapMarkerKind.Buggy: return 16;
-                default: return 16;
+                case MinimapMarkerKind.Health: return 17;
+                case MinimapMarkerKind.Workshop: return 28;
+                case MinimapMarkerKind.Buggy: return 12;
+                default: return 11;
             }
         }
 
@@ -192,7 +188,7 @@ namespace RoadGunner
                 VisibleMarkerCount++;
                 if (marker.enemy || marker.kind == MinimapMarkerKind.Player || !marker.projected || resized)
                 { marker.icon.anchoredPosition = Project(marker.world.position); marker.projected = true; }
-                if (marker.kind == MinimapMarkerKind.Player)
+                if (marker.kind == MinimapMarkerKind.Player || marker.kind == MinimapMarkerKind.Buggy)
                     marker.icon.localRotation = Quaternion.Euler(0, 0, -marker.world.eulerAngles.y);
             }
         }

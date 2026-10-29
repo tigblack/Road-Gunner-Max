@@ -23,14 +23,12 @@ namespace RoadGunner
                 map.backgroundImage.maskable && map.backgroundImage.transform.IsChildOf(map.mapRect),
                 "Solid circular Graphic + UGUI Mask, terrain RawImage and marker hierarchy inside; viewport=" + map.mapRect.rect.size);
             float farthest = 0;
-            var corridor = layout.GetComponent<ArenaCorridorLayout>();
-            var footprint = corridor ? corridor.mapFootprint : layout.ground.sharedMesh.vertices.Select(layout.ground.transform.TransformPoint).ToArray();
-            foreach (var point in footprint)
-                farthest = Mathf.Max(farthest, (map.Project(point) - map.mapRect.rect.center).magnitude);
+            foreach (var vertex in layout.ground.sharedMesh.vertices)
+                farthest = Mathf.Max(farthest, (map.Project(layout.ground.transform.TransformPoint(vertex)) - map.mapRect.rect.center).magnitude);
             bool repairsInside = map.workshops.All(w => map.IsInsideCircle(map.Project(w.transform.position), 18));
             Check("whole arena and distant repair fit round map", farthest <= map.CircleRadius - 15 && repairsInside &&
                 map.contentScale > .5f && map.contentScale <= 1,
-                "Projected authored route/pocket footprint radius=" + farthest + "; viewport radius=" + map.CircleRadius +
+                "Projected outer ground radius=" + farthest + "; viewport radius=" + map.CircleRadius +
                 "; content scale=" + map.contentScale + "; all workshops inside with marker margin=" + repairsInside);
             // Verify actual GPU stencil output, including both terrain and custom marker geometry.
             // Magenta is an isolated diagnostic color absent from the arena HUD/terrain.
@@ -90,31 +88,15 @@ namespace RoadGunner
             }
             DestroyImmediate(sample);
             PlaceCar(Ground(testOrigin) + Vector3.up * .7f, testRotation); yield return null; Capture("white-range-sand");
-            var corridor = layout.GetComponent<ArenaCorridorLayout>();
+            var road = Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                .FirstOrDefault(f => f.sharedMesh && (f.sharedMesh.name.StartsWith("Road ") || f.sharedMesh.name.Contains("worn-track")));
             bool roadFound = false;
-            if (corridor && corridor.roadsRoot && corridor.mainRoad.Length > 2)
+            if (road)
             {
-                // Static batching may replace MeshFilter.sharedMesh with a combined mesh in Play.
-                // Retain the authored road object and its actual sampled centre line as provenance.
-                var road = corridor.roadsRoot.Find("Corridor road · Main north road");
-                var renderer = road ? road.GetComponent<MeshRenderer>() : null;
-                var filter = road ? road.GetComponent<MeshFilter>() : null;
-                Vector3 point = corridor.mainRoad[corridor.mainRoad.Length / 2];
-                if (road && filter && filter.sharedMesh && renderer && renderer.enabled && road.gameObject.activeInHierarchy &&
-                    NavMesh.SamplePosition(point, out var hit, 2, NavMesh.AllAreas))
-                { PlaceCar(Ground(hit.position) + Vector3.up * .7f, testRotation); roadFound = true; }
-            }
-            else
-            {
-                var road = Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
-                    .FirstOrDefault(f => f.sharedMesh && (f.sharedMesh.name.StartsWith("Road ") || f.sharedMesh.name.Contains("worn-track")));
-                if (road)
-                {
-                    var vertices = road.sharedMesh.vertices;
-                    for (int i = 0; i + 1 < vertices.Length; i += 2)
-                        if (NavMesh.SamplePosition(road.transform.TransformPoint((vertices[i] + vertices[i + 1]) * .5f), out var hit, 3, NavMesh.AllAreas))
-                        { PlaceCar(Ground(hit.position) + Vector3.up * .7f, testRotation); roadFound = true; break; }
-                }
+                var vertices = road.sharedMesh.vertices;
+                for (int i = vertices.Length / 2; i < vertices.Length; i++)
+                    if (NavMesh.SamplePosition(road.transform.TransformPoint(vertices[i]), out var hit, 3, NavMesh.AllAreas))
+                    { PlaceCar(Ground(hit.position) + Vector3.up * .7f, testRotation); roadFound = true; break; }
             }
             yield return null; Capture("white-range-road");
             PlaceCar(Ground(darkPoint) + Vector3.up * .7f, testRotation); yield return null; Capture("white-range-dark-terrain");

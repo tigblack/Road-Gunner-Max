@@ -108,9 +108,10 @@ namespace RoadGunner.Editor
             obj.transform.position=ground;
             if(vehicle)obj.transform.position+=Vector3.up*.65f;
             if(!human&&!vehicle&&!boss){
+                if(decoration){foreach(var collider in obj.GetComponentsInChildren<Collider>(true)){Undo.RecordObject(collider,"Make decoration nonblocking");collider.enabled=false;RecordPrefab(collider);}}
+                else if(!obj.GetComponentsInChildren<Collider>(true).Any(c=>c.enabled&&!c.isTrigger)){
+                    Object.DestroyImmediate(obj);throw new InvalidOperationException("This prefab has no solid collider. Place it as Decoration or add a collider to the prefab.");}
                 var renderers=obj.GetComponentsInChildren<Renderer>();if(renderers.Length>0){var bounds=renderers[0].bounds;foreach(var r in renderers)bounds.Encapsulate(r.bounds);obj.transform.position+=Vector3.up*(ground.y-bounds.min.y);}
-                bool blocking=GameplayObstacleAuthoring.Configure(obj,decoration);
-                obj.transform.SetParent(blocking?l.obstaclesRoot:l.decorationRoot,true);
                 foreach(var t in obj.GetComponentsInChildren<Transform>())t.gameObject.isStatic=true;
                 l.navigationNeedsBake=true;
             }
@@ -150,7 +151,7 @@ namespace RoadGunner.Editor
             Undo.RecordObject(l,"Navigation baked");l.navigationNeedsBake=false;Dirty(surface);Dirty(l);
         }
         public static void Save(LevelLayout l,bool bake=true)
-        {Wire(l);if(bake)Bake(l);var corridor=l.GetComponent<ArenaCorridorLayout>();if(corridor&&l.session.minimap&&corridor.mapFootprint!=null&&corridor.mapFootprint.Length>2)CorridorMinimapStyler.Configure(l,l.session.minimap,corridor.mapFootprint);AssetDatabase.SaveAssets();if(!EditorSceneManager.SaveScene(SceneManager.GetActiveScene()))throw new IOException("Could not save scene.");}
+        {Wire(l);if(bake)Bake(l);AssetDatabase.SaveAssets();if(!EditorSceneManager.SaveScene(SceneManager.GetActiveScene()))throw new IOException("Could not save scene.");}
         public static void SaveAs(LevelLayout l,string path)
         {
             if(File.Exists(path))throw new InvalidOperationException("Choose a new scene path; Save As does not overwrite another level.");
@@ -211,7 +212,6 @@ namespace RoadGunner.Editor
                     if(PrefabUtility.GetPrefabInstanceStatus(t.gameObject)==PrefabInstanceStatus.MissingAsset)a.Add((MessageType.Error,"Broken prefab: "+t.name));
                 }
                 foreach(var c in l.authoredContentRoot.GetComponentsInChildren<CombatTarget>(true)){
-                    if(c is ArenaUpgradeStation)continue;
                     var p=c.transform.position;bool inside=p.x>=l.gameplayBounds.min.x&&p.x<=l.gameplayBounds.max.x&&p.z>=l.gameplayBounds.min.z&&p.z<=l.gameplayBounds.max.z;
                     if(!inside)a.Add((MessageType.Warning,"Enemy outside level bounds: "+c.name));
                     if(!PrefabUtility.IsPartOfPrefabInstance(c))a.Add((MessageType.Warning,"Enemy is not linked to a prefab: "+c.name));
@@ -222,12 +222,7 @@ namespace RoadGunner.Editor
                     if(!NavMesh.SamplePosition(p,out var hit,2,NavMesh.AllAreas))a.Add((MessageType.Warning,"Enemy is outside walkable navigation: "+c.name));
                     else if(l.playerSpawn&&NavMesh.SamplePosition(l.playerSpawn.position,out var start,3,NavMesh.AllAreas)){var path=new NavMeshPath();if(!NavMesh.CalculatePath(hit.position,start.position,NavMesh.AllAreas,path)||path.status!=NavMeshPathStatus.PathComplete)a.Add((MessageType.Warning,"Enemy has no path to player: "+c.name));}
                 }
-                if(l.obstaclesRoot)foreach(Transform t in GameplayObstacleAuthoring.PropInstances(l.obstaclesRoot)){
-                    var solids=t.GetComponentsInChildren<Collider>().Where(c=>c.enabled&&!c.isTrigger).ToArray();
-                    if(solids.Length==0)a.Add((MessageType.Error,"Gameplay obstacle has no solid collider: "+t.name));
-                    if(l.session&&l.session.vehicle&&solids.Any(c=>Physics.GetIgnoreLayerCollision(l.session.vehicle.gameObject.layer,c.gameObject.layer)||(c.excludeLayers.value&(1<<l.session.vehicle.gameObject.layer))!=0))a.Add((MessageType.Error,"Gameplay obstacle collision layer excludes the player: "+t.name));
-                }
-                if(l.decorationRoot)foreach(Transform t in GameplayObstacleAuthoring.PropInstances(l.decorationRoot))if(t.gameObject.activeInHierarchy&&GameplayObstacleAuthoring.ShouldBlock(t.gameObject,true)&&!t.GetComponentsInChildren<Collider>().Any(c=>c.enabled&&!c.isTrigger))a.Add((MessageType.Error,"Large visible prop is missing gameplay collision: "+t.name+". Re-place it or apply GameplayObstacleAuthoring.ConfigureLevel."));
+                if(l.obstaclesRoot)foreach(Transform t in l.obstaclesRoot)if(!t.GetComponentsInChildren<Collider>().Any(c=>c.enabled&&!c.isTrigger))a.Add((MessageType.Error,"Gameplay obstacle has no solid collider: "+t.name));
             }
             if(l.playerSpawn&&l.ground&&l.session&&l.session.vehicle){var p=l.playerSpawn.position;var bc=l.session.vehicle.GetComponent<BoxCollider>();if(Physics.CheckBox(p+l.playerSpawn.rotation*bc.center,bc.size*.48f,l.playerSpawn.rotation,1,QueryTriggerInteraction.Ignore))a.Add((MessageType.Warning,"Player spawn intersects ground or a solid obstacle; place on flatter clear ground."));}
             if(l.session&&l.session.spawns){var d=l.session.spawns;int n=(d.authoredRaiders?.Length??0)+(d.authoredBuggies?.Length??0);if(n>d.tuning.activeCap)a.Add((MessageType.Warning,"Placed enemies exceed activeCap="+d.tuning.activeCap+"; excess will not spawn."));a.Add((MessageType.Info,"Authored enemies: "+n+"; legacy encounter groups: "+d.GroupCount+"; shared resource pool retained."));}

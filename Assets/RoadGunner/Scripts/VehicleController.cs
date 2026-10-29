@@ -59,23 +59,11 @@ namespace RoadGunner
                     if(error<-.3f)brake=tuning.serviceBrakeTorque*Mathf.Clamp01(-error/3);
                     if(desiredSpeed<.02f&&Speed<.3f)brake=tuning.holdBrakeTorque*.15f;
                 }
-            // Explicit planar deceleration owns cruise release braking. Adding WheelCollider coast
-            // brake as well locks the rolling tyres and makes the real stop considerably too abrupt.
-            } else brake=Speed<.65f?tuning.holdBrakeTorque:0;
+            } else brake=Speed<.65f?tuning.holdBrakeTorque:tuning.coastBrakeTorque;
             for(int i=0;i<4;i++) { wheels[i].steerAngle=i<2?steering:0; wheels[i].motorTorque=motor*(i<2?(1-tuning.rearTorqueShare):tuning.rearTorqueShare)*.5f; wheels[i].brakeTorque=brake; }
-            if(magnitude<=0 && CanDrive && !input.Brake)ApplyCoastDeceleration();
             AntiRoll(0,1); AntiRoll(2,3);
             // Small rolling/air resistance preserves momentum, with no lateral velocity replacement.
             if(GroundedWheels>0) Body.AddForce(-Body.linearVelocity*(18+Speed*1.5f),ForceMode.Force);
-        }
-        void ApplyCoastDeceleration() {
-            // Explicit release braking acts on horizontal momentum, including sideways drift after a turn.
-            // Never replace height velocity: gravity, suspension and obstacle contact remain physical.
-            var velocity=Body.linearVelocity;
-            var planar=new Vector3(velocity.x,0,velocity.z);
-            var stopped=Vector3.MoveTowards(planar,Vector3.zero,Mathf.Max(.1f,tuning.coastDeceleration)*Time.fixedDeltaTime);
-            if(stopped.sqrMagnitude<tuning.coastStopSpeed*tuning.coastStopSpeed)stopped=Vector3.zero;
-            Body.linearVelocity=new Vector3(stopped.x,velocity.y,stopped.z);
         }
         void ApplyHeadingAssist(float heading,float speed01) {
             if(GroundedWheels<2){assistedYawRate=0;return;}
