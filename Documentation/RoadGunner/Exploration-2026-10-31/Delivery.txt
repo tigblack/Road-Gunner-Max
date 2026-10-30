@@ -1,0 +1,68 @@
+ROAD GUNNER — EXPLORATION REVISION, 31 OCTOBER 2026
+Unity 6000.6.4f1 / URP 17.6.0
+
+RESULT
+The current Unity Arena 1 now has four wasteland regions, 14 connected routes,
+12 turning/combat pockets, five breakable supply caches and three secrets.
+Alternate routes give room to approach encounters and seek optional rewards.
+The workshop remains a physically open drive-through repair hub. Existing
+cliffs, gates and workshop are preserved; eight obstructing props moved intact
+to checked shoulders. Navigation and the 512 x 512 minimap were rebuilt.
+
+This adapts exploration, visible rewards and enemy counterplay to Road Gunner.
+It does not reproduce Butcher Hero's unverified level layouts or stat tables.
+The current task extends one finite Arena 1; it does not create a campaign.
+
+Bonuses are for this run: two +5% damage caches, one +10% ram cache and two
++5 maximum/current HP caches. Three secrets each grant 3 Scrap and up to
+15 / 20 / 15 HP repair. Duplicate claims, late rewards and stale callbacks after
+Restart are rejected. HP gains retain damage already taken. Enemies have gun
+priority over supply caches. Distant secrets are hidden on the map until found.
+The original free terminals and Metal Gear/harpoon accounting remain.
+
+Rust Vulture takes 25% extra ram damage. Warlord takes 20% extra bullet damage
+during recovery after its committed strike. Actual tuning supplies the region
+hints and the boss recovery HUD. Warlord still clears the arena immediately;
+Monster is optional and the finite roster stays at 16 enemies.
+
+The player controller, vehicle tuning and per-arena handling asset are byte-for-
+byte unchanged from the preceding wheel-physics release. Driving remains a
+dynamic Rigidbody with four WheelColliders: steering arcs, traction, suspension,
+inertial coasting and real impact response. Recover/Restart retain explicit resets.
+
+VERIFIED
+- Exploration Play Mode: 88 checks, zero failures and zero Console errors.
+- Full Arena 1 regression: 204 checks, zero failures and zero Console errors.
+- Wheel physics: 20 checks, zero failures and zero Console errors.
+Total: 312 checks. See PlayMode.txt, Gameplay.txt, Physics.txt and PhysicsMetrics.json.
+- All 14 routes: 736 sampled points have complete navigation and full-car clearance;
+  authored road width samples pass. Twelve turning-pocket sweeps pass.
+- A real wheel-driven car enters the repair hub, heals and leaves it.
+- Two consecutive authoring runs produce matching logged prop destinations and
+  candidate counts after an in-memory rebuild of original navigation.
+- Map layer order, stencil clipping, complete terrain fit, marker projection and
+  world/HUD reward feedback pass; real portrait/landscape captures are included.
+
+The automated suites deliberately isolate enemies, use temporary physical
+fixtures and reposition the car between cases. They are not a natural full
+playthrough or device-performance benchmark. FPS, retention and physical-phone
+performance were not measured. Browser smoke testing and WebGL artifact checks
+are recorded separately in Browser.txt and WebBuild.json; publication evidence
+belongs in Publication.txt and LiveManifest.json.
+
+OPEN / EDIT / BUILD
+Open Assets/RoadGunner/Scenes/Level01_Greenwood.unity and press Play.
+WASD/arrows or floating joystick request a nose-first travel direction. Leave
+room for the physical turning arc. Space brakes; Escape pauses; R recovers.
+
+Edit Assets/RoadGunner/Levels/Greenwood/Exploration/Exploration layout.asset
+and Exploration tuning.asset. Then, outside Play Mode:
+Tools / Road Gunner / Arena1 / Install Exploration Arena
+Batch: RoadGunner.Editor.ExplorationArenaInstaller.InstallBatch
+The installer refreshes geometry, navigation, map and the exploration HUD.
+For a deliberate legacy HUD rebuild, apply Anton feedback before exploration.
+
+Build: Tools / Road Gunner / Web / Build Mobile Web
+Batch: RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL.
+Output: WebBuild/. The current task publishes this Unity player, not an Unreal
+HTML5 build. The Unreal/Godot summary files and local research were not changed.

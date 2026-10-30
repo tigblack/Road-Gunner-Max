@@ -1,0 +1,27 @@
+ROAD GUNNER — EXPLORATION AUTHORING, 31 OCTOBER 2026
+Unity 6000.6.4f1, saved Level01_Greenwood
+Command: RoadGunner.Editor.ExplorationArenaInstaller.InstallBatch
+Two consecutive CLI runs exited 0. All 8 relocated owners, destinations and
+candidate counts matched at the logged precision after restoring baseline geometry/navigation.
+
+Exploration installed over the current open arena: 4 regions; 14 routes; 12 open pockets; 5 breakable crates; 3 secret chests.
+Baseline-only navigation rebuilt in memory for shoulder reachability: 0.038s; previous saved Navigation.asset retained.
+Relocated Level Authoring/Authored Content/Gameplay Obstacles/B · Southwest camp/Corrugated fence fromW=(-21.00, -5.00) toW=(-24.54, -1.46); candidates=34; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Gameplay Obstacles/F · North gate and guide/Abandoned pickup fromW=(-21.00, 54.00) toW=(-18.81, 55.21); candidates=1; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Gameplay Obstacles/G · Northeast camp and sealed entrance/Rusted lookout fromW=(12.00, 31.00) toW=(9.61, 31.73); candidates=8; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Gameplay Obstacles/G · Northeast camp and sealed entrance/Shipping container fromW=(30.00, 30.00) toW=(30.52, 27.55); candidates=14; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Gameplay Obstacles/G · Northeast camp and sealed entrance/Corrugated fence fromW=(22.00, 26.00) toW=(22.95, 21.09); candidates=36; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Gameplay Obstacles/G · Northeast camp and sealed entrance/Corrugated fence fromW=(9.00, 52.00) toW=(10.43, 54.05); candidates=19; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Decoration/H · Travel landmarks and shoulder salvage/Abandoned pickup fromW=(-7.00, -34.00) toW=(-8.47, -36.02); candidates=5; oriented solid/road checks passed.
+Relocated Level Authoring/Authored Content/Decoration/H · Travel landmarks and shoulder salvage/Abandoned pickup fromW=(-9.00, 6.00) toW=(-6.52, 5.70); candidates=11; oriented solid/road checks passed.
+Relocated 8 complete baseline prop instances; original transforms retained in the authoring asset. Perimeter, sealed gates and workshop protected.
+One non-overlapping connected road surface: 7196 indexed vertices, 13080 triangles; ground-conforming +3.5cm.
+Static route centerline chassis clearance: 371 sampled oriented boxes 2.9m wide ×5.4m long; no baseline solid overlaps. This is not a dynamic driving claim.
+Original terrain/perimeter, 16 combat targets and their coordinates, base HP, vehicle tuning and inputs retained. No historical Arena1 installer was invoked.
+Authoring source: Assets/RoadGunner/Levels/Greenwood/Exploration/Exploration layout.asset; W=screen east/north, yaw45, 2.5m/W. Road mesh, texture, clearance and markers derive from the same sampled routes.
+Navigation/minimap baked=True; physical route driving still requires the separate play checks.
+
+The bake uses actual mesh geometry. Its fitted image and every marker share one
+world-to-UI projection under the circular mask. Rebaking refreshes the image
+above the sand backdrop while retaining the existing HUD position.
+Physical route/counterplay/reward acceptance is recorded in PlayMode.txt.

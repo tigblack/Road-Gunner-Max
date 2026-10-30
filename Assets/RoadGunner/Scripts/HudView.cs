@@ -25,6 +25,8 @@ namespace RoadGunner
         SessionState observedState;
         bool stateKnown;
         ArenaRunStats subscribedStats;
+        ArenaExploration subscribedExploration;
+        int observedRewardSerial;
         static readonly Color Cream = new Color(.96f, .94f, .86f);
         static readonly Color Mint = new Color(.47f, .85f, .68f);
         static readonly Color Gold = new Color(1, .73f, .30f);
@@ -43,6 +45,12 @@ namespace RoadGunner
             {
                 subscribedStats.Changed += Refresh;
                 subscribedStats.UpgradeCollected += ShowUpgrade;
+            }
+            subscribedExploration = session.exploration;
+            if (subscribedExploration)
+            {
+                observedRewardSerial = subscribedExploration.RewardSerial;
+                subscribedExploration.Changed += ExplorationChanged;
             }
             SetUpgradeVisible(false);
             if (scoreGainText) scoreGainText.gameObject.SetActive(false);
@@ -65,6 +73,7 @@ namespace RoadGunner
                 subscribedStats.Changed -= Refresh;
                 subscribedStats.UpgradeCollected -= ShowUpgrade;
             }
+            if (subscribedExploration) subscribedExploration.Changed -= ExplorationChanged;
         }
 
         public static string Number(float value) => value.ToString("0.##", CultureInfo.InvariantCulture);
@@ -78,6 +87,7 @@ namespace RoadGunner
                 observedRun = session.RunSerial;
                 previousScrap = session.Scrap;
                 feedbackUntil = scoreFlashUntil = 0;
+                observedRewardSerial = session.exploration ? session.exploration.RewardSerial : 0;
                 SetUpgradeVisible(false);
                 if (scoreGainText) scoreGainText.gameObject.SetActive(false);
             }
@@ -110,8 +120,11 @@ namespace RoadGunner
                     session.State == SessionState.Defeated ? "Your run has ended.\nTry an upgrade or the repair workshop." :
                     "Defeat Warlord to clear the arena.\nMonster is an optional mini-boss.";
             if (overlayDetails)
-                overlayDetails.text = "DAMAGE  " + Number(session.PlayerDamage(session.turret.tuning.bulletDamage)) + " / SHOT\n" +
-                    "ATK " + (stats ? stats.AttackLevel : 1) + "   ·   HP " + (stats ? stats.HealthLevel : 1) + "   ·   MAX HP " + Number(maximum);
+                overlayDetails.text = "DAMAGE  " + Number(session.PlayerDamage(session.turret.tuning.bulletDamage)) + " / SHOT   ·   MAX HP " + Number(maximum) + "\n" +
+                    "ATK " + (stats ? stats.AttackLevel : 1) + "   ·   HP " + (stats ? stats.HealthLevel : 1) +
+                    "   ·   LOOT DMG +" + Number(stats ? stats.BonusDamagePercent : 0) + "%  RAM +" + Number(stats ? stats.BonusRamPercent : 0) + "%\n" +
+                    "EXTRA HP +" + Number(stats ? stats.BonusMaxHP : 0) + "   ·   SECRETS " +
+                    (session.exploration ? session.exploration.SecretsFound + " / " + session.exploration.SecretCount : "0 / 0");
             if (restartHint) restartHint.text = "NEW RUN: SCORE, KILLS AND UPGRADES RESET";
             if (overlayAccent) overlayAccent.color = session.State == SessionState.Completed ? Gold : session.State == SessionState.Defeated ? Coral : Mint;
             if (!stateKnown || observedState != session.State || newRun)
@@ -131,6 +144,20 @@ namespace RoadGunner
             if (upgradeFeedbackText) upgradeFeedbackText.gameObject.SetActive(visible);
         }
 
+        void ExplorationChanged()
+        {
+            if (!session || !subscribedExploration) return;
+            int serial = subscribedExploration.RewardSerial;
+            bool reward = observedRun == session.RunSerial && serial > observedRewardSerial;
+            Refresh();
+            observedRewardSerial = serial;
+            if (!reward || !session.Playing || !upgradeFeedbackText) return;
+            upgradeFeedbackText.text = subscribedExploration.LastReward.Replace(" · THIS RUN", "\n<size=27>THIS RUN</size>");
+            upgradeFeedbackText.color = Gold;
+            feedbackUntil = Time.unscaledTime + 3.2f;
+            SetUpgradeVisible(true);
+        }
+
         void ShowUpgrade(ArenaUpgradeKind kind)
         {
             if (!upgradeFeedbackText || !session || !session.runStats) return;
@@ -139,6 +166,7 @@ namespace RoadGunner
             {
                 float current = session.PlayerDamage(session.turret.tuning.bulletDamage);
                 float previous = stats.tuning.ScalePlayerDamage(session.turret.tuning.bulletDamage, Mathf.Max(1, stats.AttackLevel - 1));
+                previous *= 1 + stats.BonusDamagePercent / 100;
                 float bonus = previous > 0 ? (current / previous - 1) * 100 : 0;
                 upgradeFeedbackText.text = "DAMAGE +" + bonus.ToString("0.#", CultureInfo.InvariantCulture) + "%\n<size=27>THIS RUN</size>";
                 upgradeFeedbackText.color = Gold;
@@ -146,7 +174,7 @@ namespace RoadGunner
             else
             {
                 float previous = Mathf.Max(1, session.health.tuning.vehicleHealth *
-                    (1 + Mathf.Max(0, stats.HealthLevel - 2) * stats.tuning.healthLevelBonus));
+                    (1 + Mathf.Max(0, stats.HealthLevel - 2) * stats.tuning.healthLevelBonus) + stats.BonusMaxHP);
                 string gain = Number(session.health.Maximum - previous);
                 upgradeFeedbackText.text = "MAX HP +" + gain + " · CURRENT +" + gain + "\n<size=27>THIS RUN</size>";
                 upgradeFeedbackText.color = Mint;

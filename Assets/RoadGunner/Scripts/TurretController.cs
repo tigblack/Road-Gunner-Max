@@ -20,6 +20,7 @@ namespace RoadGunner
         }
         void Update() {
             if(!session||!session.Playing)return;
+            if(Target is ArenaRewardCache && (!session.exploration || !session.exploration.isActiveAndEnabled)){Target=null;searchAt=0;}
             if(Time.time>=searchAt){searchAt=Time.time+.2f;Acquire();}
             if(!Target||!Target.Alive){Target=null;return;}
             Vector3 to=Target.AimPoint-yaw.position;Vector3 horizontal=Vector3.ProjectOnPlane(to,Vector3.up);
@@ -39,10 +40,15 @@ namespace RoadGunner
             session.effects.Shot(muzzle.position,endpoint,muzzle.rotation);
         }
         void Acquire() {
-            CombatTarget best=CanAttack(Target)?Target:null;float nearest=best?AttackRange.SquaredDistance(session.vehicle.transform.position,best.transform.position)*.65f:float.MaxValue;
-            foreach(var r in session.spawns.pool){if(!r.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,r.transform.position);if(d<nearest&&CanAttack(r)){nearest=d;best=r;}}
+            // A nearby crate must never hold target lock while an enemy can be attacked.
+            CombatTarget best=!(Target is ArenaRewardCache)&&CanAttack(Target)?Target:null;float nearest=best?AttackRange.SquaredDistance(session.vehicle.transform.position,best.transform.position)*.65f:float.MaxValue;
+            foreach(var r in session.spawns.pool){if(!r||!r.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,r.transform.position);if(d<nearest&&CanAttack(r)){nearest=d;best=r;}}
             if(session.spawns.buggyPool!=null)foreach(var buggy in session.spawns.buggyPool){if(!buggy||!buggy.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,buggy.transform.position);if(d<nearest&&CanAttack(buggy)){nearest=d;best=buggy;}}
             if(session.zone1&&session.zone1.ExtraTargets!=null)foreach(var extra in session.zone1.ExtraTargets){if(!extra||!extra.Alive)continue;float d=AttackRange.SquaredDistance(session.vehicle.transform.position,extra.transform.position);if(d<nearest&&CanAttack(extra)){nearest=d;best=extra;}}
+            if(!best && session.exploration && session.exploration.isActiveAndEnabled) {
+                if(Target is ArenaRewardCache && CanAttack(Target)){best=Target;nearest=AttackRange.SquaredDistance(session.vehicle.transform.position,best.transform.position)*.65f;}
+                foreach(var cache in session.exploration.Targets){float d=AttackRange.SquaredDistance(session.vehicle.transform.position,cache.transform.position);if(d<nearest&&CanAttack(cache)){nearest=d;best=cache;}}
+            }
             Target=best;
         }
         public void ResetCombat(){Target=null;searchAt=Time.time+.1f;fireAt=Time.time+.2f;}

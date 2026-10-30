@@ -251,12 +251,13 @@ namespace RoadGunner.Editor
                 go.transform.SetParent(map.mapRect, false); layer = go.transform;
             }
             var rect = (RectTransform)layer; rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one;
-            rect.offsetMin = rect.offsetMax = Vector2.zero; layer.SetAsFirstSibling();
+            rect.offsetMin = rect.offsetMax = Vector2.zero;
             var background = layer.GetComponent<RawImage>();
             if (!background) background = layer.gameObject.AddComponent<RawImage>();
             background.texture = texture; background.color = Color.white; background.raycastTarget = false;
             map.layout = layout; map.backgroundImage = background; map.bakedWorldBounds = bounds; map.hasBakedWorldBounds = true;
             map.bakedEnvironmentMeshCount = rasterizer.meshCount; map.bakedRoadMeshCount = rasterizer.roadCount; map.bakedTriangleCount = rasterizer.triangleCount;
+            CasualMinimapInstaller.RefreshBakedContent(map);
             EditorUtility.SetDirty(map); EditorUtility.SetDirty(background); EditorSceneManager.MarkSceneDirty(layout.gameObject.scene);
             Debug.Log("MINIMAP_BAKED " + resolution + "x" + resolution + "; static meshes=" + rasterizer.meshCount +
                 "; road meshes=" + rasterizer.roadCount + "; triangles=" + rasterizer.triangleCount + "; bounds=" + bounds + "; " + assetPath);

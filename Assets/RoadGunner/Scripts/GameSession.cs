@@ -15,6 +15,7 @@ namespace RoadGunner
         public HudView hud;
         public Zone1EnemyRoster zone1;
         public ArenaRunStats runStats;
+        public ArenaExploration exploration;
         public ArenaMinimap minimap;
         public Vector3 startPosition;
         public Quaternion startRotation;
@@ -26,7 +27,7 @@ namespace RoadGunner
         public int RunSerial { get; private set; }
         public event System.Action Changed;
         public bool Playing => State==SessionState.Playing;
-        public float PlayerDamage(float baseDamage) => runStats ? runStats.Damage(baseDamage) :
+        public float PlayerDamage(float baseDamage, bool ram = false) => runStats ? runStats.Damage(baseDamage, ram) :
             turret && turret.tuning ? turret.tuning.ScalePlayerDamage(baseDamage) : baseDamage;
         float nextRecover;
         void Awake() { Application.targetFrameRate=60; Time.timeScale=1; }
@@ -43,6 +44,7 @@ namespace RoadGunner
             if(zone1)zone1.DespawnAll();
             Physics.SyncTransforms();spawns.ResetPopulation();
             if(zone1){zone1.session=this;zone1.ResetEncounters();}
+            if(exploration){exploration.session=this;exploration.ResetRun();}
             if(minimap)minimap.RefreshTargets();
             follow.Snap();Changed?.Invoke();
         }
@@ -65,6 +67,11 @@ namespace RoadGunner
             Time.timeScale=0;Changed?.Invoke();
         }
         public void AddScrap(int amount) { if(!Playing)return;Scrap+=amount;Changed?.Invoke(); }
+        public bool GrantExplorationScrap(int amount) {
+            if(!Playing || amount<=0)return false;
+            // Direct cache rewards participate in resource accounting without creating a kill or another drop.
+            ScrapEarned+=amount;Scrap+=amount;Changed?.Invoke();return true;
+        }
         public void RaiderDefeated(Vector3 position,Vector3 direction=default) { EnemyDefeated(position,1,true,direction); }
         public void EnemyDefeated(Vector3 position,int reward,bool gear=false,Vector3 direction=default) {
             if(!Playing)return;Kills++;ScrapEarned+=reward;

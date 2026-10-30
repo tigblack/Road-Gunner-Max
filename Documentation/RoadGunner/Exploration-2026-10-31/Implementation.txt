@@ -1,0 +1,57 @@
+ROAD GUNNER — EXPLORATION REVISION
+31 October 2026, Asia/Yerevan
+Unity 6000.6.4f1 / URP 17.6.0. This revision extends the current Unity/WebGL game.
+
+DESIGN
+Four wasteland regions: Dust Flats, Salvage Yard, Rustworks, Ash Ridge.
+Connected roads, bypasses, combat clearings and optional secret branches extend
+the existing open Arena 1. Locations of the 16 enemies and the original workshop
+remain authored references. Warlord still ends the run; Monster is optional.
+The player's wheel-driven controller and vehicle tuning are preserved.
+
+Five destructible supply caches have 10.5 durability (two baseline 5.25 bullets).
+Rewards are 2 x +5% outgoing damage, 1 x +10% additional ram, 2 x +5 flat maximum HP.
+Percent damage cache bonuses add together then multiply level-scaled damage;
+the ram bonus multiplies that result only for ram. Flat HP preserves damage:
+70/100 becomes75/105. Both original free level terminals remain.
+Three nearby secret chests grant 3 Scrap each and up to 15 / 20 / 15 HP repair.
+They appear on the map within 20 m and remain revealed until Restart.
+Secrets use actual distance and line of sight; they do not block bullets.
+Caches do not grant enemy kills, spawn another pickup, or pay twice.
+Scrap from secrets participates in the same earned/collected accounting.
+Unclaimed caches/secrets are not auto-awarded when Warlord dies.
+
+Optional counterplay is assigned to actual enemy components:
+- Rust Vulture Buggy: ram damage multiplier 1.25.
+- Warlord: bullet multiplier 1.2 only during recovery after a committed strike.
+Other damage, player input and physical contact response remain unchanged.
+The boss HUD exposes the actual recovery damage window.
+No new monetization, respawn wait or permanent stat save is introduced.
+
+DATA AND EDITING
+Assets/RoadGunner/Levels/Greenwood/Exploration/Exploration layout.asset:
+Editable routes/widths, pockets, region colors/names/hints, cache definitions,
+recovery laybys and baseline transforms/materials for idempotent reauthoring.
+Assets/RoadGunner/Levels/Greenwood/Exploration/Exploration tuning.asset:
+Reward defaults, reveal/collection distances, LOS mask and counterplay factors.
+Cache definitions can override default amounts and durability.
+Hint templates read actual tuning values; the HUD does not invent stat numbers.
+
+To apply edited layout outside Play Mode:
+Tools / Road Gunner / Arena1 / Install Exploration Arena
+Batch: RoadGunner.Editor.ExplorationArenaInstaller.InstallBatch
+The installer opens/saves the main scene, rebuilds the connected road mesh and
+surface texture, refreshes navigation, regenerates the 512 x 512 minimap and authors
+exploration HUD. It never invokes legacy rebalance installers with old speeds.
+Protected cliffs/gates/workshop are retained. Blockers may be moved intact to
+verified shoulders, with original transforms stored in the layout asset.
+Actual driving and clearance evidence belongs in acceptance reports.
+
+VERIFICATION ENTRY POINTS
+RoadGunner.Editor.ExplorationVerification.Run (batch, without -quit)
+RoadGunner.Editor.Arena1Verification.Run (batch, without -quit)
+RoadGunner.Editor.WheelPhysicsVerification.Run (batch, without -quit)
+RoadGunner.EditorTools.WebBuild.Build (batch, WebGL, with -quit)
+New suite: Documentation/RoadGunner/Exploration-2026-10-31/PlayMode.txt
+Graphics/route evidence: outputs/exploration-validation/
+Build and publication status are recorded after actual successful verification.

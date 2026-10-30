@@ -1,0 +1,386 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a8a1721034b17980d2a0febc3d4eb, type: 3}
+  m_Name: Exploration layout
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::RoadGunner.Editor.ExplorationArenaLayoutData
+  minW: {x: -46, y: -63}
+  maxW: {x: 48, y: 74}
+  surfaceCellMeters: 2
+  geometryRevision: 3
+  routes:
+  - id: main-spine
+    loopId: spine
+    widthMeters: 20
+    nodesW:
+    - {x: 0, y: -48}
+    - {x: 0, y: -34}
+    - {x: 1.5, y: -25}
+    - {x: 0, y: -5}
+    - {x: 0, y: 22}
+    - {x: -1, y: 42}
+    - {x: 0, y: 60}
+  - id: workshop-drive-through
+    loopId: service-loop
+    widthMeters: 8
+    nodesW:
+    - {x: 0, y: -28}
+    - {x: 9, y: -24}
+    - {x: 12, y: -18}
+    - {x: 12, y: -12}
+    - {x: 12, y: -5}
+    - {x: 4, y: 3}
+    - {x: 0, y: 8}
+  - id: salvage-loop
+    loopId: salvage-loop
+    widthMeters: 14
+    nodesW:
+    - {x: 0, y: -30}
+    - {x: -10, y: -31}
+    - {x: -22, y: -23}
+    - {x: -25, y: -14}
+    - {x: -20, y: -3}
+    - {x: -12, y: 3}
+    - {x: 0, y: -5}
+  - id: salvage-north-return
+    loopId: salvage-loop
+    widthMeters: 14
+    nodesW:
+    - {x: -12, y: 3}
+    - {x: -15, y: 10}
+    - {x: -10, y: 18}
+    - {x: 0, y: 22}
+  - id: warlord-lower-road
+    loopId: warlord-loop
+    widthMeters: 18
+    nodesW:
+    - {x: 0, y: 22}
+    - {x: -16, y: 24}
+    - {x: -29, y: 26}
+    - {x: -35, y: 30}
+    - {x: -33, y: 35}
+  - id: warlord-upper-bypass
+    loopId: warlord-loop
+    widthMeters: 14
+    nodesW:
+    - {x: 0, y: 22}
+    - {x: -8, y: 35}
+    - {x: -16, y: 44}
+    - {x: -28, y: 44}
+    - {x: -33, y: 35}
+  - id: closed-gate-approach
+    loopId: gate-spur
+    widthMeters: 14
+    nodesW:
+    - {x: -30, y: 24}
+    - {x: -42, y: 24}
+  - id: rustworks-lower-road
+    loopId: rustworks-loop
+    widthMeters: 18
+    nodesW:
+    - {x: 0, y: 22}
+    - {x: 14, y: 22}
+    - {x: 24, y: 29}
+    - {x: 31, y: 38}
+    - {x: 32, y: 49}
+  - id: rustworks-upper-bypass
+    loopId: rustworks-loop
+    widthMeters: 14
+    nodesW:
+    - {x: 0, y: 36.5}
+    - {x: 16, y: 36.5}
+    - {x: 24, y: 40}
+    - {x: 31, y: 38}
+  - id: ridge-crosslink
+    loopId: ridge-loop
+    widthMeters: 14
+    nodesW:
+    - {x: -16, y: 44}
+    - {x: -4, y: 51}
+    - {x: 12, y: 49}
+    - {x: 24, y: 47}
+    - {x: 32, y: 49}
+  - id: ashmaw-approach
+    loopId: ashmaw-branch
+    widthMeters: 14
+    nodesW:
+    - {x: 32, y: 49}
+    - {x: 34, y: 53}
+    - {x: 38, y: 56}
+  - id: secret-scrap-gully
+    loopId: secret-west
+    widthMeters: 10
+    nodesW:
+    - {x: -25, y: -14}
+    - {x: -33, y: -10}
+    - {x: -36, y: -5}
+  - id: secret-wreck-overlook
+    loopId: secret-north
+    widthMeters: 10
+    nodesW:
+    - {x: -16, y: 44}
+    - {x: -20, y: 50}
+    - {x: -28, y: 56}
+  - id: secret-dry-cistern
+    loopId: secret-east
+    widthMeters: 10
+    nodesW:
+    - {x: 24, y: 29}
+    - {x: 29, y: 20}
+    - {x: 35, y: 16}
+    - {x: 38, y: 10}
+  pockets:
+  - id: start-turning-bowl
+    centerW: {x: 0, y: -47}
+    radiusMeters: 16
+  - id: first-raider-pocket
+    centerW: {x: 2, y: -33}
+    radiusMeters: 19
+  - id: salvage-camp
+    centerW: {x: -21, y: -16}
+    radiusMeters: 19
+  - id: salvage-north-pocket
+    centerW: {x: -16, y: 4}
+    radiusMeters: 19
+  - id: main-crossroads
+    centerW: {x: 0, y: 22}
+    radiusMeters: 22
+  - id: rustworks-camp
+    centerW: {x: 20, y: 34}
+    radiusMeters: 23
+  - id: warlord-arena
+    centerW: {x: -33, y: 35}
+    radiusMeters: 18
+  - id: ashmaw-arena
+    centerW: {x: 37.5, y: 56}
+    radiusMeters: 11.5
+  - id: secret-west-turnaround
+    centerW: {x: -35, y: -5}
+    radiusMeters: 10.5
+  - id: secret-north-turnaround
+    centerW: {x: -28, y: 56}
+    radiusMeters: 12
+  - id: secret-east-turnaround
+    centerW: {x: 37, y: 10}
+    radiusMeters: 10.5
+  - id: ashmaw-approach-bowl
+    centerW: {x: 30.5, y: 52.5}
+    radiusMeters: 13
+  regions:
+  - id: dust-flats
+    displayName: DUST FLATS
+    hint: 'SUPPLIES: auto-fire breaks marked crates'
+    centerW: {x: 0, y: -37}
+    landmarkW: {x: -10, y: -39}
+    radiusMeters: 85
+    sandColor: {r: 0.9, g: 0.66, b: 0.4, a: 1}
+  - id: salvage-yard
+    displayName: SALVAGE YARD
+    hint: 'SIDE ROADS: secrets and free repairs'
+    centerW: {x: -24, y: -5}
+    landmarkW: {x: -33, y: -14}
+    radiusMeters: 90
+    sandColor: {r: 0.68, g: 0.56, b: 0.36, a: 1}
+  - id: rustworks
+    displayName: RUSTWORKS
+    hint: 'BUGGIES: RAM DAMAGE +{buggyRamBonus}%'
+    centerW: {x: 24, y: 25}
+    landmarkW: {x: 35, y: 29}
+    radiusMeters: 65
+    sandColor: {r: 0.81, g: 0.47, b: 0.29, a: 1}
+  - id: ash-ridge
+    displayName: ASH RIDGE
+    hint: 'WARLORD: AFTER STRIKE, BULLETS +{bossRecoveryBonus}%'
+    centerW: {x: 7, y: 52}
+    landmarkW: {x: -9, y: 57}
+    radiusMeters: 130
+    sandColor: {r: 0.49, g: 0.47, b: 0.43, a: 1}
+  caches:
+  - id: crate-damage-south
+    positionW: {x: -2, y: -27}
+    reward: 0
+    overrideTuningAmount: 0
+    amount: 5
+    repairAmount: 0
+    durability: 10.5
+    secret: 0
+  - id: crate-health-salvage
+    positionW: {x: -18, y: -13}
+    reward: 2
+    overrideTuningAmount: 0
+    amount: 5
+    repairAmount: 0
+    durability: 10.5
+    secret: 0
+  - id: crate-health-crossroads
+    positionW: {x: 7, y: 28}
+    reward: 2
+    overrideTuningAmount: 0
+    amount: 5
+    repairAmount: 0
+    durability: 10.5
+    secret: 0
+  - id: crate-ram-ridge
+    positionW: {x: -7, y: 37}
+    reward: 1
+    overrideTuningAmount: 0
+    amount: 10
+    repairAmount: 0
+    durability: 10.5
+    secret: 0
+  - id: crate-damage-rustworks
+    positionW: {x: 20, y: 33}
+    reward: 0
+    overrideTuningAmount: 0
+    amount: 5
+    repairAmount: 0
+    durability: 10.5
+    secret: 0
+  - id: secret-scrap-gully
+    positionW: {x: -36, y: -5}
+    reward: 4
+    overrideTuningAmount: 0
+    amount: 3
+    repairAmount: 15
+    durability: 10.5
+    secret: 1
+  - id: secret-wreck-overlook
+    positionW: {x: -28, y: 56}
+    reward: 4
+    overrideTuningAmount: 0
+    amount: 3
+    repairAmount: 20
+    durability: 10.5
+    secret: 1
+  - id: secret-dry-cistern
+    positionW: {x: 38, y: 10}
+    reward: 4
+    overrideTuningAmount: 0
+    amount: 3
+    repairAmount: 15
+    durability: 10.5
+    secret: 1
+  recoveryLaybysW:
+  - {x: 0, y: -48}
+  - {x: 12, y: -12}
+  - {x: -12, y: -20}
+  - {x: 0, y: 22}
+  - {x: -23, y: 36}
+  - {x: 22, y: 44}
+  - {x: 34, y: 55}
+  baselineMoves:
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-928110271460363189-1205053286
+    hierarchy: "Level Authoring/Authored Content/Gameplay Obstacles/B \xB7 Southwest camp/Corrugated fence"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: -45.961937, y: 0, z: 28.284273}
+    rotation: {x: -0, y: 0.38268346, z: -0, w: 0.9238795}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2021322184127745194-1152202763
+    hierarchy: "Level Authoring/Authored Content/Gameplay Obstacles/F \xB7 North gate and guide/Abandoned pickup"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: 58.33632, y: 0, z: 132.58252}
+    rotation: {x: -0, y: 0.6427877, z: -0, w: 0.76604444}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5564581848590590821-2118925321
+    hierarchy: "Level Authoring/Authored Content/Gameplay Obstacles/G \xB7 Northeast camp and sealed entrance/Rusted lookout"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: 76.01398, y: 0, z: 33.587566}
+    rotation: {x: -0, y: 0.38268346, z: -0, w: 0.9238795}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5474903343517098250-1299426675
+    hierarchy: "Level Authoring/Authored Content/Gameplay Obstacles/G \xB7 Northeast camp and sealed entrance/Shipping container"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: 106.06602, y: 0, z: -0.0000067055225}
+    rotation: {x: -0, y: 0.44619784, z: -0, w: 0.89493436}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-928110271460363189-37365238
+    hierarchy: "Level Authoring/Authored Content/Gameplay Obstacles/G \xB7 Northeast camp and sealed entrance/Corrugated fence"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: 84.85281, y: 0, z: 7.071062}
+    rotation: {x: -0, y: 0.38268346, z: -0, w: 0.9238795}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-928110271460363189-1565361393
+    hierarchy: "Level Authoring/Authored Content/Gameplay Obstacles/G \xB7 Northeast camp and sealed entrance/Corrugated fence"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: 107.833786, y: 0, z: 76.01397}
+    rotation: {x: -0, y: 0.92387956, z: -0, w: 0.38268343}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2021322184127745194-522778269
+    hierarchy: "Level Authoring/Authored Content/Decoration/H \xB7 Travel landmarks and shoulder salvage/Abandoned pickup"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: -72.47845, y: 0, z: -47.729702}
+    rotation: {x: -0, y: 0.38268346, z: -0, w: 0.9238795}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2021322184127745194-662280066
+    hierarchy: "Level Authoring/Authored Content/Decoration/H \xB7 Travel landmarks and shoulder salvage/Abandoned pickup"
+    reason: Overlapped exploration road/pocket clearance; relocated intact to an unused shoulder.
+    position: {x: -5.3032994, y: 0, z: 26.516504}
+    rotation: {x: -0, y: 0.8433915, z: -0, w: 0.5372996}
+  baselineSurfaces:
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1274128683-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-38336934-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1604997639-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1430268595-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2083793790-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1468094429-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-158360080-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-633439114-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2006679729-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1592794082-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1994086616-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1659248067-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-194267845-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-448157349-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1441282093-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2083693887-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-785902732-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-809498050-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1857616227-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745523992-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1086048678-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}
+  - globalId: GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1000122544-0
+    materials:
+    - {fileID: 2100000, guid: b040c1d90009d48ba9d0d44351530565, type: 2}

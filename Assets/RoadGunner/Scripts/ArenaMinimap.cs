@@ -35,6 +35,7 @@ namespace RoadGunner
             public Transform world;
             public CombatTarget enemy;
             public ArenaUpgradeStation station;
+            public ArenaRewardCache cache;
             public RectTransform icon;
             public MinimapMarkerKind kind;
             public bool visible, projected;
@@ -67,6 +68,9 @@ namespace RoadGunner
             if (upgrades != null) for (int i = 0; i < upgrades.Length; i++)
                 if (upgrades[i]) Add(upgrades[i].transform, upgrades[i].kind == ArenaUpgradeKind.Attack ? MinimapMarkerKind.Attack : MinimapMarkerKind.Health, null, upgrades[i]);
             if (workshops != null) for (int i = 0; i < workshops.Length; i++) if (workshops[i]) Add(workshops[i].transform, MinimapMarkerKind.Workshop);
+            if (session.exploration && session.exploration.caches != null)
+                foreach (var cache in session.exploration.caches)
+                    if (cache) Add(cache.transform, cache.secret ? MinimapMarkerKind.Secret : MinimapMarkerKind.Cache, cache: cache);
             if (session.spawns)
             {
                 var raiders = session.spawns.pool;
@@ -87,7 +91,7 @@ namespace RoadGunner
             nextRefresh = 0; RefreshMarkers();
         }
 
-        void Add(Transform target, MinimapMarkerKind kind, CombatTarget enemy = null, ArenaUpgradeStation station = null)
+        void Add(Transform target, MinimapMarkerKind kind, CombatTarget enemy = null, ArenaUpgradeStation station = null, ArenaRewardCache cache = null)
         {
             for (int i = 0; i < markers.Count; i++) if (markers[i].world == target) return;
             var go = new GameObject(kind + " marker", typeof(RectTransform), typeof(CanvasRenderer), typeof(ArenaMinimapIcon));
@@ -96,7 +100,7 @@ namespace RoadGunner
             var rect = (RectTransform)go.transform; rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
             float size = MarkerSize(kind); icon.color = MarkerColor(kind);
             rect.sizeDelta = kind == MinimapMarkerKind.Buggy ? new Vector2(size * .8f, size * 1.2f) : new Vector2(size, size);
-            markers.Add(new Marker { world = target, enemy = enemy, station = station, icon = rect, kind = kind, visible = true });
+            markers.Add(new Marker { world = target, enemy = enemy, station = station, cache = cache, icon = rect, kind = kind, visible = true });
         }
 
         public static MinimapMarkerKind KindOf(CombatTarget target)
@@ -119,6 +123,8 @@ namespace RoadGunner
             if (kind == MinimapMarkerKind.Player) return Color.white;
             if (kind == MinimapMarkerKind.Workshop) return new Color(.12f, .82f, .32f);
             if (kind == MinimapMarkerKind.MiniBoss) return new Color(1, .48f, .07f);
+            if (kind == MinimapMarkerKind.Cache) return new Color(1, .76f, .22f);
+            if (kind == MinimapMarkerKind.Secret) return new Color(.35f, .94f, 1);
             return new Color(1, .13f, .19f);
         }
 
@@ -133,6 +139,8 @@ namespace RoadGunner
                 case MinimapMarkerKind.Health: return 17;
                 case MinimapMarkerKind.Workshop: return 28;
                 case MinimapMarkerKind.Buggy: return 12;
+                case MinimapMarkerKind.Cache: return 19;
+                case MinimapMarkerKind.Secret: return 22;
                 default: return 11;
             }
         }
@@ -167,10 +175,14 @@ namespace RoadGunner
         {
             for (int i = 0; i < markers.Count; i++)
                 if (markers[i].world == target && markers[i].visible &&
-                    (!markers[i].enemy || markers[i].enemy.Alive) && (!markers[i].station || !markers[i].station.Consumed))
+                    (!markers[i].enemy || markers[i].enemy.Alive) && (!markers[i].station || !markers[i].station.Consumed) &&
+                    (!markers[i].cache || IsCacheVisible(markers[i].cache)))
                 { position = markers[i].icon.anchoredPosition; return true; }
             position = default; return false;
         }
+
+        public static bool IsCacheVisible(ArenaRewardCache cache) => cache && cache.gameObject.activeInHierarchy &&
+            !cache.Claimed && (!cache.secret || cache.Revealed);
 
         void RefreshMarkers()
         {
@@ -182,7 +194,8 @@ namespace RoadGunner
             {
                 var marker = markers[i];
                 bool visible = marker.world && marker.world.gameObject.activeInHierarchy &&
-                    (!marker.enemy || marker.enemy.Alive) && (!marker.station || !marker.station.Consumed);
+                    (!marker.enemy || marker.enemy.Alive) && (!marker.station || !marker.station.Consumed) &&
+                    (!marker.cache || IsCacheVisible(marker.cache));
                 if (visible != marker.visible) { marker.icon.gameObject.SetActive(visible); marker.visible = visible; }
                 if (!visible) continue;
                 VisibleMarkerCount++;

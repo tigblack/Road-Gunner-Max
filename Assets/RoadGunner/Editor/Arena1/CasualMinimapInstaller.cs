@@ -73,6 +73,40 @@ namespace RoadGunner.Editor
             return Mathf.Clamp(available / Mathf.Max(.01f, largestRadius), .1f, 1);
         }
 
+        /// <summary>Refresh a new bake without moving/resizing the existing HUD frame or legend.</summary>
+        public static void RefreshBakedContent(ArenaMinimap map)
+        {
+            if (!map || !map.mapRect || !map.backgroundImage || !map.BackgroundTexture)
+                throw new InvalidOperationException("The existing baked map and rectangle are required.");
+            var backdrop = map.mapRect.Find("Warm sand behind arena");
+            if (backdrop) backdrop.SetAsFirstSibling();
+            var imageRect = map.backgroundImage.rectTransform;
+            imageRect.SetSiblingIndex(backdrop ? 1 : 0);
+            bool circular = map.circularMask && map.circularMask.enabled;
+            if (circular)
+            {
+                map.contentScale = FitArena(map);
+                imageRect.anchorMin = imageRect.anchorMax = imageRect.pivot = new Vector2(.5f, .5f);
+                imageRect.anchoredPosition = Vector2.zero;
+                imageRect.sizeDelta = map.mapRect.sizeDelta * map.contentScale;
+            }
+            else
+            {
+                map.contentScale = 1;
+                imageRect.anchorMin = Vector2.zero; imageRect.anchorMax = Vector2.one;
+                imageRect.offsetMin = imageRect.offsetMax = Vector2.zero;
+            }
+            imageRect.localScale = Vector3.one; imageRect.localRotation = Quaternion.identity;
+            map.backgroundImage.uvRect = new Rect(0, 0, 1, 1);
+            map.backgroundImage.color = Color.white; map.backgroundImage.enabled = true;
+            map.backgroundImage.maskable = true; map.backgroundImage.raycastTarget = false;
+            EditorUtility.SetDirty(imageRect); EditorUtility.SetDirty(map.backgroundImage); EditorUtility.SetDirty(map);
+            if (backdrop) EditorUtility.SetDirty(backdrop);
+            EditorSceneManager.MarkSceneDirty(map.gameObject.scene);
+            Debug.Log("MINIMAP_BAKED_CONTENT_REFRESHED textureSibling=" + imageRect.GetSiblingIndex() +
+                "; backdropSibling=" + (backdrop ? backdrop.GetSiblingIndex() : -1) + "; contentScale=" + map.contentScale.ToString("F4"));
+        }
+
         public static void Configure(ArenaMinimap map)
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Configure the circular minimap outside Play Mode.");
@@ -98,11 +132,7 @@ namespace RoadGunner.Editor
             mask.enabled = true; mask.showMaskGraphic = false; map.circularMask = mask;
             var backdrop = Disc(map.mapRect, "Warm sand behind arena", 394, Vector2.zero, new Color(.96f, .79f, .51f));
             backdrop.transform.SetAsFirstSibling();
-            map.contentScale = FitArena(map);
-            var imageRect = map.backgroundImage.rectTransform;
-            imageRect.anchorMin = imageRect.anchorMax = imageRect.pivot = new Vector2(.5f, .5f);
-            imageRect.anchoredPosition = Vector2.zero; imageRect.sizeDelta = map.mapRect.sizeDelta * map.contentScale;
-            map.backgroundImage.maskable = true; map.backgroundImage.raycastTarget = false;
+            RefreshBakedContent(map);
             map.mapRect.SetAsLastSibling();
             Disc(frame, "Casual map rim highlight", 416, new Vector2(0, 1), new Color(1, .98f, .86f, .50f), .977f).transform.SetAsLastSibling();
             if (map.legendPanel)

@@ -1,0 +1,27 @@
+Wheel-based player physics — actual saved vehicle; Unity 6000.6.4f1
+Temporary flat track, wall and one-wheel curb. ResetPose is setup only; motion uses the production DriveInput/WheelColliders.
+Impulse case explicitly applies a measured external force. No running-case velocity/rotation replacement. Timesteps are solver rates, not measured display FPS.
+PASS saved player uses four dynamic physical wheels: Mass=1400; constraints=None; CCD=ContinuousDynamic
+PASS authored suspension settles on four-wheel test ground: Contacts=4; speed=0.011; tilt=0.044; fixed step=0.017
+PASS release preserves natural forward momentum: Actual Space=False; speed=6.023 -> 5.427; distance=8.790
+PASS Space uses physical service brakes: Actual Space=True; speed=6.023 -> 0.002; distance=2.842
+PASS release coasts farther than Space from comparable speed: Coast/brake travel=8.790/2.842m; end speeds=5.427/0.002
+PASS directional 90 degree command follows a physical arc: Final heading error=19.923; path=10.164m; mean radius=8.310m; yaw before0.5m=4.989; time=2.433s (no old pivot-time requirement)
+PASS front wheel steering supplies the 90 degree turn: Peak front/rear wheel steer=28.280/0.000deg
+PASS directional 180 degree command follows a physical arc: Final heading error=19.881; path=20.252m; mean radius=7.247m; yaw before0.5m=4.957; time=4.883s (no old pivot-time requirement)
+PASS front wheel steering supplies the 180 degree turn: Peak front/rear wheel steer=28.280/0.000deg
+PASS heading command cannot pivot a translation-locked chassis: Actual grounded steering with X/Z pinned; yaw=1.140deg; travel=0.002
+PASS airborne fixture has fresh zero-contact physics state: After two setup physics steps: contacts=0
+PASS airborne input cannot steer chassis without tire contact: Contacts=0; yaw=0.000; horizontal speed=0.000; fall=1.177
+PASS external impulse retains lateral and angular physical response: Applied3m/s lateral impulse via AddForceAtPosition; first speed=3.000; travel=0.506; peak angular=0.053; tire slip=1.228
+PASS wall receives a genuine collision impulse without tunnelling: Contacts=1; impulse=12492.740Ns; approach/end speed=9.535/0.000; furthest chassisZ=-8.517
+PASS uneven ground compresses suspension and permits pitch and roll: Peak tilt=3.191; wheel suspension motion=0.138m; settled tilt=0.000; settled angular speed=0.002
+PASS wheel physics remains finite at solver 30Hz: Three-second drive distance/speed=15.770m/9.452m/s; following two-second arc=76.149deg; slip=0.011
+PASS wheel physics remains finite at solver 60Hz: Three-second drive distance/speed=15.691m/9.440m/s; following two-second arc=76.044deg; slip=0.006
+PASS wheel physics remains finite at solver 120Hz: Three-second drive distance/speed=15.649m/9.434m/s; following two-second arc=75.965deg; slip=0.002
+PASS solver-30 agrees with60Hz physical trajectory: Distance deviation=0.506%; speed deviation=0.129%; yaw difference=0.104deg
+PASS solver-120 agrees with60Hz physical trajectory: Distance deviation=0.265%; speed deviation=0.064%; yaw difference=0.080deg
+RESULT checks=20; failures=0; temporary physics fixtures removed; saved scene/tuning not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

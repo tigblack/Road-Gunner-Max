@@ -289,6 +289,7 @@ namespace RoadGunner
         public override void Hit(float damage, Vector3 direction, bool ram = false)
         {
             if (!Alive || !session || !session.Playing || damage <= 0 || (ram && Time.time < nextRam)) return;
+            damage = ArenaCombatAffinity.Apply(this, damage, ram);
             if (ram) nextRam = Time.time + Mathf.Max(.1f, playerRamCooldown);
             Health = Mathf.Max(0, Health - damage); Changed?.Invoke(); NotifyHealthChanged();
             if (Health <= 0)

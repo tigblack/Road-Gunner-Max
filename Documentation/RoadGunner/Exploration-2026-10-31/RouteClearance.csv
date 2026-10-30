@@ -1,0 +1,15 @@
+route,width_m,samples,nav_samples,car_clear_samples,road_cross_sections
+main-spine,20,140,140,140,10
+workshop-drive-through,8,64,64,64,11
+salvage-loop,14,93,93,93,11
+salvage-north-return,14,37,37,37,13
+warlord-lower-road,18,56,56,56,12
+warlord-upper-bypass,14,65,65,65,11
+closed-gate-approach,14,16,16,16,16
+rustworks-lower-road,18,64,64,64,11
+rustworks-upper-bypass,14,42,42,42,11
+ridge-crosslink,14,67,67,67,12
+ashmaw-approach,14,14,14,14,14
+secret-scrap-gully,10,21,21,21,11
+secret-wreck-overlook,10,24,24,24,12
+secret-dry-cistern,10,33,33,33,11

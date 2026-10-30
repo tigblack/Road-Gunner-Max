@@ -102,7 +102,8 @@ namespace RoadGunner
         }
         void Pose(float swing) {leftLeg.localRotation=Quaternion.Euler(swing,0,0);rightLeg.localRotation=Quaternion.Euler(-swing,0,0);leftArm.localRotation=Quaternion.Euler(-swing,0,12);rightArm.localRotation=Quaternion.Euler(swing,0,-12);}
         public override void Hit(float damage,Vector3 direction,bool ram=false) {
-            if(!Alive || !session.Playing || (ram&&Time.time<nextRam))return;
+            if(!Alive || !session || !session.Playing || damage<=0 || (ram&&Time.time<nextRam))return;
+            damage=ArenaCombatAffinity.Apply(this,damage,ram);
             if(ram)nextRam=Time.time+tuning.ramCooldown;
             Health=Mathf.Max(0,Health-damage);NotifyHealthChanged();
             if(Health<=0) {

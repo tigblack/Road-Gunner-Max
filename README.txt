@@ -9,9 +9,9 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. Arena 1 keeps the restored open geography from 7c8b54c and the Anton
-feedback HUD. The 30 October wheel-physics revision drives and turns the player
-through WheelCollider tyre forces. The current work concerns this Unity game.
+Press Play. The 31 October exploration revision adds four connected wasteland
+regions, optional routes and visible rewards to Arena 1. The player retains
+wheel-driven physics and the Anton feedback HUD. This is the Unity/WebGL game.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -47,6 +47,31 @@ player health is restored. Pause/Resume preserves run and tutorial progress.
 Pause also provides music volume and a summary of current damage and run stats.
 The volume preference is saved locally.
 
+EXPLORATION AND WORLD REWARDS
+Five supply caches are destructible auto-fire targets. Unobstructed enemies
+have targeting priority. A fresh cache takes two baseline bullets (10.5 HP).
+Two caches each add 5% damage, one adds 10% ram damage and two each add 5 flat
+maximum/current HP. Bonuses last for this run and preserve damage already taken.
+Three optional secret chests reveal on the map within 20 m. Drive close, with a
+clear approach, to collect 3 Scrap plus up to 15 / 20 / 15 HP of repair.
+Gold chest markers are shootable supply caches; cyan chests are nearby secrets.
+Neither cache type counts as an enemy kill. Restart restores all rewards.
+
+Rust Vulture takes 25% extra ram damage. After a committed Warlord strike,
+bullets deal 20% extra damage during recovery; the boss HUD shows that window.
+The new routes provide room to manoeuvre and optional approaches to encounters.
+
+Edit Levels/Greenwood/Exploration/Exploration layout.asset for routes, widths,
+turning clearings, regions, rewards and recovery laybys. Edit Exploration
+tuning.asset for reward defaults, reveal/range settings and counterplay.
+After edits, stop Play Mode and run:
+Tools / Road Gunner / Arena1 / Install Exploration Arena
+Batch entry: RoadGunner.Editor.ExplorationArenaInstaller.InstallBatch
+This rebuilds the saved scene, road surface, navigation, map and region HUD.
+Apply any legacy presentation installer before this exploration installer.
+Implementation and acceptance evidence:
+Documentation/RoadGunner/Exploration-2026-10-31/
+
 ANTON FEEDBACK AUTHORING
 To apply or reapply the current presentation, stop Play Mode and save the open
 scene, then use:
@@ -76,8 +101,8 @@ Documentation/RoadGunner/WheelPhysics-2026-10-30/
 After editing terrain or roads, refresh the static map through the existing
 minimap authoring workflow and rebake navigation as required by the Level Editor.
 Legacy rebalance/prototype/polish commands have their own authoring scopes and
-may replace presentation or tuning; apply the Anton feedback installer last
-when retaining the current HUD. See Assets/RoadGunner/README.txt for details.
+may replace presentation or tuning; apply the Anton feedback installer, then the exploration installer
+when retaining the current HUD and map. See Assets/RoadGunner/README.txt for details.
 
 WEB BUILD AND PUBLISHED DEMO
 Use Tools / Road Gunner / Web / Build Mobile Web, or batch entry
@@ -123,3 +148,9 @@ asserted here.
 Exact The War reference data was unavailable; Arena 1 remains the documented
 authored fallback layout. Unity caches, local IDE state and generated build
 folders can be recreated by the editor.
+
+EXPLORATION ACCEPTANCE — 31 OCTOBER 2026
+The saved revision passed 88 exploration, 204 Arena 1 and 20 wheel-physics
+checks: 312 total, zero failures and zero Console errors. See
+Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt and its named reports.
+These are controlled Unity fixtures, not FPS measurements or a natural full run.

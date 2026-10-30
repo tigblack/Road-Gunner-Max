@@ -28,7 +28,7 @@ namespace RoadGunner
         const float BetweenHints = 1.25f;
         const float RepairCooldown = 30f;
 
-        enum HintKind { None, Range, Score, Repair }
+        enum HintKind { None, Range, Score, Repair, Exploration }
         GameSession subscribedSession;
         VehicleHealth subscribedHealth;
         Raider[] humans = System.Array.Empty<Raider>();
@@ -40,6 +40,7 @@ namespace RoadGunner
         Vector2 gestureOrigin;
         Color gestureColor;
         bool gestureCaptured, initialized, scoreHintShown, rangePending, scorePending, repairPending, directionReady;
+        bool explorationHintShown;
         int runSerial = int.MinValue;
         float playClock, hintUntil, nextHintAt, nextRepairAt, nextDirectionAt, lastHealth;
         HintKind activeHint;
@@ -103,6 +104,7 @@ namespace RoadGunner
             runSerial = session.RunSerial;
             initialized = true;
             HasDriven = RangeHintShown = scoreHintShown = false;
+            explorationHintShown = false;
             rangePending = scorePending = repairPending = false;
             directionReady = false;
             playClock = hintUntil = nextHintAt = nextRepairAt = nextDirectionAt = 0;
@@ -238,7 +240,7 @@ namespace RoadGunner
             {
                 rangePending = false;
                 RangeHintShown = true;
-                ShowHint(HintKind.Range, "WHITE RING \u00b7 10 m gun range\nYour gun fires at enemies inside the ring", 4.8f);
+                ShowHint(HintKind.Range, "WHITE RING \u00b7 10 m gun range\nYour gun fires at targets inside the ring", 4.8f);
                 return;
             }
             if (scorePending && !scoreHintShown)
@@ -251,6 +253,12 @@ namespace RoadGunner
                 ShowHint(HintKind.Score, upgradesAvailable
                     ? "GEAR ADDS TO YOUR SCRAP SCORE\nYour harpoon collects drops \u00b7 Upgrade terminals are free"
                     : "GEAR ADDS TO YOUR SCRAP SCORE\nYour harpoon collects nearby drops", 5.5f);
+                return;
+            }
+            if (!repairPending && !explorationHintShown && playClock >= 8 && session.exploration && session.exploration.isActiveAndEnabled)
+            {
+                explorationHintShown = true;
+                ShowHint(HintKind.Exploration, "SUPPLY CACHES \u00b7 RUN BONUSES\nAuto-fire breaks them \u00b7 Side roads hide chests", 5.5f);
                 return;
             }
             if (repairPending && playClock >= nextRepairAt)

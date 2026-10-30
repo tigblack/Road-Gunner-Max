@@ -1,0 +1,32 @@
+ROAD GUNNER — ACTUAL WEBGL BROWSER SMOKE, 31 OCTOBER 2026
+Installed Google Chrome on macOS, native CUA interaction.
+Local host: http://127.0.0.1:8784/?build=exploration-20261031
+Tested the newly built WebBuild player, not the Unity Editor.
+
+OBSERVED
+PLAY starts the loader and enters the real Arena 1 with music. The 540 x 960
+portrait game is centred in the desktop window. Actual geography, enemy icons,
+workshop, player arrow and gold supply-cache markers appear on the circular map.
+
+Holding W for 6.5 seconds drives the physical car along the road. The DUST FLATS
+region card appears, with the current hint and supply/secret counts; the player
+arrow moves on the map. The live speed HUD reached 37 km/h in the observed frame.
+This observation is not a performance or controlled physics measurement.
+
+The real roof gun damaged then consumed the first supply cache. Space braking
+and Escape pause worked. Pause showed DAMAGE 5.51 / SHOT and LOOT DMG +5%, with
+100 maximum/current HP, ATK 1, HP 1, zero Scrap and zero kills: the crate granted
+the actual damage bonus without pretending it was an enemy kill.
+
+Clicking RESTART RUN returned the car to spawn, restored the start guidance and
+reset resources. MAP KEY opened the fitted legend, including SUPPLY CACHE - SHOOT
+and SECRET - NEARBY with matching icons. Closing it and pausing showed baseline
+DAMAGE 5.25 / SHOT, MAX HP 100, LOOT DMG +0%, RAM +0%, EXTRA HP +0, SECRETS 0 / 3.
+
+LIMITS
+This is a local browser smoke run with real inputs, not a full arena playthrough.
+The complete gameplay, boss, harpoon, touch routing and physics contracts were
+checked separately in Unity's controlled suites (312 passing checks).
+Physical Android/iOS devices, mobile Safari, frame times and browser Console were
+not measured in this smoke run. Native Unity suites reported zero Console errors.
+Public delivery and exact served artifact hashes are recorded separately.

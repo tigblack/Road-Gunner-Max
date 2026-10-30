@@ -176,7 +176,8 @@ namespace RoadGunner
         }
         public override void Hit(float damage, Vector3 direction, bool ram = false)
         {
-            if (!Alive || !session.Playing || (ram && Time.time < nextPlayerRam)) return;
+            if (!Alive || !session || !session.Playing || damage <= 0 || (ram && Time.time < nextPlayerRam)) return;
+            damage = ArenaCombatAffinity.Apply(this, damage, ram);
             if (ram) nextPlayerRam = Time.time + session.turret.tuning.ramCooldown;
             Health = Mathf.Max(0, Health - damage); NotifyHealthChanged(); flashUntil = Time.time + .13f;
             if (Health > 0) return;

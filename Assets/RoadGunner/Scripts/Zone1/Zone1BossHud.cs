@@ -50,7 +50,7 @@ namespace RoadGunner
             if (target is WastelandMutant mutant)
             {
                 if (mutant.IsTelegraphing) return "HEAVY SMASH · DODGE";
-                if (mutant.State == MutantState.SmashRecovery) return "RECOVERING";
+                if (mutant.State == MutantState.SmashRecovery) return RecoveryLabel(mutant);
                 return "OPTIONAL MINI-BOSS";
             }
             if (target is TruckArenaBoss truck)
@@ -65,10 +65,19 @@ namespace RoadGunner
             if (target is Raider raider && raider.arenaBoss)
             {
                 if (raider.IsTelegraphing) return "HEAVY STRIKE · DODGE";
-                if (raider.IsRecovering) return "RECOVERING";
+                if (raider.IsRecovering) return RecoveryLabel(raider);
                 return string.Empty;
             }
             return string.Empty;
+        }
+        static string RecoveryLabel(CombatTarget target)
+        {
+            if (target.TryGetComponent<ArenaCombatAffinity>(out var affinity) && affinity.enabled)
+            {
+                float multiplier = affinity.DamageMultiplier(false);
+                if (multiplier > 1.001f) return "OPENING · DMG +" + Mathf.RoundToInt((multiplier - 1) * 100) + "%";
+            }
+            return "RECOVERING";
         }
         public void Refresh()
         {

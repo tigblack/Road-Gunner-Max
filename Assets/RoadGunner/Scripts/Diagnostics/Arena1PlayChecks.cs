@@ -37,6 +37,7 @@ namespace RoadGunner
         RigidbodyConstraints carConstraints;
         int humanShots;
         bool running;
+        bool explorationWasEnabled;
         bool trackRange;
         AttackRangeIndicator trackedRange;
         int rangeTrackingFrames;
@@ -98,6 +99,7 @@ namespace RoadGunner
         {
             s = GetComponent<GameSession>();
             if (!s) throw new InvalidOperationException("Attach checks to the actual GameSession.");
+            explorationWasEnabled = s.exploration && s.exploration.enabled;
             layout = Object.FindAnyObjectByType<LevelLayout>();
             harpoon = s.vehicle.GetComponent<HarpoonCollector>();
             carConstraints = s.vehicle.Body.constraints;
@@ -137,6 +139,7 @@ namespace RoadGunner
             yield return new WaitForSecondsRealtime(.12f);
             bool playerMarker = s.minimap.TryGetMarker(s.vehicle.transform, out var playerPosition);
             int expected = 1 + raiders + buggies + 2 + s.runStats.stations.Length + s.minimap.workshops.Length;
+            if (s.exploration) expected += s.exploration.caches.Count(ArenaMinimap.IsCacheVisible);
             var lo = s.minimap.Project(s.minimap.WorldBounds.min);
             var hi = s.minimap.Project(s.minimap.WorldBounds.max);
             Check("minimap uses actual arena and live targets", s.minimap.layout == layout && playerMarker &&
@@ -267,6 +270,9 @@ namespace RoadGunner
         void Isolate()
         {
             Time.timeScale = 1;
+            // Exploration has its own production-scene suite. Keep these combat/input fixtures
+            // free of unrelated auto targets and proximity rewards while retaining their geometry.
+            if (s.exploration) s.exploration.enabled = false;
             s.Restart(); s.spawns.enabled = false; s.turret.enabled = false; s.health.DamageEnabled = false;
             foreach (var r in s.spawns.pool) if (r) r.Despawn();
             foreach (var b in s.spawns.buggyPool) if (b) b.Despawn();
@@ -860,6 +866,7 @@ namespace RoadGunner
             { b.enabled = true; b.AIEnabled = true; if (b.Body) b.Body.constraints = RigidbodyConstraints.None; }
             if (monster) { monster.enabled = true; monster.AIEnabled = true; }
             if (boss) { boss.enabled = true; boss.AIEnabled = true; }
+            if (s.exploration) s.exploration.enabled = explorationWasEnabled;
             s.vehicle.Body.constraints = carConstraints; s.spawns.enabled = true; s.turret.enabled = true; s.Restart();
         }
 

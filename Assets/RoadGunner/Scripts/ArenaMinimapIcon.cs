@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace RoadGunner
 {
-    public enum MinimapMarkerKind { Raider, Buggy, MiniBoss, Boss, Attack, Health, Workshop, Player }
+    public enum MinimapMarkerKind { Raider, Buggy, MiniBoss, Boss, Attack, Health, Workshop, Player, Cache, Secret }
 
     /// <summary>Outlined geometry glyphs: red hostiles/diamonds, orange/red skulls and a white/cyan player.</summary>
     [RequireComponent(typeof(CanvasRenderer))]
@@ -39,6 +39,13 @@ namespace RoadGunner
                 Triangle(mesh, c + new Vector2(0, -y * .05f), c + new Vector2(-x * .13f, -y * .29f), c + new Vector2(x * .13f, -y * .29f), Outline);
                 Quad(mesh, c + new Vector2(-x * .15f, -y * .61f), x * .035f, y * .15f, Outline);
                 Quad(mesh, c + new Vector2(x * .15f, -y * .61f), x * .035f, y * .15f, Outline);
+            }
+            else if (kind == MinimapMarkerKind.Cache || kind == MinimapMarkerKind.Secret)
+            {
+                Quad(mesh, c, x, y * .78f, Outline);
+                Quad(mesh, c, x * .82f, y * .60f, color);
+                Quad(mesh, c + new Vector2(0, y * .13f), x * .82f, y * .075f, Outline);
+                Quad(mesh, c, x * .14f, y * .25f, Color.white);
             }
             else if (kind == MinimapMarkerKind.Attack || kind == MinimapMarkerKind.Health)
             {

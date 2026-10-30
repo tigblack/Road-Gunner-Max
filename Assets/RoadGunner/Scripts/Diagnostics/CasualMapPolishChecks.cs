@@ -22,9 +22,15 @@ namespace RoadGunner
                 Mathf.Abs(map.mapRect.rect.width - map.mapRect.rect.height) < .01f &&
                 map.backgroundImage.maskable && map.backgroundImage.transform.IsChildOf(map.mapRect),
                 "Solid circular Graphic + UGUI Mask, terrain RawImage and marker hierarchy inside; viewport=" + map.mapRect.rect.size);
+            // Static batching replaces the rendered MeshFilter with an unreadable CombinedMesh.
+            // The physical ground collider keeps the same authored source and world transform.
+            var groundCollider = layout.ground.GetComponent<MeshCollider>();
+            var groundMesh = groundCollider ? groundCollider.sharedMesh : null;
+            if (!groundMesh || !groundMesh.isReadable || groundMesh.vertexCount == 0)
+                throw new System.InvalidOperationException("The real ground MeshCollider must expose its non-empty authored geometry for the complete-arena fit check.");
             float farthest = 0;
-            foreach (var vertex in layout.ground.sharedMesh.vertices)
-                farthest = Mathf.Max(farthest, (map.Project(layout.ground.transform.TransformPoint(vertex)) - map.mapRect.rect.center).magnitude);
+            foreach (var vertex in groundMesh.vertices)
+                farthest = Mathf.Max(farthest, (map.Project(groundCollider.transform.TransformPoint(vertex)) - map.mapRect.rect.center).magnitude);
             bool repairsInside = map.workshops.All(w => map.IsInsideCircle(map.Project(w.transform.position), 18));
             Check("whole arena and distant repair fit round map", farthest <= map.CircleRadius - 15 && repairsInside &&
                 map.contentScale > .5f && map.contentScale <= 1,
@@ -88,14 +94,23 @@ namespace RoadGunner
             }
             DestroyImmediate(sample);
             PlaceCar(Ground(testOrigin) + Vector3.up * .7f, testRotation); yield return null; Capture("white-range-sand");
-            var road = Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
-                .FirstOrDefault(f => f.sharedMesh && (f.sharedMesh.name.StartsWith("Road ") || f.sharedMesh.name.Contains("worn-track")));
-            bool roadFound = false;
-            if (road)
+            // Prefer the real road collider's source; batching can also replace static road filters.
+            var roadCollider = Object.FindObjectsByType<MeshCollider>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                .FirstOrDefault(c => IsReadableRoad(c.sharedMesh));
+            Mesh roadMesh = roadCollider ? roadCollider.sharedMesh : null;
+            Transform roadTransform = roadCollider ? roadCollider.transform : null;
+            if (!roadMesh)
             {
-                var vertices = road.sharedMesh.vertices;
+                var filter = Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                    .FirstOrDefault(f => IsReadableRoad(f.sharedMesh));
+                if (filter) { roadMesh = filter.sharedMesh; roadTransform = filter.transform; }
+            }
+            bool roadFound = false;
+            if (roadMesh)
+            {
+                var vertices = roadMesh.vertices;
                 for (int i = vertices.Length / 2; i < vertices.Length; i++)
-                    if (NavMesh.SamplePosition(road.transform.TransformPoint(vertices[i]), out var hit, 3, NavMesh.AllAreas))
+                    if (NavMesh.SamplePosition(roadTransform.TransformPoint(vertices[i]), out var hit, 3, NavMesh.AllAreas))
                     { PlaceCar(Ground(hit.position) + Vector3.up * .7f, testRotation); roadFound = true; break; }
             }
             yield return null; Capture("white-range-road");
@@ -106,6 +121,9 @@ namespace RoadGunner
                 "; screenshots retain real terrain, lighting, white contour and thin dark contrast");
             PlaceCar(testOrigin, testRotation);
         }
+
+        static bool IsReadableRoad(Mesh mesh) => mesh && mesh.isReadable && mesh.vertexCount > 0 &&
+            (mesh.name.StartsWith("Road ") || mesh.name.Contains("worn-track"));
 
         int MagentaPixelCount()
         {

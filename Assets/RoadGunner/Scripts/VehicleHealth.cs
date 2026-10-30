@@ -5,7 +5,7 @@ namespace RoadGunner
     {
         public CombatTuning tuning;
         public ArenaRunStats runStats;
-        public float Maximum => Mathf.Max(1, tuning.vehicleHealth * (runStats ? runStats.HealthMultiplier : 1));
+        public float Maximum => Mathf.Max(1, (tuning ? tuning.vehicleHealth : 100) * (runStats ? runStats.HealthMultiplier : 1) + (runStats ? runStats.BonusMaxHP : 0));
         public float Current { get; private set; }
         public bool DamageEnabled { get; set; }
         public event System.Action Changed, Died;

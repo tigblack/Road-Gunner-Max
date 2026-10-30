@@ -1,0 +1,113 @@
+{
+    "unityVersion": "6000.6.4f1",
+    "scope": "Actual player with runtime-only physical fixtures; solver-rate tests are not display-FPS measurements",
+    "checks": 20,
+    "failures": 0,
+    "completed": true,
+    "trials": [
+        {
+            "name": "release-coast",
+            "fixedStep": 0.01666666753590107,
+            "duration": 1.5,
+            "startSpeed": 6.02331018447876,
+            "endSpeed": 5.426643371582031,
+            "distance": 8.789878845214844,
+            "pathLength": 0.0,
+            "yaw": 0.0,
+            "peakSlip": 0.0,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        },
+        {
+            "name": "space-brake",
+            "fixedStep": 0.01666666753590107,
+            "duration": 1.5,
+            "startSpeed": 6.02331018447876,
+            "endSpeed": 0.0016195358475670218,
+            "distance": 2.842487335205078,
+            "pathLength": 0.0,
+            "yaw": 0.0,
+            "peakSlip": 0.0,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        },
+        {
+            "name": "arc-90",
+            "fixedStep": 0.01666666753590107,
+            "duration": 2.433333396911621,
+            "startSpeed": 0.0,
+            "endSpeed": 8.007403373718262,
+            "distance": 9.73422908782959,
+            "pathLength": 10.16409969329834,
+            "yaw": 70.07722473144531,
+            "peakSlip": 0.0,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        },
+        {
+            "name": "arc-180",
+            "fixedStep": 0.01666666753590107,
+            "duration": 4.883333206176758,
+            "startSpeed": 0.0,
+            "endSpeed": 8.5647611618042,
+            "distance": 14.508711814880371,
+            "pathLength": 20.25159454345703,
+            "yaw": 160.11712646484375,
+            "peakSlip": 0.0,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        },
+        {
+            "name": "one-wheel-curb",
+            "fixedStep": 0.01666666753590107,
+            "duration": 0.0,
+            "startSpeed": 0.0,
+            "endSpeed": 0.0006482689641416073,
+            "distance": 0.0,
+            "pathLength": 0.0,
+            "yaw": 0.0,
+            "peakSlip": 0.0,
+            "maximumTilt": 3.190525531768799,
+            "suspensionMotion": 0.13798749446868896
+        },
+        {
+            "name": "solver-30",
+            "fixedStep": 0.03333333507180214,
+            "duration": 0.0,
+            "startSpeed": 9.451874732971191,
+            "endSpeed": 0.0,
+            "distance": 15.770384788513184,
+            "pathLength": 0.0,
+            "yaw": 76.14884948730469,
+            "peakSlip": 0.010762451216578484,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        },
+        {
+            "name": "solver-60",
+            "fixedStep": 0.01666666753590107,
+            "duration": 0.0,
+            "startSpeed": 9.439676284790039,
+            "endSpeed": 0.0,
+            "distance": 15.691059112548828,
+            "pathLength": 0.0,
+            "yaw": 76.04444122314453,
+            "peakSlip": 0.00582185247913003,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        },
+        {
+            "name": "solver-120",
+            "fixedStep": 0.008333333767950535,
+            "duration": 0.0,
+            "startSpeed": 9.433667182922363,
+            "endSpeed": 0.0,
+            "distance": 15.649484634399414,
+            "pathLength": 0.0,
+            "yaw": 75.96489715576172,
+            "peakSlip": 0.0019592070020735264,
+            "maximumTilt": 0.0,
+            "suspensionMotion": 0.0
+        }
+    ]
+}

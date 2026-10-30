@@ -7,12 +7,10 @@ Use this saved Arena 1 scene for the current game. RoadGunner_Prototype.unity,
 Level01_Wasteland.unity and LevelEditor_Demo.unity are earlier reusable scenes
 and examples, with different layouts/tuning; their old notes are historical.
 
-Arena 1 retains the open pre-corridor geography from Unity revision 7c8b54c and
-the Anton guidance/HUD. The 30 October wheel-physics revision replaces the
-player's assisted body yaw with steering, drive and brake forces through the
-four WheelColliders. Arena geometry, navigation, enemy roster, damage, rewards,
-free terminals and repair remain the existing gameplay systems. This scope is
-the Unity player vehicle.
+The 31 October exploration revision extends the open Arena 1 with Dust Flats,
+Salvage Yard, Rustworks and Ash Ridge, alternate routes and optional rewards.
+The player's four WheelColliders still produce driving, steering and braking.
+The finite enemy roster, free terminals and workshop remain part of the run.
 
 PLAYING THE ARENA
 DEFEAT WARLORD to clear Arena 1. Monster Ashmaw is an optional mini-boss.
@@ -74,6 +72,31 @@ preference. The run itself has no permanent inventory or saved stat progression.
 Developer telemetry remains an opt-in F3 debug view; it is omitted from the
 ordinary player-facing controls text.
 
+EXPLORATION AND WORLD REWARDS
+Five supply caches are destructible auto-fire targets. Unobstructed enemies
+have targeting priority. A fresh cache takes two baseline bullets (10.5 HP).
+Two caches each add 5% damage, one adds 10% ram damage and two each add 5 flat
+maximum/current HP. Bonuses last for this run and preserve damage already taken.
+Three optional secret chests reveal on the map within 20 m. Drive close, with a
+clear approach, to collect 3 Scrap plus up to 15 / 20 / 15 HP of repair.
+Gold chest markers are shootable supply caches; cyan chests are nearby secrets.
+Neither cache type counts as an enemy kill. Restart restores all rewards.
+
+Rust Vulture takes 25% extra ram damage. After a committed Warlord strike,
+bullets deal 20% extra damage during recovery; the boss HUD shows that window.
+The new routes provide room to manoeuvre and optional approaches to encounters.
+
+Edit Levels/Greenwood/Exploration/Exploration layout.asset for routes, widths,
+turning clearings, regions, rewards and recovery laybys. Edit Exploration
+tuning.asset for reward defaults, reveal/range settings and counterplay.
+After edits, stop Play Mode and run:
+Tools / Road Gunner / Arena1 / Install Exploration Arena
+Batch entry: RoadGunner.Editor.ExplorationArenaInstaller.InstallBatch
+This rebuilds the saved scene, road surface, navigation, map and region HUD.
+Apply any legacy presentation installer before this exploration installer.
+Implementation and acceptance evidence:
+Documentation/RoadGunner/Exploration-2026-10-31/
+
 ANTON FEEDBACK INSTALLER
 Stop Play Mode and save the open scene before running:
 Tools > Road Gunner > Arena 1 > Apply Anton Feedback Improvements
@@ -97,8 +120,8 @@ Its presentation feedback does not grant upgrades, score, healing or damage.
 
 Legacy rebalance and polish installers have separate scopes. A rebalance may
 re-author placements/tuning; a prototype rebuild replaces its generated scene.
-If using those tools deliberately, apply the Anton feedback installer last to
-restore this HUD. The normal saved scene does not execute authoring builders.
+If using those tools deliberately, apply the Anton feedback installer followed by the exploration installer to
+restore the current HUD and map. The normal saved scene does not execute authoring builders.
 
 TUNING AND PHYSICS
 Current per-level assets: Levels/Greenwood/Arena1/, especially
@@ -223,3 +246,9 @@ Earlier documents describe their dated versions, not current acceptance status:
 - Documentation/RoadGunner/Concept-Wasteland-2026-10-16/
 The earlier reference video was inaccessible; no exact The War first-arena
 layout/count/balance was verified. This is the documented authored fallback.
+
+EXPLORATION ACCEPTANCE — 31 OCTOBER 2026
+The saved revision passed 88 exploration, 204 Arena 1 and 20 wheel-physics
+checks: 312 total, zero failures and zero Console errors. See
+Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt and its named reports.
+These are controlled Unity fixtures, not FPS measurements or a natural full run.
