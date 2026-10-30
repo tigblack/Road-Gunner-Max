@@ -252,3 +252,7 @@ The saved revision passed 88 exploration, 204 Arena 1 and 20 wheel-physics
 checks: 312 total, zero failures and zero Console errors. See
 Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt and its named reports.
 These are controlled Unity fixtures, not FPS measurements or a natural full run.
+
+CURRENT WEBGL
+https://tigblack.github.io/Road-Gunner-Max/?build=fc89028
+Publication and exact file identity: Documentation/RoadGunner/Exploration-2026-10-31/Publication.txt

@@ -1,0 +1,103 @@
+{
+  "pagesCommit": "fc89028b1774c7dd6cfd470006adc62fc56b4031",
+  "sourceCommit": "dcdf7268ab162b1e0b612c3eb5143f0a21ae07df",
+  "playUrl": "https://tigblack.github.io/Road-Gunner-Max/?build=fc89028",
+  "files": [
+    {
+      "path": "Build/WebBuild.data.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb",
+      "httpStatus": 200,
+      "bytes": 11453415,
+      "sha256": "ca419d21c183b23c11c081f1cc4cece581a9da4426a1d08b57e0bda148e33cfe",
+      "matchesLocal": true,
+      "tlsCertificateVerification": "system curl defaults; never disabled",
+      "response": {
+        "content-type": "application/vnd.unity",
+        "last-modified": "Fri, 30 Oct 2026 22:15:18 GMT",
+        "etag": "\"6ae516f6-aec3e7\"",
+        "cache-control": "max-age=600",
+        "content-length": "11453415"
+      }
+    },
+    {
+      "path": "Build/WebBuild.framework.js.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb",
+      "httpStatus": 200,
+      "bytes": 74863,
+      "sha256": "6efacbb55192e77002818290f1d183093c265148473cc521e19f49eb6b1c2716",
+      "matchesLocal": true,
+      "tlsCertificateVerification": "system curl defaults; never disabled",
+      "response": {
+        "content-type": "application/vnd.unity",
+        "last-modified": "Fri, 30 Oct 2026 22:15:18 GMT",
+        "etag": "\"6ae516f6-1246f\"",
+        "cache-control": "max-age=600",
+        "content-length": "74863"
+      }
+    },
+    {
+      "path": "Build/WebBuild.loader.js",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js",
+      "httpStatus": 200,
+      "bytes": 48779,
+      "sha256": "a3796906b187a8fa4df22d53d930a42af8b7d819c60dcba27c0cc0fc03b89003",
+      "matchesLocal": true,
+      "tlsCertificateVerification": "system curl defaults; never disabled",
+      "response": {
+        "content-type": "application/javascript; charset=utf-8",
+        "last-modified": "Fri, 30 Oct 2026 22:15:18 GMT",
+        "etag": "\"6ae516f6-be8b\"",
+        "cache-control": "max-age=600",
+        "content-length": "48779"
+      }
+    },
+    {
+      "path": "Build/WebBuild.wasm.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb",
+      "httpStatus": 200,
+      "bytes": 9895919,
+      "sha256": "5b37de1b14eec4a15e00f2ba5e45b015b35f1c6d102ee79aa9949100508019f9",
+      "matchesLocal": true,
+      "tlsCertificateVerification": "system curl defaults; never disabled",
+      "response": {
+        "content-type": "application/vnd.unity",
+        "last-modified": "Fri, 30 Oct 2026 22:15:18 GMT",
+        "etag": "\"6ae516f6-96ffef\"",
+        "cache-control": "max-age=600",
+        "content-length": "9895919"
+      }
+    },
+    {
+      "path": "build-info.json",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/build-info.json",
+      "httpStatus": 200,
+      "bytes": 240,
+      "sha256": "097add78f231a9e98eca3314ea988bcd9d302ff34245ff58d599bf6f82389984",
+      "matchesLocal": true,
+      "tlsCertificateVerification": "system curl defaults; never disabled",
+      "response": {
+        "content-type": "application/json; charset=utf-8",
+        "last-modified": "Fri, 30 Oct 2026 22:15:18 GMT",
+        "etag": "\"6ae516f6-f0\"",
+        "cache-control": "max-age=600",
+        "content-length": "240"
+      }
+    },
+    {
+      "path": "index.html",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/index.html",
+      "httpStatus": 200,
+      "bytes": 5105,
+      "sha256": "70b744427114c847d4b43bda1f488030e5c2a0d7fb6052c2c5132dd949fb77b5",
+      "matchesLocal": true,
+      "tlsCertificateVerification": "system curl defaults; never disabled",
+      "response": {
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Fri, 30 Oct 2026 22:15:18 GMT",
+        "etag": "\"6ae516f6-13f1\"",
+        "cache-control": "max-age=600",
+        "content-length": "5105"
+      }
+    }
+  ]
+}

@@ -30,3 +30,11 @@ checked separately in Unity's controlled suites (312 passing checks).
 Physical Android/iOS devices, mobile Safari, frame times and browser Console were
 not measured in this smoke run. Native Unity suites reported zero Console errors.
 Public delivery and exact served artifact hashes are recorded separately.
+
+PUBLIC START CHECK
+https://tigblack.github.io/Road-Gunner-Max/?build=fc89028
+After the matching Pages deployment and file-hash verification, Chrome opened
+PLAY, downloaded the player and entered the new Arena 1. Its actual geography
+and gold cache markers were visible. W drove the car (23 km/h in the observed
+frame); Escape paused it. The public Pause panel showed baseline 5.25 damage,
+100 HP and zero run bonuses/secrets. The browser was left paused.

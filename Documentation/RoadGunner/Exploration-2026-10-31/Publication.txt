@@ -1,0 +1,47 @@
+ROAD GUNNER — EXPLORATION WEBGL PUBLICATION
+31 October 2026, Asia/Yerevan
+
+PLAY
+https://tigblack.github.io/Road-Gunner-Max/?build=fc89028
+
+RELEASE
+Source/build commit: dcdf7268ab162b1e0b612c3eb5143f0a21ae07df
+feat: add exploration routes, run loot and enemy openings
+Pages commit: fc89028b1774c7dd6cfd470006adc62fc56b4031
+deploy: publish exploration and run rewards
+Normal pushes to origin/main and origin/gh-pages, no force push.
+The existing Pages source remains gh-pages, root folder.
+
+DEPLOYMENT
+GitHub Actions 41136841896 completed successfully (build, deploy, report):
+https://github.com/tigblack/Road-Gunner-Max/actions/runs/41136841896
+Pages API status=built, matching commit, error.message=null.
+Deployment updated UTC 2026-10-30T22:15:18Z (31 October in Asia/Yerevan).
+
+ARTIFACT IDENTITY
+Unity 6000.6.4f1 WebGL build succeeded. Built UTC 2026-10-30T22:11:27.9800400Z.
+Seven static artifacts total 21,478,321 bytes. Gzip CRC/decompression, Unity data
+header, loader/framework/template JavaScript syntax and WASM validation passed.
+WebBuild.json records all hashes and source provenance; the vehicle controller,
+vehicle tuning code and current arena handling asset are unchanged.
+
+All six nonhidden public files were downloaded at their ordinary HTTPS URLs
+with system certificate verification enabled: HTTP 200, exact local SHA256.
+See LiveManifest.json for sizes, hashes and response metadata.
+
+ACCEPTANCE
+88 exploration + 204 gameplay + 20 physics checks passed: 312 total, zero
+failures and zero Unity Console errors/exceptions/asserts. Real local Chrome
+smoke verified loading, driving, braking, the map/legend, actual cache damage
+bonus and Restart back to baseline. See Browser.txt for the observed scope.
+The public URL also loaded through PLAY, accepted driving input and paused
+with the correct new run-stat panel. Physical-phone performance, mobile Safari
+and a natural complete browser
+playthrough were not measured. These are not FPS or retention claims.
+
+HYGIENE
+Only task source/assets, the saved scene/navigation/map, reports/captures and
+seven WebGL artifacts were published. Generated URP/Burst metadata was retained
+under ignored outputs rather than included as source changes. User-local
+AntonSkill, _anton, and the Unreal/Godot summary files remain untouched/untracked.
+Temporary publishing checkout removed after verification.

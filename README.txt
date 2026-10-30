@@ -110,19 +110,19 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ has been rebuilt with the new wheel-physics revision. Its gzip,
-JavaScript, WASM and Unity data checks passed. Publication is recorded separately
-under Documentation/RoadGunner/WheelPhysics-2026-10-30/Publication.txt.
-Current wheel-physics demo: https://tigblack.github.io/Road-Gunner-Max/?build=d6a9ba3
-Published on 30 October 2026 (Asia/Yerevan). Pages deployment succeeded and all
-six public files match the verified local player. Details:
+WebBuild/ contains the 31 October exploration revision: connected regions,
+visible supply caches, secrets and enemy damage openings, retaining wheel physics.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=fc89028
+Its Pages deployment succeeded, and all six public files match the verified
+local build. Build provenance, browser smoke and acceptance reports:
+Documentation/RoadGunner/Exploration-2026-10-31/Publication.txt
+Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt
+
+Previous wheel-physics demo d6a9ba3 and Anton HUD demo 2310eee remain historical
+snapshots. Their reports describe those releases rather than this revision:
 Documentation/RoadGunner/WheelPhysics-2026-10-30/Publication.txt
-Previous demo revision: 2310eee. That release contains the open arena and Anton
-HUD with the earlier
-handling. Its 30 October 2026 (Asia/Yerevan) Pages deployment, artifact identity
-and hashes are historical evidence for that build:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/Publication.txt
-The Anton feedback installer itself does not publish a Web build.
+The authoring installers themselves do not publish a Web build.
 
 PROJECT CONTENTS AND EVIDENCE
 Assets/            Game assets, scenes, editor tools and runtime code
