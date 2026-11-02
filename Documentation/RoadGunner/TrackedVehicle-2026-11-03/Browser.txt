@@ -1,0 +1,22 @@
+PUBLIC SAFARI SMOKE — TRACKED PLAYER, 3 NOVEMBER 2026 (Asia/Yerevan)
+
+URL: https://tigblack.github.io/Road-Gunner-Max/?build=466ff61
+Native Safari on the current Mac, using a new window after Pages reported built
+for this exact commit. No browser script injection or editor gameplay was used.
+
+Observed:
+- PLAY displayed and the click loaded Arena 1 successfully.
+- Two continuous metal tread assemblies were visible instead of the old tyres.
+  Body, crew, roof gun, harpoon, white range ring and circular minimap rendered.
+- Held W moved the car along the road; the HUD showed 19 km/h.
+- After Space, held S turned the body around to face screen-bottom and continued
+  nose-first; the HUD later showed 18 km/h. Both track assemblies remained visible.
+- Auto-fire/combat proceeded. The pause panel showed KILLS 2, LOOT DMG +5%,
+  DAMAGE 5.51/SHOT, MAX HP 100 and MUSIC 30%.
+- Space brought the displayed speed to 00; Escape opened PAUSED. The new test
+  window was left paused. Other browser windows were preserved.
+
+This is a public startup/visual/controls smoke, not a full browser playthrough,
+a timed acceleration/stop measurement, an isolated audio test or an FPS benchmark.
+The controlled speed A/B and 322 native checks are recorded separately.
+No physical-phone or other-browser coverage is claimed.

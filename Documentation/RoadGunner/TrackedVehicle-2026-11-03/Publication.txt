@@ -1,0 +1,38 @@
+ROAD GUNNER — PUBLISHED TRACKED PLAYER
+3 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=466ff61
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: def43d6c828b5c367394b96b1071ace04084f559
+Pages commit: 466ff6144eae78f4a64b46371bdfd5066a1c490d
+Previous source: ba81ad9c4f64d239788f8d8c2f68a9cb0d93015e
+Previous Pages: d3c19c32705913436d56be63d0bb74b0700d85fa
+Source pushed to main and feature/tracked-player-20261103; exact player pushed
+to gh-pages in one normal atomic Git push, without force.
+
+GitHub Pages: built; error.message=null.
+Pages updated UTC: 2026-11-02T22:36:18Z.
+Deployment: https://github.com/tigblack/Road-Gunner-Max/actions/runs/41538622909
+Workflow: completed / success for the exact Pages commit.
+
+All six ordinary HTTPS URLs returned 200 with verified TLS and exact byte-count
+and SHA256 equality with the local build on the first attempt. LiveManifest.json
+records every file. The empty .nojekyll seventh artifact was checked directly
+at the Pages commit. Static payload: 25,943,070 bytes.
+Build UTC: 2026-11-02T22:34:50.4067530Z.
+
+Two moving tracks, differential drive and wider imprints are visible on the
+player. Configured max speed is halved: 11.7 -> 5.85 m/s; measured flat-course
+cruise: 10.49496 -> 5.31100 m/s (50.6% of the previous speed). Existing four suspension
+contacts provide the physical support; the visible shoes are not linked bodies.
+
+Fresh native acceptance: physics21 + tracked9 + gameplay204 + exploration88
+= 322 PASS; zero failures and runtime Console errors. The native tests include
+actual touch/keyboard input, physical pivot/contact guards, collision/suspension,
+repair, combat/rewards, boss completion and reset. Browser.txt records the
+public Safari startup, driving at 19 km/h, S turn, Space brake and Pause smoke.
+No physical-phone or device-FPS measurements are claimed.
+
+Follow-up source commits add publication evidence only. They do not change the
+frozen production source or the exact WebGL artifact published here.
