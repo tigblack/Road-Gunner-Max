@@ -1,0 +1,21 @@
+PUBLIC BROWSER SMOKE — NEW AUDIO RELEASE, 2 NOVEMBER 2026
+
+URL: https://tigblack.github.io/Road-Gunner-Max/?build=d3c19c3
+Browser: Safari on the current Mac, native computer-use interaction, after
+GitHub Pages reported built for this exact Pages commit.
+
+Observed:
+- PLAY gate displayed; actual click started loading, which completed into Arena 1.
+- Current Arcade HUD, car, ground, circular minimap and white range ring rendered.
+- Safari displayed its tab audio activity indicator after PLAY.
+- Held W moved the car along the road; Space brake input was delivered and the
+  speed display later reached 00 km/h. This was not a timed stopping benchmark.
+- Auto-targeting/range tutorial activated and combat proceeded; the pause panel
+  showed KILLS 2, LOOT DMG +5% and DAMAGE 5.51/SHOT, MAX HP 100.
+- Escape opened the new PAUSED menu; MUSIC showed 30%. The test was left paused.
+
+This is a public runtime/controls smoke, not a full browser playthrough or
+isolated browser-audio recording. Individual new SFX were verified as scene
+assets and through the separate native listener recording; subjective listening
+approval and exact browser loudness are not claimed. No real-phone or FPS test
+was performed. The six public file hashes are independently in LiveManifest.json.

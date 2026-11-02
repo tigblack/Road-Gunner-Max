@@ -27,4 +27,5 @@ Unity metadata was saved aside and restored to the exact pre-build state.
 No production code fixes or authoring installers were used during this release.
 
 Publication.txt and LiveManifest.json record source/Pages commits, deployment
-status and exact HTTPS file identity. Physical phone/FPS testing is not claimed.
+status and exact HTTPS file identity. Browser.txt records the public Safari
+startup, driving, combat and pause smoke. Physical phone/FPS testing is not claimed.

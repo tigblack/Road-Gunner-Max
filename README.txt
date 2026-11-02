@@ -113,8 +113,8 @@ decompression fallback supports static hosting.
 WebBuild/ contains the new 2 November audio update, built with Unity 6000.6.4f1.
 The static payload is 25,778,118 bytes. Build provenance, recorded audio and
 acceptance reports: Documentation/RoadGunner/WebGL-2026-11-02-Audio/.
-Publication evidence and the exact live revision are recorded in Publication.txt
-after deployment. Earlier Arcade player 63dc9c0 and exploration player fc89028
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=d3c19c3
+Publication evidence: Documentation/RoadGunner/WebGL-2026-11-02-Audio/Publication.txt. Earlier Arcade player 63dc9c0 and exploration player fc89028
 remain historical snapshots; their own publication reports are retained.
 
 Previous wheel-physics demo d6a9ba3 and Anton HUD demo 2310eee remain historical

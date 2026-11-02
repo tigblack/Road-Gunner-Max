@@ -1,0 +1,38 @@
+ROAD GUNNER — PUBLISHED NEW OPUS AUDIO VERSION
+2 November 2026
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=d3c19c3
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: ffd7b9232e21386b6f163c4061d28fe7ea90febd
+Pages commit: d3c19c32705913436d56be63d0bb74b0700d85fa
+Previous source: 6d4b1081d5eea8c7906c5b2080c4b0ecd00a687a
+Previous Pages: 63dc9c04d8c953e3a143344d21054b56658fef10
+Source pushed to main and feature/audio-visual-overhaul; exact player pushed
+to gh-pages in one normal atomic Git push, without force.
+
+GitHub Pages: built; error.message=null.
+Pages updated at: 2026-11-02T11:01:36Z.
+Deployment: https://github.com/tigblack/Road-Gunner-Max/actions/runs/41433322015
+Workflow: completed / success.
+
+All six ordinary HTTPS URLs returned 200 with verified TLS and exact byte count
+and SHA256 equality with the local build on the first attempt. LiveManifest.json
+records each response. The empty .nojekyll seventh artifact was checked directly
+in the Pages commit. Static payload: 25,778,118 bytes.
+Build UTC: 2026-11-02T10:56:14.6493540Z.
+
+Ten actual new generated WAVs are included and referenced in the saved scene:
+player/enemy gun, bullet impact and tyre roll. Remaining absent categories keep
+legacy fallback; music stays Dustlight Road. No new generation, paid API call,
+production-source fix or authoring regeneration occurred during delivery.
+
+Fresh native acceptance: 204 gameplay + 88 exploration + 20 wheel physics = 312 PASS;
+zero failures and runtime Console errors. A native listener recording of 24.98 seconds
+has no digital clipping; AudioMix.txt records measured levels and roll gating.
+Browser.txt records the public Safari launch, driving, combat and pause smoke.
+Native mix measurements do not establish subjective or browser-audio approval.
+Physical-phone and device-FPS coverage are not claimed.
+
+Follow-up source commits only add publication evidence/documentation. They do
+not change this exact WebGL artifact or the frozen production source.
