@@ -113,8 +113,8 @@ decompression fallback supports static hosting.
 WebBuild/ contains the saved 2 November Arcade update, built with Unity 6000.6.4f1.
 The static payload is 25,676,541 bytes. Build provenance, browser smoke and
 acceptance reports: Documentation/RoadGunner/WebGL-2026-11-02/.
-Publication evidence and the exact live revision are recorded in Publication.txt
-after deployment. The previous exploration demo fc89028 is a historical snapshot:
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=63dc9c0
+Publication evidence: Documentation/RoadGunner/WebGL-2026-11-02/Publication.txt. The previous exploration demo fc89028 is a historical snapshot:
 Documentation/RoadGunner/Exploration-2026-10-31/Publication.txt
 
 Previous wheel-physics demo d6a9ba3 and Anton HUD demo 2310eee remain historical

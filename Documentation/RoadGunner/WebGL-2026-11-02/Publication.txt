@@ -1,0 +1,37 @@
+ROAD GUNNER — PUBLISHED ARCADE WEBGL UPDATE
+2 November 2026
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=63dc9c0
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: a8d7e198b81f5528244c9becfc3b5879f79ef9e1
+Pushed to main and feature/audio-visual-overhaul.
+Pages commit: 63dc9c04d8c953e3a143344d21054b56658fef10
+Pushed to gh-pages without force, from fc89028b1774c7dd6cfd470006adc62fc56b4031.
+
+GitHub Pages status: built; error message: None.
+Pages status updated at: 2026-11-02T09:15:35Z.
+Deployment workflow: https://github.com/tigblack/Road-Gunner-Max/actions/runs/41419085613
+Workflow result: completed / success.
+
+All six ordinary public HTTPS file URLs returned HTTP 200, verified TLS and
+matched the local build's byte counts and SHA256 hashes on the first attempt.
+LiveManifest.json records individual responses, URLs and timestamps. The
+seventh artifact is the empty .nojekyll file, verified in the deployment commit.
+Static artifact payload: 25,676,541 bytes. Build UTC: 2026-11-02T09:05:36Z.
+No generated assets were rebuilt or altered after this WebGL build.
+
+Fresh native controlled acceptance: 204 gameplay + 88 exploration + 20 wheel
+physics = 312 passed; zero failures and Console errors. Eighty selected shader
+variants passed; actual WebGL build also succeeded. WebBuild.json records the
+source/artifact hashes and structural checks. Browser.txt records the observed
+Safari runtime smoke, the public PLAY gate and the limits of UI verification.
+No real-phone or device-performance claim is made.
+
+The saved Opus visuals, effects, HUD and materials are included. Generated
+Arcade sounds and Desert Run were absent from the supplied update; the build
+uses the intended legacy fallback and Dustlight Road. Existing optional raw
+audio generation tooling is included as source, without generated audio files.
+
+Delivery-only follow-up commits contain documentation/publication evidence;
+they do not alter this exact WebGL artifact or its production source.

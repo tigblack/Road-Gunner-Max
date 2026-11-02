@@ -18,3 +18,8 @@ focus changes; Resume/Restart pointer behavior is not claimed as verified by
 this browser smoke. Their native controlled checks passed in Gameplay.txt.
 No browser Console capture, touch-device test or physical-phone check is claimed.
 Screenshots in Screenshots/ were captured by Unity, not by a browser.
+
+After deployment the public HTTPS URL with build=63dc9c0 reached the PLAY
+gate in Safari. A user focus change interrupted the subsequent PLAY action;
+a second public runtime launch is not claimed. Exact public artifact hashes
+are checked independently in LiveManifest.json.
