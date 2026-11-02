@@ -92,7 +92,7 @@ CAPTURE outputs/arcade-overhaul-2026-11-01/exploration/region-ash-ridge.png — 
 CAPTURE outputs/arcade-overhaul-2026-11-01/exploration/region-ash-ridge-landscape.png — actual gameplay camera, world labels and HUD; 960 x 540; fixture car position=(104.30, 0.70, 79.55); region=ash-ridge
 PASS new solid landmarks block both vehicle collision and line of sight: Actual authored non-trigger scenery colliders=22; all belong to the collision and exploration LOS masks
 PASS repair hub has an unobstructed full-car drive-through: Entry=(-8.49, 0.70, -50.91); exit=(8.49, 0.70, -33.94)
-PASS real wheel-driven car can enter heal and leave the service hub: Actual healing frames=154; grounded frames=218; HP=60 -> 86.62066; exit reason=endpoint; pre-freeze car=(7.8669, 0.5150, -34.5691); progress=11.1187; upright=1.0000; post-freeze car=(7.8331, 0.5150, -34.6029); progress=11.0709; elapsed game/fixed/realtime=3.828/3.820/3.826s
+PASS real wheel-driven car can enter heal and leave the service hub: Actual healing frames=157; grounded frames=221; HP=60 -> 86.16592; exit reason=endpoint; pre-freeze car=(7.8766, 0.5150, -34.5592); progress=11.1325; upright=1.0000; post-freeze car=(7.8378, 0.5150, -34.5980); progress=11.0777; elapsed game/fixed/realtime=3.783/3.780/3.780s
 PASS real Restart resets exploration without changing the original arena: Run serial=13 -> 14; shot=5.25; HP=100
 PASS Restart restores cache durability visuals and eligible map markers: Original reward objects are rearmed once for the new run; secret visibility follows new-run discovery
 PASS Restart forgets distant secret discovery and clears reward feedback: Previously found secret is hidden again; old run bonus toast is absent

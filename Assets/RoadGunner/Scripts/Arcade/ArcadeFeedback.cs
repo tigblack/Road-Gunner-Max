@@ -49,8 +49,11 @@ namespace RoadGunner
     {
         public GameSession session;
         public List<ArcadeFeedbackSink> sinks = new List<ArcadeFeedbackSink>();
-        /// <summary>Set by the arcade audio sink once it has its clips; legacy CombatEffects one-shots then stay silent.</summary>
-        [NonSerialized] public bool ownsAudio;
+        /// <summary>Legacy CombatEffects one-shots, one flag per sound the arcade audio sink can voice itself.</summary>
+        [Flags] public enum LegacySound { None = 0, Gun = 1, Impact = 2, Explosion = 4, Pickup = 8 }
+        /// <summary>Set by the arcade audio sink for each sound it has clips for; those legacy one-shots then stay silent.</summary>
+        [NonSerialized] public LegacySound ownedSounds;
+        public bool Owns(LegacySound sound) => sound != LegacySound.None && (ownedSounds & sound) == sound;
         VehicleHealth subscribedHealth;
 
         void Awake()

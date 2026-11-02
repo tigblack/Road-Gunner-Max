@@ -9,9 +9,9 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The saved 2 November Arcade update adds toon shading, outlines,
-VFX and the new HUD over the existing exploration arena and wheel-driven physics.
-This is the Unity/WebGL game.
+Press Play. The latest 2 November update adds generated player/enemy gun sounds,
+bullet impacts and quiet tyre roll to the Arcade visuals/HUD, exploration arena
+and wheel-driven physics. This is the Unity/WebGL game.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -110,12 +110,12 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the saved 2 November Arcade update, built with Unity 6000.6.4f1.
-The static payload is 25,676,541 bytes. Build provenance, browser smoke and
-acceptance reports: Documentation/RoadGunner/WebGL-2026-11-02/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=63dc9c0
-Publication evidence: Documentation/RoadGunner/WebGL-2026-11-02/Publication.txt. The previous exploration demo fc89028 is a historical snapshot:
-Documentation/RoadGunner/Exploration-2026-10-31/Publication.txt
+WebBuild/ contains the new 2 November audio update, built with Unity 6000.6.4f1.
+The static payload is 25,778,118 bytes. Build provenance, recorded audio and
+acceptance reports: Documentation/RoadGunner/WebGL-2026-11-02-Audio/.
+Publication evidence and the exact live revision are recorded in Publication.txt
+after deployment. Earlier Arcade player 63dc9c0 and exploration player fc89028
+remain historical snapshots; their own publication reports are retained.
 
 Previous wheel-physics demo d6a9ba3 and Anton HUD demo 2310eee remain historical
 snapshots. Their reports describe those releases rather than this revision:
@@ -177,9 +177,10 @@ It runs four idempotent passes in order (each also has its own menu/batch entry)
 - ArcadeHudStyleInstaller: Lilita One font (OFL, UI/Arcade/Fonts), generated UI
   sprites, two panel families, world-label styling, ArcadeHudJuice sink (flying gears,
   chip punches, damage vignette, repair chip, result-screen celebration).
-- ArcadeAudioInstaller: ArcadeAudio sink (voice pool, variant banks, layered 3-gear
-  engine, skid, wind, stingers) and music wiring. It falls back to the legacy sounds
-  and Dustlight Road until the generated files exist.
+- ArcadeAudioInstaller: ArcadeAudio sink (voice pool, variant banks, tyre roll, skid,
+  wind, stingers) and music wiring. Each legacy one-shot (gun, impact, explosion,
+  pickup) keeps playing until its own generated clips exist; music stays Dustlight
+  Road until Desert Run exists.
 Runtime hub: Scripts/Arcade/ArcadeFeedback.cs receives gameplay moments (shot, hit,
 kill, damage, loot, upgrade, repair, victory...) from small hooks in gameplay scripts
 and forwards them to the sinks; sinks never change gameplay state.
@@ -190,13 +191,31 @@ python3 Tools/Audio/process_generated_audio.py   (slices variants, normalises, m
 WebGL-safe loops with guard + smpl chunk, builds the "Desert Run" music loop) and
 RoadGunner.Editor.ArcadeAudioInstaller.ApplyBatch.
 
+Owner audio feedback, 2 November 2026 (after playing the published build):
+- No engine drone. With the arcade sink active the car's legacy Engine.wav source is
+  held silent; movement is a quiet tyre-on-gravel roll (Tire_Roll_Loop) that is silent
+  when parked or airborne and rises with speed to about 6 LU under the music.
+  Without the sink the legacy engine only hums quietly while moving.
+- Casual gun sounds: the player turret is a soft toy-blaster "pop" (Gun_Player, 3
+  variants, ~0.13 s), enemies a cartoon "pew" (Gun_Enemy), hits a soft "tock" with a
+  quiet tin "tink" (Impact_Bullet). Hits were hand-picked from the raw generations
+  (see the takes in process_generated_audio.py); sfx_enemy_gun was rejected.
+- Still legacy: explosion, pickups, crash, UI, stingers, boss warning; still Dustlight
+  Road music. The remaining generations need the owner's approval for each paid run.
+Listening check: VisualCaptureRunner.Run -rgCaptureShots audio -rgAudioRecord out.wav
+records a fixed 25 s scene (parked, accelerate, cruise, brake, combat) with phase
+marks in CAPTURES.txt; per-phase loudness can be measured with ffmpeg ebur128.
+
 Visual review: RoadGunner.Editor.VisualCaptureRunner.Run (batch, without -quit;
 -rgCaptureLabel name -rgCaptureSize 720x1280 [-rgCaptureShots start,combat,...])
 stages 22 gameplay moments and writes outputs/visual-capture/<label>/.
 Suite reports for this revision: Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/.
-Verified on 2 November: 204 gameplay, 88 exploration and 20 wheel-physics
-checks passed, with zero failures and Console errors. All 80 selected shader
-variants passed, and the saved scene built successfully for WebGL.
-Evidence: Documentation/RoadGunner/WebGL-2026-11-02/Implementation.txt
-and WebBuild.json. The generated Arcade WAVs and Desert Run are absent; this
-build uses the designed legacy audio fallback and Dustlight Road.
+New audio update verified on 2 November: 204 gameplay, 88 exploration and
+20 wheel-physics checks passed, with zero failures and Console errors. The
+saved scene built successfully for WebGL; a fixed native audio scene was
+recorded separately. No production source/asset was altered during delivery.
+Evidence: Documentation/RoadGunner/WebGL-2026-11-02-Audio/.
+Ten generated WAVs now replace player/enemy gun, bullet impact and tyre roll.
+Other absent banks retain legacy fallback; music remains Dustlight Road.
+The earlier 80-variant shader check belongs to the previous Arcade visual release;
+shader sources remain unchanged in this audio update.

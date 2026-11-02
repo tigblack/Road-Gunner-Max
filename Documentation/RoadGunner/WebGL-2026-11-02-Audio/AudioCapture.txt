@@ -1,0 +1,10 @@
+Road Gunner visual capture • Unity 6000.6.4f1 • 720x1280 • quality Mobile
+audio mark parked t=1.11
+audio mark accelerate t=4.12
+audio mark cruise-turn t=7.14
+audio mark brake t=10.16
+audio mark combat t=13.17
+audio mark calm t=22.32
+audio mark end t=25.34
+
+RESULT shots=0 failures=0 console errors=0

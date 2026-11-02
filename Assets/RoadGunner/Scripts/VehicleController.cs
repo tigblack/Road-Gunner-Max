@@ -20,7 +20,7 @@ namespace RoadGunner
         public int GroundedWheels { get; private set; }
         public float LargestSlip { get; private set; }
         public bool CanDrive { get; set; } = true;
-        /// <summary>Set by the arcade audio sink when it drives layered engine voices itself.</summary>
+        /// <summary>Set by the arcade audio sink, which mutes the engine drone and voices movement as tyre roll instead.</summary>
         [System.NonSerialized] public bool externalEngineAudio;
         [System.NonSerialized] public ArcadeFeedback feedback;
         float steering,turnDirection,wheelbase,frontTrack,frontCentre;
@@ -112,7 +112,8 @@ namespace RoadGunner
                 wheels[i].GetWorldPose(out Vector3 p,out Quaternion q); wheelVisuals[i].SetPositionAndRotation(p,q);
                 if(dust!=null && i<dust.Length && dust[i]) { var em=dust[i].emission; bool contact=wheels[i].GetGroundHit(out WheelHit hit); em.rateOverTime=CanDrive && contact && Speed>2?Mathf.Min(30,Speed*1.25f+Mathf.Abs(hit.sidewaysSlip)*14):0; dust[i].transform.position=p-Vector3.up*.35f; }
             }
-            if(engine && !externalEngineAudio) { engine.pitch=.7f+Mathf.Clamp01(Speed/18)*1.1f; engine.volume=CanDrive?.08f+Mathf.Clamp01(Speed/18)*.09f:0; }
+            // Fallback without the arcade sink: no idle drone, only a quiet hum while actually moving.
+            if(engine && !externalEngineAudio) { engine.pitch=.75f+Mathf.Clamp01(Speed/18)*.5f; engine.volume=CanDrive?Mathf.InverseLerp(1,18,Speed)*.05f:0; }
         }
         void OnCollisionEnter(Collision collision) {
             if(!feedback || collision.contactCount==0) return;

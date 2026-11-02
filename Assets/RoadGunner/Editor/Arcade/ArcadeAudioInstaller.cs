@@ -64,8 +64,13 @@ namespace RoadGunner.Editor
                     Undo.DestroyObjectImmediate(child.gameObject);
             }
             audio.voices = voices;
-            audio.engineIdle = Loop(root, "Engine idle", 64, Clip(paths, "Engine_Idle_Loop"));
-            audio.engineDrive = Loop(root, "Engine drive", 64, Clip(paths, "Engine_Drive_Loop"));
+            // No engine drone any more (owner feedback, 2 Nov 2026): movement is a quiet tyre roll that fades out at rest.
+            foreach (string stale in new[] { "Engine idle", "Engine drive" })
+            {
+                var node = root.Find(stale);
+                if (node) Undo.DestroyObjectImmediate(node.gameObject);
+            }
+            audio.roll = Loop(root, "Tire roll", 70, Clip(paths, "Tire_Roll_Loop"));
             audio.skid = Loop(root, "Tire skid", 90, Clip(paths, "Tire_Skid_Loop"));
             audio.wind = Loop(root, "Desert wind", 160, Clip(paths, "Wind_Desert_Loop"));
 
@@ -107,7 +112,11 @@ namespace RoadGunner.Editor
                 Debug.LogWarning("ARCADE AUDIO: the Session object should hold exactly one AudioSource (music); found " + session.GetComponents<AudioSource>().Length);
             EditorSceneManager.MarkSceneDirty(session.gameObject.scene);
 
-            bool core = audio.playerGun.HasOwn && audio.bulletImpact.HasOwn && audio.explosion.HasOwn && audio.scrap.HasOwn;
+            var own = new List<string>();
+            if (audio.playerGun.HasOwn) own.Add("gun");
+            if (audio.bulletImpact.HasOwn) own.Add("impact");
+            if (audio.explosion.HasOwn) own.Add("explosion");
+            if (audio.scrap.HasOwn) own.Add("pickup");
             var banks = new (string name, ArcadeAudio.Bank bank)[]
             {
                 ("player gun", audio.playerGun), ("enemy gun", audio.enemyGun), ("bullet impacts", audio.bulletImpact), ("enemy hits", audio.bodyHit),
@@ -115,9 +124,9 @@ namespace RoadGunner.Editor
                 ("scrap", audio.scrap), ("upgrade", audio.upgrade), ("ui click", audio.uiClick), ("boss warning", audio.bossWarning),
                 ("victory", audio.victory), ("defeat", audio.defeat), ("harpoon fire", audio.harpoonFire), ("harpoon reel", audio.harpoonReel), ("whoosh", audio.whoosh),
             };
-            string loops = "engine idle=" + (audio.engineIdle.clip ? "yes" : "no") + ", engine drive=" + (audio.engineDrive.clip ? "yes" : "no") +
-                           ", skid=" + (audio.skid.clip ? "yes" : "no") + ", wind=" + (audio.wind.clip ? "yes" : "no");
-            Debug.Log("ARCADE AUDIO: " + paths.Count + " clips in " + ArcadeFolder + "; core=" + (core ? "new (legacy one-shots silenced at runtime)" : "legacy fallback") +
+            string loops = "roll=" + (audio.roll.clip ? "yes" : "no") + ", skid=" + (audio.skid.clip ? "yes" : "no") + ", wind=" + (audio.wind.clip ? "yes" : "no");
+            Debug.Log("ARCADE AUDIO: " + paths.Count + " clips in " + ArcadeFolder + "; new sounds replacing legacy one-shots: " +
+                      (own.Count > 0 ? string.Join("+", own) : "none") + "; engine drone muted at runtime" +
                       "; music=" + (musicClip && music ? musicClip.name + " " + musicClip.length.ToString("F2") + "s" : "unchanged") + "; loops: " + loops +
                       "\nbanks: " + string.Join(", ", banks.Select(b => b.name + "=" + b.bank.clips.Length)));
             foreach (string path in hasMusic ? paths.Append(MusicPath) : paths) LogImport(path);

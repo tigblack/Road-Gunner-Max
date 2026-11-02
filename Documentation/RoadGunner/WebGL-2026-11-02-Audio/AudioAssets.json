@@ -1,0 +1,106 @@
+{
+  "inputBase": "6d4b1081d5eea8c7906c5b2080c4b0ecd00a687a",
+  "note": "Existing generated clips supplied in the saved Opus update; no new generation performed for this release. Tools/Audio/Generated/manifest.json describes only the final Tire-only processing invocation. This inventory records all ten actual processed clips.",
+  "files": [
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_01.wav",
+      "bytes": 22976,
+      "sha256": "3e50f1a015d3ca50248a4f4a70930eb5f01a2f6001bc150700c75eeb78e92d57",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 11466,
+      "seconds": 0.26
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_02.wav",
+      "bytes": 21812,
+      "sha256": "6177a39347ba908fd6f43f0486d9010549735af845d6028eab44a6296becfb90",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 10884,
+      "seconds": 0.24680272108843537
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_03.wav",
+      "bytes": 23782,
+      "sha256": "6a8a57b77edddf39d16f03d268ae5bbf516340088d20bf0c495a92ca9b80eefa",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 11869,
+      "seconds": 0.26913832199546484
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_01.wav",
+      "bytes": 11402,
+      "sha256": "bf95bf12c2e146c19586b3d94672e5fc8e4d38115326f07d7f0ec296b050e4ed",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 5679,
+      "seconds": 0.12877551020408162
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_02.wav",
+      "bytes": 11936,
+      "sha256": "58899e92140bb1500cb0dc0fe087d33483da2e18e3cb472a5980748cf3f556b0",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 5946,
+      "seconds": 0.1348299319727891
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_03.wav",
+      "bytes": 10948,
+      "sha256": "255cb5a9ab8adacb6b6c9f6b00f5e71c6398f0ff82b1c2830c97b64574d9ccbe",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 5452,
+      "seconds": 0.1236281179138322
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_01.wav",
+      "bytes": 10804,
+      "sha256": "b62ec8266d8b77914d165d0e94d022bc189d157cbece5eb2bfc7cc931e43f00c",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 5380,
+      "seconds": 0.1219954648526077
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_02.wav",
+      "bytes": 10080,
+      "sha256": "42eae5254525c6bd30b544f10118b8c1c32a80920077d21081836579418baa5b",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 5018,
+      "seconds": 0.11378684807256235
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_03.wav",
+      "bytes": 10426,
+      "sha256": "2ceeebce999c745190aa503344b82306306cdc899dd9c21334946ea3c5f87ddc",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 5191,
+      "seconds": 0.11770975056689342
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Tire_Roll_Loop.wav",
+      "bytes": 275152,
+      "sha256": "520da767473bee62d0316c956504f0182ce22910a1b959553e1eff83d52773c2",
+      "channels": 1,
+      "sampleRate": 44100,
+      "bits": 16,
+      "frames": 137520,
+      "seconds": 3.1183673469387756
+    }
+  ]
+}

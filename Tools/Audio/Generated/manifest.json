@@ -1,0 +1,34 @@
+{
+  "generator": "Tools/Audio/process_generated_audio.py",
+  "sample_rate": 44100,
+  "raw_dir": "Tools/Audio/Generated/raw",
+  "sfx": [
+    {
+      "file": "Assets/RoadGunner/Audio/Arcade/Tire_Roll_Loop.wav",
+      "source": "Tools/Audio/Generated/raw/sfx_tire_roll_loop.wav",
+      "category": "loop_roll",
+      "changed": true,
+      "duration_s": 3.0719,
+      "peak_dbfs": -4.0,
+      "rms_dbfs": -22.86,
+      "crossfade_s": 0.35,
+      "seam_alignment_corr": 0.135,
+      "crossfade_corr": 0.06,
+      "seam_jump": 0.0095,
+      "seam_jump_vs_slope_rms": 0.29,
+      "seam_level_step_db": 0.02,
+      "seamless": true,
+      "guard_samples": 2048,
+      "smpl_loop": [
+        2048,
+        137519
+      ],
+      "lufs_integrated": -21.0,
+      "true_peak_dbtp": -4.0
+    }
+  ],
+  "music": null,
+  "missing_raw": [],
+  "failed": [],
+  "warnings": []
+}

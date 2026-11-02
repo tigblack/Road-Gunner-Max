@@ -1,0 +1,29 @@
+ROAD GUNNER — NEW OPUS AUDIO UPDATE, 2 NOVEMBER 2026
+
+Input base: 6d4b108 (earlier published player: gh-pages 63dc9c0).
+The newer saved workspace contains 13 tracked changes and 26 new release files.
+A byte-exact backup, binary diff and 1875 input-file hashes were saved under
+ignored outputs/WebGL-2026-11-02-Audio before verification/build.
+
+This version includes 10 generated sound clips already authored by the owner:
+three player gun variations, three enemy gun variations, three bullet impacts
+and Tire_Roll_Loop. AudioAssets.json records their formats and SHA256 hashes.
+The saved scene references each clip and replaces the previous engine layers
+with a tyre roll that responds to speed/ground contact. Per-sound ownership
+keeps missing categories on their legacy fallback, without doubling the new
+gun/impact layers. Explosion, pickup and other absent banks retain fallback;
+music remains Dustlight Road. Desert Run is not present.
+
+The audio source/processing files supplied with the update are preserved,
+including the rejected sfx_enemy_gun raw take. Processing uses the chosen takes
+in Tools/Audio/process_generated_audio.py; its latest existing manifest covers
+only the Tire-only invocation. No new sound generation, paid API request or
+asset regeneration was performed during publishing.
+
+The visual scene and vehicle physics were preserved. No authoring installer
+was rerun and no production source fix was added during delivery. Build uses
+Unity 6000.6.4f1 / URP 17.6.0 and the saved Level01_Greenwood scene.
+
+Fresh checks, recorded audio measurements, build and publication evidence are
+stored alongside this report when completed. Earlier release evidence remains
+in ../WebGL-2026-11-02 and describes its original legacy-audio player.

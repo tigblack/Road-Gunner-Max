@@ -16,11 +16,13 @@ namespace RoadGunner
         float[] buffer;
         int written, channels = 2, rate;
         volatile bool recording;
-        /// <summary>True while a recording was requested; ArcadeAudio then also logs its engine model at 4 Hz.</summary>
+        /// <summary>True while a recording was requested; ArcadeAudio then also logs its roll/skid/wind levels at 4 Hz.</summary>
         public static bool Tracing { get; private set; }
+        /// <summary>Unscaled time when the recording began (-1 when none): diagnostics log marks against the WAV clock.</summary>
+        public static float StartedAt { get; private set; } = -1;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() { Tracing = false; }
+        static void ResetStatics() { Tracing = false; StartedAt = -1; }
 
         public static void AttachIfRequested()
         {
@@ -38,6 +40,7 @@ namespace RoadGunner
             rate = AudioSettings.outputSampleRate;
             buffer = new float[Mathf.Max(1, rate) * 2 * 240];
             recording = true;
+            StartedAt = Time.unscaledTime;
         }
 
         void OnAudioFilterRead(float[] data, int channelCount)

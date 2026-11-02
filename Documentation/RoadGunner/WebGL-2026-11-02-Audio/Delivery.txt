@@ -1,0 +1,30 @@
+ROAD GUNNER — NEW OPUS AUDIO VERSION
+2 November 2026
+
+The newer saved update was confirmed against previous source 6d4b108 and player
+63dc9c0. This release adds the owner's 10 already-generated WAVs: player/enemy
+gun variations, bullet impacts and tyre roll, with corresponding code/scene
+wiring. The engine drone was replaced by speed/contact-dependent tyre roll;
+missing sound categories keep their legacy fallback. Music: Dustlight Road.
+No sound generation/API purchase or asset authoring was performed for delivery.
+
+Build: Unity 6000.6.4f1 / URP 17.6.0, saved Level01_Greenwood, WebGL.
+Built UTC: 2026-11-02T10:56:14.6493540Z; Result: Success.
+Gzip with JavaScript decompression fallback for static hosting.
+Seven static files including .nojekyll: 25,778,118 bytes.
+Unity BuildReport.totalSize: 60,112,938 bytes (a separate metric).
+
+Fresh native controlled checks: gameplay204 + exploration88 + wheel physics20
+=312 passed, zero failures and runtime Console errors. Their complete reports
+are included here. AudioCapture.txt records the fixed 25-second audio scene;
+AudioMix.txt records actual PCM measurements and their limitations. Native
+recording does not establish browser audio behavior or subjective approval.
+
+WebBuild.json records complete source/artifact SHA256 hashes and validates gzip
+CRC, Unity data/WASM headers, WASM validity and generated JavaScript syntax.
+All pre-build production source/asset hashes were preserved; known automatic
+Unity metadata was saved aside and restored to the exact pre-build state.
+No production code fixes or authoring installers were used during this release.
+
+Publication.txt and LiveManifest.json record source/Pages commits, deployment
+status and exact HTTPS file identity. Physical phone/FPS testing is not claimed.

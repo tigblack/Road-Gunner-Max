@@ -17,7 +17,7 @@ namespace RoadGunner
         [Min(.02f)] public float tracerTime=.055f, sparkTime=.11f, flashTime=.045f;
         [Tooltip("Tracer tail chases the head over its life (0 = static line).")] [Range(0,1)] public float tracerChase;
         [Tooltip("Flash mesh is a flame along the barrel (+Z) that stretches over its life; off = legacy spike.")] public bool flameFlash;
-        bool LegacyAudio => source && (!feedback || !feedback.ownsAudio);
+        bool Legacy(ArcadeFeedback.LegacySound sound) => source && (!feedback || !feedback.Owns(sound));
         public int ExplosionsPlayed { get; private set; }
         float[] tracerUntil,sparkUntil;
         Vector3[] tracerFrom,tracerTo;
@@ -37,7 +37,7 @@ namespace RoadGunner
         public void Explode(Vector3 position) {
             if(explosions==null||explosions.Length==0)return;
             explosions[nextExplosion++%explosions.Length].PlayAt(position);ExplosionsPlayed++;
-            if(LegacyAudio&&explosion)source.PlayOneShot(explosion,.35f);
+            if(Legacy(ArcadeFeedback.LegacySound.Explosion)&&explosion)source.PlayOneShot(explosion,.35f);
             if(feedback)feedback.VehicleExploded(position);
         }
         public void Shot(Vector3 from,Vector3 to,Quaternion rotation,bool hostile=false) {
@@ -50,16 +50,16 @@ namespace RoadGunner
                 flash.SetPositionAndRotation(from,flameFlash?rotation*Quaternion.Euler(0,0,Random.Range(0,60f)):rotation*Quaternion.Euler(90,0,0));
                 flash.gameObject.SetActive(true);flashUntil=Time.time+flashTime;
             }
-            if(LegacyAudio&&gun)source.PlayOneShot(gun,hostile?.15f:.22f);
+            if(Legacy(ArcadeFeedback.LegacySound.Gun)&&gun)source.PlayOneShot(gun,hostile?.15f:.22f);
             if(feedback)feedback.Shot(from,to,hostile);
         }
         public void Spark(Vector3 position) {
             if(sparkUntil==null)ResetPool();
-            if(LegacyAudio&&impact&&Time.time>=nextImpact){source.PlayOneShot(impact,.12f);nextImpact=Time.time+.08f;}if(feedback)feedback.Impact(position);
+            if(Legacy(ArcadeFeedback.LegacySound.Impact)&&impact&&Time.time>=nextImpact){source.PlayOneShot(impact,.12f);nextImpact=Time.time+.08f;}if(feedback)feedback.Impact(position);
             int i=nextSpark++%sparks.Length;sparks[i].position=position;if(view)sparks[i].rotation=view.rotation*Quaternion.Euler(0,0,Random.Range(0,90f));
             sparks[i].gameObject.SetActive(true);sparkUntil[i]=Time.time+sparkTime;
         }
-        public void Pickup(){if(LegacyAudio&&pickup)source.PlayOneShot(pickup,.25f);}
+        public void Pickup(){if(Legacy(ArcadeFeedback.LegacySound.Pickup)&&pickup)source.PlayOneShot(pickup,.25f);}
         void Update() {
             if(tracerUntil==null)return;float now=Time.time;
             for(int i=0;i<tracers.Length;i++){

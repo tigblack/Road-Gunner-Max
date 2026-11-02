@@ -6,8 +6,8 @@ namespace RoadGunner
 {
     /// <summary>
     /// Arcade sound design under the feedback hub: a pool of 2D voices with per-event clip banks (variants, cooldown,
-    /// voice cap, priority, jitter), a two-layer engine driven by a small gear/RPM model, tyre skid, desert wind.
-    /// Presentation only. Until the generated core clips exist the legacy CombatEffects one-shots keep playing.
+    /// voice cap, priority, jitter), tyre roll as the only movement sound (no engine drone), tyre skid, desert wind.
+    /// Presentation only. Each legacy CombatEffects one-shot keeps playing until its own generated clips exist.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class ArcadeAudio : ArcadeFeedbackSink
@@ -66,48 +66,46 @@ namespace RoadGunner
         public Bank bossWarning = new Bank(), victory = new Bank(), defeat = new Bank(), harpoonFire = new Bank(), harpoonReel = new Bank(), whoosh = new Bank();
 
         [Header("Loops (clips live on the sources)")]
-        public AudioSource engineIdle;
-        public AudioSource engineDrive;
+        [Tooltip("Tyres rolling over sand: the movement sound (there is no engine drone). Silent at rest, rises with speed.")]
+        public AudioSource roll;
         public AudioSource skid;
         public AudioSource wind;
-        [Range(0, 1)] public float engineVolume = .22f;
+        [Range(0, 1)] public float rollVolume = .14f;
         [Range(0, 1)] public float skidVolume = .3f;
         [Range(0, 1)] public float windVolume = .17f;
-        [Tooltip("Idle layer pitch from idle RPM to its fade-out RPM.")] public Vector2 idlePitch = new Vector2(.94f, 1.38f);
-        [Tooltip("Drive layer pitch from idle RPM to the top of a gear. Tune to the recording's native RPM.")] public Vector2 drivePitch = new Vector2(.74f, 1.42f);
+        [Tooltip("Roll pitch from a crawl to top speed.")] public Vector2 rollPitch = new Vector2(.86f, 1.12f);
 
-        public bool OwnsCoreAudio { get; private set; }
-        public bool DrivesEngine { get; private set; }
+        /// <summary>Legacy one-shots this sink voices itself (it has their clips); the rest stay on CombatEffects.</summary>
+        public ArcadeFeedback.LegacySound OwnedSounds { get; private set; }
+        /// <summary>True while the car's legacy engine source is held silent.</summary>
+        public bool MutesEngine { get; private set; }
         public int VoicesStarted { get; private set; }
         public int VoicesRejected { get; private set; }
-        public int HighestGear => topGear + 1;
 
-        // Three forward gears as fractions of tuning.maxSpeed: the RPM rises through a gear and dips on each upshift.
-        static readonly float[] GearBase = { 0f, .24f, .52f }, GearTop = { .40f, .74f, 1.10f };
-        static readonly float[] UpShift = { .36f, .68f, 99f }, DownShift = { -1f, .27f, .56f };
         static readonly float[] ShotPattern = { 0f, -.25f, .15f, -.1f, .3f };
 
         Voice[] state = new Voice[0];
         Camera view;
         bool paused, ended, started;
-        int gear, topGear, shotIndex, scrapStep, impactSuppressedFrame = -1, reelVoice = -1;
-        float rpm = .12f, load, blend, shiftTimer, skidAmount, intensity, lastScrap = -10, airborneSince = -1;
-        float idleLevel, driveLevel, skidLevel, windLevel;
+        int shotIndex, scrapStep, impactSuppressedFrame = -1, reelVoice = -1;
+        float skidAmount, intensity, lastScrap = -10, airborneSince = -1;
+        float rollLevel, skidLevel, windLevel;
 #if UNITY_EDITOR
         float nextTrace;
 #endif
 
-        bool Owns => hub && hub.ownsAudio && OwnsCoreAudio;
+        bool Owns(ArcadeFeedback.LegacySound sound) => hub && hub.Owns(sound) && (OwnedSounds & sound) == sound;
         VehicleController Vehicle => session ? session.vehicle : null;
         static float Semitones(float s) => Mathf.Pow(2, s / 12f);
 
         /// <summary>Default mix. Clip files are loudness-normalised per category, these scale them against music 0.3.</summary>
         public void ResetMix()
         {
-            playerGun.Mix(.40f, .06f, .35f, .05f, 3, 6);
-            enemyGun.Mix(.30f, .08f, .5f, .07f, 3, 4);
-            bulletImpact.Mix(.24f, .1f, .8f, .06f, 2, 2);
-            metalHit.Mix(.36f, .08f, .6f, .08f, 2, 5);
+            // Casual blaster pops: present but soft, the player gun fires five times a second.
+            playerGun.Mix(.30f, .06f, .35f, .05f, 3, 6);
+            enemyGun.Mix(.22f, .08f, .5f, .07f, 3, 4);
+            bulletImpact.Mix(.20f, .1f, .8f, .06f, 2, 2);
+            metalHit.Mix(.30f, .08f, .6f, .08f, 2, 5);
             bodyHit.Mix(.40f, .08f, .7f, .07f, 2, 4);
             explosion.Mix(.62f, .05f, .6f, .05f, 2, 9);
             crash.Mix(.50f, .06f, .5f, .10f, 2, 7);
@@ -126,8 +124,8 @@ namespace RoadGunner
             harpoonReel.Mix(.32f, .04f, .3f, .2f, 1, 4);
             whoosh.Mix(.32f, .06f, .6f, .35f, 1, 4);
             masterVolume = 1; panAmount = .45f;
-            engineVolume = .22f; skidVolume = .3f; windVolume = .17f;
-            idlePitch = new Vector2(.94f, 1.38f); drivePitch = new Vector2(.74f, 1.42f);
+            rollVolume = .14f; skidVolume = .3f; windVolume = .17f;
+            rollPitch = new Vector2(.86f, 1.12f);
         }
 
         void Reset() { ResetMix(); }
@@ -140,7 +138,7 @@ namespace RoadGunner
             if (!session) session = hub && hub.session ? hub.session : GetComponentInParent<GameSession>();
             if (voices == null || voices.Length == 0) voices = CreateVoices(14);
             state = new Voice[voices.Length];
-            foreach (var source in new[] { engineIdle, engineDrive, skid, wind }) PrepareLoop(source);
+            foreach (var source in new[] { roll, skid, wind }) PrepareLoop(source);
         }
 
         void OnEnable() { RefreshOwnership(); }
@@ -160,8 +158,8 @@ namespace RoadGunner
             view = session && session.input && session.input.view ? session.input.view : Camera.main;
             RefreshOwnership();
 #if UNITY_EDITOR
-            Debug.Log("ARCADE AUDIO active: core clips=" + OwnsCoreAudio + " (legacy one-shots " + (OwnsCoreAudio ? "silenced" : "kept") +
-                      "), layered engine=" + DrivesEngine + ", skid=" + (skid && skid.clip) + ", wind=" + (wind && wind.clip) + ", voices=" + voices.Length);
+            Debug.Log("ARCADE AUDIO active: own sounds=" + OwnedSounds + " (other legacy one-shots kept), engine drone muted=" + MutesEngine +
+                      ", roll=" + (roll && roll.clip) + ", skid=" + (skid && skid.clip) + ", wind=" + (wind && wind.clip) + ", voices=" + voices.Length);
             ArcadeAudioRecorder.AttachIfRequested();
 #endif
             paused = session && session.State == SessionState.Paused;
@@ -171,25 +169,34 @@ namespace RoadGunner
         void OnDisable()
         {
 #if UNITY_EDITOR
-            if (started) Debug.Log("ARCADE AUDIO stats: core=" + OwnsCoreAudio + " engine=" + DrivesEngine + " voices started=" + VoicesStarted +
-                                   " rejected=" + VoicesRejected + " highest gear=" + HighestGear);
+            if (started) Debug.Log("ARCADE AUDIO stats: own sounds=" + OwnedSounds + " voices started=" + VoicesStarted + " rejected=" + VoicesRejected);
 #endif
-            if (hub && OwnsCoreAudio) hub.ownsAudio = false;
+            if (hub && OwnedSounds != ArcadeFeedback.LegacySound.None) hub.ownedSounds = ArcadeFeedback.LegacySound.None;
             var vehicle = Vehicle;
-            if (vehicle && DrivesEngine) vehicle.externalEngineAudio = false;
-            OwnsCoreAudio = DrivesEngine = false;
-            foreach (var source in new[] { engineIdle, engineDrive, skid, wind }) if (source) source.Stop();
-            idleLevel = driveLevel = skidLevel = windLevel = 0;
+            if (vehicle && MutesEngine) vehicle.externalEngineAudio = false;
+            OwnedSounds = ArcadeFeedback.LegacySound.None; MutesEngine = false;
+            foreach (var source in new[] { roll, skid, wind }) if (source) source.Stop();
+            rollLevel = skidLevel = windLevel = 0;
             StopVoices();
         }
 
         void RefreshOwnership()
         {
-            OwnsCoreAudio = playerGun.HasOwn && bulletImpact.HasOwn && explosion.HasOwn && scrap.HasOwn;
-            if (hub) hub.ownsAudio = OwnsCoreAudio && isActiveAndEnabled;
+            var owned = ArcadeFeedback.LegacySound.None;
+            if (isActiveAndEnabled)
+            {
+                // Per sound: a missing bank leaves just that legacy one-shot playing (the other banks fall back to it too).
+                if (playerGun.HasOwn) owned |= ArcadeFeedback.LegacySound.Gun;
+                if (bulletImpact.HasOwn) owned |= ArcadeFeedback.LegacySound.Impact;
+                if (explosion.HasOwn) owned |= ArcadeFeedback.LegacySound.Explosion;
+                if (scrap.HasOwn) owned |= ArcadeFeedback.LegacySound.Pickup;
+            }
+            OwnedSounds = owned;
+            if (hub) hub.ownedSounds = owned;
+            // The engine drone is gone for good while this sink runs; movement is the tyre roll layer.
             var vehicle = Vehicle;
-            DrivesEngine = isActiveAndEnabled && engineIdle && engineIdle.clip && vehicle;
-            if (vehicle) vehicle.externalEngineAudio = DrivesEngine;
+            MutesEngine = isActiveAndEnabled && vehicle;
+            if (vehicle) vehicle.externalEngineAudio = MutesEngine;
         }
 
         AudioSource[] CreateVoices(int count)
@@ -321,8 +328,8 @@ namespace RoadGunner
             bool playing = session && session.State == SessionState.Playing;
             if (playing) intensity = Mathf.Max(0, intensity - dt * .45f);
             var vehicle = Vehicle;
-            if (DrivesEngine && vehicle && vehicle.engine) vehicle.engine.volume = 0;
-            UpdateEngine(vehicle, playing, dt);
+            if (MutesEngine && vehicle && vehicle.engine) vehicle.engine.volume = 0;
+            UpdateRoll(vehicle, playing, dt);
             UpdateSkid(vehicle, playing, dt);
             UpdateWind(vehicle, dt);
         }
@@ -342,48 +349,26 @@ namespace RoadGunner
             source.pitch = Mathf.Clamp(pitch, .3f, 3f);
         }
 
-        void UpdateEngine(VehicleController vehicle, bool playing, float dt)
+        void UpdateRoll(VehicleController vehicle, bool playing, float dt)
         {
-            if (!DrivesEngine) return;
-            float speed01 = 0, throttle = 0; bool grounded = true, canDrive = false;
-            if (vehicle)
+            if (!roll || !roll.clip) return;
+            float speed01 = 0, grip = 0;
+            if (vehicle && playing && vehicle.CanDrive)
             {
                 float top = vehicle.tuning ? Mathf.Max(1, vehicle.tuning.maxSpeed) : 11.7f;
-                speed01 = Mathf.Clamp(Mathf.Max(Mathf.Abs(vehicle.ForwardSpeed), vehicle.HorizontalSpeed * .8f) / top, 0, 1.15f);
-                throttle = Mathf.Clamp01(vehicle.Throttle); grounded = vehicle.GroundedWheels > 0; canDrive = vehicle.CanDrive;
+                speed01 = Mathf.Clamp01(vehicle.HorizontalSpeed / top);
+                grip = Mathf.Clamp01(vehicle.GroundedWheels / 2f);
             }
-            bool running = playing && canDrive;
-            load = Mathf.MoveTowards(load, running ? throttle : 0, dt * (throttle > load ? 6 : 3));
-            if (gear < 2 && speed01 > UpShift[gear] && load > .15f) { gear++; shiftTimer = .18f; topGear = Mathf.Max(topGear, gear); }
-            else if (gear > 0 && speed01 < DownShift[gear]) gear--;
-            shiftTimer = Mathf.Max(0, shiftTimer - dt);
-
-            float target = Mathf.Lerp(.16f, 1f, Mathf.InverseLerp(GearBase[gear], GearTop[gear], speed01));
-            if (gear == 0) target = Mathf.Max(target, .16f + load * .42f * (1 - Mathf.InverseLerp(.1f, .3f, speed01)));   // clutch slip on launch
-            if (!grounded) target = Mathf.Max(target, .25f + load * .7f);                                                  // free-spinning wheels
-            if (shiftTimer > 0) target -= .06f;
-            if (!running) target = .12f;
-            rpm = Mathf.MoveTowards(rpm, target, dt * (target > rpm ? 2.2f : 3.2f));
-
-            float blendTarget = Mathf.Clamp01(Mathf.InverseLerp(.14f, .42f, rpm) * .75f + load * .35f);
-            blend = Mathf.MoveTowards(blend, blendTarget, dt * 4);
-            float rate = paused ? 6 : ended ? .45f : 2.5f;
-            float on = running ? engineVolume : 0;
-            if (engineDrive && engineDrive.clip)
-            {
-                float dip = shiftTimer > 0 ? .72f : 1;
-                Drive(engineIdle, ref idleLevel, on * .9f * Mathf.Lerp(1, .22f, blend), rate, dt, Mathf.Lerp(idlePitch.x, idlePitch.y, Mathf.InverseLerp(.12f, .55f, rpm)));
-                Drive(engineDrive, ref driveLevel, on * blend * Mathf.Lerp(.78f, 1.05f, load) * dip, rate, dt, Mathf.Lerp(drivePitch.x, drivePitch.y, rpm));
-            }
-            else Drive(engineIdle, ref idleLevel, on * Mathf.Lerp(.8f, 1.1f, rpm), rate, dt, Mathf.Lerp(.9f, 1.9f, rpm));
+            // Silent when parked or airborne, eases in from a crawl and stays well under the music at full speed.
+            float target = rollVolume * grip * Mathf.SmoothStep(0, 1, Mathf.InverseLerp(.04f, .7f, speed01));
+            float rate = paused ? 6 : target > rollLevel ? .9f : 1.6f;
+            Drive(roll, ref rollLevel, target, rate, dt, Mathf.Lerp(rollPitch.x, rollPitch.y, speed01));
 #if UNITY_EDITOR
-            if (ArcadeAudioRecorder.Tracing && running && Time.unscaledTime >= nextTrace)
+            if (ArcadeAudioRecorder.Tracing && playing && Time.unscaledTime >= nextTrace)
             {
                 nextTrace = Time.unscaledTime + .25f;
-                Debug.Log("ARCADE AUDIO engine t=" + Time.unscaledTime.ToString("F2") + " speed01=" + speed01.ToString("F2") + " throttle=" + load.ToString("F2") +
-                          " gear=" + (gear + 1) + " rpm=" + rpm.ToString("F2") + " idle=" + idleLevel.ToString("F3") + "@" + (engineIdle ? engineIdle.pitch : 0).ToString("F2") +
-                          " drive=" + driveLevel.ToString("F3") + "@" + (engineDrive ? engineDrive.pitch : 0).ToString("F2") + " skid=" + skidLevel.ToString("F3") +
-                          " wind=" + windLevel.ToString("F3"));
+                Debug.Log("ARCADE AUDIO roll t=" + Time.unscaledTime.ToString("F2") + " speed01=" + speed01.ToString("F2") + " grip=" + grip.ToString("F1") +
+                          " roll=" + rollLevel.ToString("F3") + "@" + roll.pitch.ToString("F2") + " skid=" + skidLevel.ToString("F3") + " wind=" + windLevel.ToString("F3"));
             }
 #endif
         }
@@ -433,7 +418,7 @@ namespace RoadGunner
         {
             StopVoices(true);   // Restart announces the start region in the same frame; keep that cue
             paused = ended = false;
-            gear = 0; rpm = .12f; load = blend = shiftTimer = skidAmount = intensity = 0; scrapStep = 0; airborneSince = -1;
+            skidAmount = intensity = 0; scrapStep = 0; airborneSince = -1;
             RefreshOwnership();
         }
 
@@ -460,7 +445,7 @@ namespace RoadGunner
 
         public override void Shot(Vector3 muzzle, Vector3 end, bool hostile)
         {
-            if (!Owns) return;
+            if (!Owns(ArcadeFeedback.LegacySound.Gun)) return;
             intensity = Mathf.Min(1, intensity + (hostile ? .03f : .05f));
             if (hostile) PlayAt(enemyGun, muzzle);
             else PlayAt(playerGun, muzzle, 1, Semitones(ShotPattern[shotIndex++ % ShotPattern.Length]));
@@ -468,7 +453,7 @@ namespace RoadGunner
 
         public override void Impact(Vector3 point)
         {
-            if (!Owns || Time.frameCount == impactSuppressedFrame) return;
+            if (!Owns(ArcadeFeedback.LegacySound.Impact) || Time.frameCount == impactSuppressedFrame) return;
             PlayAt(bulletImpact, point);
         }
 
@@ -482,7 +467,7 @@ namespace RoadGunner
             }
             if (lethal) return;  // EnemyKilled voices the final blow
             int played = -1;
-            if (target is EnemyBuggy || target is TruckArenaBoss) { if (Owns && metalHit.HasOwn) played = PlayAt(metalHit, point, .8f, .86f); }
+            if (target is EnemyBuggy || target is TruckArenaBoss) { if (Owns(ArcadeFeedback.LegacySound.Impact) && metalHit.HasOwn) played = PlayAt(metalHit, point, .8f, .86f); }
             else if (target is WastelandMutant) played = PlayAt(bodyHit, point, 1.1f, .8f);
             else if (target is Raider raider) played = PlayAt(bodyHit, point, raider.arenaBoss ? 1.1f : 1, raider.arenaBoss ? .85f : 1);
             // The turret sparks the same point right after Hit: one sound per bullet.
@@ -509,7 +494,7 @@ namespace RoadGunner
         public override void VehicleExploded(Vector3 position)
         {
             intensity = Mathf.Min(1, intensity + .4f);
-            if (Owns) PlayAt(explosion, position);
+            if (Owns(ArcadeFeedback.LegacySound.Explosion)) PlayAt(explosion, position);
         }
 
         public override void PlayerDamaged(float amount, float healthFraction)
@@ -545,7 +530,7 @@ namespace RoadGunner
 
         public override void ScrapCollected(Vector3 worldPosition, int amount)
         {
-            if (!Owns) return;
+            if (!Owns(ArcadeFeedback.LegacySound.Pickup)) return;
             float now = Time.unscaledTime;
             scrapStep = now - lastScrap <= 1.2f ? Mathf.Min(scrapStep + 1, 6) : 0;
             lastScrap = now;
@@ -568,7 +553,7 @@ namespace RoadGunner
 
         public override void UpgradeCollected(ArenaUpgradeKind kind, Vector3 position)
         {
-            if (Owns) Play2D(upgrade, 1, kind == ArenaUpgradeKind.Health ? .94f : 1);
+            if (Owns(ArcadeFeedback.LegacySound.Pickup)) Play2D(upgrade, 1, kind == ArenaUpgradeKind.Health ? .94f : 1);
         }
 
         public override void CacheHit(ArenaRewardCache cache, Vector3 point)
@@ -578,7 +563,7 @@ namespace RoadGunner
 
         public override void CacheOpened(ArenaRewardCache cache, bool secret)
         {
-            if (!Owns) return;
+            if (!Owns(ArcadeFeedback.LegacySound.Pickup)) return;
             Vector3 at = cache ? cache.transform.position : Vector3.zero;
             if (cache) PlayAt(crateBreak, at); else Play2D(crateBreak);
             Play2D(killChime, 1.4f, Semitones(secret ? 12 : 7), .09f);

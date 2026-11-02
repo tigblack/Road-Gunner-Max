@@ -8,12 +8,12 @@ Idempotent: every run re-processes whatever raw files exist and rewrites identic
 (files whose bytes did not change are not touched, so Unity does not re-import them).
 Missing raws are reported and never faked.
 
-Inputs   Tools/Audio/Generated/raw/<id>.wav|.mp3|...   (ids in SFX below + music_main)
+Inputs   Tools/Audio/Generated/raw/<id>.wav|.mp3|...   (ids in SFX below + music_main; REJECTED ids are ignored)
 Outputs  Assets/RoadGunner/Audio/Arcade/*.wav            SFX: 44.1 kHz mono 16-bit
          Assets/RoadGunner/Audio/Music/Desert Run.wav    music loop: 44.1 kHz stereo 16-bit
          Assets/RoadGunner/Audio/Music/Desert Run - source.txt
          Tools/Audio/Generated/manifest.json
-Loops (engine, skid, wind, music) carry Unity's WebGL AAC loop workaround: 2048 silent guard
+Loops (tyre roll, skid, wind, music) carry Unity's WebGL AAC loop workaround: 2048 silent guard
 samples, then a RIFF 'smpl' loop from 2048 to the inclusive last sample (as generate_dustlight_road.py).
 """
 import argparse
@@ -38,8 +38,9 @@ TAU = 2 * math.pi
 # Loudness by category: (sample-peak ceiling dBFS, RMS target dBFS, RMS window s or None=whole file, soft-clip).
 # The RMS is measured over the loudest window, so variants of one category land at the same punch.
 CATEGORIES = {
-    "gun_player":      (-1.0, -11.0, .08, True),
-    "gun_enemy":       (-1.5, -12.5, .08, True),
+    # Casual blaster pops (owner feedback 2 Nov 2026): no soft-clip saturation, the guns must stay round and soft.
+    "gun_player":      (-1.0, -12.0, .06, False),
+    "gun_enemy":       (-1.5, -13.5, .06, False),
     "impact":          (-3.0, -15.0, .04, False),
     "hit":             (-2.0, -13.5, .06, False),
     "explosion":       (-1.0, -10.5, .30, True),
@@ -53,24 +54,38 @@ CATEGORIES = {
     "stinger":         (-2.0, -15.0, .80, False),
     "harpoon":         (-3.0, -15.0, .10, False),
     "whoosh":          (-6.0, -20.0, .20, False),
-    "loop_engine_idle":  (-3.0, -17.0, None, False),
-    "loop_engine_drive": (-3.0, -16.0, None, False),
+    "loop_roll":         (-4.0, -18.0, None, False),
     "loop_skid":         (-4.0, -18.0, None, False),
     "loop_wind":         (-9.0, -24.0, None, False),
 }
 
-# id -> processing. hp = high-pass Hz (also removes DC), pre = pre-roll s, fade = fade-out s.
+# id -> processing. hp = high-pass Hz (also removes DC), lp = low-pass Hz, eq = extra ffmpeg filters,
+# at = use only this window of the raw (s), pre = pre-roll s, fade = fade-out s.
+# takes = hand-picked hits: generations rarely follow "N separate hits" literally, so the usable hits were chosen from
+# spectrograms of the raw files (at = window in the raw, s). pitches = one variant per entry (varispeed, semitones);
+# layer = a second window mixed on top (gains_db per variant relative to the main hit, None = no layer).
 SFX = {
     "sfx_ui_click":          dict(out="UI_Click", cat="ui", hp=110, pre=.002, fade=.03, max_len=.6),
     "sfx_boss_warning":      dict(out="Boss_Warning", cat="warning", hp=45, pre=.006, fade=.25, max_len=3.2),
-    "sfx_engine_idle_loop":  dict(out="Engine_Idle_Loop", cat="loop_engine_idle", hp=25, loop=.35, max_len=5.0),
-    "sfx_engine_drive_loop": dict(out="Engine_Drive_Loop", cat="loop_engine_drive", hp=25, loop=.30, max_len=5.0),
+    # The only movement sound (no engine drone): the steady 2.0-5.45 s of rolling crunch (the generation ramps in from
+    # 1.62 s and decays after 5.4 s, which made the loop dip at every wrap); the ~1 kHz tyre-hum band is tamed and the
+    # top rolled off so it stays a soft bed under the music.
+    "sfx_tire_roll_loop":    dict(out="Tire_Roll_Loop", cat="loop_roll", hp=50, lp=7000, at=(2.0, 5.45),
+                                  eq=["equalizer=f=1000:t=q:w=1.4:g=-5"], loop=.35, max_len=4.0),
     "sfx_tire_skid_loop":    dict(out="Tire_Skid_Loop", cat="loop_skid", hp=160, loop=.25, max_len=4.0),
     # 8 s keeps the AAC asset under Unity WebGL's 128 KB "always decode to AudioBuffer" cut-off (true loop points).
     "sfx_desert_wind_loop":  dict(out="Wind_Desert_Loop", cat="loop_wind", hp=40, loop=1.0, max_len=8.0, whoosh="Whoosh"),
-    "sfx_player_gun":        dict(out="Gun_Player", cat="gun_player", hp=45, pre=.003, fade=.07, max_len=.85, slices=5, gap=.14),
-    "sfx_enemy_gun":         dict(out="Gun_Enemy", cat="gun_enemy", hp=60, pre=.003, fade=.07, max_len=.85, slices=5, gap=.14),
-    "sfx_bullet_impacts":    dict(out="Impact_Bullet", cat="impact", hp=120, pre=.002, fade=.05, max_len=.5, slices=6, gap=.10),
+    # Toy-blaster generation: a rounded pop (click + soft low tail) at 1.65 s for the player, the descending cartoon
+    # "pew" at 0.02 s for enemies (different voice, same family); the heavy boom at 0.7 s is not used.
+    "sfx_player_gun":        dict(takes=[
+        dict(out="Gun_Player", cat="gun_player", at=(1.60, 1.98), hp=90, lp=9000, pre=.002, fade=.07, max_len=.24, pitches=(0, -.8, .7)),
+        dict(out="Gun_Enemy", cat="gun_enemy", at=(0.0, 0.32), hp=140, lp=10000, pre=.002, fade=.07, max_len=.26, pitches=(0, .9, -.6)),
+    ]),
+    # Soft wooden "tock" at 0.04 s with the tin-can "tink" from 1.82 s as a quiet top layer (three timbres).
+    "sfx_bullet_impacts":    dict(takes=[
+        dict(out="Impact_Bullet", cat="impact", at=(0.0, 0.16), hp=120, lp=9000, pre=.002, fade=.05, max_len=.14, pitches=(0, 1.2, -1.0),
+             layer=dict(at=(1.79, 2.10), hp=1500, lp=12000, fade=.08, max_len=.12, gains_db=(-14, -20, None))),
+    ]),
     "sfx_enemy_hits":        dict(out="Hit_Enemy", cat="hit", hp=50, pre=.003, fade=.06, max_len=.6, slices=3, gap=.14),
     "sfx_harpoon":           dict(out=("Harpoon_Fire", "Harpoon_Reel"), cat="harpoon", hp=60, pre=.003, fade=.08, max_len=2.5, split2=True),
     "sfx_explosion":         dict(out="Explosion", cat="explosion", hp=25, pre=.004, fade=.35, max_len=3.0),
@@ -80,6 +95,10 @@ SFX = {
     "sfx_upgrade_powerup":   dict(out="Upgrade_Powerup", cat="powerup", hp=60, pre=.004, fade=.3, max_len=2.5),
     "sfx_victory_stinger":   dict(out="Stinger_Victory", cat="stinger", hp=35, pre=.006, fade=.45, max_len=6.0),
     "sfx_defeat_stinger":    dict(out="Stinger_Defeat", cat="stinger", hp=35, pre=.006, fade=.45, max_len=6.0),
+}
+# Raw generations that came out unusable; kept for provenance, never processed.
+REJECTED = {
+    "sfx_enemy_gun": "sub-bass boom under an automatic volley, no single shots (2 Nov 2026); Gun_Enemy comes from sfx_player_gun",
 }
 TRUE_PEAK_LIMIT = -0.5                    # dBTP, every SFX
 MUSIC_ID = "music_main"
@@ -193,6 +212,18 @@ def fade(y, fade_in=.0015, fade_out=.06):
     fo = min(n // 3, int(fade_out * RATE))
     for i in range(fo): y[n - fo + i] *= .5 + .5 * math.cos(math.pi * (i + 1) / fo)
     return y
+
+
+def repitch(y, semitones):
+    """Varispeed by linear interpolation: pitch and length change together, like AudioSource.pitch."""
+    if not semitones: return array("d", y)
+    step = 2 ** (semitones / 12)
+    n = max(1, int((len(y) - 1) / step))
+    out = array("d", bytes(8 * n))
+    for i in range(n):
+        p = i * step; k = int(p); f = p - k
+        out[i] = y[k] * (1 - f) + y[k + 1] * f
+    return out
 
 
 def trim(x, pre=.004, fade_out=.06, max_len=None, tail_db=-48.0):
@@ -338,20 +369,6 @@ def loop_body(x, xfade, max_len=None):
     w = min(X, int(.05 * RATE))
     natural = [(x[length - w:length], x[length:length + w])]
     return y, {"crossfade_s": round(X / RATE, 3), "seam_alignment_corr": round(best_c, 3), "crossfade_corr": round(rho, 3)}, natural
-
-
-def fundamental(x, lo=25.0, hi=260.0):
-    """Rough engine firing frequency: autocorrelation of a 4x-decimated 1 s excerpt (reported for pitch tuning)."""
-    seg = x[len(x) // 4: len(x) // 4 + RATE]
-    dec = [sum(seg[i:i + 4]) / 4 for i in range(0, len(seg) - 4, 4)]
-    rate = RATE / 4
-    mean = sum(dec) / max(1, len(dec)); dec = [v - mean for v in dec]
-    energy = sum(v * v for v in dec) or 1.0
-    best, best_lag = 0.0, 0
-    for lag in range(int(rate / hi), int(rate / lo) + 1):
-        c = sum(map(mul, dec[:-lag], dec[lag:])) / energy
-        if c > best * 1.04: best, best_lag = c, lag    # prefer the shortest strong period (avoid sub-harmonics)
-    return (round(rate / best_lag, 1), round(best, 2)) if best_lag else (None, 0.0)
 
 
 def seam_metrics(channels, natural=None):
@@ -734,16 +751,64 @@ def remove_stale(sfx_dir, prefix, keep):
             path.unlink(missing_ok=True); Path(str(path) + ".meta").unlink(missing_ok=True)
 
 
+def band(spec):
+    """ffmpeg filter chain of a spec or take: high-pass, optional low-pass, optional extra filters."""
+    chain = ["highpass=f=%d:poles=2" % spec["hp"]]
+    if spec.get("lp"): chain.append("lowpass=f=%d:poles=2" % spec["lp"])
+    return chain + list(spec.get("eq", ()))
+
+
+def window(x, at):
+    a, b = (int(t * RATE) for t in at)
+    return array("d", x[max(0, a):min(len(x), b)])
+
+
+def emit_variants(name, variants, cat, src, sfx_dir, report, extra=None):
+    """Writes name_01.. with one shared true-peak trim (median of the needed corrections) so the variants stay equally loud."""
+    needed = [min(0.0, TRUE_PEAK_LIMIT - .2 - tp) for tp in (true_peak_of(v, sfx_dir) for v in variants) if tp is not None]
+    if needed and len(needed) == len(variants):
+        shared = sorted(needed)[len(needed) // 2]
+        variants = [array("d", (s * lin(min(shared, c)) for s in v)) for v, c in zip(variants, needed)]
+    punch = [db(loudest_rms(v, CATEGORIES[cat][2])) for v in variants]
+    for i, v in enumerate(variants):
+        info = {"variant": i + 1, "variants": len(variants), "variant_punch_spread_db": round(max(punch) - min(punch), 2)}
+        info.update((extra or [{}] * len(variants))[i])
+        output(sfx_dir, "%s_%02d" % (name, i + 1), v, cat, report, src, info)
+    remove_stale(sfx_dir, name, len(variants))
+
+
+def process_take(take, src, sfx_dir, report, warnings):
+    cat = take["cat"]
+    hit = trim(window(decode(src, 1, filters=band(take)), take["at"]), take["pre"], take["fade"], take["max_len"])
+    if len(hit) < int(.02 * RATE): warnings.append("%s: take %s is empty" % (take["out"], take["at"])); return
+    layer = take.get("layer")
+    top = trim(window(decode(src, 1, filters=band(layer)), layer["at"]), .001, layer["fade"], layer["max_len"]) if layer else None
+    variants, extra = [], []
+    for index, semitones in enumerate(take.get("pitches", (0,))):
+        y = array("d", hit)
+        gain_db = layer["gains_db"][index % len(layer["gains_db"])] if layer else None
+        if top is not None and len(top) and gain_db is not None:
+            g = lin(gain_db) * peak(hit) / max(peak(top), 1e-9)
+            offset = int(.002 * RATE)
+            if len(y) < offset + len(top): y.extend(array("d", bytes(8 * (offset + len(top) - len(y)))))
+            for i, v in enumerate(top): y[offset + i] += v * g
+        variants.append(normalise(repitch(y, semitones), cat))
+        extra.append({"take_s": list(take["at"]), "pitch_semitones": semitones, "layer_db": gain_db})
+    emit_variants(take["out"], variants, cat, src, sfx_dir, report, extra)
+
+
 def process_sfx(ident, spec, src, sfx_dir, report, warnings):
+    if "takes" in spec:
+        for take in spec["takes"]: process_take(take, src, sfx_dir, report, warnings)
+        return
     cat = spec["cat"]
-    x = decode(src, 1, filters=["highpass=f=%d:poles=2" % spec["hp"]])
+    x = decode(src, 1, filters=band(spec))
+    if spec.get("at"): x = window(x, spec["at"])
     if peak(x) < 1e-4: warnings.append(ident + ": raw file is silent"); return
     if "loop" in spec:
         body, info, natural = loop_body(x, spec["loop"], spec.get("max_len"))
         body = normalise(body, cat)
         info.update(seam_metrics([body], natural))
-        if cat.startswith("loop_engine"):
-            info["fundamental_hz"], info["fundamental_confidence"] = fundamental(body)
         if not info["seamless"]: warnings.append("%s: loop seam not clean (%s)" % (ident, info))
         output(sfx_dir, spec["out"], body, cat, report, src, info, loop=True)
         if spec.get("whoosh"):
@@ -756,16 +821,7 @@ def process_sfx(ident, spec, src, sfx_dir, report, warnings):
         variants = [v for v in variants if len(v) > int(.02 * RATE)]
         if len(variants) < spec["slices"]:
             warnings.append("%s: found %d of %d hits" % (ident, len(variants), spec["slices"]))
-        # One shared true-peak trim (median of the needed corrections) keeps the variants equally loud.
-        needed = [min(0.0, TRUE_PEAK_LIMIT - .2 - tp) for tp in (true_peak_of(v, sfx_dir) for v in variants) if tp is not None]
-        if needed:
-            shared = sorted(needed)[len(needed) // 2]
-            variants = [array("d", (s * lin(min(shared, c)) for s in v)) for v, c in zip(variants, needed)] if len(needed) == len(variants) else variants
-        punch = [db(loudest_rms(v, CATEGORIES[cat][2])) for v in variants]
-        for i, v in enumerate(variants):
-            output(sfx_dir, "%s_%02d" % (spec["out"], i + 1), v, cat, report, src,
-                   {"variant": i + 1, "variants": len(variants), "variant_punch_spread_db": round(max(punch) - min(punch), 2)})
-        remove_stale(sfx_dir, spec["out"], len(variants))
+        emit_variants(spec["out"], variants, cat, src, sfx_dir, report)
         return
     if spec.get("split2"):
         fire, reel, prominence = split_two(x)
@@ -794,6 +850,8 @@ def main():
 
     report, warnings, missing, failed, music = [], [], [], [], None
     ids = list(SFX) + [MUSIC_ID]
+    for ident, reason in REJECTED.items():
+        if find_raw(args.raw, ident): print("skipping rejected raw %s: %s" % (ident, reason))
     for ident in ids:
         if only and ident not in only: continue
         src = find_raw(args.raw, ident)

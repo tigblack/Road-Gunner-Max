@@ -36,7 +36,9 @@ namespace RoadGunner
             Write(); StartCoroutine(Run());
         }
 
-        bool Wanted(string name) => filter.Length == 0 || filter.Split(',').Any(f => f.Length > 0 && name.StartsWith(f.Trim()));
+        // "audio" is a listening scene, not a picture: it only runs when asked for by name.
+        bool Wanted(string name) => filter.Length == 0 ? !name.StartsWith("audio", StringComparison.Ordinal)
+                                                       : filter.Split(',').Any(f => f.Length > 0 && name.StartsWith(f.Trim()));
 
         IEnumerator Run()
         {
@@ -45,7 +47,7 @@ namespace RoadGunner
             {
                 ("start", StartShot), ("drive", DriveShot), ("combat", CombatShot), ("station", StationShot),
                 ("workshop", WorkshopShot), ("region", RegionShots), ("mutant", MutantShot), ("boss", BossShot),
-                ("pause", PauseShot), ("defeat", DefeatShot), ("victory", VictoryShot),
+                ("pause", PauseShot), ("defeat", DefeatShot), ("victory", VictoryShot), ("audio", AudioScene),
             };
             foreach (var step in steps)
             {
@@ -223,6 +225,61 @@ namespace RoadGunner
             boss.Hit(boss.MaximumHealth + 1, Vector3.forward); boss.Hit(boss.MaximumHealth + 1, Vector3.forward);
             yield return Frames(); yield return new WaitForSecondsRealtime(.5f);
             Capture("victory");
+        }
+
+        /// <summary>
+        /// Fixed 25 s scene for "-rgAudioRecord": parked (music only), accelerating and cruising (tyre roll), braking to a
+        /// stop, then sustained turret combat with a shooting buggy. Marks are logged against the recording clock.
+        /// </summary>
+        IEnumerator AudioScene()
+        {
+            Isolate();
+            Vector3 forward = s.startRotation * Vector3.forward;
+            Mark("parked");
+            yield return new WaitForSecondsRealtime(3f);
+            Mark("accelerate");
+            s.input.testBrake = false; s.input.testDirection = ScreenDirection(forward);
+            yield return new WaitForSecondsRealtime(3f);
+            Mark("cruise-turn");
+            s.input.testDirection = ScreenDirection(Quaternion.Euler(0, 40, 0) * forward);
+            yield return new WaitForSecondsRealtime(3f);
+            Mark("brake");
+            s.input.testDirection = Vector2.zero; s.input.testBrake = true;
+            yield return new WaitForSecondsRealtime(3f);
+            Mark("combat");
+            s.turret.enabled = true;
+            Vector3 origin = s.vehicle.transform.position; Quaternion heading = s.vehicle.transform.rotation;
+            var buggy = s.spawns.buggyPool.FirstOrDefault(b => b);
+            if (buggy && NavMesh.SamplePosition(origin + heading * Vector3.forward * 8.5f, out var spot, 2f, NavMesh.AllAreas))
+            {
+                buggy.Spawn(spot.position, Quaternion.LookRotation(Flat(origin - spot.position)), -1); buggy.AIEnabled = false;
+                buggy.gun.CanShoot = true; buggy.Body.constraints = RigidbodyConstraints.FreezeAll;
+            }
+            // Keep two raiders in range so the turret fires the whole time (the buggy is a longer, metallic target).
+            float until = Time.realtimeSinceStartup + 9f; int turn = 0;
+            while (Time.realtimeSinceStartup < until)
+            {
+                if (s.spawns.pool.Count(r => r && r.Alive) < 2)
+                {
+                    var raider = s.spawns.pool.FirstOrDefault(r => r && !r.Alive);
+                    Vector3 direction = Quaternion.Euler(0, 70 + turn++ * 83f, 0) * (heading * Vector3.forward);
+                    if (raider && NavMesh.SamplePosition(origin + direction * 6.5f, out var hit, 1.5f, NavMesh.AllAreas)) raider.Spawn(hit.position, -1, turn);
+                }
+                yield return new WaitForSecondsRealtime(.25f);
+            }
+            Mark("calm");
+            s.turret.enabled = false;
+            foreach (var r in s.spawns.pool) if (r && r.Alive) r.Despawn();
+            if (buggy && buggy.Alive) buggy.gun.CanShoot = false;
+            yield return new WaitForSecondsRealtime(3f);
+            Mark("end");
+        }
+
+        void Mark(string label)
+        {
+            float t = ArcadeAudioRecorder.StartedAt >= 0 ? Time.unscaledTime - ArcadeAudioRecorder.StartedAt : -1;
+            manifest.Add("audio mark " + label + " t=" + t.ToString("F2")); Write();
+            Debug.Log("ARCADE AUDIO mark " + label + " t=" + t.ToString("F2"));
         }
 
         // ---------- staging helpers ----------
