@@ -10,6 +10,25 @@ namespace RoadGunner
     public sealed class VehicleTuning : ScriptableObject
     {
         public float mass = 1400, maxSpeed = 18, totalDriveTorque = 3100;
+        [Header("Tracked drive (player profile only)")]
+        [Tooltip("Zero steering angle on four suspension wheels; differential track torque and bounded grounded yaw torque.")]
+        public bool trackedDrive;
+        [Min(1), Tooltip("Maximum requested tracked yaw rate in degrees per second.")]
+        public float trackedMaxYawRate = 45;
+        [Min(1), Tooltip("Rate at which the yaw-rate request changes, in degrees per second squared. Does not set body angular velocity.")]
+        public float trackedYawAcceleration = 75;
+        [Min(0), Tooltip("Maximum grounded yaw-assist torque in newton metres, scaled down with partial wheel contact.")]
+        public float trackedYawTorque = 9000;
+        [Min(.05f), Tooltip("Physical yaw-rate controller response time in seconds; torque is bounded by trackedYawTorque.")]
+        public float trackedYawResponse = .15f;
+        [Min(.1f), Tooltip("Requested tracked yaw rate per degree of heading error, in inverse seconds.")]
+        public float trackedHeadingGain = 1.4f;
+        [Range(.1f,1), Tooltip("Sideways tyre stiffness multiplier for track scrub. Original wheel friction data remains unchanged.")]
+        public float trackedSidewaysGrip = .4f;
+        [Min(0), Tooltip("Lateral velocity damping rate during a grounded low-speed pivot only, in inverse seconds.")]
+        public float trackedPivotLateralDamping = 6;
+        [Min(0), Tooltip("Maximum lateral pivot stabilization acceleration in metres per second squared (2.45 is about 0.25g).")]
+        public float trackedPivotLateralAcceleration = 2.45f;
         [Header("Wheel-driven handling")]
         [Min(.1f), Tooltip("Maximum requested wheel-drive acceleration in metres per second squared.")]
         public float acceleration = 4;
@@ -25,7 +44,7 @@ namespace RoadGunner
         [Range(30,170), Tooltip("Heading error at which the physical turn uses its manoeuvring speed.")]
         public float turnBeforeDriveAngle = 100;
         [Range(0,60)] public float fullDriveAngle = 25;
-        [Min(.5f), Tooltip("Forward speed in tight turns. Wheels need rolling motion; there is no pivot/yaw assist.")]
+        [Min(.5f), Tooltip("Wheeled forward speed in tight turns; tracked speed below which a rearward request can pivot.")]
         public float turningSpeed = 4.2f;
         [Min(.1f), Tooltip("Requested front-wheel angle per degree of heading error.")]
         public float headingSteerGain = .85f;

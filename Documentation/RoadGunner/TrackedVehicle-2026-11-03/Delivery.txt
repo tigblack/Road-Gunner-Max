@@ -1,0 +1,43 @@
+ROAD GUNNER — TRACKED PLAYER, 3 NOVEMBER 2026
+
+The player now has two moving metal track assemblies with road rollers,
+continuous tread shoes and wider ground imprints. The body, crew, roof gun and
+harpoon remain. Four existing WheelCollider suspension contacts support the
+vehicle; differential drive and contact-dependent torque/force assists provide
+steering. Decorative tracks add no collision bodies. This is a tracked arcade
+vehicle using wheel-contact proxies, not a simulation of individual linked shoes.
+
+Configured speed: 11.7 -> 5.85 m/s; drive acceleration: 4.4 -> 2.2 m/s2.
+Identical flat-course measurements: 10.49496 -> 5.31100 m/s.
+The new speed is 50.61% of the old speed (49.39% slower).
+Downward directional input turns the nose before forward travel. Both sides can
+counter-rotate on the ground. Physical motion does not overwrite velocity or pose;
+Recover/Restart retain their explicit reset behavior. Enemy/combat tuning is
+preserved; speed-dependent ram impacts naturally become weaker at the new speed.
+
+Fresh controlled native checks on the saved scene:
+Physics21 + tracked9 + gameplay204 + exploration88 = 322 PASS.
+Zero failures and runtime Console errors/exceptions/asserts in all four suites.
+Reports include 90/180 degree turns, zero steering angles, supported pivot,
+airborne and one-sided assist guards, impulse/wall/curb response, solver-rate
+comparison, actual touch/keyboard input, rewards, repair, boss clear and restart.
+The workshop drive-through reached its exit while restoring actual health.
+Baseline2 records the separate measurement made before production edits.
+
+Unity 6000.6.4f1 / URP17.6.0, saved Level01_Greenwood, WebGL build: Success.
+Built UTC: 2026-11-02T22:34:50.4067530Z.
+Seven static payload files: 25,943,070 bytes.
+Unity BuildReport.totalSize: 60,331,232 bytes (a separate metric).
+Gzip with JavaScript decompression fallback for static hosting.
+
+WebBuild.json records exact file/source SHA256, gzip CRC, Unity data/WASM headers,
+WASM validity and generated/inline JavaScript syntax. All 1890 frozen production
+source/asset files match after the build. Five known automatic Unity metadata
+changes were saved aside and restored to their exact pre-build bytes.
+The narrow player-track authoring installer was used once; legacy full-world or
+presentation installers were not rerun. Native screenshots show the same final
+geometry before the last steering-only refinement.
+
+Publication.txt and LiveManifest.json record the actual deployment and HTTPS
+artifact identity. Browser.txt records the public browser smoke and its scope.
+No real-phone performance, display-FPS or subjective audio-quality claim is made.

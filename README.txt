@@ -9,15 +9,15 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 2 November update adds generated player/enemy gun sounds,
-bullet impacts and quiet tyre roll to the Arcade visuals/HUD, exploration arena
-and wheel-driven physics. This is the Unity/WebGL game.
+Press Play. The 3 November update converts the player into a tracked vehicle,
+with moving tread shoes and rollers, differential steering and about half the
+previous travel speed. The existing Arcade visuals, audio and arena are retained.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
-a camera-relative travel direction. The car steers toward that direction while
-rolling forward. S / Down requests a forward U-turn toward screen-bottom; allow
-room for its turning arc. It does not select reverse. Joystick magnitude controls
+a camera-relative travel direction. The tracked car turns its nose toward that
+direction and drives forward. S / Down first turns the chassis around; the tracks
+can counter-rotate on the ground. It does not select reverse. Joystick magnitude controls
 speed; a held joystick takes priority. Release input to coast. Space applies the
 brake. Escape / II pauses the run.
 
@@ -90,14 +90,22 @@ Documentation/RoadGunner/AntonFeedback-2026-10-29/Implementation.txt
 ARENA AUTHORING AND TUNING
 Tools / Road Gunner / Level Editor opens the existing scene-based authoring
 tools. Per-level settings live under Assets/RoadGunner/Levels/Greenwood/Arena1.
-Configured player maxSpeed is 11.7 m/s. Tight turns request a manoeuvring speed
-of 4.2 m/s at full input, rather than pivoting the body in place. Ackermann
-steering uses the actual 3.05 m wheelbase and 2.07 m front track. Yaw countersteer
-acts through front-wheel angles. Ordinary driving does not directly set body
-rotation or velocity; Recover/Restart still reset pose explicitly. Outgoing base
-damage uses multiplier 0.35. The feedback installer authors presentation only.
-Wheel-physics revision notes and subsequent evidence belong under:
-Documentation/RoadGunner/WheelPhysics-2026-10-30/
+The Arena 1 player profile now has trackedDrive=true, maxSpeed=5.85 m/s and
+acceleration=2.2 m/s2 (previously 11.7 and 4.4). A matching 15-second straight-course
+comparison measured 10.49496 -> 5.31100 m/s (50.6% of the old speed). Four existing
+WheelColliders provide suspension and ground contacts; visible tyres are hidden
+behind two animated track assemblies. Motor torque differs between the sides;
+wheel steering stays zero. A bounded 9000 Nm yaw assist acts only with support
+on both sides, never by replacing body velocity/rotation. Recover/Restart still
+reset pose explicitly. Buggies retain their wheeled profile. Combat HP/ATK and
+arena geometry are unchanged. Evidence: Documentation/RoadGunner/TrackedVehicle-2026-11-03/.
+
+The saved scene already has tracks. To regenerate only their visual assets:
+Tools / Road Gunner / Player / Install Tracked Visuals Only
+Batch: RoadGunner.Editor.PlayerTrackVisualInstaller.InstallBatch
+This preserves body, crew, weapons and the four suspension contacts. Do not run
+legacy world/presentation installers just to build or publish this saved scene.
+Historical wheel-only revision evidence remains in WheelPhysics-2026-10-30/.
 After editing terrain or roads, refresh the static map through the existing
 minimap authoring workflow and rebake navigation as required by the Level Editor.
 Legacy rebalance/prototype/polish commands have their own authoring scopes and
@@ -110,11 +118,12 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the new 2 November audio update, built with Unity 6000.6.4f1.
-The static payload is 25,778,118 bytes. Build provenance, recorded audio and
-acceptance reports: Documentation/RoadGunner/WebGL-2026-11-02-Audio/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=d3c19c3
-Publication evidence: Documentation/RoadGunner/WebGL-2026-11-02-Audio/Publication.txt. Earlier Arcade player 63dc9c0 and exploration player fc89028
+WebBuild/ contains the 3 November tracked-player update, built with Unity 6000.6.4f1.
+The static payload is 25,943,070 bytes. Build provenance, speed comparison and
+acceptance reports: Documentation/RoadGunner/TrackedVehicle-2026-11-03/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=466ff61
+Publication evidence: Documentation/RoadGunner/TrackedVehicle-2026-11-03/Publication.txt.
+Earlier audio player d3c19c3, Arcade player 63dc9c0 and exploration player fc89028
 remain historical snapshots; their own publication reports are retained.
 
 Previous wheel-physics demo d6a9ba3 and Anton HUD demo 2310eee remain historical
@@ -139,7 +148,7 @@ recorded 204 Unity runtime checks, zero failures and zero Console errors:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/PlayMode.txt
 Its archive/JavaScript/WASM/HTTP checks and unavailable post-build visual browser
 run (CUA cgWindowNotFound) also concern that earlier build. They do not establish
-acceptance of the new wheel physics. The current revision passed 20 dedicated
+acceptance of the later tracked conversion. The 30 October revision passed 20 dedicated
 physics checks plus 204 full Arena 1 regression checks, with zero failures and
 zero Console errors/exceptions/asserts. Reports: WheelPhysics-2026-10-30/PlayMode.txt
 and Gameplay.txt. No FPS, retention or cross-platform physics determinism is
@@ -153,6 +162,15 @@ The saved revision passed 88 exploration, 204 Arena 1 and 20 wheel-physics
 checks: 312 total, zero failures and zero Console errors. See
 Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt and its named reports.
 These are controlled Unity fixtures, not FPS measurements or a natural full run.
+
+TRACKED PLAYER ACCEPTANCE — 3 NOVEMBER 2026
+Two animated tread assemblies, wider ground imprints and grounded differential
+steering replace the visible player tyres. The 15-second straight-course A/B
+measured 10.49496 -> 5.31100 m/s (50.6% of the old speed). Configured maxSpeed
+is exactly halved, 11.7 -> 5.85 m/s. Fresh native checks: physics21 + tracked9 +
+gameplay204 + exploration88 = 322 PASS, zero failures and runtime Console errors.
+See Documentation/RoadGunner/TrackedVehicle-2026-11-03/Delivery.txt. These are
+controlled fixtures, not a measured browser FPS or physical-phone benchmark.
 
 ARCADE AUDIO + VISUAL OVERHAUL — 1-2 NOVEMBER 2026 (branch feature/audio-visual-overhaul)
 Goal: natural generated sound, thematic music and a bright idle-arcade look with

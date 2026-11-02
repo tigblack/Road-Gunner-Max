@@ -24,9 +24,10 @@ namespace RoadGunner
         public void Clear(){next=0;for(int i=0;i<Capacity;i++)born[i]=-100;if(mesh){System.Array.Clear(colors,0,colors.Length);mesh.colors=colors;}last[0]=last[1]=Vector3.positiveInfinity;}
         void LateUpdate(){
             if(!mesh||!vehicle.Body||Time.timeScale<=0)return;
-            if(vehicle.Speed>1)for(int i=0;i<2;i++)if(vehicle.wheels[i+2].GetGroundHit(out WheelHit hit)){
+            bool tracked=vehicle.tuning&&vehicle.tuning.trackedDrive;
+            for(int i=0;i<2;i++)if((tracked?Mathf.Abs(Vector3.Dot(vehicle.Body.GetPointVelocity(vehicle.wheels[i+2].transform.position),transform.forward))>.35f:vehicle.Speed>1)&&vehicle.wheels[i+2].GetGroundHit(out WheelHit hit)){
                 if(Vector3.Distance(last[i],hit.point)<.32f)continue;last[i]=hit.point;
-                var forward=Vector3.ProjectOnPlane(transform.forward,hit.normal).normalized*.29f;var right=Vector3.Cross(hit.normal,forward.normalized)*.19f;var p=hit.point+hit.normal*.016f;int j=next*4;
+                var forward=Vector3.ProjectOnPlane(transform.forward,hit.normal).normalized*.29f;var right=Vector3.Cross(hit.normal,forward.normalized)*(tracked?.34f:.19f);var p=hit.point+hit.normal*.016f;int j=next*4;
                 vertices[j]=p-right-forward;vertices[j+1]=p+right-forward;vertices[j+2]=p+right+forward;vertices[j+3]=p-right+forward;born[next]=Time.time;next=(next+1)%Capacity;
             }
             if(Time.time<refresh)return;refresh=Time.time+.06f;

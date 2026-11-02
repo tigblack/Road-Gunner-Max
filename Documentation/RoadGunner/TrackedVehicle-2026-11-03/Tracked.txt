@@ -1,0 +1,13 @@
+PASS dynamic chassis settles: contacts=4; speed=0.01068736
+PASS two visible physical-contact track assemblies: track component=True
+PASS ordinary tyres hidden and no decorative collisions: original four WheelColliders remain on chassis; track meshes cannot hook obstacles
+PASS steady straight course reaches finite cruise: mean=5.310998; range=5.310737..5.311183; configured=5.85
+PASS track belts advance with actual straight movement: left=71.51083; right=71.51094
+PASS configured speed is halved: old=11.7; new=5.85
+PASS measured steady speed is halved: old=10.49496; new=5.310998; ratio=0.5060521
+PASS parked belts remain still: speed=3.510178E-05
+PASS one supported track cannot activate yaw assist: contacts=2; peak assist=0; pivot force=0
+RESULT checks=9; failures=0; saved scene not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

@@ -13,16 +13,25 @@ MonoBehaviour:
   m_Name: Arena 1 vehicle handling
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.VehicleTuning
   mass: 1400
-  maxSpeed: 11.7
+  maxSpeed: 5.85
   totalDriveTorque: 2700
-  acceleration: 4.4
+  trackedDrive: 1
+  trackedMaxYawRate: 45
+  trackedYawAcceleration: 75
+  trackedYawTorque: 9000
+  trackedYawResponse: 0.15
+  trackedHeadingGain: 1.4
+  trackedSidewaysGrip: 0.4
+  trackedPivotLateralDamping: 6
+  trackedPivotLateralAcceleration: 2.45
+  acceleration: 2.2
   rotationSpeed: 150
   rotationAcceleration: 540
   steeringResponse: 4
-  driveResponseSpeed: 3
+  driveResponseSpeed: 1.5
   turnBeforeDriveAngle: 100
   fullDriveAngle: 25
-  turningSpeed: 4.2
+  turningSpeed: 2.1
   headingSteerGain: 0.85
   yawCounterSteer: 0.4
   ackermannStrength: 1

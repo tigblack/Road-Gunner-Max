@@ -1,0 +1,6 @@
+PASS dynamic chassis settles: contacts=4; speed=0.01069955
+PASS steady straight course reaches finite cruise: mean=10.49496; range=10.49463..10.49518; configured=11.7
+RESULT checks=2; failures=0; saved scene not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

@@ -1,0 +1,46 @@
+ROAD GUNNER — TRACKED PLAYER, 3 NOVEMBER 2026
+
+Input baseline: ba81ad9. Unity 6000.6.4f1 / URP 17.6.0.
+Request: put the player car on tracks and make it travel twice as slowly.
+
+Two player-only tread assemblies replace the visible tyres: 88 moving metal
+shoes, 12 road rollers, return rollers, front idlers and rear sprockets. The
+existing body, crew, roof turret, harpoon and four physical WheelCollider
+contacts are retained. Two dynamic meshes share one ArcadeToon material.
+Animation uses measured motion of each side and physical suspension endpoints,
+with reusable buffers. Decorative modules add no colliders. Track imprints
+are wider and also follow a moving side during a pivot. Terrain, navigation
+and the minimap were preserved.
+
+VehicleTuning adds an optional tracked profile; the original wheeled branch
+remains available for other assets. Player limit: 11.7 -> 5.85 m/s; acceleration:
+4.4 -> 2.2 m/s2; response speed: 3 -> 1.5 m/s; manoeuvring gate: 4.2 -> 2.1 m/s.
+Differential motor/brake inputs replace front-wheel steering. Direction-down
+turns the nose before forward travel. Ground-supported yaw assist uses bounded
+AddTorque: 9000 Nm cap, 45 deg/s request ceiling, 75 deg/s2 request ramp,
+0.15 s response and 0.40 lateral grip multiplier. A low-speed pivot receives
+bounded lateral damping at the COM (6/s, maximum 2.45 m/s2), without vertical
+force. Both assists require contact on both sides; released input, braking,
+jumps and one-sided support disable them. Driving does not replace body
+velocity/rotation. Existing Recover/Restart still explicitly reset the pose.
+
+Before changing production code the old saved car was measured on a temporary
+flat course for 15 seconds, averaging its final two seconds. The old mean was
+10.49496 m/s; the first new mean was 5.31100 m/s, ratio 0.50605. Baseline.json
+and the final Tracked.json preserve the measurements. The baseline source is
+ba81ad9; Baseline mode is only meaningful on that pre-conversion source. The
+normal test reads the committed baseline, so it also works from a fresh clone.
+
+Profile-aware diagnostics replace wheel-only Ackermann/no-pivot assumptions
+with differential steering, physical pivot and Rigidbody yaw-lock assertions.
+Grounding, airborne dynamics, impulse, collision, suspension and solver-rate
+limits are retained. The old speed targets scale with the requested half-speed
+profile. Route time budgets use distance and the slower profile, with finite
+caps. Combat, rewards, restart, actual InputSystem routing and UI checks remain.
+
+Combat/HP tuning, enemy tuning, upgrades, audio assets, level geometry and UI
+style were preserved. Ram damage still depends on actual forward speed, so a
+slower full-speed impact is naturally weaker under the unchanged formula. The new narrow track authoring entry was used once; no old full art
+or world installers were reapplied. The screenshot pass uses the same final
+geometry, before the last steering-only tuning. Native results and final WebGL
+publication evidence are recorded alongside this file.

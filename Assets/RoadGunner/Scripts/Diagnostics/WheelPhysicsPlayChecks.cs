@@ -15,8 +15,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed class WheelPhysicsPlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/WheelPhysics.txt";
-        public const string ArtifactFolder = "outputs/arcade-overhaul-2026-11-01/wheel-physics";
+        public const string ReportPath = "Documentation/RoadGunner/TrackedVehicle-2026-11-03/Physics.txt";
+        public const string ArtifactFolder = "outputs/tracked-vehicle-2026-11-03/physics";
         public bool Completed { get; private set; }
         public int Checks { get; private set; }
         public int Failures { get; private set; }
@@ -48,6 +48,9 @@ namespace RoadGunner
         int originalFrameRate, originalVSync;
         bool originalSpawns, originalTurret, running, restored;
         string phase = "setup";
+        bool TrackedProfile => car.tuning.trackedDrive;
+        float ProfileSpeedScale => TrackedProfile ? .5f : 1f;
+        float ExpectedCruise => 10.49496f * ProfileSpeedScale;
 
         public void Begin()
         {
@@ -55,10 +58,10 @@ namespace RoadGunner
             running = true; Completed = false;
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(ArtifactFolder);
-            report.Add("Wheel-based player physics — actual saved vehicle; Unity " + Application.unityVersion);
+            report.Add("Physical player drive — actual saved vehicle and its drive profile; Unity " + Application.unityVersion);
             report.Add("Temporary flat track, wall and one-wheel curb. ResetPose is setup only; motion uses the production DriveInput/WheelColliders.");
             report.Add("Impulse case explicitly applies a measured external force. No running-case velocity/rotation replacement. Timesteps are solver rates, not measured display FPS.");
-            samples.AppendLine("phase,fixedTime,x,y,z,vx,vy,vz,yaw,tilt,frontSteer,rearSteer,motorTorque,brakeTorque,grounded,slip");
+            samples.AppendLine("phase,fixedTime,x,y,z,vx,vy,vz,yaw,tilt,frontSteer,rearSteer,motorTorque,brakeTorque,grounded,slip,leftTrackSpeed,rightTrackSpeed,leftTrackTorque,rightTrackTorque,requestedYawRate,appliedYawAssistTorque");
             WriteArtifacts(); StartCoroutine(RunGuarded());
         }
 
@@ -72,7 +75,10 @@ namespace RoadGunner
                 .Append(F(body.rotation.eulerAngles.y)).Append(',').Append(F(Tilt())).Append(',')
                 .Append(F(car.wheels[0].steerAngle)).Append(',').Append(F(car.wheels[2].steerAngle)).Append(',')
                 .Append(F(MotorTorque())).Append(',').Append(F(car.wheels[0].brakeTorque)).Append(',')
-                .Append(car.GroundedWheels).Append(',').Append(F(car.LargestSlip)).AppendLine();
+                .Append(car.GroundedWheels).Append(',').Append(F(car.LargestSlip)).Append(',')
+                .Append(F(car.LeftTrackSpeed)).Append(',').Append(F(car.RightTrackSpeed)).Append(',')
+                .Append(F(car.LeftTrackTorque)).Append(',').Append(F(car.RightTrackTorque)).Append(',')
+                .Append(F(car.RequestedYawRate)).Append(',').Append(F(car.AppliedYawAssistTorque)).AppendLine();
         }
 
         IEnumerator RunGuarded()
@@ -126,6 +132,8 @@ namespace RoadGunner
                 car.wheels.Length == 4 && Mathf.Abs(body.mass - car.tuning.mass) < .01f && body.mass > 100 &&
                 body.collisionDetectionMode == CollisionDetectionMode.ContinuousDynamic,
                 "Mass=" + body.mass + "; constraints=" + originalConstraints + "; CCD=" + body.collisionDetectionMode);
+            report.Add("Drive profile=" + (TrackedProfile ? "tracked" : "wheeled") + "; limit=" + F(car.tuning.maxSpeed) +
+                "m/s; coast setup=" + F(6 * ProfileSpeedScale) + "m/s; measured baseline reference=10.49496m/s. Actual half-speed ratio is a separate A/B acceptance.");
             yield return ResetAt(-45);
             Check("authored suspension settles on four-wheel test ground", car.GroundedWheels >= 3 && car.Speed < .3f && Tilt() < 5 &&
                 Array.TrueForAll(car.wheels, wheel => wheel.enabled && wheel.suspensionDistance > .05f && wheel.suspensionSpring.spring > 1000),
@@ -138,7 +146,7 @@ namespace RoadGunner
             for (int mode = 0; mode < 2; mode++)
             {
                 yield return ResetAt(-45); phase = mode == 0 ? "release-coast" : "space-brake";
-                yield return AccelerateTo(6);
+                yield return AccelerateTo(6 * ProfileSpeedScale);
                 var result = new Trial { name = phase, fixedStep = Time.fixedDeltaTime, startSpeed = HorizontalSpeed() };
                 Vector3 start = body.position;
                 // Both modes release the direction. Space is queued through the real keyboard input path.
@@ -151,11 +159,11 @@ namespace RoadGunner
                 result.duration = Time.fixedTime - began; result.endSpeed = HorizontalSpeed(); result.distance = FlatDistance(start, body.position);
                 results[mode] = result; trials.Add(result);
                 Check(mode == 0 ? "release preserves natural forward momentum" : "Space uses physical service brakes",
-                    result.startSpeed >= 5.5f && (mode == 0 ? !actualSpace && result.endSpeed > 1.5f : actualSpace && result.endSpeed < result.startSpeed * .6f),
+                    result.startSpeed >= 5.5f * ProfileSpeedScale && (mode == 0 ? !actualSpace && result.endSpeed > 1.5f * ProfileSpeedScale : actualSpace && result.endSpeed < result.startSpeed * .6f),
                     "Actual Space=" + actualSpace + "; speed=" + F(result.startSpeed) + " -> " + F(result.endSpeed) + "; distance=" + F(result.distance));
             }
-            Check("release coasts farther than Space from comparable speed", Mathf.Abs(results[0].startSpeed - results[1].startSpeed) < .7f &&
-                results[0].distance > results[1].distance * 1.2f && results[0].endSpeed > results[1].endSpeed + .75f,
+            Check("release coasts farther than Space from comparable speed", Mathf.Abs(results[0].startSpeed - results[1].startSpeed) < .7f * ProfileSpeedScale &&
+                results[0].distance > results[1].distance * 1.2f && results[0].endSpeed > results[1].endSpeed + .75f * ProfileSpeedScale,
                 "Coast/brake travel=" + F(results[0].distance) + "/" + F(results[1].distance) + "m; end speeds=" + F(results[0].endSpeed) + "/" + F(results[1].endSpeed));
         }
 
@@ -163,62 +171,120 @@ namespace RoadGunner
         {
             foreach (float request in new[] { 90f, 180f })
             {
-                yield return ResetAt(-35); phase = "arc-" + request;
+                yield return ResetAt(-35); phase = (TrackedProfile ? "tracked-turn-" : "arc-") + request;
                 var start = body.position; var previous = start; var initial = body.rotation;
                 Vector3 desired = Quaternion.AngleAxis(request, Vector3.up) * Vector3.forward;
                 Command(desired); float began = Time.fixedTime, path = 0, yawBeforeHalfMetre = 0, frontSteer = 0, rearSteer = 0, minimumForward = 0;
-                bool reversed = false; float error = 180;
+                float peakYawRate = 0, peakRequest = 0, peakAssist = 0, peakDifferential = 0, pivotTravel = 0;
+                int differentialSamples = 0, counterRotationSamples = 0; bool reversed = false; float error = 180;
                 do
                 {
                     yield return new WaitForFixedUpdate();
                     path += FlatDistance(previous, body.position); previous = body.position;
                     float yaw = Vector3.Angle(initial * Vector3.forward, body.rotation * Vector3.forward);
                     if (path < .5f) yawBeforeHalfMetre = Mathf.Max(yawBeforeHalfMetre, yaw);
-                    frontSteer = Mathf.Max(frontSteer, Mathf.Abs(car.wheels[0].steerAngle)); rearSteer = Mathf.Max(rearSteer, Mathf.Abs(car.wheels[2].steerAngle));
+                    frontSteer = Mathf.Max(frontSteer, Mathf.Abs(car.wheels[0].steerAngle), Mathf.Abs(car.wheels[1].steerAngle));
+                    rearSteer = Mathf.Max(rearSteer, Mathf.Abs(car.wheels[2].steerAngle), Mathf.Abs(car.wheels[3].steerAngle));
                     minimumForward = Mathf.Min(minimumForward, car.ForwardSpeed); reversed |= car.input.Reverse;
                     error = Vector3.Angle(Vector3.ProjectOnPlane(body.rotation * Vector3.forward, Vector3.up), desired);
+                    peakYawRate = Mathf.Max(peakYawRate, Mathf.Abs(body.angularVelocity.y) * Mathf.Rad2Deg);
+                    peakRequest = Mathf.Max(peakRequest, Mathf.Abs(car.RequestedYawRate));
+                    peakAssist = Mathf.Max(peakAssist, Mathf.Abs(car.AppliedYawAssistTorque));
+                    float differential = car.LeftTrackTorque - car.RightTrackTorque;
+                    peakDifferential = Mathf.Max(peakDifferential, Mathf.Abs(differential));
+                    if (Mathf.Abs(car.RequestedYawRate) > 5 && differential * car.RequestedYawRate > 0) differentialSamples++;
+                    if (error > car.tuning.turnBeforeDriveAngle && car.LeftTrackTorque * car.RightTrackTorque < -1) counterRotationSamples++;
+                    if (error > car.tuning.turnBeforeDriveAngle) pivotTravel = Mathf.Max(pivotTravel, FlatDistance(start, body.position));
                 } while (error > 20 && Time.fixedTime - began < 16);
                 float turned = Vector3.Angle(initial * Vector3.forward, body.rotation * Vector3.forward);
+                float signedTurn = Vector3.SignedAngle(initial * Vector3.forward, body.rotation * Vector3.forward, Vector3.up);
                 var result = new Trial { name = phase, fixedStep = Time.fixedDeltaTime, duration = Time.fixedTime - began,
                     endSpeed = HorizontalSpeed(), pathLength = path, distance = FlatDistance(start, body.position), yaw = turned };
                 trials.Add(result);
-                Check("directional " + request + " degree command follows a physical arc", error <= 20 && path > 1.5f &&
-                    path / Mathf.Max(.01f, turned * Mathf.Deg2Rad) > .75f && yawBeforeHalfMetre < 20 && !reversed && minimumForward > -.5f && Tilt() < 25,
-                    "Final heading error=" + F(error) + "; path=" + F(path) + "m; mean radius=" + F(path / Mathf.Max(.01f, turned * Mathf.Deg2Rad)) +
-                    "m; yaw before0.5m=" + F(yawBeforeHalfMetre) + "; time=" + F(result.duration) + "s (no old pivot-time requirement)");
-                Check("front wheel steering supplies the " + request + " degree turn", frontSteer > 5 && rearSteer < .25f,
-                    "Peak front/rear wheel steer=" + F(frontSteer) + "/" + F(rearSteer) + "deg");
+                if (TrackedProfile)
+                {
+                    Check("tracked " + request + " degree command turns the nose physically", error <= 20 && !reversed && minimumForward > -.5f &&
+                        Tilt() < 25 && Finite(body.position) && Finite(body.angularVelocity) && (request > 90 || signedTurn > 0) &&
+                        peakYawRate <= car.tuning.trackedMaxYawRate * 1.25f + 3 && (request < 180 || pivotTravel < .75f),
+                        "Heading error=" + F(error) + "; signed yaw=" + F(signedTurn) + "; peak yaw rate=" + F(peakYawRate) +
+                        "deg/s; rearward-request drift=" + F(pivotTravel) + "m; minimum forward=" + F(minimumForward) + "; time=" + F(result.duration));
+                    Check("differential tracks supply the " + request + " degree turn without wheel steering", frontSteer < .25f && rearSteer < .25f &&
+                        differentialSamples > 0 && peakDifferential > 1 && peakRequest > 5 && peakRequest <= car.tuning.trackedMaxYawRate + .01f &&
+                        peakAssist <= car.tuning.trackedYawTorque + 1 && (request < 180 || counterRotationSamples > 0),
+                        "Front/rear steer=" + F(frontSteer) + "/" + F(rearSteer) + "; sign-correct differential samples=" + differentialSamples +
+                        "; counter-rotation samples=" + counterRotationSamples + "; peak torque difference=" + F(peakDifferential) +
+                        "Nm; yaw request=" + F(peakRequest) + "deg/s; assist=" + F(peakAssist) + "Nm");
+                }
+                else
+                {
+                    Check("directional " + request + " degree command follows a physical arc", error <= 20 && path > 1.5f &&
+                        path / Mathf.Max(.01f, turned * Mathf.Deg2Rad) > .75f && yawBeforeHalfMetre < 20 && !reversed && minimumForward > -.5f && Tilt() < 25,
+                        "Final heading error=" + F(error) + "; path=" + F(path) + "m; mean radius=" + F(path / Mathf.Max(.01f, turned * Mathf.Deg2Rad)) +
+                        "m; yaw before0.5m=" + F(yawBeforeHalfMetre) + "; time=" + F(result.duration) + "s (no old pivot-time requirement)");
+                    Check("front wheel steering supplies the " + request + " degree turn", frontSteer > 5 && rearSteer < .25f,
+                        "Peak front/rear wheel steer=" + F(frontSteer) + "/" + F(rearSteer) + "deg");
+                }
             }
         }
 
         IEnumerator NoPivotOrAirSteering()
         {
             yield return ResetAt(-35); phase = "translation-locked-heading";
-            body.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            body.constraints = originalConstraints | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
             Vector3 start = body.position; Quaternion initial = body.rotation;
-            Command(Vector3.right); float began = Time.fixedTime;
-            while (Time.fixedTime - began < 1) yield return new WaitForFixedUpdate();
-            float pinnedYaw = Vector3.Angle(initial * Vector3.forward, body.rotation * Vector3.forward);
-            Check("heading command cannot pivot a translation-locked chassis", pinnedYaw < 8 && FlatDistance(start, body.position) < .03f &&
-                Mathf.Abs(car.wheels[0].steerAngle) > 5 && car.GroundedWheels >= 2,
-                "Actual grounded steering with X/Z pinned; yaw=" + F(pinnedYaw) + "deg; travel=" + F(FlatDistance(start, body.position)));
+            Command(Vector3.right); float began = Time.fixedTime, requestedYaw = 0, differential = 0;
+            while (Time.fixedTime - began < 1)
+            {
+                yield return new WaitForFixedUpdate();
+                requestedYaw = Mathf.Max(requestedYaw, car.RequestedYawRate);
+                differential = Mathf.Max(differential, car.LeftTrackTorque - car.RightTrackTorque);
+            }
+            float pinnedYaw = Vector3.SignedAngle(initial * Vector3.forward, body.rotation * Vector3.forward, Vector3.up);
+            if (TrackedProfile)
+            {
+                Check("grounded differential tracks can pivot a translation-locked chassis", pinnedYaw > 5 &&
+                    pinnedYaw <= car.tuning.trackedMaxYawRate * 1.25f + 3 && FlatDistance(start, body.position) < .03f &&
+                    Array.TrueForAll(car.wheels, wheel => Mathf.Abs(wheel.steerAngle) < .25f) && car.GroundedWheels >= 2 && requestedYaw > 5 && differential > 1,
+                    "X/Z pinned, yaw free; physical yaw=" + F(pinnedYaw) + "deg; travel=" + F(FlatDistance(start, body.position)) +
+                    "m; request=" + F(requestedYaw) + "; torque difference=" + F(differential));
+                yield return ResetAt(-35); phase = "yaw-locked-tracked-heading";
+                body.constraints = originalConstraints | RigidbodyConstraints.FreezeRotationY;
+                initial = body.rotation; Command(Vector3.right); began = Time.fixedTime; requestedYaw = 0;
+                while (Time.fixedTime - began < 1)
+                {
+                    yield return new WaitForFixedUpdate(); requestedYaw = Mathf.Max(requestedYaw, car.RequestedYawRate);
+                }
+                float lockedYaw = Vector3.Angle(initial * Vector3.forward, body.rotation * Vector3.forward);
+                Check("tracked turn respects the rigidbody yaw constraint", lockedYaw < 2 && requestedYaw > 5 && car.GroundedWheels >= 2 &&
+                    (body.constraints & RigidbodyConstraints.FreezeRotationY) != 0,
+                    "Actual requested turn with FreezeRotationY; yaw=" + F(lockedYaw) + "deg; request=" + F(requestedYaw) +
+                    "; contacts=" + car.GroundedWheels + "; controller cannot replace body rotation");
+            }
+            else
+                Check("heading command cannot pivot a translation-locked chassis", Mathf.Abs(pinnedYaw) < 8 && FlatDistance(start, body.position) < .03f &&
+                    Mathf.Abs(car.wheels[0].steerAngle) > 5 && car.GroundedWheels >= 2,
+                    "Actual grounded steering with X/Z pinned; yaw=" + F(pinnedYaw) + "deg; travel=" + F(FlatDistance(start, body.position)));
             body.constraints = originalConstraints;
             phase = "airborne-setup";
             car.ResetPose(floorOrigin + new Vector3(0, 8, -35), Quaternion.identity); Physics.SyncTransforms(); session.follow.Snap();
             Command(Vector3.zero, true);
-            // GetGroundHit describes the last simulation. First let PhysX refresh the wheel
-            // contacts, then let the production FixedUpdate refresh its contact telemetry.
+            // Contacts describe the last PhysX step: synchronize setup before measuring airborne steering.
             yield return new WaitForFixedUpdate(); yield return new WaitForFixedUpdate();
             Check("airborne fixture has fresh zero-contact physics state", car.GroundedWheels == 0 &&
                 Array.TrueForAll(car.wheels, wheel => !wheel.GetGroundHit(out _)),
                 "After two setup physics steps: contacts=" + car.GroundedWheels);
             phase = "airborne-heading";
-            Command(Vector3.right); initial = body.rotation; start = body.position; began = Time.fixedTime; int contacts = 0;
-            while (Time.fixedTime - began < .45f) { yield return new WaitForFixedUpdate(); contacts = Mathf.Max(contacts, car.GroundedWheels); }
+            Command(TrackedProfile ? Vector3.back : Vector3.right); initial = body.rotation; start = body.position; began = Time.fixedTime; int contacts = 0; float airAssist = 0, airForce = 0;
+            while (Time.fixedTime - began < .45f)
+            {
+                yield return new WaitForFixedUpdate(); contacts = Mathf.Max(contacts, car.GroundedWheels);
+                airAssist = Mathf.Max(airAssist, Mathf.Abs(car.AppliedYawAssistTorque)); airForce = Mathf.Max(airForce, Mathf.Abs(car.AppliedPivotLateralForce));
+            }
             float airYaw = Vector3.Angle(initial * Vector3.forward, body.rotation * Vector3.forward);
             Check("airborne input cannot steer chassis without tire contact", contacts == 0 && airYaw < 2 && HorizontalSpeed() < .2f &&
-                start.y - body.position.y > .3f && body.linearVelocity.y < -.5f,
-                "Contacts=" + contacts + "; yaw=" + F(airYaw) + "; horizontal speed=" + F(HorizontalSpeed()) + "; fall=" + F(start.y - body.position.y));
+                start.y - body.position.y > .3f && body.linearVelocity.y < -.5f && (!TrackedProfile || airAssist < .001f && airForce < .001f),
+                "Contacts=" + contacts + "; yaw=" + F(airYaw) + "; horizontal speed=" + F(HorizontalSpeed()) + "; fall=" + F(start.y - body.position.y) +
+                "; peak grounded-yaw assist=" + F(airAssist) + "; pivot force=" + F(airForce));
         }
 
         IEnumerator ExternalImpulse()
@@ -244,7 +310,8 @@ namespace RoadGunner
             wall.SetActive(true); Physics.SyncTransforms();
             yield return ResetAt(-25); phase = "physical-wall"; collisionProbe.WallContacts = 0; collisionProbe.MaximumImpulse = 0;
             Command(Vector3.forward); float began = Time.fixedTime, peakSpeed = 0, furthest = body.position.z;
-            while (Time.fixedTime - began < 8 && collisionProbe.WallContacts == 0)
+            float wallBudget = TravelBudget(Mathf.Abs(wall.transform.position.z - body.position.z), 1, 8);
+            while (Time.fixedTime - began < wallBudget && collisionProbe.WallContacts == 0)
             {
                 yield return new WaitForFixedUpdate(); peakSpeed = Mathf.Max(peakSpeed, HorizontalSpeed()); furthest = Mathf.Max(furthest, body.position.z);
             }
@@ -259,7 +326,8 @@ namespace RoadGunner
             var baselines = new float[4];
             for (int i = 0; i < 4; i++) baselines[i] = SuspensionOffset(car.wheels[i]);
             Command(Vector3.forward * .55f); began = Time.fixedTime; float peakTilt = 0, suspensionMotion = 0;
-            while (Time.fixedTime - began < 4.5f)
+            float curbBudget = TravelBudget(Mathf.Abs(curb.transform.position.z - body.position.z) + 1, .55f, 4.5f);
+            while (Time.fixedTime - began < curbBudget)
             {
                 yield return new WaitForFixedUpdate(); peakTilt = Mathf.Max(peakTilt, Tilt());
                 for (int i = 0; i < 4; i++) suspensionMotion = Mathf.Max(suspensionMotion, Mathf.Abs(SuspensionOffset(car.wheels[i]) - baselines[i]));
@@ -331,6 +399,11 @@ namespace RoadGunner
             var box = GameObject.CreatePrimitive(PrimitiveType.Cube); box.name = name;
             box.transform.SetParent(fixture.transform); box.transform.position = position; box.transform.localScale = size;
             box.hideFlags = HideFlags.DontSave; return box;
+        }
+        float TravelBudget(float distance, float inputMagnitude, float minimum)
+        {
+            float cruise = ExpectedCruise * inputMagnitude;
+            return Mathf.Clamp(distance / Mathf.Max(.1f, cruise) + cruise / (2 * Mathf.Max(.1f, car.tuning.acceleration)) + 1, minimum, 16);
         }
         float Tilt() => Vector3.Angle(body.rotation * Vector3.up, Vector3.up);
         float HorizontalSpeed() => Vector3.ProjectOnPlane(body.linearVelocity, Vector3.up).magnitude;

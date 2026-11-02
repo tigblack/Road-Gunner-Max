@@ -19,8 +19,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/Gameplay.txt";
-        public const string CaptureFolder = "outputs/arcade-overhaul-2026-11-01/gameplay";
+        public const string ReportPath = "Documentation/RoadGunner/TrackedVehicle-2026-11-03/Gameplay.txt";
+        public const string CaptureFolder = "outputs/tracked-vehicle-2026-11-03/gameplay";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -36,6 +36,9 @@ namespace RoadGunner
         Quaternion testRotation;
         RigidbodyConstraints carConstraints;
         int humanShots;
+        bool TrackedProfile => s.vehicle.tuning.trackedDrive;
+        float ProfileSpeedScale => TrackedProfile ? .5f : 1f;
+        float ExpectedProfileLimit => 11.7f * ProfileSpeedScale;
         bool running;
         bool explorationWasEnabled;
         bool trackRange;
@@ -146,11 +149,13 @@ namespace RoadGunner
             Check("finite authored encounters", !s.spawns.repeatAuthoredEnemies && s.spawns.GroupCount == 0 &&
                 s.spawns.authoredRaiders.All(r => r.Alive && r.agent.isOnNavMesh) && s.spawns.authoredBuggies.All(b => b.Alive),
                 "All authored enemies spawned; legacy random encounter respawn is disabled");
-            Check("current speed increased by thirty percent", Mathf.Abs(s.vehicle.tuning.maxSpeed - 9f * 1.30f) < .05f &&
-                s.vehicle.tuning.maxSpeed < 18 && s.vehicle.tuning.steeringRate >= 120 &&
+            Check("saved drive profile has the intended speed and combat balance", Mathf.Abs(s.vehicle.tuning.maxSpeed - ExpectedProfileLimit) < .05f &&
+                s.vehicle.tuning.maxSpeed < 18 && (TrackedProfile ? s.vehicle.tuning.trackedMaxYawRate > 0 &&
+                s.vehicle.tuning.trackedYawAcceleration > 0 : s.vehicle.tuning.steeringRate >= 120) &&
                 s.turret.tuning.playerDamageMultiplier >= .33f && s.turret.tuning.playerDamageMultiplier <= .4f,
-                "Previous forward=9; current=" + s.vehicle.tuning.maxSpeed + "; multiplier=" + s.vehicle.tuning.maxSpeed / 9 +
-                ", steering=" + s.vehicle.tuning.steeringRate + ", outgoing multiplier=" + s.turret.tuning.playerDamageMultiplier);
+                "Profile=" + (TrackedProfile ? "tracked" : "wheeled") + "; configured limit=" + s.vehicle.tuning.maxSpeed +
+                "; expected=" + ExpectedProfileLimit + "; outgoing multiplier=" + s.turret.tuning.playerDamageMultiplier +
+                "; actual half-speed ratio is measured separately against the frozen wheeled baseline");
             Check("base run stats and HUD", s.runStats.AttackLevel == 1 && s.runStats.HealthLevel == 1 &&
                 s.hud.statsText.text.Contains("ATK 1") && s.hud.statsText.text.Contains("HP 1") &&
                 Mathf.Approximately(s.health.Maximum, s.health.tuning.vehicleHealth), s.hud.statsText.text);
@@ -586,7 +591,7 @@ namespace RoadGunner
             float end = Time.realtimeSinceStartup + 6;
             while (Time.realtimeSinceStartup < end) { peak = Mathf.Max(peak, s.vehicle.Speed); yield return null; }
             trackRange = false;
-            Check("increased speed in real vehicle physics", peak > 6 && peak <= s.vehicle.tuning.maxSpeed * 1.15f &&
+            Check("profile speed in real vehicle physics", peak > 6 * ProfileSpeedScale && peak <= s.vehicle.tuning.maxSpeed * 1.15f &&
                 Vector3.Distance(start, s.vehicle.transform.position) > 5 && s.vehicle.GroundedWheels >= 3,
                 "Peak=" + peak.ToString("F2") + "m/s; limit=" + s.vehicle.tuning.maxSpeed + "; travelled=" + Vector3.Distance(start, s.vehicle.transform.position).ToString("F1"));
             Check("visible range follows the moving player", trackedRange && trackedRange.Visible && Mathf.Abs(trackedRange.Radius - s.turret.Range) < .001f &&
@@ -646,14 +651,15 @@ namespace RoadGunner
             {
                 yield return null;
                 touchPeak = Mathf.Max(touchPeak, s.vehicle.ForwardSpeed);
-                if (s.vehicle.ForwardSpeed > 9 && s.vehicle.GroundedWheels >= 3 && joystick.IsHeld && s.input.Magnitude > .98f && !s.input.Reverse)
+                if (s.vehicle.ForwardSpeed > 9 * ProfileSpeedScale && s.vehicle.GroundedWheels >= 3 && joystick.IsHeld && s.input.Magnitude > .98f && !s.input.Reverse)
                     sustainedFast += Time.unscaledDeltaTime;
                 else sustainedFast = 0;
             }
-            Check("sustained touch exceeds the previous nine metre speed", !s.input.testInput && joystick.IsHeld &&
-                Mathf.Abs(s.vehicle.tuning.maxSpeed - 11.7f) < .05f && touchPeak > 9 && touchPeak <= s.vehicle.tuning.maxSpeed * 1.15f && sustainedFast >= .4f,
+            Check("sustained touch reaches the profile's forward-speed band", !s.input.testInput && joystick.IsHeld &&
+                Mathf.Abs(s.vehicle.tuning.maxSpeed - ExpectedProfileLimit) < .05f && touchPeak > 9 * ProfileSpeedScale &&
+                touchPeak <= s.vehicle.tuning.maxSpeed * 1.15f && sustainedFast >= .4f,
                 "Production Touchscreen/UI peak=" + touchPeak.ToString("F2") + "m/s; configured=" + s.vehicle.tuning.maxSpeed +
-                "; continuously above9 with grounded wheels=" + sustainedFast.ToString("F2") + "s");
+                "; continuously above " + (9 * ProfileSpeedScale).ToString("F2") + "m/s with grounded wheels=" + sustainedFast.ToString("F2") + "s");
             s.vehicle.Body.constraints = RigidbodyConstraints.FreezeAll;
             Touch(105, UnityEngine.InputSystem.TouchPhase.Ended, point + roadDrag * screenRadius * 1.15f);
             yield return null; yield return null;
@@ -680,7 +686,10 @@ namespace RoadGunner
                 bool routed = joystick.IsHeld && s.input.UsesHeadingSteering && s.input.Magnitude > .9f &&
                     Vector3.Dot(s.input.WorldDirection, expected) > .999f;
                 float firstTurn = Quaternion.Angle(before, s.vehicle.transform.rotation), headingError = 180;
-                bool reversed = false; float minimumForward = 0; end = Time.realtimeSinceStartup + 7;
+                float requestedTurn = Vector3.Angle(screenUp, expected);
+                float turnBudget = TrackedProfile ? Mathf.Clamp(requestedTurn / Mathf.Max(1, s.vehicle.tuning.trackedMaxYawRate) +
+                    s.vehicle.tuning.trackedMaxYawRate / Mathf.Max(1, s.vehicle.tuning.trackedYawAcceleration) + 3, 7, 12) : 7;
+                bool reversed = false; float minimumForward = 0; end = Time.realtimeSinceStartup + turnBudget;
                 do
                 {
                     reversed |= s.input.Reverse; minimumForward = Mathf.Min(minimumForward, s.vehicle.ForwardSpeed);

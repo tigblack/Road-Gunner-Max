@@ -16,8 +16,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed class ExplorationPlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/Exploration.txt";
-        public const string ArtifactFolder = "outputs/arcade-overhaul-2026-11-01/exploration";
+        public const string ReportPath = "Documentation/RoadGunner/TrackedVehicle-2026-11-03/Exploration.txt";
+        public const string ArtifactFolder = "outputs/tracked-vehicle-2026-11-03/exploration";
         public bool Completed { get; private set; }
         public int Checks { get; private set; }
         public int Failures { get; private set; }
@@ -129,7 +129,7 @@ namespace RoadGunner
             Check("reward targets do not inflate the enemy roster or boss HUD", exploration.Targets.Count() == caches.Count(c => !c.proximityOnly) &&
                 exploration.Targets.All(t => t is ArenaRewardCache && !t.UsesBossHealthHud) && s.zone1.ExtraTargets.Length == 2,
                 "Breakable targets=" + exploration.Targets.Count() + "; original ordinary/boss pools remain separate");
-            Check("player retains physical wheel steering and dynamic body", !s.vehicle.Body.isKinematic && constraints == RigidbodyConstraints.None &&
+            Check("player retains physical suspension contacts and dynamic body", !s.vehicle.Body.isKinematic && constraints == RigidbodyConstraints.None &&
                 s.vehicle.wheels.Length == 4 && s.vehicle.wheels.All(w => w.enabled && w.suspensionDistance > .05f) &&
                 Mathf.Approximately(s.vehicle.Body.mass, s.vehicle.tuning.mass), "Detailed wheel-physics regression is run separately; exploration does not replace the player");
             Capture("fresh-start");
@@ -428,19 +428,33 @@ namespace RoadGunner
             Vector3 front = (s.vehicle.wheels[0].transform.position + s.vehicle.wheels[1].transform.position) * .5f;
             Vector3 rear = (s.vehicle.wheels[2].transform.position + s.vehicle.wheels[3].transform.position) * .5f;
             float steer = s.vehicle.tuning.steeringBySpeed.Evaluate(s.vehicle.tuning.turningSpeed / s.vehicle.tuning.maxSpeed);
-            float turnRadius = Flat(front - rear).magnitude / Mathf.Tan(steer * Mathf.Deg2Rad) * 1.25f;
+            bool tracked = s.vehicle.tuning.trackedDrive;
+            float turnRadius = tracked ? 0 : Flat(front - rear).magnitude / Mathf.Tan(steer * Mathf.Deg2Rad) * 1.25f;
+            // A tank can turn around its centre, but its corners still sweep a finite physical disc.
+            // Derive that disc from the actual chassis colliders, including the same clearance margins as VehicleClear.
+            float footprintRadius = 0;
+            foreach (var box in s.vehicle.GetComponents<BoxCollider>().Where(b => b.enabled && !b.isTrigger))
+                foreach (int x in new[] { -1, 1 }) foreach (int z in new[] { -1, 1 })
+                {
+                    Vector3 half = Vector3.Scale(box.size * .5f, box.transform.lossyScale) + new Vector3(.2f, 0, .15f);
+                    Vector3 corner = box.transform.TransformPoint(box.center) + box.transform.right * half.x * x + box.transform.forward * half.z * z;
+                    footprintRadius = Mathf.Max(footprintRadius, Flat(corner - s.vehicle.transform.position).magnitude);
+                }
+            float requiredRadius = tracked ? footprintRadius : turnRadius;
             foreach (var item in Field<Array>(definition, "pockets"))
             {
                 string id = Field<string>(item, "id"); var pocket = owned.Find("Combat pockets/" + id);
-                bool clear = pocket && Field<float>(item, "radiusMeters") > turnRadius + 2.5f;
+                bool clear = pocket && requiredRadius > 0 && Field<float>(item, "radiusMeters") > requiredRadius + 2.5f;
                 for (int i = 0; clear && i < 24; i++)
                 {
                     Vector3 radial = Quaternion.Euler(0, i * 15, 0) * Vector3.forward;
                     Vector3 position = Ground(pocket.position + radial * turnRadius) + Vector3.up * .7f;
-                    clear &= VehicleClear(position, Quaternion.LookRotation(Vector3.Cross(Vector3.up, radial)), null, out _);
+                    Quaternion facing = tracked ? Quaternion.Euler(0, i * 15, 0) : Quaternion.LookRotation(Vector3.Cross(Vector3.up, radial));
+                    clear &= VehicleClear(position, facing, null, out _);
                 }
                 Check("turning pocket " + id + " fits the physical car sweep", clear,
-                    "Static full-body circle clearance at conservative wheel-geometry radius=" + turnRadius.ToString("F2") + "m; actual dynamic arc tested by the separate physics suite");
+                    "24 full-body orientations; " + (tracked ? "tracked chassis corner sweep=" : "conservative wheel-geometry radius=") +
+                    requiredRadius.ToString("F2") + "m plus2.5m pocket reserve; dynamic turn tested separately");
             }
 
             foreach (var cache in caches)
@@ -498,8 +512,14 @@ namespace RoadGunner
             Vector3 right = Flat(s.input.view.transform.right).normalized, up = Flat(s.input.view.transform.forward).normalized;
             s.input.testDirection = new Vector2(Vector3.Dot(forward, right), Vector3.Dot(forward, up));
             float before = s.health.Current, realBegan = Time.realtimeSinceStartup, gameBegan = Time.time, fixedBegan = Time.fixedTime;
-            float deadline = realBegan + 9; int healingFrames = 0, groundedFrames = 0;
-            while (Vector3.Dot(s.vehicle.Body.position - workshop.transform.position, forward) < workshop.healingRadius + 1 && Time.realtimeSinceStartup < deadline)
+            // Keep an explicit travel budget at the intended profile speed, rather than the old wheel-car's wall-clock deadline.
+            float expectedCruise = 10.49496f * (s.vehicle.tuning.trackedDrive ? .5f : 1f);
+            float travelBudget = Mathf.Clamp(1.5f * (Vector3.Distance(entry, exit) / expectedCruise +
+                expectedCruise / (2 * Mathf.Max(.1f, s.vehicle.tuning.acceleration))) + 2, 9, 18);
+            float fixedDeadline = fixedBegan + travelBudget, realDeadline = realBegan + travelBudget * 3;
+            int healingFrames = 0, groundedFrames = 0;
+            while (Vector3.Dot(s.vehicle.Body.position - workshop.transform.position, forward) < workshop.healingRadius + 1 &&
+                Time.fixedTime < fixedDeadline && Time.realtimeSinceStartup < realDeadline)
             {
                 yield return null;
                 if (workshop.IsRepairing) healingFrames++;
@@ -511,15 +531,16 @@ namespace RoadGunner
             float exitUpright = Vector3.Dot(s.vehicle.transform.up, Vector3.up), after = s.health.Current;
             float realElapsed = Time.realtimeSinceStartup - realBegan, gameElapsed = Time.time - gameBegan, fixedElapsed = Time.fixedTime - fixedBegan;
             bool reachedExit = exitProgress >= workshop.healingRadius + 1;
-            string exitReason = reachedExit ? "endpoint" : Time.realtimeSinceStartup >= deadline ? "deadline" : "other";
+            string exitReason = reachedExit ? "endpoint" : Time.fixedTime >= fixedDeadline ? "physics deadline" :
+                Time.realtimeSinceStartup >= realDeadline ? "wall-clock watchdog" : "other";
             s.input.testDirection = Vector2.zero; s.input.testBrake = true; s.vehicle.Body.constraints = RigidbodyConstraints.FreezeAll;
             Vector3 frozenPosition = s.vehicle.Body.position;
             float frozenProgress = Vector3.Dot(frozenPosition - workshop.transform.position, forward);
             workshop.enabled = false;
-            Check("real wheel-driven car can enter heal and leave the service hub", reachedExit &&
+            Check("real physical vehicle can enter heal and leave the service hub", reachedExit &&
                 healingFrames > 0 && groundedFrames > 30 && after > before && exitUpright > .9f,
                 "Actual healing frames=" + healingFrames + "; grounded frames=" + groundedFrames + "; HP=" + before + " -> " + after +
-                "; exit reason=" + exitReason + "; pre-freeze car=" + exitPosition.ToString("F4") + "; progress=" + exitProgress.ToString("F4") +
+                "; exit reason=" + exitReason + "; physics budget=" + travelBudget.ToString("F2") + "s; pre-freeze car=" + exitPosition.ToString("F4") + "; progress=" + exitProgress.ToString("F4") +
                 "; upright=" + exitUpright.ToString("F4") + "; post-freeze car=" + frozenPosition.ToString("F4") + "; progress=" + frozenProgress.ToString("F4") +
                 "; elapsed game/fixed/realtime=" + gameElapsed.ToString("F3") + "/" + fixedElapsed.ToString("F3") + "/" + realElapsed.ToString("F3") + "s");
         }
