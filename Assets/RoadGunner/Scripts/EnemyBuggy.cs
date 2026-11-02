@@ -32,6 +32,9 @@ namespace RoadGunner
         float repathAt, nextPlayerRam, flashUntil, wreckUntil, steering, stuckFor, reverseUntil;
         Vector3 lastPosition;
         MaterialPropertyBlock block;
+        static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        // Hue-keeping warm flash on the armour panels with a per-target cooldown; see ArcadeVfxFlash.
+        readonly ArcadeVfxFlash flashFx = new ArcadeVfxFlash();
         void Awake()
         {
             Body = GetComponent<Rigidbody>();
@@ -54,6 +57,7 @@ namespace RoadGunner
             steering = 0; repathAt = 0; cornerCount = 0; stuckFor = 0; reverseUntil = 0;
             nextPlayerRam = 0; flashUntil = 0;
             lastPosition = transform.position;
+            flashFx.Cancel(); flashFx.ResetCooldown();
             foreach (var panel in armor) panel.SetPropertyBlock(null);
             if (dust) dust.Clear(); if (smoke) { smoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); }
             if (gun) { gun.CanShoot = true; gun.ResetCombat(); }
@@ -171,16 +175,22 @@ namespace RoadGunner
             if (!Alive) { if (gameObject.activeSelf && session && session.Playing && Time.time >= wreckUntil) Despawn(); return; }
             for (int i = 0; i < wheels.Length; i++) { wheels[i].GetWorldPose(out var p, out var q); wheelVisuals[i].SetPositionAndRotation(p, q); }
             if (dust) { var emission = dust.emission; emission.rateOverTime = session.Playing && GroundedWheels > 0 && Body.linearVelocity.magnitude > 2 ? 14 : 0; }
-            block.Clear(); if (Time.time < flashUntil) block.SetColor("_BaseColor", new Color(1, .6f, .25f));
-            foreach (var panel in armor) panel.SetPropertyBlock(block);
+            if (flashUntil > 0 && !flashFx.Tick()) flashUntil = 0;
         }
         public override void Hit(float damage, Vector3 direction, bool ram = false)
         {
             if (!Alive || !session || !session.Playing || damage <= 0 || (ram && Time.time < nextPlayerRam)) return;
             damage = ArenaCombatAffinity.Apply(this, damage, ram);
             if (ram) nextPlayerRam = Time.time + session.turret.tuning.ramCooldown;
-            Health = Mathf.Max(0, Health - damage); NotifyHealthChanged(); flashUntil = Time.time + .13f;
+            Health = Mathf.Max(0, Health - damage); NotifyHealthChanged();
+            if (Health > 0)
+            {
+                if (!flashFx.Bound) flashFx.Bind(armor);
+                if (flashFx.Trigger(ArcadeVfxFlash.WarmWhite, .5f, .055f, .15f)) flashUntil = Time.time + .1f;
+            }
+            var feedback = session.Feedback; if (feedback) feedback.EnemyHit(this, AimPoint, damage, ram, Health <= 0);
             if (Health > 0) return;
+            flashFx.Cancel(); flashUntil = 0;
             State = BuggyState.Wrecked; wreckUntil = Time.time + tuning.wreckLifetime;
             if (gun) gun.ResetCombat();
             foreach (var collider in bodyColliders) collider.enabled = false;
@@ -188,6 +198,7 @@ namespace RoadGunner
             Body.linearVelocity = Vector3.zero; Body.angularVelocity = Vector3.zero; Body.isKinematic = true;
             if (dust) { var em = dust.emission; em.rateOverTime = 0; }
             if (smoke) { smoke.Play(); smoke.Emit(8); }
+            if (feedback) feedback.EnemyKilled(this, transform.position, tuning.scrapReward);
             session.EnemyDefeated(transform.position, tuning.scrapReward, true, direction);
             block.Clear(); block.SetColor("_BaseColor", new Color(.22f, .18f, .14f));
             foreach (var panel in armor) panel.SetPropertyBlock(block);

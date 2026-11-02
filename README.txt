@@ -9,9 +9,9 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The 31 October exploration revision adds four connected wasteland
-regions, optional routes and visible rewards to Arena 1. The player retains
-wheel-driven physics and the Anton feedback HUD. This is the Unity/WebGL game.
+Press Play. The saved 2 November Arcade update adds toon shading, outlines,
+VFX and the new HUD over the existing exploration arena and wheel-driven physics.
+This is the Unity/WebGL game.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -110,13 +110,12 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 31 October exploration revision: connected regions,
-visible supply caches, secrets and enemy damage openings, retaining wheel physics.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=fc89028
-Its Pages deployment succeeded, and all six public files match the verified
-local build. Build provenance, browser smoke and acceptance reports:
+WebBuild/ contains the saved 2 November Arcade update, built with Unity 6000.6.4f1.
+The static payload is 25,676,541 bytes. Build provenance, browser smoke and
+acceptance reports: Documentation/RoadGunner/WebGL-2026-11-02/.
+Publication evidence and the exact live revision are recorded in Publication.txt
+after deployment. The previous exploration demo fc89028 is a historical snapshot:
 Documentation/RoadGunner/Exploration-2026-10-31/Publication.txt
-Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt
 
 Previous wheel-physics demo d6a9ba3 and Anton HUD demo 2310eee remain historical
 snapshots. Their reports describe those releases rather than this revision:
@@ -154,3 +153,50 @@ The saved revision passed 88 exploration, 204 Arena 1 and 20 wheel-physics
 checks: 312 total, zero failures and zero Console errors. See
 Documentation/RoadGunner/Exploration-2026-10-31/Delivery.txt and its named reports.
 These are controlled Unity fixtures, not FPS measurements or a natural full run.
+
+ARCADE AUDIO + VISUAL OVERHAUL — 1-2 NOVEMBER 2026 (branch feature/audio-visual-overhaul)
+Goal: natural generated sound, thematic music and a bright idle-arcade look with
+cel shading, ink outlines, juicy VFX and a chunky HUD. Presentation only: gameplay,
+tuning, colliders and navigation are unchanged.
+
+Apply (after any legacy installer), stop Play Mode first:
+Tools / Road Gunner / Arcade / Apply Full Arcade Overhaul
+Batch entry: RoadGunner.Editor.ArcadeOverhaulInstaller.ApplyBatch
+The saved scene already includes the Arcade passes. Building and publishing
+do not require rerunning authoring installers, which regenerate scene assets.
+It runs four idempotent passes in order (each also has its own menu/batch entry):
+- ArcadeVisualInstaller: "RoadGunner/Arcade Toon" cel shader on opaque materials,
+  upgraded "RoadGunner/Concept Desert" ground (procedural sand detail, painted roads,
+  toon shadows), arcade palette atlases (separate team-red enemy atlas), ink outline
+  FullScreenPassRendererFeature on Mobile_Renderer and PC_Renderer (SSAO off),
+  sun/ambient/haze, "Arcade Sunny Grade" volume (tonemapping stays None), regenerated
+  world texture, collider-free region dressing, workshop/station restyle, minimap rebake.
+- ArcadeVfxInstaller: ArcadeVfx sink (muzzle stars, tracers, sparks, damage numbers,
+  death poofs, explosions within the 3-slot budget, telegraph zones, loot halos,
+  station beacons, repair pluses, confetti), hit flashes, camera shake (FollowCamera).
+- ArcadeHudStyleInstaller: Lilita One font (OFL, UI/Arcade/Fonts), generated UI
+  sprites, two panel families, world-label styling, ArcadeHudJuice sink (flying gears,
+  chip punches, damage vignette, repair chip, result-screen celebration).
+- ArcadeAudioInstaller: ArcadeAudio sink (voice pool, variant banks, layered 3-gear
+  engine, skid, wind, stingers) and music wiring. It falls back to the legacy sounds
+  and Dustlight Road until the generated files exist.
+Runtime hub: Scripts/Arcade/ArcadeFeedback.cs receives gameplay moments (shot, hit,
+kill, damage, loot, upgrade, repair, victory...) from small hooks in gameplay scripts
+and forwards them to the sinks; sinks never change gameplay state.
+
+Generated audio: raw ElevenLabs files go to Tools/Audio/Generated/raw/<id>.wav|mp3
+(ids are listed in Tools/Audio/process_generated_audio.py). Then run on the Mac:
+python3 Tools/Audio/process_generated_audio.py   (slices variants, normalises, makes
+WebGL-safe loops with guard + smpl chunk, builds the "Desert Run" music loop) and
+RoadGunner.Editor.ArcadeAudioInstaller.ApplyBatch.
+
+Visual review: RoadGunner.Editor.VisualCaptureRunner.Run (batch, without -quit;
+-rgCaptureLabel name -rgCaptureSize 720x1280 [-rgCaptureShots start,combat,...])
+stages 22 gameplay moments and writes outputs/visual-capture/<label>/.
+Suite reports for this revision: Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/.
+Verified on 2 November: 204 gameplay, 88 exploration and 20 wheel-physics
+checks passed, with zero failures and Console errors. All 80 selected shader
+variants passed, and the saved scene built successfully for WebGL.
+Evidence: Documentation/RoadGunner/WebGL-2026-11-02/Implementation.txt
+and WebBuild.json. The generated Arcade WAVs and Desert Run are absent; this
+build uses the designed legacy audio fallback and Dustlight Road.

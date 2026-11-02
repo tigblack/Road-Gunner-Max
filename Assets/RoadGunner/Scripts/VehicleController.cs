@@ -20,6 +20,9 @@ namespace RoadGunner
         public int GroundedWheels { get; private set; }
         public float LargestSlip { get; private set; }
         public bool CanDrive { get; set; } = true;
+        /// <summary>Set by the arcade audio sink when it drives layered engine voices itself.</summary>
+        [System.NonSerialized] public bool externalEngineAudio;
+        [System.NonSerialized] public ArcadeFeedback feedback;
         float steering,turnDirection,wheelbase,frontTrack,frontCentre;
         readonly float[] frontWheelSide = new float[2];
         void Awake() {
@@ -109,7 +112,14 @@ namespace RoadGunner
                 wheels[i].GetWorldPose(out Vector3 p,out Quaternion q); wheelVisuals[i].SetPositionAndRotation(p,q);
                 if(dust!=null && i<dust.Length && dust[i]) { var em=dust[i].emission; bool contact=wheels[i].GetGroundHit(out WheelHit hit); em.rateOverTime=CanDrive && contact && Speed>2?Mathf.Min(30,Speed*1.25f+Mathf.Abs(hit.sidewaysSlip)*14):0; dust[i].transform.position=p-Vector3.up*.35f; }
             }
-            if(engine) { engine.pitch=.7f+Mathf.Clamp01(Speed/18)*1.1f; engine.volume=CanDrive?.08f+Mathf.Clamp01(Speed/18)*.09f:0; }
+            if(engine && !externalEngineAudio) { engine.pitch=.7f+Mathf.Clamp01(Speed/18)*1.1f; engine.volume=CanDrive?.08f+Mathf.Clamp01(Speed/18)*.09f:0; }
+        }
+        void OnCollisionEnter(Collision collision) {
+            if(!feedback || collision.contactCount==0) return;
+            // Ground contact is handled by the wheels; report real body impacts against obstacles and actors.
+            float speed=collision.relativeVelocity.magnitude; var contact=collision.GetContact(0);
+            if(speed<2.5f || Vector3.Dot(contact.normal,Vector3.up)>.75f) return;
+            feedback.VehicleCollision(contact.point,speed);
         }
         public void ResetPose(Vector3 position,Quaternion rotation) {
             Body.position=position; Body.rotation=rotation; Body.linearVelocity=Vector3.zero; Body.angularVelocity=Vector3.zero;

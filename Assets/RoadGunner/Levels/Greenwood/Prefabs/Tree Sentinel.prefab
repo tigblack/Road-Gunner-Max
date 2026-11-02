@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.08, g: 0.105, b: 0.105, a: 0.96}
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.28, b: 0.2, a: 1}
@@ -1098,7 +1098,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.91, g: 0.87, b: 0.75, a: 0.96}
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
   m_EffectColor: {r: 0.015, g: 0.025, b: 0.025, a: 0.65}
   m_EffectDistance: {x: 2, y: -3}
@@ -1231,6 +1231,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2763470167371851153, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
     - target: {fileID: 3496638085032496956, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Name
       value: Tree Sentinel
@@ -1271,6 +1275,14 @@ PrefabInstance:
       propertyPath: rightLeg
       value: 
       objectReference: {fileID: 8410297896134655379}
+    - target: {fileID: 5157787596620355079, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
+    - target: {fileID: 5735490688870982769, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
     - target: {fileID: 6586003874184757038, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
       propertyPath: m_Height
       value: 4
@@ -1323,6 +1335,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8101426540484967772, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
+    - target: {fileID: 8815801705610774622, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4611652353106399032, guid: 794f3d6aac8194296b60f66adf3bbbeb, type: 3}
@@ -1347,7 +1367,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d66d381032b7411da7b68298c4a5c61, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.Raider
 --- !u!4 &4358626271683397638 stripped
 Transform:
@@ -1369,7 +1389,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbcc00b8485b4bc0826ad3d8239d8fac, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.EnemyHealthBar
   target: {fileID: 1889040579660936626}
   gameplayCamera: {fileID: 0}
@@ -1377,3 +1397,6 @@ MonoBehaviour:
   worldCanvas: {fileID: 5553646059501761950}
   healthFill: {fileID: 4217561307296549520}
   height: 2.45
+  damageTrail: {fileID: 0}
+  fadeGroup: {fileID: 0}
+  fullHealthAlpha: 0.62

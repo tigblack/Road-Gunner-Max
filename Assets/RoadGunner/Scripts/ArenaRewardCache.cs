@@ -106,6 +106,7 @@ namespace RoadGunner
             if (Revealed || !session || !session.Playing) return;
             Revealed = true;
             if (exploration) exploration.NotifyCacheChanged();
+            var fx = session.Feedback; if (fx) fx.SecretRevealed(this);
         }
         public bool InCollectionRange()
         {
@@ -152,6 +153,7 @@ namespace RoadGunner
             claiming = false;
             if (!session.Playing) return true;
             if (session.effects) session.effects.Pickup();
+            var feedback = session.Feedback; if (feedback) feedback.CacheOpened(this, secret);
             onCollected?.Invoke(); return true;
         }
         bool SameRun(GameSession owner, int serial) => owner && session == owner && owner.RunSerial == serial;
@@ -160,6 +162,7 @@ namespace RoadGunner
             if (!Alive || !session || !session.Playing || !ArenaExploration.ValidAmount(damage) || (ram && Time.time < nextRam)) return;
             if (ram) nextRam = Time.time + (session.turret && session.turret.tuning ? Mathf.Max(.1f, session.turret.tuning.ramCooldown) : .8f);
             currentHealth = Mathf.Max(0, currentHealth - damage); NotifyHealthChanged();
+            var fx = session.Feedback; if (fx) fx.CacheHit(this, AimPoint);
             if (currentHealth <= 0) TryCollect();
         }
     }

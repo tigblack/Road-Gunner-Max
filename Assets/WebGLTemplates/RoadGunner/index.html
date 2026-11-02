@@ -63,6 +63,8 @@
     canvas.addEventListener('touchstart',event=>event.preventDefault(),{passive:false});
     canvas.addEventListener('touchmove',event=>event.preventDefault(),{passive:false});
     play.addEventListener('click',()=>{
+      // iOS 17+/Safari: play game audio even when the ringer is set to silent.
+      try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
       play.disabled=true;play.hidden=true;progress.hidden=false;status.textContent='Loading arena…';
       const loader=document.createElement('script');loader.src='Build/{{{ LOADER_FILENAME }}}';
       loader.onerror=()=>{status.textContent='Could not load the game. Reload to try again.';};

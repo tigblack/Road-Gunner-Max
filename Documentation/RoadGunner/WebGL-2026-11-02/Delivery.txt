@@ -1,0 +1,33 @@
+ROAD GUNNER — WEBGL BUILD OF THE SAVED OPUS UPDATE
+2 November 2026
+
+The saved Arcade presentation update from feature/audio-visual-overhaul is
+included with its scene, materials, meshes, shaders, HUD, VFX and runtime hooks.
+The existing exploration gameplay and wheel physics are retained. Authoring
+installers were not rerun; saved shadow distance 52 and asset wiring were kept.
+
+Build: Unity 6000.6.4f1 / URP 17.6.0, Level01_Greenwood, WebGL.
+Build completed at 2026-11-02T09:05:36Z, Result: Success.
+Gzip with JavaScript decompression fallback for static hosting.
+Seven published files including .nojekyll: 25,676,541 bytes (~24.49 MiB).
+Unity BuildReport.totalSize: 60,176,673 bytes (a different metric).
+
+Fresh controlled Editor checks, all with zero failures and Console errors:
+- Gameplay: 204
+- Exploration: 88
+- Wheel physics: 20
+Reports: ../ArcadeOverhaul-2026-11-01/{Gameplay,Exploration,WheelPhysics}.txt.
+Eighty selected GLES3/Metal shader variants passed. Actual WebGL compilation
+also succeeded. Gzip CRC, Unity data/WASM headers, WASM validation and generated
+JavaScript syntax were checked; WebBuild.json records hashes and source inputs.
+
+Only two diagnostic harness fixes were added during delivery: measure the
+workshop drive endpoint before teardown, and route synthetic Editor input to
+Game View during the checks while restoring the original focus settings.
+Acceptance thresholds and production driving behavior were not changed.
+
+Audio limitation: generated Arcade WAVs and Desert Run are not in the input.
+The player uses the designed legacy fallback and Dustlight Road. No generated
+sounds, new composition, physical-phone performance or device coverage is claimed.
+Browser.txt distinguishes observed local browser smoke from controlled checks.
+Publication.txt and LiveManifest.json record the final GitHub Pages delivery.

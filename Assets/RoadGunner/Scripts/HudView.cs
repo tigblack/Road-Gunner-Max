@@ -27,10 +27,11 @@ namespace RoadGunner
         ArenaRunStats subscribedStats;
         ArenaExploration subscribedExploration;
         int observedRewardSerial;
-        static readonly Color Cream = new Color(.96f, .94f, .86f);
-        static readonly Color Mint = new Color(.47f, .85f, .68f);
-        static readonly Color Gold = new Color(1, .73f, .30f);
-        static readonly Color Coral = new Color(1, .49f, .39f);
+        // Arcade HUD palette: white score on navy chips, gold/mint toasts on the navy card, state ribbons.
+        static readonly Color Cream = new Color(1, .99f, .95f);
+        static readonly Color Mint = new Color(.31f, .88f, .64f);
+        static readonly Color Gold = new Color(1, .79f, .24f);
+        static readonly Color Coral = new Color(.91f, .28f, .23f);
 
         void Start()
         {
@@ -38,6 +39,7 @@ namespace RoadGunner
             resume.onClick.AddListener(session.TogglePause);
             restart.onClick.AddListener(session.Restart);
             recover.onClick.AddListener(session.Recover);
+            foreach (var button in new[] { pause, resume, restart, recover }) if (button) button.onClick.AddListener(UiClick);
             session.Changed += Refresh;
             session.health.Changed += Refresh;
             subscribedStats = session.runStats;
@@ -57,6 +59,8 @@ namespace RoadGunner
             Refresh();
         }
 
+        void UiClick() { var fx = session ? session.Feedback : null; if (fx) fx.UiClick(); }
+
         void OnDestroy()
         {
             if (session)
@@ -67,6 +71,7 @@ namespace RoadGunner
                 if (resume) resume.onClick.RemoveListener(session.TogglePause);
                 if (restart) restart.onClick.RemoveListener(session.Restart);
                 if (recover) recover.onClick.RemoveListener(session.Recover);
+                foreach (var button in new[] { pause, resume, restart, recover }) if (button) button.onClick.RemoveListener(UiClick);
             }
             if (subscribedStats)
             {

@@ -1,0 +1,31 @@
+ROAD GUNNER — OPUS UPDATE WEBGL DELIVERY, 2 NOVEMBER 2026
+
+Requested scope: build and publish the saved Unity update on
+feature/audio-visual-overhaul. The input had 107 modified tracked files and
+381 new release files, based on b73da70. The initial source snapshot and a full
+binary diff were preserved under ignored outputs/WebGL-2026-11-02/.
+
+The saved Level01_Greenwood includes the Arcade toon shaders, outline render
+feature, palette/materials, region dressing, VFX, camera feedback and new HUD.
+No authoring installers were reapplied, preserving the user's saved scene,
+shadow distance 52 and complete Arcade asset wiring.
+
+Audio: the new Arcade audio system is wired, but generated Arcade WAV files
+and Desert Run are absent. This player uses the designed legacy fallback and
+Dustlight Road. No audio was generated or purchased during delivery.
+
+The workshop diagnostic now records the actual driven endpoint before
+FreezeAll teardown changes the interpolated body pose. Its thresholds and
+nine-second timeout are unchanged. The input diagnostic temporarily routes
+Editor keyboard/pointer events to Game View regardless of window focus, then
+restores the exact prior settings. Actual gameplay inputs and all acceptance
+conditions are retained. Neither change modifies the player's driving code.
+
+Unity 6000.6.4f1 / URP 17.6.0. WebGL uses Gzip with JavaScript decompression
+fallback and the existing RoadGunner template. Open the saved scene and use
+Tools / Road Gunner / Web / Build Mobile Web. Batch entry:
+RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL.
+
+Fresh verification/build/publication results are recorded in the adjacent
+reports and manifests after each step actually completes. The older reports
+describe their own snapshots; no device-FPS or physical-phone claim is made.

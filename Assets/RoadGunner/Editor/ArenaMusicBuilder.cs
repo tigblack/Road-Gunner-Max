@@ -8,7 +8,10 @@ namespace RoadGunner.Editor
     /// <summary>Connects the original loop to the existing session and pause overlay; no new audio manager.</summary>
     public static class ArenaMusicBuilder
     {
-        public const string ClipPath = "Assets/RoadGunner/Audio/Music/Dustlight Road.wav";
+        public const string DesertRunPath = "Assets/RoadGunner/Audio/Music/Desert Run.wav";
+        public const string DustlightRoadPath = "Assets/RoadGunner/Audio/Music/Dustlight Road.wav";
+        /// <summary>Desert Run (processed ElevenLabs loop) once imported; the original procedural loop until then.</summary>
+        public static string ClipPath => AssetImporter.GetAtPath(DesertRunPath) is AudioImporter ? DesertRunPath : DustlightRoadPath;
 
         public static ArenaMusic Configure(GameSession session)
         {

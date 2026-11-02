@@ -65,13 +65,14 @@ namespace RoadGunner
                 Vector3 flat=Vector3.ProjectOnPlane(target.position-pivot.position,Vector3.up);
                 if(flat.sqrMagnitude>.001f&&Vector3.Angle(pivot.forward,flat)>5)return;
                 tipPosition=spawnPoint.position;projectile.gameObject.SetActive(true);cable.enabled=true;State=HarpoonState.Launching;
+                var fx=session.Feedback;if(fx)fx.HarpoonLaunched(tipPosition);
             }
             if(State==HarpoonState.Launching)
             {
                 Vector3 delta=target.position-tipPosition;
                 if(delta.sqrMagnitude>.001f)projectile.rotation=Quaternion.LookRotation(delta);
                 tipPosition=Vector3.MoveTowards(tipPosition,target.position,Mathf.Max(.1f,harpoonLaunchSpeed)*Time.deltaTime);
-                if((tipPosition-target.position).sqrMagnitude<.0025f)State=HarpoonState.Retracting;
+                if((tipPosition-target.position).sqrMagnitude<.0025f){State=HarpoonState.Retracting;var fx=session.Feedback;if(fx)fx.HarpoonLatched(tipPosition);}
             }
             if(State==HarpoonState.Retracting)
             {
@@ -81,7 +82,7 @@ namespace RoadGunner
                 pickups.MoveReservedGear(handle,this,tipPosition);
                 if((tipPosition-collectionPoint.position).sqrMagnitude<.04f)
                 {
-                    if(pickups.CollectReservedGear(handle,this))CollectionsCompleted++;
+                    if(pickups.CollectReservedGear(handle,this)){CollectionsCompleted++;var fx=session.Feedback;if(fx)fx.HarpoonReeled(tipPosition);}
                     ResetCollection();searchAt=Time.time+Mathf.Max(0,delayBetweenCollections);return;
                 }
             }

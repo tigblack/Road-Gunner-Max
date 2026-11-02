@@ -19,8 +19,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/WheelPhysics-2026-10-30/Gameplay.txt";
-        public const string CaptureFolder = "outputs/wheel-physics-regression";
+        public const string ReportPath = "Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/Gameplay.txt";
+        public const string CaptureFolder = "outputs/arcade-overhaul-2026-11-01/gameplay";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }
@@ -42,6 +42,9 @@ namespace RoadGunner
         AttackRangeIndicator trackedRange;
         int rangeTrackingFrames;
         float maximumRangeCentreError;
+        InputSettings inputFocusSettings;
+        InputSettings.EditorInputBehaviorInPlayMode originalEditorInputBehavior;
+        InputSettings.BackgroundBehavior originalBackgroundBehavior;
 
         void LateUpdate()
         {
@@ -58,10 +61,30 @@ namespace RoadGunner
             running = true; Completed = false; Failures = Checks = 0; report.Clear();
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(CaptureFolder);
+            OverrideInputFocusPolicy();
             report.Add("Arena 1 wheel-driven handling regression — actual Unity Play Mode; " + Application.unityVersion);
             report.Add("Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.");
             File.WriteAllLines(ReportPath, report);
             StartCoroutine(RunGuarded());
+        }
+
+        void OverrideInputFocusPolicy()
+        {
+            // Batch editor window focus must not divert queued touchscreen/keyboard events into
+            // editor state buffers. Keep the real production InputSystem/UI route and restore both settings.
+            inputFocusSettings = InputSystem.settings;
+            originalEditorInputBehavior = inputFocusSettings.editorInputBehaviorInPlayMode;
+            originalBackgroundBehavior = inputFocusSettings.backgroundBehavior;
+            inputFocusSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+            inputFocusSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+        }
+
+        void RestoreInputFocusPolicy()
+        {
+            if (!inputFocusSettings) return;
+            inputFocusSettings.backgroundBehavior = originalBackgroundBehavior;
+            inputFocusSettings.editorInputBehaviorInPlayMode = originalEditorInputBehavior;
+            inputFocusSettings = null;
         }
 
         void Check(string name, bool passed, string detail)
@@ -578,6 +601,15 @@ namespace RoadGunner
             Check("phone input surface exists", EventSystem.current && joystick && joystick.gameObject.activeInHierarchy,
                 "Existing EventSystem and floating joystick are active");
             syntheticTouch = InputSystem.AddDevice<Touchscreen>();
+            var focusedWindow = UnityEditor.EditorWindow.focusedWindow;
+            string inputPolicy = "INPUT POLICY before real touch: applicationFocused=" + Application.isFocused +
+                "; editorWindow=" + (focusedWindow ? focusedWindow.GetType().Name : "none") +
+                "; editorPolicy=" + InputSystem.settings.editorInputBehaviorInPlayMode + " (original " + originalEditorInputBehavior + ")" +
+                "; background=" + InputSystem.settings.backgroundBehavior + " (original " + originalBackgroundBehavior + ")" +
+                "; keyboard=" + (Keyboard.current == null ? "absent" : "enabled=" + Keyboard.current.enabled) +
+                "; touchEnabled=" + syntheticTouch.enabled + "; driveComponentEnabled=" + s.input.isActiveAndEnabled +
+                "; driveEnabled=" + s.input.Enabled + "; testInput=" + s.input.testInput + "; state=" + s.State;
+            report.Add(inputPolicy); File.WriteAllLines(ReportPath, report); Debug.Log("RG ARENA1 " + inputPolicy);
             if (Keyboard.current != null) InputSystem.QueueStateEvent(Keyboard.current, new KeyboardState());
             Check("floating joystick hides before a touch", !joystick.IsHeld && !joystick.ring.gameObject.activeInHierarchy && joystick.Value == Vector2.zero,
                 "Activation zone stays available while its ring/thumb are hidden");
@@ -858,6 +890,7 @@ namespace RoadGunner
 
         void Restore()
         {
+            RestoreInputFocusPolicy();
             if (syntheticTouch != null) { InputSystem.RemoveDevice(syntheticTouch); syntheticTouch = null; }
             if (!s) return;
             Time.timeScale = 1;
@@ -870,7 +903,11 @@ namespace RoadGunner
             s.vehicle.Body.constraints = carConstraints; s.spawns.enabled = true; s.turret.enabled = true; s.Restart();
         }
 
-        void OnDestroy() { if (syntheticTouch != null) InputSystem.RemoveDevice(syntheticTouch); }
+        void OnDestroy()
+        {
+            try { if (syntheticTouch != null) InputSystem.RemoveDevice(syntheticTouch); }
+            finally { RestoreInputFocusPolicy(); }
+        }
     }
 }
 #endif

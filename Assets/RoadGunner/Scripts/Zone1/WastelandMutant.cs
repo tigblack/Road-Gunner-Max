@@ -78,8 +78,9 @@ namespace RoadGunner
         bool homeCaptured, wasPlaying;
         float nextDestination, nextAttack, warningStartedAt, strikeAt, recoverAt, despawnAt, nextRam, flashUntil, retryNavigationAt;
         Collider playerCollider;
-        MaterialPropertyBlock flashBlock;
         bool flashApplied;
+        // Hue-keeping warm 30% tint + 1.07 scale punch with a per-target cooldown; see ArcadeVfxFlash.
+        readonly ArcadeVfxFlash flashFx = new ArcadeVfxFlash();
 
         void Awake()
         {
@@ -165,6 +166,7 @@ namespace RoadGunner
             if (!session || !session.vehicle || !session.health) { StopAgent(); SetWarning(false); return; }
             if (!session.Playing)
             {
+                if (flashApplied && !flashFx.Tick()) ClearFlash();
                 if (wasPlaying) CancelAttack();
                 wasPlaying = false; StopAgent(); SetWarning(false); return;
             }
@@ -176,7 +178,7 @@ namespace RoadGunner
             if (!Alive) return;
             if (!AIEnabled) { if (wasPlaying) CancelAttack(); wasPlaying = false; StopAgent(); SetWarning(false); return; }
             if (!wasPlaying) { wasPlaying = true; nextAttack = Mathf.Max(nextAttack, Time.time + .65f); }
-            if (flashApplied && Time.time >= flashUntil) ClearFlash();
+            if (flashApplied && (!flashFx.Tick() || Time.time >= flashUntil)) ClearFlash();
             if (!playerCollider) playerCollider = session.vehicle.GetComponent<Collider>();
             if (!AgentReady)
             {
@@ -244,6 +246,7 @@ namespace RoadGunner
             }
             else if (telegraph) telegraph.transform.position = smashPoint + Vector3.up * .045f;
             SetWarning(true); SmashesStarted++;
+            var fx = session ? session.Feedback : null; if (fx) fx.AttackTelegraph(this, smashPoint, smashRadius, Mathf.Max(.25f, windupDuration));
         }
         void ResolveSmash()
         {
@@ -251,7 +254,9 @@ namespace RoadGunner
             Vector3 boundary = PlayerBoundary(smashPoint + Vector3.up * .55f);
             Vector3 delta = boundary - smashPoint; delta.y = 0;
             bool inside = delta.sqrMagnitude <= smashRadius * smashRadius;
-            if (inside && ClearStrike(smashPoint + Vector3.up * .55f, boundary) && session.health.Damage(smashDamage)) SmashesLanded++;
+            bool landed = inside && ClearStrike(smashPoint + Vector3.up * .55f, boundary) && session.health.Damage(smashDamage);
+            if (landed) SmashesLanded++;
+            var fx = session.Feedback; if (fx) fx.AttackSlam(this, smashPoint, landed);
             if (session.effects) session.effects.Spark(smashPoint + Vector3.up * .08f);
         }
         void PoseIdle()
@@ -283,7 +288,8 @@ namespace RoadGunner
         }
         void ClearFlash()
         {
-            if (skinRenderers != null) for (int i = 0; i < skinRenderers.Length; i++) if (skinRenderers[i]) skinRenderers[i].SetPropertyBlock(null);
+            if (flashFx.Bound) flashFx.Clear();
+            else if (skinRenderers != null) for (int i = 0; i < skinRenderers.Length; i++) if (skinRenderers[i]) skinRenderers[i].SetPropertyBlock(null);
             flashApplied = false;
         }
         public override void Hit(float damage, Vector3 direction, bool ram = false)
@@ -292,23 +298,21 @@ namespace RoadGunner
             damage = ArenaCombatAffinity.Apply(this, damage, ram);
             if (ram) nextRam = Time.time + Mathf.Max(.1f, playerRamCooldown);
             Health = Mathf.Max(0, Health - damage); Changed?.Invoke(); NotifyHealthChanged();
+            var feedback = session.Feedback; if (feedback) feedback.EnemyHit(this, AimPoint, damage, ram, Health <= 0);
             if (Health <= 0)
             {
                 State = MutantState.Dead; SetWarning(false); StopAgent(true);
                 if (agent) agent.enabled = false;
                 if (hitbox) hitbox.enabled = false;
                 despawnAt = Time.time + Mathf.Max(.1f, corpseLifetime); ClearFlash();
-                if (!RewardGranted) { RewardGranted = true; session.EnemyDefeated(transform.position, scrapReward, true, direction); }
+                if (!RewardGranted) { RewardGranted = true; if (feedback) feedback.EnemyKilled(this, transform.position, scrapReward); session.EnemyDefeated(transform.position, scrapReward, true, direction); }
                 return;
             }
             // Heavy attacks are committed; small bullets do not silently cancel a warning the player is dodging.
-            flashUntil = Time.time + .12f; flashApplied = true;
-            if (skinRenderers != null)
-            {
-                if (flashBlock == null) flashBlock = new MaterialPropertyBlock();
-                flashBlock.SetColor("_BaseColor", new Color(1, .64f, .36f));
-                for (int i = 0; i < skinRenderers.Length; i++) if (skinRenderers[i]) skinRenderers[i].SetPropertyBlock(flashBlock);
-            }
+            // Weak warm tint + squash punch, at most every .16 s, and never over the telegraphed wind-up the player is reading.
+            if (State == MutantState.Telegraph || skinRenderers == null) return;
+            if (!flashFx.Bound) flashFx.Bind(skinRenderers, visual);
+            if (flashFx.Trigger(ArcadeVfxFlash.WarmWhite, .3f, .05f, .16f, .07f)) { flashUntil = Time.time + .25f; flashApplied = true; }
         }
     }
 }

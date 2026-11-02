@@ -16,8 +16,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed class ExplorationPlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/Exploration-2026-10-31/PlayMode.txt";
-        public const string ArtifactFolder = "outputs/exploration-validation";
+        public const string ReportPath = "Documentation/RoadGunner/ArcadeOverhaul-2026-11-01/Exploration.txt";
+        public const string ArtifactFolder = "outputs/arcade-overhaul-2026-11-01/exploration";
         public bool Completed { get; private set; }
         public int Checks { get; private set; }
         public int Failures { get; private set; }
@@ -497,18 +497,31 @@ namespace RoadGunner
             workshop.enabled = true; s.input.testBrake = false;
             Vector3 right = Flat(s.input.view.transform.right).normalized, up = Flat(s.input.view.transform.forward).normalized;
             s.input.testDirection = new Vector2(Vector3.Dot(forward, right), Vector3.Dot(forward, up));
-            float before = s.health.Current, deadline = Time.realtimeSinceStartup + 9; int healingFrames = 0, groundedFrames = 0;
+            float before = s.health.Current, realBegan = Time.realtimeSinceStartup, gameBegan = Time.time, fixedBegan = Time.fixedTime;
+            float deadline = realBegan + 9; int healingFrames = 0, groundedFrames = 0;
             while (Vector3.Dot(s.vehicle.Body.position - workshop.transform.position, forward) < workshop.healingRadius + 1 && Time.realtimeSinceStartup < deadline)
             {
                 yield return null;
                 if (workshop.IsRepairing) healingFrames++;
                 if (s.vehicle.GroundedWheels >= 3) groundedFrames++;
             }
+            // Measure the driven trajectory before fixture teardown changes interpolation / rigidbody constraints.
+            Vector3 exitPosition = s.vehicle.Body.position;
+            float exitProgress = Vector3.Dot(exitPosition - workshop.transform.position, forward);
+            float exitUpright = Vector3.Dot(s.vehicle.transform.up, Vector3.up), after = s.health.Current;
+            float realElapsed = Time.realtimeSinceStartup - realBegan, gameElapsed = Time.time - gameBegan, fixedElapsed = Time.fixedTime - fixedBegan;
+            bool reachedExit = exitProgress >= workshop.healingRadius + 1;
+            string exitReason = reachedExit ? "endpoint" : Time.realtimeSinceStartup >= deadline ? "deadline" : "other";
             s.input.testDirection = Vector2.zero; s.input.testBrake = true; s.vehicle.Body.constraints = RigidbodyConstraints.FreezeAll;
+            Vector3 frozenPosition = s.vehicle.Body.position;
+            float frozenProgress = Vector3.Dot(frozenPosition - workshop.transform.position, forward);
             workshop.enabled = false;
-            Check("real wheel-driven car can enter heal and leave the service hub", Vector3.Dot(s.vehicle.Body.position - workshop.transform.position, forward) >= workshop.healingRadius + 1 &&
-                healingFrames > 0 && groundedFrames > 30 && s.health.Current > before && Vector3.Dot(s.vehicle.transform.up, Vector3.up) > .9f,
-                "Actual healing frames=" + healingFrames + "; grounded frames=" + groundedFrames + "; HP=" + before + " -> " + s.health.Current + "; car=" + s.vehicle.Body.position);
+            Check("real wheel-driven car can enter heal and leave the service hub", reachedExit &&
+                healingFrames > 0 && groundedFrames > 30 && after > before && exitUpright > .9f,
+                "Actual healing frames=" + healingFrames + "; grounded frames=" + groundedFrames + "; HP=" + before + " -> " + after +
+                "; exit reason=" + exitReason + "; pre-freeze car=" + exitPosition.ToString("F4") + "; progress=" + exitProgress.ToString("F4") +
+                "; upright=" + exitUpright.ToString("F4") + "; post-freeze car=" + frozenPosition.ToString("F4") + "; progress=" + frozenProgress.ToString("F4") +
+                "; elapsed game/fixed/realtime=" + gameElapsed.ToString("F3") + "/" + fixedElapsed.ToString("F3") + "/" + realElapsed.ToString("F3") + "s");
         }
 
         static T Field<T>(object source, string name) => (T)source.GetType().GetField(name).GetValue(source);

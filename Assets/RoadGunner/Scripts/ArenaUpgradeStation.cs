@@ -86,6 +86,7 @@ namespace RoadGunner
                 displayText.gameObject.SetActive(false);
             }
             if (session.effects) session.effects.Pickup();
+            var fx = session.Feedback; if (fx) fx.UpgradeCollected(kind, transform.position);
             onCollected?.Invoke();
             return true;
         }

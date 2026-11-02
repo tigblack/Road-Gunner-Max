@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d61c74b12b8094ae9bb7dd05ac979e86, type: 2}
+  - {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d61c74b12b8094ae9bb7dd05ac979e86, type: 2}
+  - {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbcc00b8485b4bc0826ad3d8239d8fac, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.EnemyHealthBar
   target: {fileID: 8186525026297390299}
   gameplayCamera: {fileID: 0}
@@ -310,6 +310,9 @@ MonoBehaviour:
   worldCanvas: {fileID: 497244811895714382}
   healthFill: {fileID: 1816481483827791502}
   height: 2.45
+  damageTrail: {fileID: 0}
+  fadeGroup: {fileID: 0}
+  fullHealthAlpha: 0.62
 --- !u!1 &5326382675859252994
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +379,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d61c74b12b8094ae9bb7dd05ac979e86, type: 2}
+  - {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -492,7 +495,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.08, g: 0.105, b: 0.105, a: 0.96}
@@ -578,7 +581,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d61c74b12b8094ae9bb7dd05ac979e86, type: 2}
+  - {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -752,7 +755,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.91, g: 0.87, b: 0.75, a: 0.96}
@@ -782,7 +785,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
   m_EffectColor: {r: 0.015, g: 0.025, b: 0.025, a: 0.65}
   m_EffectDistance: {x: 2, y: -3}
@@ -842,7 +845,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.28, b: 0.2, a: 1}
@@ -928,7 +931,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d61c74b12b8094ae9bb7dd05ac979e86, type: 2}
+  - {fileID: 2100000, guid: 7654ed7e9709547999eece2d96e92b72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

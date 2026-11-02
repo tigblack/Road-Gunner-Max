@@ -99,7 +99,9 @@ namespace RoadGunner
                 if (distance <= zone.radius * zone.radius && distance < closest) { closest = distance; next = zone; }
             }
             if (next == CurrentZone) return false;
-            CurrentZone = next; return true;
+            CurrentZone = next;
+            if (next != null && session && session.Playing) { var fx = session.Feedback; if (fx) fx.RegionEntered(next); }
+            return true;
         }
 
         internal bool GrantReward(ArenaRewardCache cache)

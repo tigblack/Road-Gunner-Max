@@ -27,7 +27,10 @@ namespace RoadGunner
                 yield return new WaitForSecondsRealtime(.2f);
                 Check("Arena music automatically plays the loaded loop", voice.isPlaying && voice.loop && voice.clip == music.loopClip &&
                     !voice.playOnAwake && voice.spatialBlend == 0 && voice.ignoreListenerPause && starts == 1 &&
-                    music.loopClip.loadState == AudioDataLoadState.Loaded && music.loopClip.length > 47 && music.loopClip.length < 50 &&
+                    music.loopClip.loadState == AudioDataLoadState.Loaded &&
+                    // Desert Run: bar-aligned loop cut by Tools/Audio/process_generated_audio.py (42-122 s); Dustlight Road: 48 s.
+                    (music.loopClip.name == "Desert Run" ? music.loopClip.length > 40 && music.loopClip.length < 125 :
+                        music.loopClip.length > 47 && music.loopClip.length < 50) &&
                     music.loopClip.channels == 2,
                     "Playing=" + voice.isPlaying + "; loop=" + voice.loop + "; starts=" + starts +
                     "; clip=" + music.loopClip.name + "; length=" + music.loopClip.length.ToString("F3") + "s; load=" + music.loopClip.loadState);

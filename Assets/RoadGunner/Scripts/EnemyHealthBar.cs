@@ -14,10 +14,17 @@ namespace RoadGunner
         public Canvas worldCanvas;
         public Image healthFill;
         [Min(.1f)] public float height = 2.45f;
+        [Header("Arcade presentation (optional)")]
+        [Tooltip("White chunk that trails the real fill down after a hit. Decorative; the real fill updates instantly.")]
+        public Image damageTrail;
+        [Tooltip("Fades untouched bars so a group of full-health enemies is not a wall of red slabs.")]
+        public CanvasGroup fadeGroup;
+        [Range(0, 1)] public float fullHealthAlpha = .62f;
         public bool IsVisible => worldCanvas && worldCanvas.enabled && worldCanvas.gameObject.activeInHierarchy;
         public float DisplayedRatio => healthFill ? healthFill.fillAmount : 0;
         public int HealthRefreshCount { get; private set; }
         CombatTarget subscribedTarget;
+        float trailHold;
         static Camera fallbackCamera;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -51,9 +58,17 @@ namespace RoadGunner
         public void RefreshHealth()
         {
             HealthRefreshCount++;
-            if (healthFill) healthFill.fillAmount = target ? Mathf.Clamp01(target.CurrentHealth / Mathf.Max(1, target.MaxHealth)) : 0;
+            float ratio = target ? Mathf.Clamp01(target.CurrentHealth / Mathf.Max(1, target.MaxHealth)) : 0;
+            if (healthFill) healthFill.fillAmount = ratio;
             bool show = isActiveAndEnabled && target && target.Alive && !target.UsesBossHealthHud && gameplayCamera;
             if (worldCanvas) worldCanvas.enabled = show;
+            if (damageTrail)
+            {
+                // Heals, respawns and deaths snap the trail; a hit leaves the old value to drain after a short hold.
+                if (!show || ratio >= damageTrail.fillAmount) damageTrail.fillAmount = ratio;
+                else trailHold = Time.unscaledTime + .22f;
+            }
+            if (fadeGroup) fadeGroup.alpha = ratio >= .999f ? fullHealthAlpha : 1;
             if (show) PositionAndFaceCamera();
         }
         void PositionAndFaceCamera()
@@ -63,7 +78,14 @@ namespace RoadGunner
         }
         void LateUpdate()
         {
-            if (IsVisible) PositionAndFaceCamera();
+            if (!IsVisible) return;
+            PositionAndFaceCamera();
+            if (damageTrail && healthFill)
+            {
+                float fill = healthFill.fillAmount, trail = damageTrail.fillAmount;
+                if (trail > fill + .0005f && Time.unscaledTime >= trailHold)
+                    damageTrail.fillAmount = Mathf.Max(fill, trail - Mathf.Min(.1f, Time.unscaledDeltaTime) * Mathf.Max(.7f, (trail - fill) * 4.5f));
+            }
         }
         void OnDisable()
         {

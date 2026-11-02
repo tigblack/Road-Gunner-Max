@@ -1,0 +1,20 @@
+BROWSER SMOKE — 2 NOVEMBER 2026
+
+Fresh WebBuild served over HTTP at 127.0.0.1:8786, query arcade-20261102.
+Safari on this Mac, native computer-use interaction:
+- PLAY gate displayed, progress completed and Arena 1 rendered.
+- New glossy HUD, font/icons, circular minimap, toon vehicle/materials,
+  white weapon range ring and ground surface displayed without pink shaders.
+- W moved the car along the road; HUD speed changed from 1 to 13 and 31 km/h.
+- A supply cache broke with visible feedback and DAMAGE +5%; the pause
+  statistics showed 5.51 damage/shot and LOOT DMG +5%.
+- Enemy damage changed the player health to 94/100.
+- Escape opened and closed the new pause panel. MUSIC showed 30%.
+
+These are observed smoke results, not a full browser playthrough or FPS test.
+The Chrome launch page was reached, but another active user window repeatedly
+changed focus. Subsequent Safari button checks were also interrupted by user
+focus changes; Resume/Restart pointer behavior is not claimed as verified by
+this browser smoke. Their native controlled checks passed in Gameplay.txt.
+No browser Console capture, touch-device test or physical-phone check is claimed.
+Screenshots in Screenshots/ were captured by Unity, not by a browser.

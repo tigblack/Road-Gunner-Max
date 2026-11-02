@@ -27,6 +27,8 @@ namespace RoadGunner
         public int RunSerial { get; private set; }
         public event System.Action Changed;
         public bool Playing => State==SessionState.Playing;
+        /// <summary>Presentation hub (audio, VFX, HUD juice). May be null in older scenes.</summary>
+        public ArcadeFeedback Feedback => effects ? effects.feedback : null;
         public float PlayerDamage(float baseDamage, bool ram = false) => runStats ? runStats.Damage(baseDamage, ram) :
             turret && turret.tuning ? turret.tuning.ScalePlayerDamage(baseDamage) : baseDamage;
         float nextRecover;
@@ -46,16 +48,16 @@ namespace RoadGunner
             if(zone1){zone1.session=this;zone1.ResetEncounters();}
             if(exploration){exploration.session=this;exploration.ResetRun();}
             if(minimap)minimap.RefreshTargets();
-            follow.Snap();Changed?.Invoke();
+            follow.Snap();var fx=Feedback;if(fx)fx.RunRestarted();Changed?.Invoke();
         }
         public void TogglePause() { if(State==SessionState.Defeated || State==SessionState.Completed)return;SetPaused(State==SessionState.Playing); }
         public void SetPaused(bool paused) {
             if(State==SessionState.Defeated || State==SessionState.Completed)return;
             State=paused?SessionState.Paused:SessionState.Playing; input.Clear(); input.Enabled=!paused;
             spawns.CancelAttacks();turret.ResetCombat();Time.timeScale=paused?0:1;
-            if(vehicle.engine) vehicle.engine.Pause();if(!paused&&vehicle.engine)vehicle.engine.UnPause();Changed?.Invoke();
+            if(vehicle.engine) vehicle.engine.Pause();if(!paused&&vehicle.engine)vehicle.engine.UnPause();var fx=Feedback;if(fx)fx.PausedChanged(paused);Changed?.Invoke();
         }
-        void Defeat() { State=SessionState.Defeated;input.Enabled=false;input.Clear();vehicle.CanDrive=false;spawns.CancelAttacks();turret.ResetCombat();Time.timeScale=0;Changed?.Invoke(); }
+        void Defeat() { State=SessionState.Defeated;input.Enabled=false;input.Clear();vehicle.CanDrive=false;spawns.CancelAttacks();turret.ResetCombat();Time.timeScale=0;var fx=Feedback;if(fx)fx.Defeat(vehicle.transform.position);Changed?.Invoke(); }
         public void CompleteArena() {
             if(!Playing)return;
             // Keep every resource already earned, including the boss drop and gear on a harpoon.
@@ -64,7 +66,7 @@ namespace RoadGunner
             State=SessionState.Completed;input.Enabled=false;input.Clear();vehicle.CanDrive=false;
             health.DamageEnabled=false;spawns.CancelAttacks();turret.ResetCombat();
             if(vehicle.engine)vehicle.engine.Pause();
-            Time.timeScale=0;Changed?.Invoke();
+            Time.timeScale=0;var fx=Feedback;if(fx)fx.Victory(vehicle.transform.position);Changed?.Invoke();
         }
         public void AddScrap(int amount) { if(!Playing)return;Scrap+=amount;Changed?.Invoke(); }
         public bool GrantExplorationScrap(int amount) {
@@ -88,6 +90,7 @@ namespace RoadGunner
             }
             if(!found)return;
             nextRecover=Time.time+3;input.Clear();vehicle.GetComponent<HarpoonCollector>()?.ResetCollection();vehicle.ResetPose(best,startRotation);turret.ResetCombat();Physics.SyncTransforms();follow.Snap();
+            var feedback=Feedback;if(feedback)feedback.Recovered(best);
         }
         void OnApplicationFocus(bool focus) { if(!focus && Playing && Application.isMobilePlatform) SetPaused(true); }
         void OnApplicationPause(bool paused) { if(paused && Playing) SetPaused(true); }

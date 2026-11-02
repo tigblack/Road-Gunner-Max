@@ -55,8 +55,26 @@ namespace RoadGunner
         void Feedback(bool active)
         {
             IsRepairing = active;
+            Present(active);
             if (activeRepairEffect && activeRepairEffect.activeSelf != active) activeRepairEffect.SetActive(active);
             if (repairingLabel && repairingLabel.gameObject.activeSelf != active) repairingLabel.gameObject.SetActive(active);
+        }
+        // Presentation cue only (sound, particles, HUD chip). Gaps shorter than the hold, such as a hit landing at full HP
+        // inside the bay or a pause, keep one continuous cue instead of restarting it.
+        bool presenting; float presentStopAt;
+        void Present(bool active)
+        {
+            if (!session) return;
+            if (active) { presentStopAt = float.PositiveInfinity; if (presenting) return; presenting = true; }
+            else if (!presenting) return;
+            else if (!isActiveAndEnabled || session.State == SessionState.Defeated || session.State == SessionState.Completed) presenting = false;
+            else
+            {
+                if (float.IsPositiveInfinity(presentStopAt)) presentStopAt = Time.unscaledTime + .75f;
+                if (session.State == SessionState.Paused || Time.unscaledTime < presentStopAt) return;
+                presenting = false;
+            }
+            var fx = session.Feedback; if (fx) fx.RepairChanged(presenting, transform.position);
         }
         void OnDrawGizmosSelected() { Gizmos.color = new Color(.85f,.65f,.25f,.7f); Gizmos.DrawWireSphere(transform.position, healingRadius); }
     }

@@ -74,6 +74,7 @@ namespace RoadGunner
             flyingGear[slot]=gear;launchFrom[slot]=origin;launchedAt[slot]=Time.time;SetVisual(slot,gear);
             items[slot].position=gear?origin:positions[slot];items[slot].rotation=Quaternion.Euler(gear?15:0,slot*137.5f,0);
             items[slot].gameObject.SetActive(true);ActiveCount++;
+            var fx=session?session.Feedback:null;if(fx)fx.GearDropped(origin);
         }
         void SetVisual(int slot,bool gear)
         {
@@ -126,12 +127,13 @@ namespace RoadGunner
                 reward+=values[i];values[i]=0;reservedBy[i]=null;items[i].gameObject.SetActive(false);
             }
             ActiveCount=0;
-            if(reward>0){session.AddScrap(reward);if(session.effects)session.effects.Pickup();}
+            if(reward>0){session.AddScrap(reward);if(session.effects)session.effects.Pickup();var fx=session.Feedback;if(fx)fx.ScrapCollected(session.vehicle.transform.position,reward);}
         }
         void Collect(int i)
         {
             int reward=values[i];values[i]=0;reservedBy[i]=null;items[i].gameObject.SetActive(false);ActiveCount--;
             session.AddScrap(reward);session.effects.Pickup();
+            var fx=session.Feedback;if(fx)fx.ScrapCollected(items[i].position,reward);
         }
         void Update()
         {
