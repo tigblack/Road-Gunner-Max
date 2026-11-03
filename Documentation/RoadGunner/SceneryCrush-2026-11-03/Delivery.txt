@@ -39,6 +39,7 @@ headers, WebAssembly validation and all loader/framework/template JS syntax pass
 All 2107 frozen production input files remained unchanged through packaging after
 restoring Unity's five automatic render-metadata rewrites to exact prebuild bytes.
 
-Publication and public-browser evidence are recorded in Publication.txt,
-LiveManifest.json and Browser.txt after deployment verification. No physical-phone
+Publication.txt and LiveManifest.json record deployment and public HTTPS file
+identity. Browser.txt records the unavailable computer-use window environment;
+public browser execution was not observed in this session. No physical-phone
 coverage, browser full playthrough or hardware performance measurement is claimed.

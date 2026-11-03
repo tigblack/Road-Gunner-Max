@@ -1,0 +1,44 @@
+ROAD GUNNER — PUBLISHED SCENERY DESTRUCTION
+3 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=42a3746
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: 62dcf2d2cbfe3b51a35596670257dffa03556c4e
+Pages commit: 42a3746b9893e4c5a445f5caedae635685b99180
+Previous source: ece4240eb9caf59d8092220ab094ad05fe0563a2
+Previous Pages: 466ff6144eae78f4a64b46371bdfd5066a1c490d
+Source pushed to main and feature/scenery-crush-20261103; exact player pushed
+to gh-pages in one normal atomic Git push, without force.
+
+GitHub Pages: built; error.message=null.
+Pages updated UTC: 2026-11-03T19:33:53Z.
+Action: https://github.com/tigblack/Road-Gunner-Max/actions/runs/41704198370
+Workflow: completed / success for the exact Pages commit.
+GitHub-pages deployment 7528626264: success for that same SHA.
+Pages duration: 87234 milliseconds.
+
+All six ordinary HTTPS payload URLs returned 200 with verified TLS and exact
+byte-count/SHA256 equality with the local build on the first attempt. The empty
+.nojekyll seventh artifact was checked as a blob at the exact Pages commit.
+LiveManifest.json records each URL/hash/response and deployment evidence.
+Static payload: 26,186,699 bytes. Build UTC: 2026-11-03T19:31:10.3521230Z.
+
+Small scenery now breaks under the player and living Buggies with visible pooled
+fragments and no gameplay rewards. Large rocks, cliffs, hulls and buildings remain
+solid. Restart restores destroyed scenery. Three small shoulder pose corrections
+keep the unchanged driving lanes clear. The tracked car's half-speed profile,
+combat, upgrades, rewards, HUD/minimap and audio were retained.
+
+Acceptance: scenery26 + physics21 + tracked9 + gameplay204 + exploration88 =
+348 PASS; zero failures and runtime Console errors. Physics/tracked ran before
+three pose-only clearance corrections; scenery/gameplay/exploration repeated on
+the final saved scene. All14 car routes/736samples and navigation paths passed.
+
+Public browser execution could not be observed: computer-use returned missing
+Safari/Chrome windows and no available tab provider, including after reinitializing.
+Browser.txt records this environment limitation. Native fixture screenshots are
+not presented as public browser evidence. No phone or device-FPS result is claimed.
+
+Follow-up source commits add publication evidence only and do not change the
+frozen production input or the exact WebGL artifacts published here.

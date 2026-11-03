@@ -1,0 +1,21 @@
+PUBLIC BROWSER SMOKE — NOT RUN (COMPUTER-USE ENVIRONMENT)
+3 November 2026 (Asia/Yerevan)
+
+Target: https://tigblack.github.io/Road-Gunner-Max/?build=42a3746
+
+The computer-use service could list running Safari and Chrome applications but
+could not bind either browser window: getApp returned cgWindowNotFound (-10005).
+The browser inventory was empty. Creating a Chrome or in-app-browser tab returned
+Browser is not available. Reinitializing the computer-use session and retrying
+Safari produced the same missing-window error.
+
+Consequently no public PLAY click, WebGL rendering, driving/destruction or browser
+audio observation is claimed for this revision. No successful public gameplay
+screenshot exists. Existing user windows were not navigated or used for gameplay.
+The older tracked-release Safari smoke is historical, not evidence for this build.
+
+The 348 controlled native checks and actual native camera/HUD fixture screenshots
+are recorded separately. Packaging, gzip CRCs, WASM validation and JavaScript
+syntax passed. LiveManifest.json records public HTTPS file identity and GitHub
+Pages/Actions deployment status, which does not establish browser execution.
+No physical-phone, browser full-playthrough or device FPS result is claimed.
