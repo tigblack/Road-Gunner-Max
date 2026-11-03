@@ -12,8 +12,8 @@ namespace RoadGunner
     public sealed class TrackedVehiclePlayChecks : MonoBehaviour
     {
         public static bool Baseline => Array.IndexOf(Environment.GetCommandLineArgs(), "-rgTrackedBaseline") >= 0;
-        public static string ReportPath => "Documentation/RoadGunner/TrackedVehicle-2026-11-03/"+(Baseline?"Baseline":"Tracked")+".txt";
-        const string Folder="outputs/TrackedVehicle-2026-11-03";
+        public static string ReportPath => "Documentation/RoadGunner/SceneryCrush-2026-11-03/"+(Baseline?"Baseline":"Tracked")+".txt";
+        const string Folder="outputs/SceneryCrush-2026-11-03";
         public bool Completed {get;private set;}
         public int Checks {get;private set;}
         public int Failures {get;private set;}
@@ -55,7 +55,7 @@ namespace RoadGunner
             m.meanCruise=total/Mathf.Max(1,count);
             Check("steady straight course reaches finite cruise",m.meanCruise>1&&m.meanCruise<car.tuning.maxSpeed*1.05f&&m.maxCruise-m.minCruise<.2f,"mean="+m.meanCruise+"; range="+m.minCruise+".."+m.maxCruise+"; configured="+m.configuredMax);
             File.WriteAllText(Folder+"/"+(Baseline?"baseline":"tracked")+".json",JsonUtility.ToJson(m,true));
-            if(!Baseline)File.WriteAllText("Documentation/RoadGunner/TrackedVehicle-2026-11-03/Tracked.json",JsonUtility.ToJson(m,true));
+            if(!Baseline)File.WriteAllText("Documentation/RoadGunner/SceneryCrush-2026-11-03/Tracked.json",JsonUtility.ToJson(m,true));
             if(!Baseline){var old=JsonUtility.FromJson<Measurement>(File.ReadAllText("Documentation/RoadGunner/TrackedVehicle-2026-11-03/Baseline.json"));float ratio=m.meanCruise/old.meanCruise;
                 Check("track belts advance with actual straight movement",tracks&&tracks.LeftDistanceMeters-leftStart>40&&tracks.RightDistanceMeters-rightStart>40&&Mathf.Abs((tracks.LeftDistanceMeters-leftStart)-(tracks.RightDistanceMeters-rightStart))<2,"left="+(tracks?tracks.LeftDistanceMeters-leftStart:0)+"; right="+(tracks?tracks.RightDistanceMeters-rightStart:0));
                 Check("configured speed is halved",Mathf.Abs(m.configuredMax-old.configuredMax*.5f)<.001f,"old="+old.configuredMax+"; new="+m.configuredMax);

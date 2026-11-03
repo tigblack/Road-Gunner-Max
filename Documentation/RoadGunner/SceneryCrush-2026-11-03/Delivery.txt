@@ -1,0 +1,44 @@
+ROAD GUNNER — SMALL SCENERY DESTRUCTION
+3 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=42a3746
+
+Cacti, wooden/metal crates, barrels, loose pipes/plates, tyres, dead branches and
+other small scenery now crumble under the player or a living Buggy. Coloured
+fragments, dust and quiet impact feedback accompany the break. Repeated contact
+cannot break twice or create HP, kills, Scrap, Metal Gear or upgrade rewards.
+Restart restores the props. Pause and terminal states stop processing; Recover
+does not destroy a corridor between the old and new position.
+
+Large boulders, rock spires, hulls, cliffs and buildings remain solid to cars and
+shots. Grass, flat tiny pebbles and ground drifts remain surface detail. There
+are 688 soft items and 209 new exact hard colliders, with 3 existing hard ones
+reused. The combined source meshes were classified without regenerating art.
+Three complete Boulder shoulder compositions were moved about 3 m off the lane
+when their newly enabled collision entered the car envelope. All 14 routes now
+pass 736 unchanged full-car clearance samples and complete navigation paths;
+the workshop remains physically open. Authoring.json records exact old/new poses.
+
+Preserved: original shared visual mesh/material assets, roads/route markers,
+tracked car and its half-speed tuning, combat/HP/loot rules, HUD/minimap and audio.
+1880 of 1890 original production files are byte-identical to baseline ece4240;
+the 10 edited original files and all source hashes are recorded separately.
+
+Validation: scenery26 + physics21 + tracked9 + gameplay204 + exploration88 =
+348 PASS, zero failures and runtime Console errors. Physics/tracked ran before
+the three pose-only clearance corrections; scenery/gameplay/exploration were
+repeated after the final migration and a read-only editor reload. These are
+controlled native fixtures, not a natural full-run video or a device FPS test.
+The screenshots show the disclosed copied-source acceptance course.
+
+Independent static review confirmed all 897 owned proxy transforms against the
+serialized source catalog. All original visual source hashes and triangle ranges
+passed the saved-scene check. WebGL packaging succeeded on Unity6000.6.4f1/URP17.6.
+Seven static artifacts total 26,186,699 bytes; gzip CRCs, Unity data/WASM
+headers, WebAssembly validation and all loader/framework/template JS syntax pass.
+All 2107 frozen production input files remained unchanged through packaging after
+restoring Unity's five automatic render-metadata rewrites to exact prebuild bytes.
+
+Publication and public-browser evidence are recorded in Publication.txt,
+LiveManifest.json and Browser.txt after deployment verification. No physical-phone
+coverage, browser full playthrough or hardware performance measurement is claimed.

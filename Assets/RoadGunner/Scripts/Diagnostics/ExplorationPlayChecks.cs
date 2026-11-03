@@ -16,8 +16,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed class ExplorationPlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/TrackedVehicle-2026-11-03/Exploration.txt";
-        public const string ArtifactFolder = "outputs/tracked-vehicle-2026-11-03/exploration";
+        public const string ReportPath = "Documentation/RoadGunner/SceneryCrush-2026-11-03/Exploration.txt";
+        public const string ArtifactFolder = "outputs/scenery-crush-2026-11-03/exploration";
         public bool Completed { get; private set; }
         public int Checks { get; private set; }
         public int Failures { get; private set; }

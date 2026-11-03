@@ -9,9 +9,9 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The 3 November update converts the player into a tracked vehicle,
-with moving tread shoes and rollers, differential steering and about half the
-previous travel speed. The existing Arcade visuals, audio and arena are retained.
+Press Play. The latest 3 November update makes small scenery break under cars
+and adds solid collision to large decorative rocks and wreckage. The tracked
+player, moving tread shoes, differential steering and half-speed handling remain.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -46,6 +46,31 @@ RESTART RUN starts again: score, kills and upgrades reset, enemies return and
 player health is restored. Pause/Resume preserves run and tutorial progress.
 Pause also provides music volume and a summary of current damage and run stats.
 The volume preference is saved locally.
+
+SCENERY CONTACT
+Drive into cacti, small wooden/metal crates, barrels, loose pipes, tyre stacks
+and dead branches to crumble them into short-lived cosmetic fragments. Player
+and living enemy Buggies can crush these props. Decorative destruction does
+not change HP, kills, upgrades or Scrap. Restart restores the props and clears
+fragments. Marked gameplay reward caches retain their existing rules.
+
+Large boulders, rock spires, cliffs, hulls and buildings are solid and block
+chassis and shots. Grass, flat pebbles, dunes and ground drifts remain surface
+detail. Terrain/roads and the existing arena layout remain recognisable.
+
+The saved scene already includes this wiring. Narrow authoring only:
+Tools / Road Gunner / Scenery / Install Vehicle Crush Collisions Only
+Batch: RoadGunner.Editor.DecorationCollisionInstaller.InstallBatch
+Read-only saved-catalog check: DecorationCollisionInstaller.DumpManifestBatch
+Do not rerun legacy full art/world installers just to package this saved scene.
+Implementation and evidence: Documentation/RoadGunner/SceneryCrush-2026-11-03/.
+Acceptance: scenery26 + physics21 + tracked9 + gameplay204 + exploration88 =
+348 PASS, zero failures and runtime Console errors. Three complete shoulder
+compositions were shifted about 3 m off the driving lanes after enabling rock
+collision; all 14 full-car routes (736 samples) and navigation paths remain clear.
+Physics/tracked suites ran before these pose-only corrections; scenery/gameplay/
+exploration suites were repeated on the final saved scene. Vehicle tuning and
+original visual mesh/material assets remained unchanged.
 
 EXPLORATION AND WORLD REWARDS
 Five supply caches are destructible auto-fire targets. Unobstructed enemies
@@ -118,11 +143,13 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 3 November tracked-player update, built with Unity 6000.6.4f1.
-The static payload is 25,943,070 bytes. Build provenance, speed comparison and
-acceptance reports: Documentation/RoadGunner/TrackedVehicle-2026-11-03/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=466ff61
-Publication evidence: Documentation/RoadGunner/TrackedVehicle-2026-11-03/Publication.txt.
+WebBuild/ contains the 3 November scenery destruction update, built with Unity 6000.6.4f1.
+The static payload is 26,186,699 bytes. Build provenance, source preservation,
+clearance corrections and acceptance reports:
+Documentation/RoadGunner/SceneryCrush-2026-11-03/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=42a3746
+Publication evidence: Documentation/RoadGunner/SceneryCrush-2026-11-03/Publication.txt.
+The tracked-player release 466ff61 remains a historical snapshot.
 Earlier audio player d3c19c3, Arcade player 63dc9c0 and exploration player fc89028
 remain historical snapshots; their own publication reports are retained.
 

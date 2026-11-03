@@ -19,8 +19,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed partial class Arena1PlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/TrackedVehicle-2026-11-03/Gameplay.txt";
-        public const string CaptureFolder = "outputs/tracked-vehicle-2026-11-03/gameplay";
+        public const string ReportPath = "Documentation/RoadGunner/SceneryCrush-2026-11-03/Gameplay.txt";
+        public const string CaptureFolder = "outputs/scenery-crush-2026-11-03/gameplay";
         public bool Completed { get; private set; }
         public int Failures { get; private set; }
         public int Checks { get; private set; }

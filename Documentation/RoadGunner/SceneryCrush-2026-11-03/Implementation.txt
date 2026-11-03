@@ -1,0 +1,69 @@
+ROAD GUNNER — VEHICLE SCENERY CRUSH, 3 NOVEMBER 2026
+
+Baseline source: ece4240. Unity 6000.6.4f1 / URP 17.6.0.
+Request: small cacti, crates and similar props break when a car drives into them;
+large rocks, cliffs and buildings remain solid.
+
+The existing visuals were retained. Original Arcade chunk geometry was replayed
+without mutation and compared with every saved position, normal, UV and index:
+1067 primary items, 29 chunks, 207432 vertices. Eight mixed Concept shoulder
+recipes were matched triangle by triangle against their original member meshes;
+79 placed compositions yielded 354 independently classified members. Standalone
+legacy and Concept roadside props were included. Gameplay targets, actors,
+reward caches, upgrades, workshop equipment and loot were excluded.
+
+The saved scene has 208 mutable source MeshFilters and 688 soft item probes.
+Supported soft families include 168 cacti, 24 wooden supply crates, 4 metal crates,
+76 individual Arcade barrels, 24 fuel-drum groups, dead branches, tyre/scrap props,
+loose pipes, plates and bones. Grass tufts, dry scrub, flat pebbles, dunes and
+ash drifts remain surface detail. Authoring.json gives the complete classification.
+
+Large scenery has 209 new compact, exact static MeshColliders, plus 3 reused hard
+colliders: 125 Boulder entries, 46 rock-spire groups, 20 hulls and 21 girders.
+Boulders are hard at world height>=0.32m or horizontal size>=1m; smaller pebbles
+remain ground detail. Existing 136 protected solid colliders were preserved.
+Collider-based navigation baking used the existing configuration. Three formerly
+nonblocking Boulder compositions entered the car clearance envelope after adding
+solid collision. Their complete shoulder instances were moved about 3 m away
+from the workshop and upper Warlord lane; their original local mesh geometry,
+materials and hard collision were retained. Authoring.json records all old/new
+poses and exact offsets. The roads, route markers and arena geography did not move.
+All 14 complete navigation routes, their 736 full-car centreline samples and the
+actual workshop driving opening passed before saving the clearance migration.
+A separate editor reload verified saved metadata, original visuals and static flags.
+
+Runtime: ArenaDecorationCrush caches the player and living Buggies, performs
+non-allocating overlap/swept-box queries with rotation substeps and checks actual
+point velocity>=0.25m/s and ground support. Layer 12 RG_SceneryCrush is excluded
+from the saved player/Buggy weapon masks. Props are query shapes; the vehicle
+moves through them as their visible geometry breaks. Large solids are Default
+layer geometry, so they stop both chassis and shots.
+
+DecorationCrushChunk lazily clones the affected source instance and degenerates
+only the selected index ranges, retaining all neighbouring and hard geometry.
+Original shared mesh assets stay unchanged. Mutable renderers are excluded from
+static batching so the same operation works in a packaged player. A prewarmed
+pool of 96 cosmetic pieces emits 6-8 coloured fragments, dust and a quiet existing
+impact cue. Pieces have no colliders/masses, last roughly 1.1-1.4 s and shrink away.
+No HP, damage, kills, upgrades, Scrap or Metal Gear are created by decorative props.
+
+RunSerial restores indices/probes and clears debris on Restart. Pause/final
+states stop processing. VehicleController adds only a pose-reset serial; Recover
+and Restart cannot sweep a false destruction bridge across a teleport. Existing
+tracked speed/torque/combat settings were retained.
+
+Tools / Road Gunner / Scenery / Install Vehicle Crush Collisions Only
+Batch: RoadGunner.Editor.DecorationCollisionInstaller.InstallBatch
+Read-only: RoadGunner.Editor.DecorationCollisionInstaller.DumpManifestBatch
+One-time narrow clearance repair: DecorationCollisionInstaller.RepairRouteClearanceBatch
+The narrow installer verifies the saved source catalog before authoring and uses
+it for repeat installation. It does not reapply the full art/world/minimap passes.
+Intentional changes to source meshes or poses must be reconciled with that catalog.
+
+Props.txt records actual input-driven physical drives using copies of production
+chunks with one selected item enabled on a disclosed temporary course. Its 26
+checks cover original layers, selected-range preservation, repeated contact,
+HP/rewards, near miss, Recover, states, Restart, a real authored MeshCollider and
+Boulder/cliff/bunker physical impacts. Screenshots are actual native camera/HUD
+captures of that fixture, not a natural arena playthrough. Other native suites,
+WebGL artifact identity and public browser evidence are recorded separately.

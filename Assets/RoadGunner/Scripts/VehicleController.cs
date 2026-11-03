@@ -11,6 +11,8 @@ namespace RoadGunner
         public ParticleSystem[] dust;
         public AudioSource engine;
         public Rigidbody Body { get; private set; }
+        /// <summary>Changes only on explicit pose resets, so contact sweeps never bridge Recover/Restart teleports.</summary>
+        public int PoseResetSerial { get; private set; }
         public float ForwardSpeed { get; private set; }
         public float Speed => Body==null?0:Body.linearVelocity.magnitude;
         public float HorizontalSpeed => Body==null?0:Vector3.ProjectOnPlane(Body.linearVelocity,Vector3.up).magnitude;
@@ -243,6 +245,7 @@ namespace RoadGunner
             feedback.VehicleCollision(contact.point,speed);
         }
         public void ResetPose(Vector3 position,Quaternion rotation) {
+            PoseResetSerial++;
             Body.position=position; Body.rotation=rotation; Body.linearVelocity=Vector3.zero; Body.angularVelocity=Vector3.zero;
             transform.SetPositionAndRotation(position,rotation); steering=0; turnDirection=0; ForwardSpeed=0; Throttle=0; AppliedBrakeTorque=tuning.holdBrakeTorque;
             RequestedYawRate=AppliedYawAssistTorque=LeftTrackSpeed=RightTrackSpeed=LeftTrackTorque=RightTrackTorque=0;

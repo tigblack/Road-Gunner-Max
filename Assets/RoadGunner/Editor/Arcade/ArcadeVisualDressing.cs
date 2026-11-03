@@ -30,6 +30,34 @@ namespace RoadGunner.Editor
 
         enum Zone { Rim, Pocket, Open }
 
+        public sealed class ReplayItem
+        {
+            public string id, category;
+            public int start, count;
+            public bool primary;
+            public Bounds worldBounds;
+        }
+        public sealed class ReplayChunk
+        {
+            public Vector2Int key;
+            public Vector3[] vertices, normals;
+            public Vector2[] uvs;
+            public int[] triangles;
+            public ReplayItem[] items;
+        }
+        public sealed class ReplayResult { public ReplayChunk[] chunks; public int primaryItems; }
+        static bool recordingOnly;
+        static ReplayResult recorded;
+
+        /// <summary>Replays only the original deterministic recipe; never writes a mesh, material, prefab or scene.</summary>
+        public static ReplayResult ReplayRecords(GameSession session)
+        {
+            if (recordingOnly) throw new InvalidOperationException("Nested dressing replay is unsupported.");
+            recordingOnly = true; recorded = null;
+            try { Apply(session, new List<string>()); return recorded ?? throw new InvalidOperationException("No saved dressing/layout to replay."); }
+            finally { recordingOnly = false; recorded = null; }
+        }
+
         sealed class Builder
         {
             public readonly List<Vector3> vertices = new List<Vector3>();
@@ -37,6 +65,16 @@ namespace RoadGunner.Editor
             public readonly List<Vector2> uvs = new List<Vector2>();
             public readonly List<int> triangles = new List<int>();
             public int items;
+            public string parentId, category;
+            public readonly List<ReplayItem> records = new List<ReplayItem>();
+            public void Record(string name, int start, string suffix, bool primary)
+            {
+                int count = triangles.Count - start;
+                if (count == 0) throw new InvalidOperationException("Empty dressing item " + parentId);
+                var bounds = new Bounds(vertices[triangles[start]], Vector3.zero);
+                for (int i = start; i < triangles.Count; i++) bounds.Encapsulate(vertices[triangles[i]]);
+                records.Add(new ReplayItem { id = parentId + suffix, category = name, start = start, count = count, primary = primary, worldBounds = bounds });
+            }
 
             // Flat-shaded triangle, wound so its normal faces away from 'inside' (works for every convex part).
             public void Tri(Vector3 a, Vector3 b, Vector3 c, Vector3 inside, int cell)
@@ -85,11 +123,18 @@ namespace RoadGunner.Editor
             var roads = ArcadeVisualGround.RasterSurfaceDistance(lanes, data, false);
 
             var root = layout.decorationRoot.Find(RootName);
-            if (root) foreach (Transform child in root.Cast<Transform>().ToArray()) Object.DestroyImmediate(child.gameObject);
-            else { root = new GameObject(RootName).transform; root.SetParent(layout.decorationRoot, false); }
-            root.gameObject.SetActive(true);
-            root.localPosition = Vector3.zero; root.localRotation = Quaternion.identity; root.localScale = Vector3.one;
-            GameObjectUtility.SetStaticEditorFlags(root.gameObject, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
+            if (recordingOnly)
+            {
+                if (!root) throw new InvalidOperationException("Saved Arcade dressing root is required for a non-mutating replay.");
+            }
+            else
+            {
+                if (root) foreach (Transform child in root.Cast<Transform>().ToArray()) Object.DestroyImmediate(child.gameObject);
+                else { root = new GameObject(RootName).transform; root.SetParent(layout.decorationRoot, false); }
+                root.gameObject.SetActive(true);
+                root.localPosition = Vector3.zero; root.localRotation = Quaternion.identity; root.localScale = Vector3.one;
+                GameObjectUtility.SetStaticEditorFlags(root.gameObject, StaticEditorFlags.BatchingStatic | StaticEditorFlags.OccludeeStatic);
+            }
 
             Physics.SyncTransforms();
             var keepOut = new List<(Vector3 p, float r)>();
@@ -132,10 +177,21 @@ namespace RoadGunner.Editor
                     string region = NearestRegion(data, w);
                     var key = new Vector2Int(Mathf.FloorToInt(at.x / ChunkSize), Mathf.FloorToInt(at.z / ChunkSize));
                     if (!chunks.TryGetValue(key, out var builder)) chunks.Add(key, builder = new Builder());
+                    builder.parentId = "arcade/" + key.x + "," + key.y + "/" + builder.items;
+                    int start = builder.triangles.Count;
                     Item(builder, region, zone, du, dl, (float)pick, hit.point, new System.Random(seed));
+                    builder.Record(builder.category, start, "", true);
                     builder.items++; placed++; zoneCounts[zone]++;
                     regionCounts[region] = regionCounts.TryGetValue(region, out int rc) ? rc + 1 : 1;
                 }
+
+            if (recordingOnly)
+            {
+                recorded = new ReplayResult { primaryItems = placed, chunks = chunks.OrderBy(p => p.Key.x).ThenBy(p => p.Key.y).Select(p => new ReplayChunk {
+                    key = p.Key, vertices = p.Value.vertices.ToArray(), normals = p.Value.normals.ToArray(), uvs = p.Value.uvs.ToArray(),
+                    triangles = p.Value.triangles.ToArray(), items = p.Value.records.ToArray() }).ToArray() };
+                return;
+            }
 
             if (!AssetDatabase.IsValidFolder(MeshFolder)) AssetDatabase.CreateFolder(ArcadeVisualInstaller.Root, "Meshes");
             var used = new HashSet<string>();
@@ -191,39 +247,41 @@ namespace RoadGunner.Editor
             switch (region)
             {
                 case "salvage-yard":
-                    if (zone == Zone.Pocket) { if (pick < .35f) Plate(b, at, yaw, rng); else if (pick < .7f) Tuft(b, at, rng, DryLeavesCell, 1.1f); else if (pick < .85f) Tyre(b, at, yaw, rng, false); else Pebbles(b, at, rng, RockCell, RockLightCell); }
-                    else if (pick < .24f) ScrapPile(b, at, yaw, rng);
-                    else if (pick < .46f) { if (rng.NextDouble() < .55) TyreStack(b, at, yaw, rng); else Tyre(b, at, yaw, rng, true); }
-                    else if (pick < .72f) Tuft(b, at, rng, DryLeavesCell, 1.25f);
-                    else if (pick < .86f && roomy) Hull(b, at, yaw, rng);
-                    else Pebbles(b, at, rng, RockCell, RockLightCell);
+                    if (zone == Zone.Pocket) { if (pick < .35f) Pick(b, "Plate", () => Plate(b, at, yaw, rng)); else if (pick < .7f) Pick(b, "Tuft", () => Tuft(b, at, rng, DryLeavesCell, 1.1f)); else if (pick < .85f) Pick(b, "Tyre", () => Tyre(b, at, yaw, rng, false)); else Pick(b, "Pebbles", () => Pebbles(b, at, rng, RockCell, RockLightCell)); }
+                    else if (pick < .24f) Pick(b, "ScrapPile", () => ScrapPile(b, at, yaw, rng));
+                    else if (pick < .46f) { if (rng.NextDouble() < .55) Pick(b, "TyreStack", () => TyreStack(b, at, yaw, rng)); else Pick(b, "Tyre", () => Tyre(b, at, yaw, rng, true)); }
+                    else if (pick < .72f) Pick(b, "Tuft", () => Tuft(b, at, rng, DryLeavesCell, 1.25f));
+                    else if (pick < .86f && roomy) Pick(b, "Hull", () => Hull(b, at, yaw, rng));
+                    else Pick(b, "Pebbles", () => Pebbles(b, at, rng, RockCell, RockLightCell));
                     break;
                 case "rustworks":
-                    if (zone == Zone.Pocket) { if (pick < .4f) Plate(b, at, yaw, rng); else if (pick < .8f) Pebbles(b, at, rng, RockShadeCell, RockCell); else Pipe(b, at, yaw, rng, .7f); }
-                    else if (pick < .24f) Barrels(b, at, yaw, rng);
-                    else if (pick < .44f) Pipe(b, at, yaw, rng, 1f);
-                    else if (pick < .6f && roomy) Girder(b, at, yaw, rng);
-                    else if (pick < .78f) Plate(b, at, yaw, rng);
-                    else Pebbles(b, at, rng, RockShadeCell, RockCell);
+                    if (zone == Zone.Pocket) { if (pick < .4f) Pick(b, "Plate", () => Plate(b, at, yaw, rng)); else if (pick < .8f) Pick(b, "Pebbles", () => Pebbles(b, at, rng, RockShadeCell, RockCell)); else Pick(b, "Pipe", () => Pipe(b, at, yaw, rng, .7f)); }
+                    else if (pick < .24f) Pick(b, "Barrels", () => Barrels(b, at, yaw, rng));
+                    else if (pick < .44f) Pick(b, "Pipe", () => Pipe(b, at, yaw, rng, 1f));
+                    else if (pick < .6f && roomy) Pick(b, "Girder", () => Girder(b, at, yaw, rng));
+                    else if (pick < .78f) Pick(b, "Plate", () => Plate(b, at, yaw, rng));
+                    else Pick(b, "Pebbles", () => Pebbles(b, at, rng, RockShadeCell, RockCell));
                     break;
                 case "ash-ridge":
-                    if (zone == Zone.Pocket) { if (pick < .5f) Pebbles(b, at, rng, AshStoneCell, IvoryShadeCell); else if (pick < .8f) Drift(b, at, yaw, rng, AshStoneCell, .8f); else Bones(b, at, yaw, rng); }
-                    else if (pick < .28f && roomy) Spire(b, at, yaw, rng);
-                    else if (pick < .48f) DeadTree(b, at, yaw, rng);
-                    else if (pick < .68f) Drift(b, at, yaw, rng, AshStoneCell, 1.2f);
-                    else if (pick < .9f) Pebbles(b, at, rng, AshStoneCell, IvoryShadeCell);
-                    else Tuft(b, at, rng, DryLeavesCell, 1f);
+                    if (zone == Zone.Pocket) { if (pick < .5f) Pick(b, "Pebbles", () => Pebbles(b, at, rng, AshStoneCell, IvoryShadeCell)); else if (pick < .8f) Pick(b, "Drift", () => Drift(b, at, yaw, rng, AshStoneCell, .8f)); else Pick(b, "Bones", () => Bones(b, at, yaw, rng)); }
+                    else if (pick < .28f && roomy) Pick(b, "Spire", () => Spire(b, at, yaw, rng));
+                    else if (pick < .48f) Pick(b, "DeadTree", () => DeadTree(b, at, yaw, rng));
+                    else if (pick < .68f) Pick(b, "Drift", () => Drift(b, at, yaw, rng, AshStoneCell, 1.2f));
+                    else if (pick < .9f) Pick(b, "Pebbles", () => Pebbles(b, at, rng, AshStoneCell, IvoryShadeCell));
+                    else Pick(b, "Tuft", () => Tuft(b, at, rng, DryLeavesCell, 1f));
                     break;
                 default:
-                    if (zone == Zone.Pocket) { if (pick < .5f) Pebbles(b, at, rng, RockLightCell, RockCell); else if (pick < .8f) Tuft(b, at, rng, DryLeavesCell, 1f); else Bones(b, at, yaw, rng); }
-                    else if (pick < .2f && roomy) Dune(b, at, yaw, rng);
-                    else if (pick < .42f) Cactus(b, at, yaw, rng);
-                    else if (pick < .66f) Tuft(b, at, rng, rng.NextDouble() < .3 ? CactusCell : DryLeavesCell, 1.2f);
-                    else if (pick < .9f) Pebbles(b, at, rng, RockLightCell, RockCell);
-                    else Bones(b, at, yaw, rng);
+                    if (zone == Zone.Pocket) { if (pick < .5f) Pick(b, "Pebbles", () => Pebbles(b, at, rng, RockLightCell, RockCell)); else if (pick < .8f) Pick(b, "Tuft", () => Tuft(b, at, rng, DryLeavesCell, 1f)); else Pick(b, "Bones", () => Bones(b, at, yaw, rng)); }
+                    else if (pick < .2f && roomy) Pick(b, "Dune", () => Dune(b, at, yaw, rng));
+                    else if (pick < .42f) Pick(b, "Cactus", () => Cactus(b, at, yaw, rng));
+                    else if (pick < .66f) Pick(b, "Tuft", () => Tuft(b, at, rng, rng.NextDouble() < .3 ? CactusCell : DryLeavesCell, 1.2f));
+                    else if (pick < .9f) Pick(b, "Pebbles", () => Pebbles(b, at, rng, RockLightCell, RockCell));
+                    else Pick(b, "Bones", () => Bones(b, at, yaw, rng));
                     break;
             }
         }
+
+        static void Pick(Builder builder, string category, Action draw) { builder.category = category; draw(); }
 
         static float R(System.Random rng, float min, float max) => min + (float)rng.NextDouble() * (max - min);
 
@@ -487,6 +545,7 @@ namespace RoadGunner.Editor
             int count = rng.Next(1, 4);
             for (int i = 0; i < count; i++)
             {
+                int firstIndex = b.triangles.Count;
                 int cell = new[] { RustCell, YellowCell, RustDarkCell, TealCell }[rng.Next(4)];
                 var offset = Quaternion.Euler(0, yaw + i * 120, 0) * Vector3.forward * (i == 0 ? 0 : .5f);
                 bool tipped = rng.NextDouble() < .3;
@@ -498,6 +557,7 @@ namespace RoadGunner.Editor
                 var axis = (end - start).normalized;
                 Prism(b, start + axis * h * .3f, start + axis * h * .36f, r * 1.04f, r * 1.04f, 8, RustDarkCell, false, false);
                 Prism(b, start + axis * h * .64f, start + axis * h * .7f, r * 1.04f, r * 1.04f, 8, RustDarkCell, false, false);
+                b.Record("Barrel", firstIndex, "/barrel/" + i, false);
             }
         }
 

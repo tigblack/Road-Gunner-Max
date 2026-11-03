@@ -1,0 +1,58 @@
+{
+  "base": "ece4240eb9caf59d8092220ab094ad05fe0563a2",
+  "originalProductionFiles": 1890,
+  "unchangedOriginalFiles": 1880,
+  "changedOriginalFiles": [
+    {
+      "path": "Assets/RoadGunner/Editor/Arcade/ArcadeVisualDressing.cs",
+      "beforeSha256": "985cbf79d5a17219e6559d0e4d4136025c0d987899a20649b918db4936ce6ac5",
+      "afterSha256": "05003a2bc0342f8dae72ba18bdcec648f16484d062a8e631e9b018c7ddc8fad8"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/ConceptArt/ConceptDressing.cs",
+      "beforeSha256": "75bc4a034429517211b04131a5f7e561b12f5582eaef8d370cd81ab17fbaa6b5",
+      "afterSha256": "2f470172193e626b3b9772fa51f39ce223e85c5b3a1c98ee0cce9ca6eee65b53"
+    },
+    {
+      "path": "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+      "beforeSha256": "4bd12eb8cf2815ef56e07bf0ddd7e8fd06ce10f65e0c0cd8fee691fc70a08105",
+      "afterSha256": "34d1678ff8d071df6e85ead54133e7c5dd9819f1a64bd5d1c473c7a2e7a031be"
+    },
+    {
+      "path": "Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Navigation.asset",
+      "beforeSha256": "4c2244b4a371b187f40a9ae4641d3f075ed919b17dbfe2dbb71de2269768d1cb",
+      "afterSha256": "5af94aa55283258c82fffc633397b6abf96a9f91b08d7dc2d8e48a9fabb42987"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/Arena1PlayChecks.cs",
+      "beforeSha256": "6e65da162fcf410b03d4e6433fdffbd7458f6605c67640a5142240918cad9f97",
+      "afterSha256": "c1f7be08cfa5776e2d436ede7cb0caddac874855d3a99c60690f7fa79efdd386"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/ExplorationPlayChecks.cs",
+      "beforeSha256": "4043dbeb06e0c7f0c913d3982b9a274c3e597222d4ba8e7b7d797db27019101e",
+      "afterSha256": "98a36ed3f52d83debe9222221b9052923e0e97348b0e68845f21194346d29b67"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/TrackedVehiclePlayChecks.cs",
+      "beforeSha256": "780fe71a2314cb4a3e9f702633a40f776637efad5cc645fabc3f6be6fe710477",
+      "afterSha256": "4b6b3071fb26441ba802b6b985811978fd40231798eb31cb776d3272d79e4c7b"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WheelPhysicsPlayChecks.cs",
+      "beforeSha256": "333a853ceeaacf0a5262eac43ef41cae164b20b38c4af0fa9007c5ab0d7b3ed8",
+      "afterSha256": "b49209a6c9ebe27009aea9a0ed239c3d577e98e394e45567d3ebde652f91061b"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleController.cs",
+      "beforeSha256": "303744f8a76cdec180bd97ef610be5be505d0a158cc0389ac9c53d8576a719bf",
+      "afterSha256": "5fdc88efe9370ce54732b1b236884a15200f4fcfee7bf8ac972a98859b7fef70"
+    },
+    {
+      "path": "ProjectSettings/TagManager.asset",
+      "beforeSha256": "7ddd075ccdb83bab0eedcbb4ae2fdf565d075dc79742ee20e0344b90f397af0a",
+      "afterSha256": "870e72ee4450c3a03aee911bd166c33f4225e8bd7906308176ae1b7128f3b5ce"
+    }
+  ],
+  "notes": "Only approved source edits, saved collision/scene/navigation wiring and scenery layer name changed. Original visual mesh/material assets and all combat/vehicle tuning unchanged. New authored collision mesh assets and new scripts are additional files."
+}

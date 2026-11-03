@@ -33,6 +33,54 @@ namespace RoadGunner.ConceptArt.Editor
             foreach(var c in g.GetComponentsInChildren<Collider>(true))Object.DestroyImmediate(c);
             foreach(var t in g.GetComponentsInChildren<Transform>(true))t.gameObject.isStatic=true;
         }
+        public sealed class MemberSpec
+        {
+            public string kind;
+            public Vector3 position;
+            public float scale, yaw;
+            public MemberSpec(string kind, Vector3 position, float scale, float yaw)
+            { this.kind = kind; this.position = position; this.scale = scale; this.yaw = yaw; }
+        }
+        /// <summary>Read-only original member recipe; does not call ArtKit.Ensure, Bake or save any source prefab.</summary>
+        public static MemberSpec[] ReplayMembers(int i)
+        {
+            if (i < 0 || i > 7) throw new ArgumentOutOfRangeException(nameof(i));
+            var members = new List<MemberSpec>();
+            void Add(string kind, Vector3 position, float scale, float yaw) => members.Add(new MemberSpec(kind, position, scale, yaw));
+            // Positive local X points away from the old driving lane, exactly as in the saved templates.
+            if (i < 5)
+            {
+                Add("Boulder", new Vector3(.63f, 0, .30f), .38f + (i % 3) * .10f, i * 37);
+                Add("Boulder", new Vector3(1.23f, 0, -.63f), .18f + (i % 2) * .08f, i * 17 + 42);
+                Add("Dry scrub", new Vector3(.10f, 0, -.70f), .82f, i * 43);
+                Add("Dry scrub", new Vector3(1.58f, 0, .55f), .68f, i * 19);
+                if (i != 2) Add("Cactus", new Vector3(1.17f, 0, .92f), .68f + (i % 3) * .15f, i * 71);
+                if (i == 3) Add("Boulder", new Vector3(.23f, 0, 1.23f), .21f, 27);
+            }
+            else if (i == 5)
+            {
+                Add("Tire stack", new Vector3(.52f, 0, .13f), .80f, 12);
+                Add("Dry scrub", new Vector3(1.18f, 0, -.64f), .85f, 84);
+                Add("Boulder", new Vector3(.66f, 0, -.86f), .23f, 7);
+                Add("Cactus", new Vector3(1.45f, 0, .95f), .68f, 30);
+            }
+            else if (i == 6)
+            {
+                Add("Fuel drums", new Vector3(.68f, 0, .17f), .72f, 98);
+                Add("Boulder", new Vector3(.48f, 0, -.89f), .26f, 94);
+                Add("Dry scrub", new Vector3(1.34f, 0, 1.12f), .82f, 140);
+            }
+            else
+            {
+                Add("Wooden supply crate", new Vector3(.62f, 0, .10f), .85f, 17);
+                Add("Boulder", new Vector3(.96f, 0, -.94f), .28f, 13);
+                Add("Dry scrub", new Vector3(.06f, 0, .92f), .80f, 120);
+                Add("Cactus", new Vector3(1.68f, 0, .37f), .71f, 150);
+            }
+            return members.ToArray();
+        }
+        public static GameObject ReplaySource(string kind) => Source(kind);
+
         static GameObject[] Groups()
         {
             var result=new GameObject[8];
@@ -41,31 +89,7 @@ namespace RoadGunner.ConceptArt.Editor
                 var g=ArtKit.Node("Shoulder composition "+i);var p=g.transform;
                 try
                 {
-                    // Positive local X points away from the driving lane. The inward edge stays near x=0.
-                    if(i<5)
-                    {
-                        Add(p,"Boulder",new Vector3(.63f,0,.30f),.38f+(i%3)*.10f,i*37);
-                        Add(p,"Boulder",new Vector3(1.23f,0,-.63f),.18f+(i%2)*.08f,i*17+42);
-                        Add(p,"Dry scrub",new Vector3(.10f,0,-.70f),.82f,i*43);
-                        Add(p,"Dry scrub",new Vector3(1.58f,0,.55f),.68f,i*19);
-                        if(i!=2)Add(p,"Cactus",new Vector3(1.17f,0,.92f),.68f+(i%3)*.15f,i*71);
-                        if(i==3)Add(p,"Boulder",new Vector3(.23f,0,1.23f),.21f,27);
-                    }
-                    else if(i==5)
-                    {
-                        Add(p,"Tire stack",new Vector3(.52f,0,.13f),.80f,12);Add(p,"Dry scrub",new Vector3(1.18f,0,-.64f),.85f,84);
-                        Add(p,"Boulder",new Vector3(.66f,0,-.86f),.23f,7);Add(p,"Cactus",new Vector3(1.45f,0,.95f),.68f,30);
-                    }
-                    else if(i==6)
-                    {
-                        Add(p,"Fuel drums",new Vector3(.68f,0,.17f),.72f,98);Add(p,"Boulder",new Vector3(.48f,0,-.89f),.26f,94);
-                        Add(p,"Dry scrub",new Vector3(1.34f,0,1.12f),.82f,140);
-                    }
-                    else
-                    {
-                        Add(p,"Wooden supply crate",new Vector3(.62f,0,.10f),.85f,17);Add(p,"Boulder",new Vector3(.96f,0,-.94f),.28f,13);
-                        Add(p,"Dry scrub",new Vector3(.06f,0,.92f),.80f,120);Add(p,"Cactus",new Vector3(1.68f,0,.37f),.71f,150);
-                    }
+                    foreach (var member in ReplayMembers(i)) Add(p, member.kind, member.position, member.scale, member.yaw);
                     ArtKit.Bake(p,"Env_Shoulder_Composition_"+i);
                     var visual=p.Find("Finished shared visuals");foreach(Transform child in p.Cast<Transform>().ToArray())if(child!=visual)Object.DestroyImmediate(child.gameObject);
                     g.isStatic=true;if(visual)visual.gameObject.isStatic=true;

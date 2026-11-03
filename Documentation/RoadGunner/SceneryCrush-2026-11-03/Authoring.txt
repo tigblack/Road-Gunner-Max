@@ -1,0 +1,37 @@
+Saved-scene vehicle scenery collision authoring
+Verified catalog schema=1; repeat=True; scene=Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Arcade original primary items=1067; chunks=29; unchanged vertices=207432
+Concept mixed instances=79; recovered members=354
+Mutable original sources=208; soft query probes=688; compact exact hard colliders=209; reused original hard colliders=3
+Replaced standalone soft solids=8; existing protected solids=136; complete route guards=14
+Exact unchanged car-box route guard: routes=14; samples=736; clearance repair version=1
+Approved pose-only relocation clearance-20261103/d26299ad621b05e1dc73: (-38.79362, 0.01200, -55.44483) -> (-39.97362, 0.01200, -58.20483); delta=(-1.180, 0.000, -2.760); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-301807272
+Approved pose-only relocation clearance-20261103/88c9216d8eb31fd764b4: (44.53004, 0.01200, 56.85391) -> (47.45004, 0.01200, 56.16391); delta=(2.920, 0.000, -0.690); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-1994667937
+Approved pose-only relocation clearance-20261103/30a2efe5dfdb3320a1a5: (13.46587, 0.01200, 1.67133) -> (16.45587, 0.01200, 1.47133); delta=(2.990, 0.000, -0.200); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-2003288657
+Barrel: soft=76, hard=0, surface=0, composite=0
+Barrels: soft=0, hard=0, surface=0, composite=38
+Bones: soft=35, hard=0, surface=0, composite=0
+Boulder: soft=0, hard=125, surface=22, composite=0
+Cactus: soft=168, hard=0, surface=0, composite=0
+DeadTree: soft=87, hard=0, surface=0, composite=0
+Drift: soft=0, hard=0, surface=52, composite=0
+Dry scrub: soft=0, hard=0, surface=233, composite=0
+Dune: soft=0, hard=0, surface=61, composite=0
+Fuel drums: soft=24, hard=0, surface=0, composite=0
+Girder: soft=0, hard=21, surface=0, composite=0
+Hull: soft=0, hard=20, surface=0, composite=0
+Metal storage crate: soft=4, hard=0, surface=0, composite=0
+Pebbles: soft=0, hard=0, surface=241, composite=0
+Pipe: soft=34, hard=0, surface=0, composite=0
+Plate: soft=62, hard=0, surface=0, composite=0
+ScrapPile: soft=52, hard=0, surface=0, composite=0
+Spire: soft=0, hard=46, surface=0, composite=0
+Tire and scrap pile: soft=35, hard=0, surface=0, composite=0
+Tire stack: soft=34, hard=0, surface=0, composite=0
+Tuft: soft=0, hard=0, surface=178, composite=0
+Tyre: soft=22, hard=0, surface=0, composite=0
+TyreStack: soft=31, hard=0, surface=0, composite=0
+Wooden supply crate: soft=24, hard=0, surface=0, composite=0
+PASS: original visual geometry/materials/poses unchanged; all item triples/ranges validated. All Arcade replay positions/normals/UV/indices matched the saved chunks; all Concept template triangles matched original members. Approved clearance migration: only three whole shoulder poses changed; all visual/collision-local geometry and materials preserved; exact original car-box centreline checks pass.
+Only query probes on RG_SceneryCrush/12 can break; large hard scenery is Default/0. Gameplay targets, upgrades, workshop, crew and actors are excluded.
+Original visual meshes/materials and generation recipes retained; only recorded whole-instance clearance poses changed. One existing-config collider navigation bake; no full visual/world/minimap installer.

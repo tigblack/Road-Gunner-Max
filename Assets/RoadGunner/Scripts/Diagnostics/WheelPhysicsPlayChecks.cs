@@ -15,8 +15,8 @@ namespace RoadGunner
     [DefaultExecutionOrder(10000)]
     public sealed class WheelPhysicsPlayChecks : MonoBehaviour
     {
-        public const string ReportPath = "Documentation/RoadGunner/TrackedVehicle-2026-11-03/Physics.txt";
-        public const string ArtifactFolder = "outputs/tracked-vehicle-2026-11-03/physics";
+        public const string ReportPath = "Documentation/RoadGunner/SceneryCrush-2026-11-03/Physics.txt";
+        public const string ArtifactFolder = "outputs/scenery-crush-2026-11-03/physics";
         public bool Completed { get; private set; }
         public int Checks { get; private set; }
         public int Failures { get; private set; }

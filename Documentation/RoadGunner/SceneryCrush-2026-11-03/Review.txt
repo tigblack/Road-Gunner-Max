@@ -1,0 +1,12 @@
+INDEPENDENT STATIC REVIEW — SCENERY CRUSH
+Reviewed at UTC: 2026-11-03T19:27:37.944064+00:00
+
+Scope: ArenaDecorationCrush.cs, DecorationCrushChunk.cs and DecorationCollisionInstaller.cs, plus the saved Level01_Greenwood scene and Authoring.json. No source, scene or asset changes were made during the review; Unity and builds were not launched.
+
+No production blockers found in the reviewed code. Contact uses registered living/grounded vehicles and measured Rigidbody point velocity. Run-state and pose-reset guards prevent paused/terminal mutation and teleport sweeps. Soft geometry changes use per-instance mesh copies and selected triangle ranges; source assets and hard geometry remain separate. Restart restores indices/probes and clears bounded cosmetic debris without combat/reward calls.
+
+Independent saved-data check: recomputed world TRS matrices from serialized scene transforms and compared them with each catalog source.pose. All 897 owned proxies matched: 688 soft probes plus 209 exact hard MeshColliders. Maximum matrix-element error was 4.999999987e-6 (approximately 5e-6), below the 1e-4 comparison tolerance. The only three missing owned proxies were the expected regional Boulder objects that reuse existing hard colliders; catalog.reusedHardColliders=3.
+
+The recorded whole-composition clearance migration updates source.pose and synchronizes every soft/hard proxy for the moved source. Local geometry, triangle provenance and materials remain unchanged. Identity/old-position guards, protected-solid signatures, the original full-car route clearance, workshop clearance and existing-configuration navigation guards run before saving. New Boulder colliders are included in the physical clearance checks.
+
+Limitation: this is a static code and saved-data review. It does not independently establish PhysX driving results, final native-suite results, browser rendering/performance or public deployment. Those require the separately recorded runtime and release checks.
