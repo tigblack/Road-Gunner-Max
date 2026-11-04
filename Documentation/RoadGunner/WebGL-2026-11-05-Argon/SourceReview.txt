@@ -1,0 +1,23 @@
+Argon visual update — independent static source review
+Reviewed at UTC: 2026-11-04T22:06:14.534076+00:00
+Baseline HEAD: 6a24f9c5a8f8c5392064f0bb376ab99cc81dc4f8 plus the current uncommitted Argon visual changes.
+Scope: read-only Git diff, current saved Level01_Greenwood scene, changed art/editor code, asset references and build entrypoints. This is a static review, not a browser, performance or natural-playthrough result.
+
+Result: no release-blocking source or missing-reference defect found in this review.
+
+Changes verified:
+- New ArgonVisualOverhaul editor runner and revised procedural player, crew, weapons, enemy, environment, shoulder, regional dressing and site geometry. Saved scene, navigation and exact scenery collision assets were regenerated.
+- The only changed runtime C# file relative to the baseline is PlayerTrackVisuals.cs; its diff changes mesh construction and visual detail, not tracked-drive controls or physics.
+- Existing scene MonoBehaviour components changed at preserved component IDs are DecorationCrushChunk data only (180 components). Regenerated components comprise 28 crush chunks and the scenery crush manager. Existing GameSession/input/health/AI/HUD component records at preserved IDs are unchanged.
+- All 448 distinct external GUID references in the saved scene resolve to project assets or installed packages. Changed YAML assets/prefabs/materials have no unresolved GUID references. No duplicate asset GUIDs or missing accompanying metas were found in the examined project files. No changed/new RoadGunner file exceeds 25 MiB.
+- Current collision catalog records 208 mutable sources, 688 soft probes, 209 exact hard colliders and 3 reused hard colliders. Arcade geometry is now 235332 vertices across the same 29 chunks/1067 primary items. Catalog verification records exact replay/range matching and all 14 car-clearance routes.
+
+Build and validation:
+- Unity 6000.6.4f1; startup scene Assets/RoadGunner/Scenes/Level01_Greenwood.unity.
+- Build the saved snapshot with RoadGunner.EditorTools.WebBuild.Build and -buildTarget WebGL. ArgonVisualOverhaul.ApplyBatch is an authoring operation that rewrites art, scene and collision data; it is not needed for a normal build.
+- Required release evidence: completed SceneryCrushVerification (26), WheelPhysicsVerification (21), TrackedVehicleVerification (9), Arena1Verification (204), ExplorationVerification (88), Console gates, shader validation and the actual WebGL build. Fresh release evidence is collected separately under WebGL-2026-11-05-Argon; this review does not claim those active runs have finished.
+- Greater geometric detail warrants actual rendered WebGL visual/performance smoke. No device/browser frame-rate claim follows from static source review or native fixture checks.
+
+Scoped physics fixture correction (5 November):
+The first fresh physics run completed 21 checks with two failures: the queued Space event did not reach DriveInput.Brake (False), and both coast/brake trials consequently followed the same 4.253 m trajectory. CSV brake torque stayed at the 50 Nm coast value; this run did not exercise the 1100 Nm service-brake branch. The other 19 checks and Console gate passed.
+WheelPhysicsPlayChecks lacked the scoped editor focus policy already used by Arena1PlayChecks. Installed InputSystem InputSettings documents editor routing of unfocused keyboard events and background-device disabling. The fixture now temporarily sets AllDeviceInputAlwaysGoesToGameView and IgnoreFocus, restores both exact previous settings on normal/failed teardown and destruction, and records synthetic/current keyboard state alongside DriveInput.Brake. No production code, physical thresholds, assertions, or input path was replaced. This is a test environment correction; the fresh rerun remains required to demonstrate actual Space braking.

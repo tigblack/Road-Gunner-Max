@@ -14,25 +14,33 @@ namespace RoadGunner.Editor
     /// Workshop: the baked workshop mesh is re-derived from its legacy source into an arcade copy without the old
     /// apron/footing/joint slabs that z-fought with the packed-road mesh, with the cow-print rust blooms painted out
     /// (teal cladding, cream end walls, navy uprights, yellow knee braces, rust roofs with cream seams and teal trim) and
-    /// the high side canopies split into a no-shadow renderer (no ghost slabs on the floor). A new opaque concrete floor
-    /// slab (tile grid, mint repair lane with chevrons, wrench badge) sits just above the measured road/terrain height.
-    /// Upgrade stations: navy pedestal, gold rim, emissive inner disc (gold attack / mint health).
+    /// the high side canopies split into a no-shadow renderer (no ghost slabs on the floor), plus a 3D rooftop wrench-and-gear
+    /// landmark totem and glowing service beacons. A new opaque concrete floor slab (tile grid, mint repair lane with chevrons,
+    /// hazard corner brackets, wrench badge) sits just above the measured road/terrain height.
+    /// Upgrade stations: navy pedestal, gold rim, corner pylons, 3D attack/health totem crest, and emissive inner disc.
+    /// Reward caches: armored wasteland loot chest trim with gold corner bumpers and glowing energy core bars.
     /// </summary>
     public static class ArcadeVisualSites
     {
         const string WorkshopSourcePath = "Assets/RoadGunner/Art/ConceptWasteland/Meshes/Env_AutoRepairWorkshop_Palette.asset";
         const string ShellPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade workshop shell.asset";
         const string CanopyPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade workshop canopy.asset";
+        const string RooftopPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade workshop rooftop.asset";
         const string FloorMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade workshop floor.asset";
         const string FloorTexturePath = ArcadeVisualInstaller.Root + "/Textures/Arcade workshop floor.png";
         const string FloorMaterialPath = ArcadeVisualInstaller.Root + "/Materials/Arcade workshop floor.mat";
         const string RimMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade station rim.asset";
         const string DiscMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade station disc.asset";
+        const string AttackTotemMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade station attack totem.asset";
+        const string HealthTotemMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade station health totem.asset";
+        const string CacheTrimMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade cache trim.asset";
+        const string CacheGlowMeshPath = ArcadeVisualInstaller.Root + "/Meshes/Arcade cache glow.asset";
         const string GoldMaterialPath = ArcadeVisualInstaller.Root + "/Materials/Arcade station gold.mat";
         const string GlowGoldMaterialPath = ArcadeVisualInstaller.Root + "/Materials/Arcade station glow gold.mat";
         const string GlowMintMaterialPath = ArcadeVisualInstaller.Root + "/Materials/Arcade station glow mint.mat";
         public const string FloorName = "Arcade workshop floor";
         public const string CanopyName = "Arcade workshop canopy (no shadows)";
+        public const string RooftopName = "Arcade workshop rooftop landmarks";
         const float FloorX = 23.4f, FloorZ = 13.4f, FloorDepth = .14f;
 
         public static void Apply(GameSession session, Shader toon, List<string> log)
@@ -41,7 +49,10 @@ namespace RoadGunner.Editor
                 log.Add(Workshop(workshop, toon));
             int stations = 0;
             foreach (var station in RoadGunnerLevelAuthoring.InScene<ArenaUpgradeStation>().Where(s => s)) { Station(station, toon); stations++; }
-            log.Add("Upgrade stations: " + stations + " restyled (navy pedestal, gold rim, emissive gold/mint inner disc).");
+            log.Add("Upgrade stations: " + stations + " restyled (navy pedestal, gold rim, 3D totem crest, emissive gold/mint inner disc).");
+            int caches = 0;
+            foreach (var cache in RoadGunnerLevelAuthoring.InScene<ArenaRewardCache>().Where(c => c)) { Cache(cache, toon); caches++; }
+            log.Add("Reward caches: " + caches + " restyled with armored chest trim and glowing core bars.");
         }
 
         static Mesh SaveMesh(Mesh mesh, string path)
@@ -90,6 +101,46 @@ namespace RoadGunner.Editor
             EditorUtility.SetDirty(go);
         }
 
+        // ---------- small procedural mesh builder for site landmarks ----------
+
+        sealed class SiteMeshBuilder
+        {
+            public readonly List<Vector3> v = new List<Vector3>();
+            public readonly List<Vector3> n = new List<Vector3>();
+            public readonly List<Vector2> uv = new List<Vector2>();
+            public readonly List<int> t = new List<int>();
+
+            public void Quad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector3 normal, Vector2 cellUv)
+            {
+                int i = v.Count;
+                v.Add(a); v.Add(b); v.Add(c); v.Add(d);
+                n.Add(normal); n.Add(normal); n.Add(normal); n.Add(normal);
+                uv.Add(cellUv); uv.Add(cellUv); uv.Add(cellUv); uv.Add(cellUv);
+                t.AddRange(new[] { i, i + 1, i + 2, i, i + 2, i + 3 });
+            }
+
+            public void Box(Vector3 center, Vector3 size, Quaternion rot, string cellName = null)
+            {
+                Vector2 u = string.IsNullOrEmpty(cellName) ? Vector2.zero : ArcadeVisualPalette.CellUv(ArcadeVisualPalette.CellOf(cellName));
+                Vector3 h = size * .5f;
+                Vector3 P(float x, float y, float z) => center + rot * new Vector3(x * h.x, y * h.y, z * h.z);
+                Vector3 N(Vector3 dir) => (rot * dir).normalized;
+                Quad(P(-1, 1, -1), P(-1, 1, 1), P(1, 1, 1), P(1, 1, -1), N(Vector3.up), u);
+                Quad(P(-1, -1, 1), P(-1, -1, -1), P(1, -1, -1), P(1, -1, 1), N(Vector3.down), u);
+                Quad(P(-1, -1, 1), P(1, -1, 1), P(1, 1, 1), P(-1, 1, 1), N(Vector3.forward), u);
+                Quad(P(1, -1, -1), P(-1, -1, -1), P(-1, 1, -1), P(1, 1, -1), N(Vector3.back), u);
+                Quad(P(1, -1, 1), P(1, -1, -1), P(1, 1, -1), P(1, 1, 1), N(Vector3.right), u);
+                Quad(P(-1, -1, -1), P(-1, -1, 1), P(-1, 1, 1), P(-1, 1, -1), N(Vector3.left), u);
+            }
+
+            public Mesh Build(string name)
+            {
+                var mesh = new Mesh { name = name, indexFormat = v.Count > 65535 ? IndexFormat.UInt32 : IndexFormat.UInt16 };
+                mesh.SetVertices(v); mesh.SetNormals(n); mesh.SetUVs(0, uv); mesh.SetTriangles(t, 0); mesh.RecalculateBounds();
+                return mesh;
+            }
+        }
+
         // ---------- workshop ----------
 
         static string Workshop(RepairWorkshop workshop, Shader toon)
@@ -121,6 +172,11 @@ namespace RoadGunner.Editor
             canopyGo.transform.localPosition = Vector3.zero; canopyGo.transform.localRotation = Quaternion.identity; canopyGo.transform.localScale = Vector3.one;
             Visual(canopyGo, canopy, palette, ShadowCastingMode.Off);
 
+            // 3D Rooftop Landmarks (crossed wrench & gear totems + glowing mint service beacons + awning headers)
+            var rooftopGo = Child(canopyGo.transform, RooftopName);
+            rooftopGo.transform.localPosition = Vector3.zero; rooftopGo.transform.localRotation = Quaternion.identity; rooftopGo.transform.localScale = Vector3.one;
+            Visual(rooftopGo, SaveMesh(WorkshopRooftopMesh(), RooftopPath), palette, ShadowCastingMode.Off);
+
             // Opaque concrete floor slab (queue 2000: never washes over world labels or VFX text).
             var texture = WriteFloorTexture();
             var floorMaterial = ToonMaterial(FloorMaterialPath, toon, "Arcade workshop floor");
@@ -148,8 +204,39 @@ namespace RoadGunner.Editor
                     var r = f.GetComponent<MeshRenderer>();
                     if (r) { if (r.enabled) { r.enabled = false; EditorUtility.SetDirty(r); } hidden++; }
                 }
-            return "Workshop '" + root.name + "': shell " + shell.vertexCount + " verts (" + stats + "), canopy " + canopy.vertexCount + " verts without shadows; concrete floor top at y=" +
+            return "Workshop '" + root.name + "': shell " + shell.vertexCount + " verts (" + stats + "), canopy " + canopy.vertexCount + " verts + rooftop landmarks without shadows; concrete floor top at y=" +
                 floorTop.ToString("F3") + " (" + FloorX + "x" + FloorZ + " m); painted wrench renderers hidden " + hidden + ".";
+        }
+
+        static Mesh WorkshopRooftopMesh()
+        {
+            var b = new SiteMeshBuilder();
+            for (int s = -1; s <= 1; s += 2)
+            {
+                float x = s * 9.75f;
+                // Rooftop totem pedestal + giant gear & crossed wrenches
+                b.Box(new Vector3(x, 5.95f, 0), new Vector3(1.1f, .42f, 2.6f), Quaternion.identity, "Steel");
+                b.Box(new Vector3(x, 6.22f, 0), new Vector3(1.22f, .14f, 2.75f), Quaternion.identity, "Yellow");
+                // Giant gear ring & teeth
+                b.Box(new Vector3(x, 7.15f, 0), new Vector3(.28f, 1.55f, 1.55f), Quaternion.identity, "Teal");
+                b.Box(new Vector3(x, 7.15f, 0), new Vector3(.34f, 1.10f, 1.10f), Quaternion.Euler(45, 0, 0), "Yellow");
+                b.Box(new Vector3(x, 7.15f, 0), new Vector3(.42f, .58f, .58f), Quaternion.identity, "Mint");
+                // Crossed giant spanner shafts above the gear
+                for (int k = -1; k <= 1; k += 2)
+                {
+                    b.Box(new Vector3(x, 7.35f, 0), new Vector3(.22f, 2.65f, .28f), Quaternion.Euler(k * 38f, 0, 0), "Ivory");
+                    b.Box(new Vector3(x, 8.35f, k * .82f), new Vector3(.26f, .48f, .56f), Quaternion.Euler(k * 20f, 0, 0), "Yellow");
+                }
+                // 2 glowing Mint service beacons per canopy end
+                for (int z = -1; z <= 1; z += 2)
+                {
+                    b.Box(new Vector3(x, 5.92f, z * 5.8f), new Vector3(.68f, .28f, .68f), Quaternion.identity, "Steel");
+                    b.Box(new Vector3(x, 6.26f, z * 5.8f), new Vector3(.52f, .48f, .52f), Quaternion.identity, "Mint");
+                    b.Box(new Vector3(x, 5.85f, z * 6.32f), new Vector3(3.2f, .52f, .14f), Quaternion.identity, "Yellow");
+                    b.Box(new Vector3(x, 5.85f, z * 6.40f), new Vector3(2.6f, .26f, .08f), Quaternion.identity, "Mint");
+                }
+            }
+            return b.Build("Arcade workshop rooftop");
         }
 
         static float MeasureFloor(RepairWorkshop workshop)
@@ -265,7 +352,7 @@ namespace RoadGunner.Editor
         {
             const int width = 1024, height = 512;
             Color concrete = ArcadeVisualInstaller.Hex("E6D6B8"), seam = ArcadeVisualInstaller.Hex("CDBB9C"), border = ArcadeVisualInstaller.Hex("C3A47C"),
-                mint = ArcadeVisualInstaller.Hex("4EE0A4"), mintInk = ArcadeVisualInstaller.Hex("249E74"), stain = ArcadeVisualInstaller.Hex("CDBD9F");
+                mint = ArcadeVisualInstaller.Hex("4EE0A4"), mintInk = ArcadeVisualInstaller.Hex("249E74"), gold = ArcadeVisualInstaller.Hex("FCC946"), stain = ArcadeVisualInstaller.Hex("CDBD9F");
             float aa = FloorX / width * 1.2f;
             var pixels = new Color32[width * height];
             for (int py = 0; py < height; py++) for (int px = 0; px < width; px++)
@@ -287,6 +374,9 @@ namespace RoadGunner.Editor
                 float laneEdge = Mathf.Abs(Mathf.Abs(x) - 3.5f) - .11f;
                 if (Mathf.Abs(x) < 3.5f) c = Color.Lerp(c, mint, .08f);
                 c = Color.Lerp(c, mint, Coverage(laneEdge, aa));
+                // Gold hazard corner brackets framing the service bay
+                float cornerBracket = Mathf.Max(Mathf.Abs(Mathf.Abs(x) - 5.2f) - .14f, Mathf.Abs(Mathf.Abs(z) - 4.8f) - .9f);
+                c = Color.Lerp(c, gold, Coverage(cornerBracket, aa) * .88f);
                 for (int k = 0; k < 2; k++)
                     foreach (float side in new[] { -1f, 1f })
                     {
@@ -371,6 +461,96 @@ namespace RoadGunner.Editor
             var disc = Child(discParent, "Arcade station glow disc");
             disc.transform.position = root.TransformPoint(new Vector3(0, top + .006f, 0)); disc.transform.rotation = root.rotation; disc.transform.localScale = Vector3.one;
             Visual(disc, SaveMesh(Annulus(Mathf.Max(.4f, radius * .62f), radius - .2f, 40), DiscMeshPath), glow, ShadowCastingMode.Off);
+
+            // 3D Totem Crest + Corner Energy Pylons on availableVisual so each upgrade station has an unmistakable 3D silhouette
+            var totem = Child(discParent, "Arcade station totem crest");
+            totem.transform.position = root.TransformPoint(new Vector3(0, top, 0)); totem.transform.rotation = root.rotation; totem.transform.localScale = Vector3.one;
+            Visual(totem, SaveMesh(StationTotemMesh(health, radius), health ? HealthTotemMeshPath : AttackTotemMeshPath), glow, ShadowCastingMode.On);
+        }
+
+        static Mesh StationTotemMesh(bool health, float radius)
+        {
+            var b = new SiteMeshBuilder();
+            // 4 glowing corner pylons around the station rim
+            for (int i = 0; i < 4; i++)
+            {
+                float a = (45f + i * 90f) * Mathf.Deg2Rad;
+                var pos = new Vector3(Mathf.Cos(a) * (radius - .18f), .28f, Mathf.Sin(a) * (radius - .18f));
+                b.Box(pos, new Vector3(.22f, .56f, .22f), Quaternion.Euler(0, -i * 90f - 45f, 0));
+                b.Box(pos + Vector3.up * .34f, new Vector3(.14f, .18f, .14f), Quaternion.Euler(45, i * 90f, 45));
+            }
+            // Overhead holographic/emissive crest above the terminal
+            if (health)
+            {
+                // Bold 3D Medical Shield & Cross Aegis Crest
+                b.Box(new Vector3(0, 2.55f, 0), new Vector3(.88f, .26f, .22f), Quaternion.identity);
+                b.Box(new Vector3(0, 2.55f, 0), new Vector3(.26f, .88f, .22f), Quaternion.identity);
+                for (int s = -1; s <= 1; s += 2)
+                    b.Box(new Vector3(s * .58f, 2.55f, 0), new Vector3(.14f, .64f, .18f), Quaternion.Euler(0, 0, s * -16f));
+            }
+            else
+            {
+                // Bold 3D Twin-Autocannon & Chevron Attack Crest
+                for (int s = -1; s <= 1; s += 2)
+                {
+                    b.Box(new Vector3(s * .24f, 2.62f, 0), new Vector3(.18f, .86f, .18f), Quaternion.Euler(0, 0, s * -18f));
+                    b.Box(new Vector3(s * .42f, 2.45f, 0), new Vector3(.38f, .16f, .20f), Quaternion.Euler(0, 0, s * 32f));
+                }
+                b.Box(new Vector3(0, 2.88f, 0), new Vector3(.32f, .32f, .22f), Quaternion.Euler(0, 0, 45f));
+            }
+            return b.Build(health ? "Arcade station health totem" : "Arcade station attack totem");
+        }
+
+        // ---------- reward caches ----------
+
+        static void Cache(ArenaRewardCache cache, Shader toon)
+        {
+            if (!cache.availableVisual) return;
+            var gold = ToonMaterial(GoldMaterialPath, toon, "Arcade station gold");
+            bool mintAccent = cache.reward == ArenaRewardKind.Health || cache.reward == ArenaRewardKind.Repair;
+            var glow = ToonMaterial(mintAccent ? GlowMintMaterialPath : GlowGoldMaterialPath, toon, mintAccent ? "Arcade station glow mint" : "Arcade station glow gold");
+
+            var trimGo = Child(cache.availableVisual.transform, "Arcade cache gold trim");
+            trimGo.layer = cache.gameObject.layer;
+            trimGo.transform.localPosition = Vector3.zero; trimGo.transform.localRotation = Quaternion.identity; trimGo.transform.localScale = Vector3.one;
+            Visual(trimGo, SaveMesh(CacheTrimMesh(), CacheTrimMeshPath), gold, ShadowCastingMode.On);
+
+            var glowGo = Child(cache.availableVisual.transform, "Arcade cache glow core");
+            glowGo.layer = cache.gameObject.layer;
+            glowGo.transform.localPosition = Vector3.zero; glowGo.transform.localRotation = Quaternion.identity; glowGo.transform.localScale = Vector3.one;
+            Visual(glowGo, SaveMesh(CacheGlowMesh(), CacheGlowMeshPath), glow, ShadowCastingMode.Off);
+        }
+
+        static Mesh CacheTrimMesh()
+        {
+            var b = new SiteMeshBuilder();
+            // Armored golden corner bumpers + heavy front/back lock clasps on the 1.7 x 0.92 x 1.18 chest
+            for (int sx = -1; sx <= 1; sx += 2)
+                for (int sz = -1; sz <= 1; sz += 2)
+                {
+                    b.Box(new Vector3(sx * .84f, .52f, sz * .58f), new Vector3(.18f, .96f, .18f), Quaternion.identity);
+                    b.Box(new Vector3(sx * .84f, 1.02f, sz * .58f), new Vector3(.24f, .12f, .24f), Quaternion.identity);
+                }
+            for (int sz = -1; sz <= 1; sz += 2)
+            {
+                b.Box(new Vector3(0, .74f, sz * .62f), new Vector3(.34f, .38f, .10f), Quaternion.identity);
+            }
+            for (int sx = -1; sx <= 1; sx += 2)
+            {
+                b.Box(new Vector3(sx * .90f, .62f, 0), new Vector3(.08f, .14f, .46f), Quaternion.identity);
+            }
+            return b.Build("Arcade cache trim");
+        }
+
+        static Mesh CacheGlowMesh()
+        {
+            var b = new SiteMeshBuilder();
+            // Glowing energy core strips on the chest lid and front/back lock faces
+            for (int sx = -1; sx <= 1; sx += 2)
+                b.Box(new Vector3(sx * .46f, 1.07f, 0), new Vector3(.18f, .06f, .92f), Quaternion.identity);
+            for (int sz = -1; sz <= 1; sz += 2)
+                b.Box(new Vector3(0, .74f, sz * .66f), new Vector3(.18f, .18f, .05f), Quaternion.Euler(0, 0, 45f));
+            return b.Build("Arcade cache glow");
         }
 
         static Mesh Ring(float major, float minor, int segments)

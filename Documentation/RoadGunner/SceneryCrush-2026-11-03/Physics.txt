@@ -4,7 +4,9 @@ Impulse case explicitly applies a measured external force. No running-case veloc
 PASS saved player uses four dynamic physical wheels: Mass=1400; constraints=None; CCD=ContinuousDynamic
 Drive profile=tracked; limit=5.850m/s; coast setup=3.000m/s; measured baseline reference=10.49496m/s. Actual half-speed ratio is a separate A/B acceptance.
 PASS authored suspension settles on four-wheel test ground: Contacts=4; speed=0.011; tilt=0.048; fixed step=0.017
+INPUT POLICY release-coast: applicationFocused=True; editorPolicy=AllDeviceInputAlwaysGoesToGameView (original PointersAndKeyboardsRespectGameViewFocus); background=IgnoreFocus (original ResetAndDisableNonBackgroundDevices); keyboardEnabled=True; syntheticIsCurrent=True; syntheticSpace=False; currentSpace=False; driveEnabled=True; testInput=False; driveBrake=False
 PASS release preserves natural forward momentum: Actual Space=False; speed=3.026 -> 2.521; distance=4.253
+INPUT POLICY space-brake: applicationFocused=True; editorPolicy=AllDeviceInputAlwaysGoesToGameView (original PointersAndKeyboardsRespectGameViewFocus); background=IgnoreFocus (original ResetAndDisableNonBackgroundDevices); keyboardEnabled=True; syntheticIsCurrent=True; syntheticSpace=True; currentSpace=True; driveEnabled=True; testInput=False; driveBrake=True
 PASS Space uses physical service brakes: Actual Space=True; speed=3.026 -> 0.000; distance=0.703
 PASS release coasts farther than Space from comparable speed: Coast/brake travel=4.253/0.703m; end speeds=2.521/0.000
 PASS tracked 90 degree command turns the nose physically: Heading error=19.967; signed yaw=70.034; peak yaw rate=28.732deg/s; rearward-request drift=0.000m; minimum forward=-0.002; time=3.383

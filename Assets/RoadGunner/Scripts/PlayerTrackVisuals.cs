@@ -113,16 +113,24 @@ namespace RoadGunner
             for (int i = 0; i < treadsPerSide; i++)
             {
                 builder.Begin(PartKind.Shoe, i / (float)treadsPerSide, 0);
-                builder.BevelBox(Vector3.zero, new Vector3(width, shoeThickness, pitch * .87f), .035f, Steel);
-                // Replaceable rubber pads and a broad raised steel grouser, with exposed bright ends.
-                builder.Box(new Vector3(-width * .235f, shoeThickness * .57f, 0), new Vector3(width * .40f, .022f, pitch * .63f), Rubber);
-                builder.Box(new Vector3(width * .235f, shoeThickness * .57f, 0), new Vector3(width * .40f, .022f, pitch * .63f), Rubber);
-                builder.Box(new Vector3(0, shoeThickness * .5f + grouserHeight * .5f, 0),
-                    new Vector3(width * .96f, grouserHeight, pitch * .18f), BrightSteel);
-                // A central guide tooth on the inside and visible hinge ends make an articulated belt silhouette.
-                builder.Box(new Vector3(0, -shoeThickness * .5f - .037f, 0), new Vector3(.065f, .074f, pitch * .44f), DarkSteel);
+                builder.BevelBox(Vector3.zero, new Vector3(width, shoeThickness, pitch * .88f), .035f, Steel);
+                // Heavy dual rubber road pads with angled chevron steel grousers and center ice cleat.
+                builder.Box(new Vector3(-width * .24f, shoeThickness * .57f, 0), new Vector3(width * .39f, .024f, pitch * .64f), Rubber);
+                builder.Box(new Vector3(width * .24f, shoeThickness * .57f, 0), new Vector3(width * .39f, .024f, pitch * .64f), Rubber);
+                float gy = shoeThickness * .5f + grouserHeight * .5f;
+                builder.Box(new Vector3(-width * .24f, gy, .008f),
+                    new Vector3(width * .45f, grouserHeight, pitch * .17f), BrightSteel, Quaternion.Euler(0, 16f, 0));
+                builder.Box(new Vector3(width * .24f, gy, .008f),
+                    new Vector3(width * .45f, grouserHeight, pitch * .17f), BrightSteel, Quaternion.Euler(0, -16f, 0));
+                builder.Box(new Vector3(0, gy + .004f, -.012f),
+                    new Vector3(width * .18f, grouserHeight * 1.08f, pitch * .22f), i % 2 == 0 ? Brass : BrightSteel);
+                // Central guide horn on the inside and visible armored end-link hinge pins.
+                builder.Box(new Vector3(0, -shoeThickness * .5f - .038f, 0), new Vector3(.068f, .076f, pitch * .45f), DarkSteel);
                 for (int sign = -1; sign <= 1; sign += 2)
-                    builder.Cylinder(new Vector3(sign * (width * .5f - .015f), 0, -pitch * .31f), .036f, .055f, Brass, 6);
+                {
+                    builder.Cylinder(new Vector3(sign * (width * .5f - .014f), 0, -pitch * .31f), .038f, .058f, Brass, 6);
+                    builder.Box(new Vector3(sign * (width * .5f + .008f), .008f, 0), new Vector3(.022f, shoeThickness * .82f, pitch * .72f), DarkSteel);
+                }
                 builder.End();
             }
 
@@ -136,20 +144,27 @@ namespace RoadGunner
                 AddWheel(builder, PartKind.ReturnWheel, .25f + i * .25f, .105f, width * .72f, false, isLeft);
 
             builder.Begin(PartKind.Frame, 0, 0);
-            float outside = (isLeft ? -1 : 1) * (width * .5f + .018f);
-            builder.BevelBox(new Vector3(outside, .115f, 0), new Vector3(.065f, .19f, span * .83f), .035f, Teal);
-            builder.Box(new Vector3(outside, .01f, 0), new Vector3(.08f, .065f, span * .93f), DarkSteel);
-            builder.Box(new Vector3(outside * 1.01f, .185f, 0), new Vector3(.075f, .035f, span * .66f), BrightSteel);
-            for (int i = 0; i < 5; i++)
+            float dir = isLeft ? -1f : 1f;
+            float outside = dir * (width * .5f + .020f);
+            // Main armored sponson beam + sloped upper track skirt + lower rock-slider rail.
+            builder.BevelBox(new Vector3(outside, .125f, 0), new Vector3(.072f, .21f, span * .86f), .035f, Teal);
+            builder.Box(new Vector3(outside - dir * .055f, .265f, 0), new Vector3(.18f, .042f, span * .92f), Teal, Quaternion.Euler(0, 0, dir * -14f));
+            builder.Box(new Vector3(outside + dir * .018f, .225f, 0), new Vector3(.048f, .036f, span * .78f), BrightSteel);
+            builder.Box(new Vector3(outside, -.005f, 0), new Vector3(.088f, .072f, span * .95f), DarkSteel);
+            // Bogie suspension struts and armored bolt bosses.
+            for (int i = 0; i < 6; i++)
             {
-                float z = Mathf.Lerp(-span * .36f, span * .36f, i / 4f);
-                builder.Cylinder(new Vector3(outside + Mathf.Sign(outside) * .047f, .11f, z), .033f, .025f, Bolt, 6);
+                float z = Mathf.Lerp(-span * .38f, span * .38f, i / 5f);
+                builder.Box(new Vector3(outside - dir * .012f, -.075f, z), new Vector3(.052f, .15f, .075f), Steel, Quaternion.Euler(i % 2 == 0 ? 12f : -12f, 0, 0));
+                builder.Cylinder(new Vector3(outside + dir * .048f, .12f, z), .036f, .028f, Bolt, 6);
             }
-            // Ivory end wear strips and small brass inspection plates match the existing pickup palette.
+            // Central brass insignia plate and angled ivory/brass corner mudguards.
+            builder.BevelBox(new Vector3(outside + dir * .038f, .125f, 0), new Vector3(.024f, .095f, .28f), .012f, Brass);
             for (int sign = -1; sign <= 1; sign += 2)
             {
-                builder.BevelBox(new Vector3(outside, .14f, sign * span * .37f), new Vector3(.085f, .25f, .23f), .02f, Dust);
-                builder.Box(new Vector3(outside + Mathf.Sign(outside) * .049f, .145f, sign * span * .37f), new Vector3(.018f, .055f, .13f), Brass);
+                builder.BevelBox(new Vector3(outside, .145f, sign * span * .39f), new Vector3(.092f, .26f, .25f), .022f, Dust);
+                builder.Box(new Vector3(outside + dir * .052f, .15f, sign * span * .39f), new Vector3(.020f, .065f, .15f), Brass);
+                builder.Box(new Vector3(outside - dir * .04f, .21f, sign * span * .47f), new Vector3(.16f, .045f, .18f), Teal, Quaternion.Euler(sign * 22f, 0, 0));
             }
             builder.End();
             var side = builder.Finish(isLeft ? "Player left articulated track" : "Player right articulated track");
@@ -161,19 +176,21 @@ namespace RoadGunner
         {
             builder.Begin(kind, fraction, radius);
             bool small = kind == PartKind.ReturnWheel;
-            builder.Cylinder(Vector3.zero, radius, width * .67f, sprocket ? DarkSteel : Rubber, small ? 12 : 18);
-            builder.Cylinder(Vector3.zero, radius * .82f, width * .74f, sprocket ? Steel : Teal, small ? 12 : 18);
+            builder.Cylinder(Vector3.zero, radius, width * .68f, sprocket ? DarkSteel : Rubber, small ? 12 : 18);
+            builder.Cylinder(Vector3.zero, radius * .83f, width * .75f, sprocket ? Steel : Teal, small ? 12 : 18);
             int outside = isLeft ? -1 : 1;
             float faceX = outside * width * .395f;
-            builder.Cylinder(new Vector3(faceX, 0, 0), radius * .55f, .065f, sprocket ? Brass : Steel, small ? 10 : 14);
-            builder.Cylinder(new Vector3(faceX + outside * .037f, 0, 0), radius * .25f, .055f, BrightSteel, 8);
+            builder.Cylinder(new Vector3(faceX, 0, 0), radius * .58f, .068f, sprocket ? Brass : Steel, small ? 10 : 14);
+            builder.Cylinder(new Vector3(faceX + outside * .040f, 0, 0), radius * .28f, .060f, BrightSteel, 8);
             if (!small)
             {
                 for (int i = 0; i < 6; i++)
                 {
                     float a = i * Mathf.PI / 3;
-                    builder.Cylinder(new Vector3(faceX + outside * .04f, Mathf.Cos(a) * radius * .66f, Mathf.Sin(a) * radius * .66f),
-                        .021f, .027f, Bolt, 6);
+                    builder.Cylinder(new Vector3(faceX + outside * .042f, Mathf.Cos(a) * radius * .66f, Mathf.Sin(a) * radius * .66f),
+                        .023f, .030f, Bolt, 6);
+                    Quaternion rq = Quaternion.AngleAxis(i * 60, Vector3.right);
+                    builder.Box(rq * new Vector3(faceX + outside * .018f, radius * .44f, 0), new Vector3(.022f, radius * .36f, .036f), sprocket ? BrightSteel : Brass, rq);
                 }
             }
             if (sprocket)
@@ -181,7 +198,7 @@ namespace RoadGunner
                 for (int i = 0; i < 12; i++)
                 {
                     Quaternion q = Quaternion.AngleAxis(i * 30, Vector3.right);
-                    builder.Box(q * new Vector3(0, radius + .012f, 0), new Vector3(width * .70f, .065f, .065f), BrightSteel, q);
+                    builder.Box(q * new Vector3(0, radius + .016f, 0), new Vector3(width * .72f, .072f, .068f), BrightSteel, q);
                 }
             }
             builder.End();

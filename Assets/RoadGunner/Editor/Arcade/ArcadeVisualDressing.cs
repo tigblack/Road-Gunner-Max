@@ -10,8 +10,8 @@ namespace RoadGunner.Editor
 {
     /// <summary>
     /// Collider-free, static, chunk-combined dressing under Decoration/Arcade dressing, region-themed:
-    /// Dust Flats dunes, tufts, cacti, pebbles, bones; Salvage Yard scrap piles, tyres, hull bits, sage tufts;
-    /// Rustworks barrels, pipes, girders, rust plates; Ash Ridge lilac rock spires, dead white trees, ash drifts.
+    /// Dust Flats dunes, tufts, flowering cacti, pebbles, horned beast bones; Salvage Yard scrap piles, tyres, muscle hull bits, sage tufts;
+    /// Rustworks hazard barrels, flanged pipes, girders, rust plates; Ash Ridge lilac rock spires with crystal veins, dead white trees, ash drifts.
     /// Densest on pocket/road rims (~1 per 20 m²), sparse small flat items inside pockets, clustered in open sand;
     /// never on the travelled lanes (route distance raster), clear of the spawn, workshop, stations and caches, one
     /// shared palette-atlas material. Deterministic: re-running rebuilds the identical result.
@@ -346,8 +346,9 @@ namespace RoadGunner.Editor
                 Prism(b, at + Vector3.up * y, elbow, ar * .9f, ar, 6, CactusCell, false, false);
                 Prism(b, elbow - Vector3.up * ar * .5f, elbow + Vector3.up * rise, ar, ar, 6, CactusCell, true, false);
                 Prism(b, elbow + Vector3.up * rise, elbow + Vector3.up * (rise + ar * .45f), ar, ar * .55f, 6, CactusCell, false, true);
+                Rock(b, elbow + Vector3.up * (rise + ar * .52f), Vector3.one * ar * .65f, yaw, rng, i == 0 ? YellowCell : RedCell);
             }
-            if (rng.NextDouble() < .4) Rock(b, top + Vector3.up * r * .5f, Vector3.one * r * .75f, yaw, rng, rng.NextDouble() < .5 ? RedCell : YellowCell);
+            Rock(b, top + Vector3.up * r * .52f, Vector3.one * r * .78f, yaw, rng, rng.NextDouble() < .5 ? RedCell : YellowCell);
             if (rng.NextDouble() < .5) Rock(b, at + Quaternion.Euler(0, yaw, 0) * Vector3.forward * (r + .2f), new Vector3(.26f, .16f, .22f), yaw, rng, RockLightCell);
         }
 
@@ -407,7 +408,7 @@ namespace RoadGunner.Editor
 
         static void Spire(Builder b, Vector3 at, float yaw, System.Random rng)
         {
-            // Chunky leaning lilac rock spires (1-3 per cluster) with a pale strata band and base rubble.
+            // Chunky leaning lilac rock spires (1-3 per cluster) with a pale strata band, crystal veins and base rubble.
             int count = rng.Next(1, 4);
             for (int k = 0; k < count; k++)
             {
@@ -419,6 +420,9 @@ namespace RoadGunner.Editor
                 Prism(b, basePoint - Vector3.up * .1f, mid, r, r * .72f, 6, AshStoneCell, false, false, twist);
                 Prism(b, mid, mid + lean * Vector3.up * h * .08f, r * .76f, r * .7f, 6, IvoryShadeCell, false, false, twist);
                 Prism(b, mid + lean * Vector3.up * h * .08f, basePoint + lean * Vector3.up * h, r * .7f, r * .3f, 6, AshStoneCell, false, true, twist + .2f);
+                // Erupting amber/teal crystal shard jutting from the spire flank (within base radius)
+                var shardDir = Quaternion.Euler(-28f, yaw + k * 95f, 0) * Vector3.up;
+                Prism(b, basePoint + Vector3.up * h * .25f, basePoint + Vector3.up * h * .25f + shardDir * (h * .42f), r * .22f, .02f, 5, k % 2 == 0 ? YellowCell : TealCell, false, true);
             }
             for (int i = 0; i < 3; i++)
                 Rock(b, at + Quaternion.Euler(0, yaw + i * 120 + R(rng, -30, 30), 0) * Vector3.forward * R(rng, .8f, 1.2f), new Vector3(.42f, .3f, .38f) * R(rng, .8f, 1.3f), yaw, rng, AshStoneCell);
@@ -441,6 +445,12 @@ namespace RoadGunner.Editor
                 Prism(b, start, end, r * .6f, r * .22f, 5, IvoryCell, false, true);
                 if (rng.NextDouble() < .6) Prism(b, end - dir * length * .35f, end - dir * length * .35f + (Quaternion.Euler(0, 55, 0) * dir + Vector3.up * .4f).normalized * length * .55f, r * .32f, r * .12f, 4, IvoryCell, false, true);
             }
+            // Gnarled root buttresses at the base
+            for (int k = 0; k < 3; k++)
+            {
+                var rDir = Quaternion.Euler(0, yaw + k * 120f, 0) * Vector3.forward;
+                Prism(b, at + Vector3.up * .32f, at + rDir * .38f, r * .65f, r * .25f, 4, IvoryShadeCell, false, true);
+            }
             Rock(b, at + Vector3.up * .04f, new Vector3(.55f, .16f, .5f), yaw, rng, AshStoneCell);
         }
 
@@ -448,7 +458,10 @@ namespace RoadGunner.Editor
         {
             float major = R(rng, .38f, .48f), minor = R(rng, .12f, .16f);
             bool leaning = allowLean && rng.NextDouble() < .45;
-            Torus(b, at + Vector3.up * (leaning ? major * .55f : minor * .55f), Quaternion.Euler(0, yaw, 0) * Quaternion.Euler(leaning ? R(rng, 25, 65) : R(rng, -6, 6), 0, 0), major, minor, RubberCell);
+            var center = at + Vector3.up * (leaning ? major * .55f : minor * .55f);
+            var rot = Quaternion.Euler(0, yaw, 0) * Quaternion.Euler(leaning ? R(rng, 25, 65) : R(rng, -6, 6), 0, 0);
+            Torus(b, center, rot, major, minor, RubberCell);
+            Prism(b, center - rot * Vector3.up * (minor * .55f), center + rot * Vector3.up * (minor * .55f), major * .52f, major * .52f, 6, SteelLightCell, true, true);
         }
 
         static void Torus(Builder b, Vector3 center, Quaternion rotation, float major, float minor, int cell)
@@ -488,7 +501,12 @@ namespace RoadGunner.Editor
                 Rock(b, a, Vector3.one * .14f, yaw, rng, IvoryCell);
                 Rock(b, c, Vector3.one * .14f, yaw, rng, IvoryCell);
             }
-            if (rng.NextDouble() < .35) Rock(b, at + Quaternion.Euler(0, yaw + 90, 0) * Vector3.forward * .45f + Vector3.up * .12f, new Vector3(.3f, .24f, .34f), yaw, rng, IvoryCell); // skull
+            // Horned desert beast skull at the bone pile
+            var skullPos = at + Quaternion.Euler(0, yaw + 90, 0) * Vector3.forward * .38f + Vector3.up * .14f;
+            var skullRot = Quaternion.Euler(0, yaw, 0);
+            Rock(b, skullPos, new Vector3(.32f, .25f, .38f), yaw, rng, IvoryCell);
+            for (int s = -1; s <= 1; s += 2)
+                Prism(b, skullPos + skullRot * new Vector3(s * .12f, .08f, -.04f), skullPos + skullRot * new Vector3(s * .38f, .28f, -.18f), .045f, .012f, 5, IvoryShadeCell, false, true);
         }
 
         static void Box(Builder b, Vector3 center, Vector3 size, Quaternion rotation, int cell)
@@ -516,7 +534,7 @@ namespace RoadGunner.Editor
 
         static void ScrapPile(Builder b, Vector3 at, float yaw, System.Random rng)
         {
-            int[] cells = { RustCell, RustDarkCell, SteelLightCell, RustCell, TealDarkCell, YellowCell };
+            int[] cells = { RustCell, RustDarkCell, SteelLightCell, RedCell, TealDarkCell, YellowCell };
             int count = rng.Next(3, 6);
             for (int i = 0; i < count; i++)
             {
@@ -526,15 +544,19 @@ namespace RoadGunner.Editor
                 Box(b, at + offset + Vector3.up * (size.y * .4f + i * .12f), size, rotation, cells[rng.Next(cells.Length)]);
             }
             Prism(b, at + Vector3.up * .3f, at + Quaternion.Euler(0, yaw, 0) * new Vector3(.7f, .55f, .1f), .05f, .05f, 6, SteelCell, true, true);
+            // Salvaged toothed cogwheel sticking out of the scrap heap
+            var cogCenter = at + Quaternion.Euler(0, yaw, 0) * new Vector3(-.22f, .34f, .18f);
+            Prism(b, cogCenter - Vector3.up * .06f, cogCenter + Vector3.up * .06f, .24f, .24f, 8, YellowCell, true, true);
         }
 
         static void Hull(Builder b, Vector3 at, float yaw, System.Random rng)
         {
-            // Half-buried car shell: tilted body, cabin, wheel arch hole hint.
-            int paint = new[] { RustCell, TealDarkCell, RustDarkCell, YellowCell }[rng.Next(4)];
+            // Half-buried muscle car shell: tilted body, cabin, supercharger scoop, and wheels.
+            int paint = new[] { RustCell, TealDarkCell, RedCell, YellowCell }[rng.Next(4)];
             var rotation = Quaternion.Euler(R(rng, -6, 6), yaw, R(rng, 8, 18));
             Box(b, at + Vector3.up * .25f, new Vector3(1.9f, .55f, 1.05f), rotation, paint);
             Box(b, at + rotation * new Vector3(-.15f, .68f, 0), new Vector3(.95f, .38f, .9f), rotation, paint == YellowCell ? RustCell : paint);
+            Box(b, at + rotation * new Vector3(.52f, .58f, 0), new Vector3(.42f, .20f, .38f), rotation, SteelLightCell);
             Box(b, at + rotation * new Vector3(.25f, .7f, 0), new Vector3(.08f, .3f, .82f), rotation * Quaternion.Euler(0, 0, -25), SteelCell);
             Torus(b, at + rotation * new Vector3(.62f, .2f, .56f), rotation * Quaternion.Euler(90, 0, 0), .2f, .08f, RubberCell);
             Pebbles(b, at + rotation * new Vector3(-1.15f, 0, .3f), rng, SandShadeCell, RockCell);
@@ -546,7 +568,7 @@ namespace RoadGunner.Editor
             for (int i = 0; i < count; i++)
             {
                 int firstIndex = b.triangles.Count;
-                int cell = new[] { RustCell, YellowCell, RustDarkCell, TealCell }[rng.Next(4)];
+                int cell = new[] { RustCell, YellowCell, RedCell, TealCell }[rng.Next(4)];
                 var offset = Quaternion.Euler(0, yaw + i * 120, 0) * Vector3.forward * (i == 0 ? 0 : .5f);
                 bool tipped = rng.NextDouble() < .3;
                 float r = .26f, h = .82f;
@@ -555,8 +577,9 @@ namespace RoadGunner.Editor
                 else { start = at + offset; end = start + Vector3.up * h; }
                 Prism(b, start, end, r, r, 8, cell, true, true);
                 var axis = (end - start).normalized;
-                Prism(b, start + axis * h * .3f, start + axis * h * .36f, r * 1.04f, r * 1.04f, 8, RustDarkCell, false, false);
-                Prism(b, start + axis * h * .64f, start + axis * h * .7f, r * 1.04f, r * 1.04f, 8, RustDarkCell, false, false);
+                Prism(b, start + axis * h * .3f, start + axis * h * .36f, r * 1.05f, r * 1.05f, 8, SteelCell, false, false);
+                Prism(b, start + axis * h * .64f, start + axis * h * .7f, r * 1.05f, r * 1.05f, 8, SteelCell, false, false);
+                Prism(b, end, end + axis * .04f, r * .28f, r * .28f, 6, SteelLightCell, false, true);
                 b.Record("Barrel", firstIndex, "/barrel/" + i, false);
             }
         }

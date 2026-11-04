@@ -81,6 +81,24 @@ namespace RoadGunner.ConceptArt.Editor
         }
         public static GameObject ReplaySource(string kind) => Source(kind);
 
+        /// <summary>Rebuilds the 8 shared shoulder composition meshes in-place without overwriting prefab fileIDs or scene instances.</summary>
+        public static void RebuildTemplatesOnly()
+        {
+            ArtKit.Ensure();
+            sources.Clear();
+            for (int i = 0; i < 8; i++)
+            {
+                var g = ArtKit.Node("Shoulder composition " + i);
+                var p = g.transform;
+                try
+                {
+                    foreach (var member in ReplayMembers(i)) Add(p, member.kind, member.position, member.scale, member.yaw);
+                    ArtKit.Bake(p, "Env_Shoulder_Composition_" + i);
+                }
+                finally { Object.DestroyImmediate(g); }
+            }
+        }
+
         static GameObject[] Groups()
         {
             var result=new GameObject[8];

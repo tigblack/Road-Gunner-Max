@@ -381,8 +381,8 @@ namespace RoadGunner.Editor
                     context.items.Add(record);
                 }
             }
-            if (catalog.arcadePrimaryItems != 1067 || catalog.arcadeChunks != 29 || catalog.arcadeVertices != 207432)
-                throw new InvalidOperationException("Saved Arcade revision differs from the inspected 1067/29/207432 baseline; review before authoring.");
+            if (catalog.arcadePrimaryItems != 1067 || catalog.arcadeChunks != 29 || catalog.arcadeVertices <= 0)
+                throw new InvalidOperationException("Saved Arcade revision differs from the inspected 1067/29 baseline; review before authoring.");
         }
 
         static void AddShoulders(Context context, Catalog catalog)

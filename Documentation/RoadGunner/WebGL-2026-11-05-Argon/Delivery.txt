@@ -1,0 +1,41 @@
+ROAD GUNNER — ARGON VISUAL RELEASE
+5 November 2026 (Asia/Yerevan)
+
+The requested local version contains the already-authored Argon visual overhaul:
+rebuilt player/crew/weapons/tracks, Raiders, Buggy, boss/pickup meshes, environmental
+props, shoulder compositions, regional dressing and landmark details. New cache
+trim/glow, upgrade totems and workshop rooftop meshes are included. Matching new
+hard collision meshes replace obsolete generated assets together with their .meta
+files, saved scene, functional collision catalog and NavMesh.
+
+No art/world/Argon installer was rerun for this release. Original requested asset
+bytes were retained. The only delivery source correction is an opt-in editor-only
+physics test focus policy, matching the existing gameplay test policy. Its first
+attempt had two failed assertions because queued Space never reached DriveInput;
+scoped focus policies now route the real queued keyboard event to the game and
+restore both original settings on teardown. All physical assertions/thresholds
+remain unchanged. The rerun observed Space=True and a real stop. First-attempt
+logs are retained under ignored outputs/WebGL-2026-11-05-Argon/Physics-first.*.
+
+Fresh native acceptance on the saved version: scenery26 + physics21 + tracked9 +
+gameplay204 + exploration88 = 348 PASS, zero failures and runtime Console errors.
+These include real physical contact/suspension/steering, scoped keyboard/touch
+input, rewards/repair, boss completion/reset, scenery destruction/restoration and
+14 complete driving/navigation routes. These are controlled native fixtures;
+they are not phone-device or display-FPS measurements.
+
+Independent saved-data/code audits found no release blocker: external GUIDs and
+.metafiles resolve, source hashes and triangle ranges match the current catalog,
+688 soft probes/208 mutable chunks and 209 new hard colliders plus 3 reused ones
+retain their correct state. The current catalog records 1067 primary Arcade items,
+29 chunks and 235332 vertices. User gameplay/handling/tuning components are retained;
+the changed runtime art code alters track geometry only. Read SceneAudit.txt and
+SourceReview.txt for exact scope and limitations.
+
+Screenshots/initial-start.png and white-range-combat.png are fresh actual native
+camera/HUD captures from this release's gameplay suite, not browser screenshots.
+The root also reviewed the previous day's Argon staged start/combat captures.
+
+WebBuild.json records packaging, gzip/WASM/JavaScript validation and frozen input
+hashes. Publication.txt and LiveManifest.json record the exact public payload and
+GitHub deployment. Browser.txt records the separate public browser smoke outcome.

@@ -43,6 +43,9 @@ namespace RoadGunner
         GameObject fixture, wall, curb;
         WheelPhysicsCollisionProbe collisionProbe;
         Keyboard keyboard;
+        InputSettings inputFocusSettings;
+        InputSettings.EditorInputBehaviorInPlayMode originalEditorInputBehavior;
+        InputSettings.BackgroundBehavior originalBackgroundBehavior;
         RigidbodyConstraints originalConstraints;
         float originalStep;
         int originalFrameRate, originalVSync;
@@ -58,11 +61,31 @@ namespace RoadGunner
             running = true; Completed = false;
             Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
             Directory.CreateDirectory(ArtifactFolder);
+            OverrideInputFocusPolicy();
             report.Add("Physical player drive — actual saved vehicle and its drive profile; Unity " + Application.unityVersion);
             report.Add("Temporary flat track, wall and one-wheel curb. ResetPose is setup only; motion uses the production DriveInput/WheelColliders.");
             report.Add("Impulse case explicitly applies a measured external force. No running-case velocity/rotation replacement. Timesteps are solver rates, not measured display FPS.");
             samples.AppendLine("phase,fixedTime,x,y,z,vx,vy,vz,yaw,tilt,frontSteer,rearSteer,motorTorque,brakeTorque,grounded,slip,leftTrackSpeed,rightTrackSpeed,leftTrackTorque,rightTrackTorque,requestedYawRate,appliedYawAssistTorque");
             WriteArtifacts(); StartCoroutine(RunGuarded());
+        }
+
+        void OverrideInputFocusPolicy()
+        {
+            // Batch editor focus can route queued keyboard events into editor state instead of
+            // the production DriveInput path. Scope both policies to this opt-in fixture only.
+            inputFocusSettings = InputSystem.settings;
+            originalEditorInputBehavior = inputFocusSettings.editorInputBehaviorInPlayMode;
+            originalBackgroundBehavior = inputFocusSettings.backgroundBehavior;
+            inputFocusSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+            inputFocusSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+        }
+
+        void RestoreInputFocusPolicy()
+        {
+            if (!inputFocusSettings) return;
+            inputFocusSettings.backgroundBehavior = originalBackgroundBehavior;
+            inputFocusSettings.editorInputBehaviorInPlayMode = originalEditorInputBehavior;
+            inputFocusSettings = null;
         }
 
         void FixedUpdate()
@@ -154,6 +177,13 @@ namespace RoadGunner
                 InputSystem.QueueStateEvent(keyboard, mode == 0 ? new KeyboardState() : new KeyboardState(Key.Space));
                 yield return null; yield return null;
                 bool actualSpace = car.input.Brake;
+                report.Add("INPUT POLICY " + phase + ": applicationFocused=" + Application.isFocused +
+                    "; editorPolicy=" + InputSystem.settings.editorInputBehaviorInPlayMode + " (original " + originalEditorInputBehavior + ")" +
+                    "; background=" + InputSystem.settings.backgroundBehavior + " (original " + originalBackgroundBehavior + ")" +
+                    "; keyboardEnabled=" + keyboard.enabled + "; syntheticIsCurrent=" + (Keyboard.current == keyboard) +
+                    "; syntheticSpace=" + keyboard.spaceKey.isPressed +
+                    "; currentSpace=" + (Keyboard.current != null && Keyboard.current.spaceKey.isPressed) +
+                    "; driveEnabled=" + car.input.Enabled + "; testInput=" + car.input.testInput + "; driveBrake=" + actualSpace);
                 float began = Time.fixedTime;
                 while (Time.fixedTime - began < 1.5f) yield return new WaitForFixedUpdate();
                 result.duration = Time.fixedTime - began; result.endSpeed = HorizontalSpeed(); result.distance = FlatDistance(start, body.position);
@@ -431,6 +461,7 @@ namespace RoadGunner
         void Restore()
         {
             if (restored) return; restored = true;
+            RestoreInputFocusPolicy();
             if (keyboard != null) { InputSystem.RemoveDevice(keyboard); keyboard = null; }
             if (collisionProbe) { collisionProbe.enabled = false; Destroy(collisionProbe); }
             if (fixture) { fixture.SetActive(false); Destroy(fixture); }
@@ -439,7 +470,11 @@ namespace RoadGunner
             body.constraints = originalConstraints; car.input.testInput = false; car.input.testBrake = false; car.input.Clear();
             session.spawns.enabled = originalSpawns; session.turret.enabled = originalTurret; session.Restart();
         }
-        void OnDestroy() { if (running) Restore(); }
+        void OnDestroy()
+        {
+            try { if (running) Restore(); }
+            finally { RestoreInputFocusPolicy(); }
+        }
     }
 
     public sealed class WheelPhysicsCollisionProbe : MonoBehaviour

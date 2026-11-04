@@ -72,7 +72,13 @@ namespace RoadGunner.ConceptArt.Editor
                 case "Sealed industrial bunker": Bunker(p);break;
                 case "Scrap wind pump": WindPump(p);break;
                 case "Tire and scrap pile": Scrap(p);break;
-                case "Fuel drums": Drum(p,Vector3.zero);Drum(p,new Vector3(.97f,0,.26f),"Red");Jerry(p,new Vector3(-.67f,0,-.31f),"Ivory");break;
+                case "Fuel drums":
+                    Drum(p,Vector3.zero,"Rust");
+                    Drum(p,new Vector3(.97f,0,.26f),"Red");
+                    Drum(p,new Vector3(.38f,0,-.54f),"Teal",.92f);
+                    Jerry(p,new Vector3(-.67f,0,-.31f),"Yellow");
+                    Jerry(p,new Vector3(-.32f,0,.44f),"Ivory",.85f);
+                    break;
                 case "Tire stack": TireStack(p);break;
                 case "Metal storage crate": Crate(p,Vector3.zero,false);break;
                 case "Wooden supply crate": Crate(p,Vector3.zero,true);break;
@@ -100,32 +106,37 @@ namespace RoadGunner.ConceptArt.Editor
         static void WornRoof(Transform p,string n,Vector3 at,Vector2 size,Vector3 rotation,int seed=0)
         {
             var roof=N(p,n,at,Quaternion.Euler(rotation));Corrugated(roof,"Ivory folded roof sheets",Vector3.zero,size,"Ivory",Mathf.Max(8,Mathf.RoundToInt(size.x*4)));
-            // Corrosion follows exposed sheet edges, with occasional broad patches. The top-facing back of the
-            // corrugation lies at z=-.045; all paint is laid directly on that surface rather than floating boxes.
             int pieces=Mathf.Max(3,Mathf.RoundToInt(size.y/2.1f));for(int i=0;i<pieces;i++)
             {
                 float y=-size.y*.43f+(i+.25f)*(size.y*.84f/pieces);
                 for(int edge=-1;edge<=1;edge+=2){float width=size.x*(edge==1?.17f:.095f);float length=size.y/pieces*(.77f+(i%2)*.16f);Mark(roof,"Irregular rust along folded sheet edge",new Vector3(edge*(size.x*.48f-width*.31f),y,-.053f),new Vector2(width,length),i%3==0?"RustDark":"Rust",new Vector3(0,180,0),seed+i+(edge==1?2:0));}
             }
             for(int i=0;i<2;i++){float x=size.x*(i==0?-.11f:.22f),y=size.y*(i==0?-.34f:.28f);Mark(roof,"Old roof corrosion bloom",new Vector3(x,y,-.055f),new Vector2(size.x*.30f,size.y*.13f),"Rust",new Vector3(0,180,0),seed+i+1);}
-            // A few joined sheet seams support a sense of scale and fabrication without a noisy texture.
             for(int i=1;i<3;i++)B(roof,"Folded roof sheet joining strip",new Vector3(0,-size.y*.5f+i*size.y/3,-.061f),new Vector3(size.x,.035f,.018f),"IvoryShade",.005f);
         }
         static void Fence(Transform p)
         {
-            for(int i=0;i<6;i++){var t=N(p,"Bolted sheet "+i,new Vector3(-2.75f+i*1.1f,1.08f,(i%2)*.045f),Quaternion.Euler(0,0,i==1?-3:i==4?2:0));Corrugated(t,"Worn corrugated sheet",Vector3.zero,new Vector2(1.13f,2.08f),i%3==0?"Ivory":"Rust",5);Mark(t,"Sheet rust bloom",new Vector3(-.22f,-.61f,.065f),new Vector2(.48f,.5f),"RustDark",default,i);}
-            for(int s=-1;s<=1;s+=2){B(p,"Box steel post",new Vector3(s*3.08f,1.25f,.06f),new Vector3(.19f,2.5f,.24f),"Steel",.025f);B(p,"Post cap",new Vector3(s*3.08f,2.52f,.06f),new Vector3(.25f,.09f,.28f),"SteelLight",.018f);}
+            for(int i=0;i<6;i++){var t=N(p,"Bolted sheet "+i,new Vector3(-2.75f+i*1.1f,1.08f,(i%2)*.045f),Quaternion.Euler(0,0,i==1?-3:i==4?2:0));Corrugated(t,"Worn corrugated sheet",Vector3.zero,new Vector2(1.13f,2.08f),i%3==0?"Ivory":i%2==0?"TealDark":"Rust",5);Mark(t,"Sheet rust bloom",new Vector3(-.22f,-.61f,.065f),new Vector2(.48f,.5f),"RustDark",default,i);}
+            for(int s=-1;s<=1;s+=2){B(p,"Box steel post",new Vector3(s*3.08f,1.25f,.06f),new Vector3(.19f,2.5f,.24f),"Steel",.025f);B(p,"Post cap",new Vector3(s*3.08f,2.52f,.06f),new Vector3(.25f,.09f,.28f),"Yellow",.018f);}
             for(int h=0;h<2;h++)B(p,"Horizontal rusty channel",new Vector3(0,.42f+h*1.25f,-.11f),new Vector3(6.2f,.14f,.15f),"RustDark",.018f);
             for(int i=0;i<7;i++)for(int h=0;h<2;h++)C(p,"Fence fastener",new Vector3(-3+i, .42f+h*1.25f,.11f),.045f,.025f,"SteelLight",new Vector3(90,0,0),8);
+            // Wasteland barricade top spikes & painted hazard warning strip
+            B(p,"Fence hazard warning band",new Vector3(0,1.62f,.075f),new Vector3(5.6f,.18f,.03f),"Yellow",.01f);
+            for(int i=0;i<5;i++)B(p,"Fence chevron stripe "+i,new Vector3(-2.2f+i*1.1f,1.62f,.09f),new Vector3(.38f,.19f,.025f),"Red",.008f,new Vector3(0,0,28));
+            for(int i=0;i<9;i++)C(p,"Top barricade spike "+i,new Vector3(-2.8f+i*.7f,2.24f,.04f),.04f,.26f,"SteelLight",new Vector3((i%2==0?12:-12),0,0),6);
         }
         static void Container(Transform p)
         {
             B(p,"Container raised floor",new Vector3(0,.15f,0),new Vector3(3.1f,.3f,6.2f),"Steel",.06f);
-            for(int s=-1;s<=1;s+=2){Corrugated(p,"Long corrugated wall",new Vector3(s*1.5f,1.55f,0),new Vector2(6.12f,2.73f),s==1?"Rust":"Red",18,new Vector3(0,90,0));for(int z=-1;z<=1;z+=2)B(p,"Container corner casting",new Vector3(s*1.49f,1.55f,z*3.02f),new Vector3(.17f,3.0f,.18f),"RustDark",.025f);}
+            for(int s=-1;s<=1;s+=2){Corrugated(p,"Long corrugated wall",new Vector3(s*1.5f,1.55f,0),new Vector2(6.12f,2.73f),s==1?"TealDark":"Red",18,new Vector3(0,90,0));for(int z=-1;z<=1;z+=2)B(p,"Container corner casting",new Vector3(s*1.49f,1.55f,z*3.02f),new Vector3(.19f,3.02f,.20f),"Yellow",.025f);}
             WornRoof(p,"Pale weathered container roof",new Vector3(0,2.98f,0),new Vector2(3.05f,6.12f),new Vector3(90,0,0),3);
             for(int i=0;i<2;i++){var d=N(p,"Container double door",new Vector3((i-.5f)*1.45f,1.55f,-3.12f));WornPanel(d,"Door panel",Vector3.zero,new Vector3(1.42f,2.72f,.08f),i==0?"Rust":"IvoryShade",new Vector3(0,180,0),i);for(int j=0;j<2;j++){B(d,"Door locking bar",new Vector3((j-.5f)*.88f,0,-.085f),new Vector3(.055f,2.36f,.06f),"SteelLight",.016f);B(d,"Lock handle",new Vector3((j-.5f)*.88f,-.12f,-.15f),new Vector3(.29f,.06f,.06f),"Steel",.014f);}for(int h=0;h<3;h++)B(d,"Heavy door hinge",new Vector3(i==0?-.68f:.68f,-.87f+h*.87f,-.075f),new Vector3(.2f,.16f,.12f),"Steel",.022f);}
-            for(int i=0;i<3;i++)WornPanel(p,"Corrugated patch",new Vector3(1.575f,.6f+i*.68f,-1.9f+i*1.43f),new Vector3(.72f,.55f,.045f),i==1?"Ivory":"RustDark",new Vector3(0,90,0),i);
-            B(p,"Stencilled empty storage stripe",new Vector3(0,2.24f,-3.18f),new Vector3(1.0f,.16f,.025f),"Ivory",.006f);
+            for(int i=0;i<3;i++)WornPanel(p,"Corrugated patch",new Vector3(1.575f,.6f+i*.68f,-1.9f+i*1.43f),new Vector3(.72f,.55f,.045f),i==1?"Yellow":"Ivory",new Vector3(0,90,0),i);
+            B(p,"Stencilled empty storage stripe",new Vector3(0,2.24f,-3.18f),new Vector3(1.2f,.20f,.03f),"Yellow",.008f);
+            // Rooftop salvage HVAC unit & side cargo stripes
+            B(p,"Rooftop salvage HVAC unit",new Vector3(-.45f,3.26f,1.3f),new Vector3(1.35f,.48f,1.65f),"Steel",.05f);
+            C(p,"Rooftop fan shroud",new Vector3(-.45f,3.52f,1.3f),.44f,.10f,"RustDark",default,12);
+            for(int s=-1;s<=1;s+=2)B(p,"Side cargo bold stripe",new Vector3(s*1.58f,1.85f,.4f),new Vector3(.04f,.34f,3.8f),"Ivory",.01f);
         }
         static void Tire(Transform p,Vector3 at,float radius=.57f,float width=.34f,Quaternion? rot=null)
         {
@@ -133,25 +144,33 @@ namespace RoadGunner.ConceptArt.Editor
             ArtKit.Torus(t,"Dusty raised sidewall",Vector3.up*(width*.47f),radius*.84f,radius*.60f,.035f,"RubberEdge",null,20);
             for(int i=0;i<16;i++){float a=i*22.5f*Mathf.Deg2Rad;B(t,"Large tread block",new Vector3(Mathf.Cos(a)*radius,0,Mathf.Sin(a)*radius),new Vector3(.18f,width*.86f,.15f),"RubberEdge",.027f,new Vector3(0,-i*22.5f,0));}
         }
-        static void TireStack(Transform p){for(int i=0;i<3;i++)Tire(p,new Vector3(i==1?.035f:0,.18f+i*.33f,i==1?-.025f:0),.6f,.32f);}
+        static void TireStack(Transform p)
+        {
+            for(int i=0;i<3;i++)Tire(p,new Vector3(i==1?.035f:0,.18f+i*.33f,i==1?-.025f:0),.6f,.32f);
+            C(p,"Top tire alloy rim",new Vector3(0,.84f,0),.32f,.24f,"Yellow",default,12);
+            C(p,"Top tire hub cap",new Vector3(0,.97f,0),.14f,.06f,"SteelLight",default,10);
+        }
         static void Wheel(Transform p,Vector3 at,float r=.55f)
         {var t=N(p,"Wreck wheel",at,Quaternion.Euler(0,0,90));Tire(t,Vector3.zero,r,.29f);C(t,"Exposed steel rim",Vector3.zero,r*.46f,.32f,"RustDark");C(t,"Dented hub",new Vector3(0,.17f,0),r*.21f,.04f,"SteelLight");}
         static void Wreck(Transform p,bool bus)
         {
             if(bus){Bus(p);return;}var car=N(p,"Abandoned scavenged muscle pickup",new Vector3(0,-.10f,0),Quaternion.Euler(0,0,-2));
             B(car,"Exposed ladder chassis",new Vector3(0,.6f,0),new Vector3(1.83f,.24f,4.85f),"Steel",.06f);
-            B(car,"Long bent hood",new Vector3(0,1.2f,1.40f),new Vector3(2.30f,.32f,2.09f),"Rust",.12f,new Vector3(-3,0,2));
+            B(car,"Long bent hood",new Vector3(0,1.2f,1.40f),new Vector3(2.30f,.32f,2.09f),"TealDark",.12f,new Vector3(-3,0,2));
+            B(car,"Exposed supercharger engine block",new Vector3(0,1.48f,1.35f),new Vector3(.78f,.38f,.85f),"Steel",.04f);
+            B(car,"Rusted air scoop on wreck",new Vector3(0,1.72f,1.40f),new Vector3(.56f,.22f,.58f),"Red",.03f);
             B(car,"Front steel valance",new Vector3(0,.91f,2.42f),new Vector3(2.40f,.52f,.20f),"RustDark",.07f);B(car,"Broken front grille",new Vector3(0,1.02f,2.545f),new Vector3(1.42f,.25f,.045f),"Steel",.025f);
             for(int i=0;i<6;i++)B(car,"Radiator grille slat",new Vector3(-.63f+i*.25f,1.02f,2.58f),new Vector3(.06f,.22f,.035f),"SteelLight",.01f);
             for(int s=-1;s<=1;s+=2){SideBody(car,s);Wheel(car,new Vector3(s*1.22f,.57f,1.64f));Wheel(car,new Vector3(s*1.22f,.57f,-1.58f));
                 B(car,"Lower door sill",new Vector3(s*1.12f,.78f,-.13f),new Vector3(.13f,.20f,1.5f),"RustDark",.04f);
-                WornPanel(car,"Chipped door skin",new Vector3(s*1.155f,1.19f,-.25f),new Vector3(1.30f,.65f,.07f),"IvoryShade",new Vector3(0,s*90,0),s==1?1:2);
+                WornPanel(car,"Chipped door skin",new Vector3(s*1.155f,1.19f,-.25f),new Vector3(1.30f,.65f,.07f),"Yellow",new Vector3(0,s*90,0),s==1?1:2);
                 Beam(car,"A pillar",new Vector3(s*1.0f,1.40f,.60f),new Vector3(s*.87f,2.13f,.13f),.09f,"Steel");Beam(car,"B pillar",new Vector3(s*.94f,1.35f,-.91f),new Vector3(s*.87f,2.15f,-.86f),.10f,"RustDark");
                 Beam(car,"Cabin top rail",new Vector3(s*.87f,2.15f,-.87f),new Vector3(s*.87f,2.13f,.13f),.10f,"Rust");
                 B(car,"Empty rear bed side",new Vector3(s*1.08f,1.13f,-1.82f),new Vector3(.15f,.64f,1.20f),"Rust",.06f);
                 B(car,"Dented front bumper",new Vector3(s*.61f,.68f,2.57f),new Vector3(1.15f,.15f,.23f),"SteelLight",.035f,new Vector3(0,s*7,0));
             }
             B(car,"Weathered roof sheet",new Vector3(0,2.17f,-.36f),new Vector3(1.95f,.13f,1.22f),"Rust",.085f,new Vector3(0,0,-2));
+            B(car,"Roof lightbar remnant",new Vector3(0,2.30f,.02f),new Vector3(1.35f,.12f,.16f),"Steel",.02f);
             Mark(car,"Large roof paint remnant",new Vector3(.20f,2.255f,-.38f),new Vector2(1.1f,.83f),"IvoryShade",new Vector3(-90,0,0),1);
             Beam(car,"Windscreen lower frame",new Vector3(-.99f,1.43f,.59f),new Vector3(.99f,1.43f,.59f),.10f,"Steel");Beam(car,"Windscreen upper frame",new Vector3(-.86f,2.12f,.13f),new Vector3(.86f,2.12f,.13f),.09f,"Steel");
             for(int s=-1;s<=1;s+=2){B(car,"Exposed worn seat",new Vector3(s*.47f,1.14f,-.36f),new Vector3(.63f,.18f,.60f),"Cloth",.09f);B(car,"Seat back",new Vector3(s*.47f,1.50f,-.63f),new Vector3(.61f,.62f,.15f),"Cloth",.08f,new Vector3(-8,0,0));}
@@ -161,7 +180,6 @@ namespace RoadGunner.ConceptArt.Editor
         }
         static void SideBody(Transform p,int side)
         {
-            // Real scalloped cut-outs around each tire instead of intersecting solid rectangular bodywork.
             const int steps=40;var v=new List<Vector3>();var tr=new List<int>();float x=side*1.15f;
             for(int i=0;i<=steps;i++){float z=-2.43f+i*4.86f/steps;float low=.72f;foreach(float wheel in new[]{-1.58f,1.64f}){float d=Mathf.Abs(z-wheel);if(d<.69f)low=Mathf.Max(low,.57f+Mathf.Sqrt(.69f*.69f-d*d));}v.Add(new Vector3(x,low,z));v.Add(new Vector3(x,1.37f,z));if(i>0){int a=(i-1)*2,b=i*2;if(side==1)tr.AddRange(new[]{a,a+1,b+1,a,b+1,b});else tr.AddRange(new[]{a,b+1,a+1,a,b,b+1});}}
             var mesh=new Mesh{name="Env_Wreck_scalloped_fender"};mesh.SetVertices(v);mesh.SetTriangles(tr,0);mesh.RecalculateNormals();mesh.RecalculateBounds();ArtKit.Part(p,"Scalloped quarter panel",mesh,Vector3.zero,Vector3.one,"Rust");
@@ -169,13 +187,16 @@ namespace RoadGunner.ConceptArt.Editor
         }
         static void Bus(Transform p)
         {
-            B(p,"Burnt utility bus chassis",new Vector3(0,.67f,0),new Vector3(2.35f,.31f,8.9f),"Steel",.08f);B(p,"Lower bus shell",new Vector3(0,1.19f,0),new Vector3(2.53f,.75f,8.85f),"Rust",.11f);B(p,"Ribbed roof shell",new Vector3(0,2.85f,0),new Vector3(2.53f,.22f,8.87f),"IvoryShade",.14f);
+            B(p,"Burnt utility bus chassis",new Vector3(0,.67f,0),new Vector3(2.35f,.31f,8.9f),"Steel",.08f);B(p,"Lower bus shell",new Vector3(0,1.19f,0),new Vector3(2.53f,.75f,8.85f),"Yellow",.11f);B(p,"Ribbed roof shell",new Vector3(0,2.85f,0),new Vector3(2.53f,.22f,8.87f),"IvoryShade",.14f);
             for(int s=-1;s<=1;s+=2){for(int i=0;i<7;i++){float z=-3.65f+i*1.22f;B(p,"Bus window pillar",new Vector3(s*1.18f,2.18f,z),new Vector3(.11f,1.14f,.12f),"RustDark",.025f);if(i==1||i==5)B(p,"Remaining dirty window",new Vector3(s*1.17f,2.12f,z+.48f),new Vector3(.05f,.73f,.68f),"Glass",.02f);}B(p,"Upper window rail",new Vector3(s*1.19f,2.70f,0),new Vector3(.12f,.10f,8.6f),"Rust",.023f);Wheel(p,new Vector3(s*1.30f,.53f,-2.9f));Wheel(p,new Vector3(s*1.30f,.53f,2.9f));for(int i=0;i<4;i++)WornPanel(p,"Old bus paint",new Vector3(s*1.28f,1.19f,-3.1f+i*1.98f),new Vector3(1.36f,.46f,.025f),i%2==0?"Red":"IvoryShade",new Vector3(0,s*90,0),i);}
             for(int z=-1;z<=1;z+=2){B(p,"Bus end panel",new Vector3(0,1.7f,z*4.4f),new Vector3(2.48f,2.0f,.13f),"Rust",.09f);B(p,"Empty windshield opening",new Vector3(0,2.20f,z*4.49f),new Vector3(2.10f,.78f,.025f),"Steel",.02f);B(p,"Steel bumper",new Vector3(0,.77f,z*4.53f),new Vector3(2.74f,.18f,.26f),"SteelLight",.04f);}for(int i=0;i<6;i++)B(p,"Roof channel",new Vector3(0,2.98f,-3.6f+i*1.44f),new Vector3(2.51f,.05f,.055f),"RustDark",.012f);
+            // Rooftop HVAC pods & Raider sniper barricade plates on top of the bus wreck
+            for(int z=-1;z<=1;z+=2)B(p,"Bus rooftop AC unit",new Vector3(0,3.14f,z*2.1f),new Vector3(1.45f,.32f,1.65f),"TealDark",.04f);
+            for(int s=-1;s<=1;s+=2)B(p,"Rooftop sniper shield plate",new Vector3(s*1.18f,3.26f,0),new Vector3(.10f,.52f,3.4f),"Rust",.025f,new Vector3(0,0,s*-8));
         }
         static void Drum(Transform p,Vector3 at,string paint="Rust",float s=1)
         {
-            var t=N(p,"Empty steel fuel drum",at);t.localScale=Vector3.one*s;C(t,"Round drum body",new Vector3(0,.55f,0),.42f,1.06f,paint);for(int i=0;i<2;i++)ArtKit.Torus(t,"Rolled drum hoop",new Vector3(0,.25f+i*.58f,0),.441f,.395f,.055f,"Steel",null,16);C(t,"Recessed drum lid",new Vector3(0,1.085f,0),.382f,.025f,"RustDark");ArtKit.Torus(t,"Top rolled lip",new Vector3(0,1.09f,0),.43f,.386f,.035f,"SteelLight",null,16);C(t,"Fuel bung",new Vector3(.18f,1.111f,.06f),.062f,.028f,"Steel");Mark(t,"Broad drum rust",new Vector3(-.10f,.58f,.424f),new Vector2(.49f,.56f),"RustDark",default,1);B(t,"Faded fuel label",new Vector3(.04f,.73f,.435f),new Vector3(.30f,.18f,.02f),"IvoryShade",.009f);
+            var t=N(p,"Empty steel fuel drum",at);t.localScale=Vector3.one*s;C(t,"Round drum body",new Vector3(0,.55f,0),.42f,1.06f,paint);for(int i=0;i<2;i++)ArtKit.Torus(t,"Rolled drum hoop",new Vector3(0,.25f+i*.58f,0),.441f,.395f,.055f,"Steel",null,16);C(t,"Recessed drum lid",new Vector3(0,1.085f,0),.382f,.025f,"RustDark");ArtKit.Torus(t,"Top rolled lip",new Vector3(0,1.09f,0),.43f,.386f,.035f,"SteelLight",null,16);C(t,"Fuel bung",new Vector3(.18f,1.111f,.06f),.062f,.028f,"Steel");Mark(t,"Broad drum rust",new Vector3(-.10f,.58f,.424f),new Vector2(.49f,.56f),"RustDark",default,1);B(t,"Faded fuel label",new Vector3(.04f,.73f,.435f),new Vector3(.34f,.20f,.025f),"Yellow",.009f);
         }
         static void Jerry(Transform p,Vector3 at,string paint="Red",float s=1)
         {
@@ -184,61 +205,172 @@ namespace RoadGunner.ConceptArt.Editor
         static void Crate(Transform p,Vector3 at,bool wood,float s=1)
         {
             var t=N(p,wood?"Wooden supply crate":"Salvaged metal supply crate",at);t.localScale=Vector3.one*s;string m=wood?"Wood":"TealDark";B(t,"Crate body",new Vector3(0,.58f,0),new Vector3(1.16f,1.16f,1.16f),m,.045f);
-            if(wood){for(int side=-1;side<=1;side+=2){for(int i=0;i<4;i++)B(t,"Broad timber board",new Vector3(-.44f+i*.29f,.59f,side*.592f),new Vector3(.265f,1.10f,.035f),i%3==0?"WoodLight":"Wood",.015f);Beam(t,"Crate diagonal brace",new Vector3(-.46f,.12f,side*.63f),new Vector3(.46f,1.04f,side*.63f),.11f,"WoodLight");}for(int side=-1;side<=1;side+=2)for(int z=-1;z<=1;z+=2)B(t,"Timber edge batten",new Vector3(side*.52f,.59f,z*.61f),new Vector3(.13f,1.18f,.085f),"WoodLight",.025f);}
-            else{for(int s1=-1;s1<=1;s1+=2){B(t,"Crate binding rail",new Vector3(s1*.40f,.60f,0),new Vector3(.085f,1.22f,1.24f),"SteelLight",.018f);B(t,"Crate lower foot",new Vector3(s1*.43f,.06f,0),new Vector3(.16f,.14f,1.27f),"Steel",.027f);}B(t,"Crate lid",new Vector3(0,1.19f,0),new Vector3(1.23f,.10f,1.24f),"Teal",.035f);B(t,"Ivory identifier",new Vector3(0,.70f,-.602f),new Vector3(.40f,.28f,.028f),"Ivory",.018f);B(t,"Crate latch",new Vector3(0,1.04f,-.64f),new Vector3(.15f,.18f,.06f),"Steel",.016f);}
+            if(wood){for(int side=-1;side<=1;side+=2){for(int i=0;i<4;i++)B(t,"Broad timber board",new Vector3(-.44f+i*.29f,.59f,side*.592f),new Vector3(.265f,1.10f,.035f),i%3==0?"WoodLight":"Wood",.015f);Beam(t,"Crate diagonal brace",new Vector3(-.46f,.12f,side*.63f),new Vector3(.46f,1.04f,side*.63f),.11f,"WoodLight");}for(int side=-1;side<=1;side+=2)for(int z=-1;z<=1;z+=2){B(t,"Timber edge batten",new Vector3(side*.52f,.59f,z*.61f),new Vector3(.13f,1.18f,.085f),"WoodLight",.025f);B(t,"Steel corner bracket",new Vector3(side*.56f,1.10f,z*.56f),new Vector3(.18f,.18f,.18f),"Steel",.02f);}B(t,"Stencil marking",new Vector3(0,.62f,-.62f),new Vector3(.52f,.22f,.025f),"Yellow",.01f);}
+            else{for(int s1=-1;s1<=1;s1+=2){B(t,"Crate binding rail",new Vector3(s1*.40f,.60f,0),new Vector3(.085f,1.22f,1.24f),"SteelLight",.018f);B(t,"Crate lower foot",new Vector3(s1*.43f,.06f,0),new Vector3(.16f,.14f,1.27f),"Steel",.027f);}B(t,"Crate lid",new Vector3(0,1.19f,0),new Vector3(1.23f,.10f,1.24f),"Teal",.035f);B(t,"Ivory identifier",new Vector3(0,.70f,-.602f),new Vector3(.44f,.30f,.028f),"Yellow",.018f);B(t,"Crate latch",new Vector3(0,1.04f,-.64f),new Vector3(.18f,.22f,.07f),"SteelLight",.016f);B(t,"Crate glow status",new Vector3(.36f,1.04f,-.63f),new Vector3(.10f,.08f,.04f),"Mint",.01f);}
         }
         static void Scrap(Transform p)
-        {for(int i=0;i<4;i++)B(p,"Broad salvaged sheet",new Vector3((i-1.5f)*.28f,.12f+i*.065f,0),new Vector3(.59f,.10f,1.28f),i%2==0?"Rust":"IvoryShade",.035f,new Vector3(3+i*4,i*27,0));Tire(p,new Vector3(1.03f,.17f,.40f),.43f,.29f);C(p,"Scavenged gearbox",new Vector3(-.62f,.35f,.31f),.25f,.58f,"Steel",new Vector3(0,0,90));B(p,"Machinery casing",new Vector3(-.56f,.25f,.07f),new Vector3(.55f,.42f,.60f),"SteelLight",.06f);for(int i=0;i<3;i++)B(p,"Cooling fin",new Vector3(-.56f,.23f,-.17f+i*.12f),new Vector3(.60f,.37f,.045f),"Steel",.012f);}
+        {
+            for(int i=0;i<4;i++)B(p,"Broad salvaged sheet",new Vector3((i-1.5f)*.28f,.12f+i*.065f,0),new Vector3(.59f,.10f,1.28f),i%2==0?"Rust":i==1?"Yellow":"TealDark",.035f,new Vector3(3+i*4,i*27,0));
+            Tire(p,new Vector3(1.03f,.17f,.40f),.43f,.29f);
+            C(p,"Scavenged gearbox",new Vector3(-.62f,.35f,.31f),.25f,.58f,"Steel",new Vector3(0,0,90));
+            B(p,"Machinery casing",new Vector3(-.56f,.25f,.07f),new Vector3(.55f,.42f,.60f),"SteelLight",.06f);
+            for(int i=0;i<3;i++)B(p,"Cooling fin",new Vector3(-.56f,.23f,-.17f+i*.12f),new Vector3(.60f,.37f,.045f),"Steel",.012f);
+            C(p,"Discarded plasma cell",new Vector3(.32f,.28f,-.36f),.14f,.48f,"Mint",new Vector3(25,40,78),10);
+            Beam(p,"Bent exhaust pipe",new Vector3(-.20f,.18f,-.45f),new Vector3(.65f,.72f,.15f),.075f,"RustDark");
+        }
         static void Pump(Transform p)
         {
-            // Original 2 x 2 x 1.5 kiosk envelope, now a clearly empty fuel dispenser.
-            B(p,"Pump concrete plinth",new Vector3(0,.09f,0),new Vector3(2,.18f,1.5f),"IvoryShade",.07f);B(p,"Rounded old pump cabinet",new Vector3(-.30f,.94f,0),new Vector3(.96f,1.68f,.65f),"Ivory",.14f);B(p,"Painted pump side band",new Vector3(-.30f,.69f,-.355f),new Vector3(.83f,.66f,.045f),"Red",.035f);B(p,"Dark meter bezel",new Vector3(-.30f,1.36f,-.356f),new Vector3(.68f,.37f,.065f),"Steel",.05f);B(p,"Old ivory meter face",new Vector3(-.30f,1.36f,-.398f),new Vector3(.52f,.21f,.025f),"IvoryShade",.012f);for(int i=0;i<3;i++)B(p,"Empty meter marks",new Vector3(-.46f+i*.16f,1.37f,-.414f),new Vector3(.09f,.05f,.01f),"Steel",.003f);
-            Mark(p,"Pump paint peeled",new Vector3(-.05f,.47f,-.39f),new Vector2(.34f,.43f),"Rust",new Vector3(0,180,0),1);C(p,"Pump red cap",new Vector3(-.30f,1.84f,0),.28f,.12f,"Red");
+            // Original 2 x 2 x 1.5 kiosk envelope, now a retro-futuristic desert fuel & service kiosk.
+            B(p,"Pump concrete plinth",new Vector3(0,.09f,0),new Vector3(2,.18f,1.5f),"IvoryShade",.07f);
+            B(p,"Rounded old pump cabinet",new Vector3(-.30f,.94f,0),new Vector3(.96f,1.68f,.65f),"Ivory",.14f);
+            B(p,"Painted pump side band",new Vector3(-.30f,.69f,-.355f),new Vector3(.83f,.66f,.045f),"Red",.035f);
+            B(p,"Dark meter bezel",new Vector3(-.30f,1.36f,-.356f),new Vector3(.68f,.37f,.065f),"Steel",.05f);
+            B(p,"Old ivory meter face",new Vector3(-.30f,1.36f,-.398f),new Vector3(.52f,.21f,.025f),"IvoryShade",.012f);
+            for(int i=0;i<3;i++)B(p,"Empty meter marks",new Vector3(-.46f+i*.16f,1.37f,-.414f),new Vector3(.09f,.05f,.01f),"Steel",.003f);
+            Mark(p,"Pump paint peeled",new Vector3(-.05f,.47f,-.39f),new Vector2(.34f,.43f),"Rust",new Vector3(0,180,0),1);
+            C(p,"Pump red cap",new Vector3(-.30f,1.84f,0),.28f,.12f,"Red");
+            ArtKit.Ellipsoid(p,"Retro fuel globe sign",new Vector3(-.30f,2.06f,0),new Vector3(.42f,.42f,.22f),"Glow",10,6);
             Vector3[] hose={new Vector3(.20f,1.55f,.05f),new Vector3(.57f,1.48f,.05f),new Vector3(.66f,.92f,.05f),new Vector3(.62f,.28f,.05f),new Vector3(.92f,.19f,.05f),new Vector3(.97f,.63f,.05f),new Vector3(.82f,1.02f,.05f)};for(int i=1;i<hose.Length;i++)Beam(p,"Dry black fuel hose",hose[i-1],hose[i],.055f,"Rubber");B(p,"Hanging fuel nozzle",new Vector3(.80f,1.08f,.03f),new Vector3(.11f,.30f,.08f),"Steel",.025f,new Vector3(0,0,-24));Jerry(p,new Vector3(.45f,.14f,-.41f),"Red",.65f);
-            for(int side=-1;side<=1;side+=2)B(p,"Small canopy post",new Vector3(side*1.05f,1.15f,.48f),new Vector3(.10f,2.3f,.10f),"RustDark",.025f);Corrugated(p,"Damaged ivory pump shelter",new Vector3(0,2.29f,0),new Vector2(2.58f,1.9f),"IvoryShade",10,new Vector3(90,0,0));B(p,"Empty fuel station header",new Vector3(0,2.19f,-.78f),new Vector3(2.11f,.22f,.08f),"Rust",.025f);B(p,"Weathered ivory header strip",new Vector3(0,2.19f,-.83f),new Vector3(.73f,.07f,.016f),"Ivory",.004f);
+            for(int side=-1;side<=1;side+=2)B(p,"Small canopy post",new Vector3(side*1.05f,1.15f,.48f),new Vector3(.12f,2.3f,.12f),"TealDark",.025f);
+            Corrugated(p,"Damaged ivory pump shelter",new Vector3(0,2.29f,0),new Vector2(2.58f,1.9f),"Teal",10,new Vector3(90,0,0));
+            B(p,"Empty fuel station header",new Vector3(0,2.19f,-.78f),new Vector3(2.18f,.26f,.09f),"Red",.025f);
+            B(p,"Weathered ivory header strip",new Vector3(0,2.19f,-.835f),new Vector3(1.55f,.11f,.02f),"Yellow",.006f);
         }
         static void Pole(Transform p)
-        {Beam(p,"Leaning utility pole",Vector3.zero,new Vector3(.30f,5,0),.19f,"Wood");B(p,"Pole crossarm",new Vector3(.30f,4.45f,0),new Vector3(2.0f,.15f,.20f),"RustDark",.035f);for(int s=-1;s<=1;s+=2)C(p,"Ivory ceramic insulator",new Vector3(.3f+s*.78f,4.60f,0),.105f,.24f,"IvoryShade");B(p,"Broken sodium lamp",new Vector3(.95f,4.18f,0),new Vector3(.44f,.20f,.49f),"Steel",.05f);B(p,"Dusty lamp lens",new Vector3(.95f,4.06f,0),new Vector3(.34f,.04f,.37f),"IvoryShade",.02f);for(int i=0;i<3;i++)B(p,"Pole steel binding",new Vector3(.15f,2.1f+i*.34f,0),new Vector3(.25f,.07f,.25f),"Steel",.012f);}
+        {
+            Beam(p,"Leaning utility pole",Vector3.zero,new Vector3(.30f,5,0),.19f,"Wood");
+            B(p,"Pole crossarm",new Vector3(.30f,4.45f,0),new Vector3(2.1f,.15f,.20f),"RustDark",.035f);
+            B(p,"Secondary lower crossarm",new Vector3(.26f,3.75f,0),new Vector3(1.45f,.12f,.16f),"Rust",.025f);
+            for(int s=-1;s<=1;s+=2)
+            {
+                C(p,"Ivory ceramic insulator",new Vector3(.3f+s*.78f,4.60f,0),.105f,.24f,"Mint");
+                C(p,"Lower ceramic insulator",new Vector3(.26f+s*.52f,3.88f,0),.085f,.18f,"IvoryShade");
+            }
+            C(p,"Pole transformer drum",new Vector3(-.12f,3.20f,.24f),.24f,.68f,"TealDark",default,12);
+            B(p,"Broken sodium lamp",new Vector3(.95f,4.18f,0),new Vector3(.44f,.20f,.49f),"Steel",.05f);
+            B(p,"Dusty lamp lens",new Vector3(.95f,4.06f,0),new Vector3(.34f,.06f,.37f),"Glow",.02f);
+            for(int i=0;i<3;i++)B(p,"Pole steel binding",new Vector3(.15f,2.1f+i*.34f,0),new Vector3(.25f,.07f,.25f),"Steel",.012f);
+        }
         static void Tower(Transform p)
         {
             for(int s=-1;s<=1;s+=2)for(int z=-1;z<=1;z+=2){Beam(p,"Lookout structural leg",new Vector3(s*1.72f,0,z*1.72f),new Vector3(s*1.43f,3.5f,z*1.43f),.24f,"RustDark");B(p,"Lookout foot plate",new Vector3(s*1.72f,.08f,z*1.72f),new Vector3(.58f,.15f,.58f),"Steel",.04f);}
-            B(p,"Lookout deck",new Vector3(0,3.48f,0),new Vector3(3.95f,.22f,3.95f),"Wood",.055f);for(int s=-1;s<=1;s+=2){Beam(p,"Tower cross brace",new Vector3(-1.65f,.5f,s*1.66f),new Vector3(1.43f,3.3f,s*1.43f),.12f,"Steel");Corrugated(p,"Lookout partial wall",new Vector3(s*1.85f,4.13f,0),new Vector2(3.65f,1.12f),s==1?"Rust":"IvoryShade",10,new Vector3(0,90,0));for(int z=-1;z<=1;z+=2)B(p,"Canopy support",new Vector3(s*1.65f,4.62f,z*1.65f),new Vector3(.13f,2.2f,.13f),"Steel",.02f);}
+            B(p,"Lookout deck",new Vector3(0,3.48f,0),new Vector3(3.95f,.22f,3.95f),"Wood",.055f);for(int s=-1;s<=1;s+=2){Beam(p,"Tower cross brace",new Vector3(-1.65f,.5f,s*1.66f),new Vector3(1.43f,3.3f,s*1.43f),.12f,"Steel");Corrugated(p,"Lookout partial wall",new Vector3(s*1.85f,4.13f,0),new Vector2(3.65f,1.12f),s==1?"Rust":"TealDark",10,new Vector3(0,90,0));for(int z=-1;z<=1;z+=2)B(p,"Canopy support",new Vector3(s*1.65f,4.62f,z*1.65f),new Vector3(.13f,2.2f,.13f),"Steel",.02f);}
             Corrugated(p,"Patched lookout canopy",new Vector3(0,5.59f,0),new Vector2(4.65f,4.58f),"Rust",16,new Vector3(90,0,5));for(int i=0;i<10;i++)B(p,"Access ladder rung",new Vector3(0,.35f+i*.33f,-1.89f),new Vector3(.64f,.065f,.07f),"SteelLight",.012f);for(int s=-1;s<=1;s+=2)Beam(p,"Ladder upright",new Vector3(s*.34f,.1f,-1.90f),new Vector3(s*.34f,3.7f,-1.90f),.07f,"Steel");
+            // Watchtower Searchlight, Radio Dish & Raider Banner
+            C(p,"Watchtower searchlight barrel",new Vector3(1.35f,4.72f,-1.75f),.26f,.42f,"Steel",new Vector3(105,20,0),12);
+            C(p,"Watchtower searchlight lens",new Vector3(1.42f,4.67f,-1.94f),.22f,.06f,"Glow",new Vector3(105,20,0),12);
+            Beam(p,"Rooftop radio mast",new Vector3(-1.2f,5.6f,1.1f),new Vector3(-1.2f,7.2f,1.1f),.06f,"SteelLight");
+            ArtKit.Ellipsoid(p,"Radio mast beacon",new Vector3(-1.2f,7.28f,1.1f),new Vector3(.22f,.22f,.22f),"Glow",8,5);
+            B(p,"Lookout war banner",new Vector3(0,2.45f,1.62f),new Vector3(1.35f,1.45f,.05f),"Red",.02f);
+            B(p,"Banner chevron",new Vector3(0,2.45f,1.66f),new Vector3(.85f,.32f,.03f),"Yellow",.01f);
         }
         static void Gate(Transform p,bool closed)
         {
-            for(int s=-1;s<=1;s+=2){B(p,"Gate massive anchor",new Vector3(s*14.3f,2.4f,0),new Vector3(2.8f,4.8f,3),"RockShade",.18f);WornPanel(p,"Gate pier armor",new Vector3(s*14.3f,2.2f,-1.53f),new Vector3(2.38f,3.85f,.10f),"IvoryShade",new Vector3(0,180,0),s==1?1:2);B(p,"Gate pier cap",new Vector3(s*14.3f,4.9f,0),new Vector3(3,.21f,3.2f),"Rust",.065f);for(int i=0;i<3;i++)B(p,"Gate pier strap",new Vector3(s*14.3f,.72f+i*1.5f,-1.63f),new Vector3(2.73f,.15f,.10f),"Steel",.025f);}
-            if(closed){for(int i=0;i<12;i++){float x=-11.92f+i*2.17f;Corrugated(p,"Reclaimed gate sheet",new Vector3(x,2.1f,(i%2)*.04f),new Vector2(2.22f,4.2f),i%4==0?"IvoryShade":"Rust",7);Mark(p,"Gate corrosion",new Vector3(x,.53f,.11f),new Vector2(1.22f,.80f),"RustDark",default,i);}for(int s=-1;s<=1;s+=2){Beam(p,"Gate X girder",new Vector3(s*12.2f,.5f,-.18f),new Vector3(-s*12.2f,3.7f,-.18f),.25f,"Steel");B(p,"Locked gate center bar",new Vector3(s*.55f,2.2f,-.32f),new Vector3(.13f,2.7f,.12f),"SteelLight",.025f);}B(p,"Gate lock block",new Vector3(0,2.03f,-.41f),new Vector3(.50f,.48f,.24f),"Steel",.05f);}
+            for(int s=-1;s<=1;s+=2)
+            {
+                B(p,"Gate massive anchor",new Vector3(s*14.3f,2.4f,0),new Vector3(2.8f,4.8f,3),"RockShade",.18f);
+                WornPanel(p,"Gate pier armor",new Vector3(s*14.3f,2.2f,-1.53f),new Vector3(2.38f,3.85f,.10f),"IvoryShade",new Vector3(0,180,0),s==1?1:2);
+                B(p,"Gate pier cap",new Vector3(s*14.3f,4.9f,0),new Vector3(3,.21f,3.2f),"Rust",.065f);
+                for(int i=0;i<3;i++)B(p,"Gate pier strap",new Vector3(s*14.3f,.72f+i*1.5f,-1.63f),new Vector3(2.73f,.15f,.10f),"Steel",.025f);
+                // Glowing beacon brazier + war spikes atop each gate pier
+                C(p,"Gate pier beacon housing",new Vector3(s*14.3f,5.32f,0),.45f,.62f,"Steel",default,10);
+                ArtKit.Ellipsoid(p,"Gate pier beacon flame",new Vector3(s*14.3f,5.72f,0),new Vector3(.68f,.68f,.68f),"Glow",10,6);
+                for(int k=-1;k<=1;k+=2)Beam(p,"Pier tusk horn "+k,new Vector3(s*14.3f+k*.75f,4.6f,-1.4f),new Vector3(s*14.3f+k*1.1f,5.4f,-2.3f),.16f,"Ivory");
+            }
+            if(closed){for(int i=0;i<12;i++){float x=-11.92f+i*2.17f;Corrugated(p,"Reclaimed gate sheet",new Vector3(x,2.1f,(i%2)*.04f),new Vector2(2.22f,4.2f),i%4==0?"IvoryShade":i%2==0?"Rust":"TealDark",7);Mark(p,"Gate corrosion",new Vector3(x,.53f,.11f),new Vector2(1.22f,.80f),"RustDark",default,i);C(p,"Gate top spike "+i,new Vector3(x,4.45f,0),.09f,.55f,"SteelLight",default,6);}for(int s=-1;s<=1;s+=2){Beam(p,"Gate X girder",new Vector3(s*12.2f,.5f,-.18f),new Vector3(-s*12.2f,3.7f,-.18f),.25f,"Steel");B(p,"Locked gate center bar",new Vector3(s*.55f,2.2f,-.32f),new Vector3(.13f,2.7f,.12f),"SteelLight",.025f);}B(p,"Gate lock block",new Vector3(0,2.03f,-.41f),new Vector3(.65f,.62f,.28f),"Yellow",.05f);}
             else for(int s=-1;s<=1;s+=2)Corrugated(p,"Open reclaimed gate leaf",new Vector3(s*13,1.8f,-4),new Vector2(7,3.6f),"Rust",18,new Vector3(0,90,0));
         }
         static void Gantry(Transform p)
-        {for(int s=-1;s<=1;s+=2){B(p,"Salvage gantry column",new Vector3(s*4.4f,3,0),new Vector3(.60f,6,1.0f),"RustDark",.075f);B(p,"Column broad base",new Vector3(s*4.4f,.25f,0),new Vector3(1.7f,.50f,1.7f),"RockShade",.11f);Beam(p,"Knee bracket",new Vector3(s*4.2f,4.5f,0),new Vector3(s*2.7f,6,0),.19f,"Steel");}B(p,"Overhead salvage beam",new Vector3(0,6.1f,0),new Vector3(10,.58f,1.1f),"Rust",.075f);B(p,"Empty crane trolley",new Vector3(.2f,5.72f,0),new Vector3(.85f,.29f,.74f),"Steel",.05f);Beam(p,"Crane cable",new Vector3(.2f,5.6f,0),new Vector3(.2f,3.95f,0),.055f,"Steel");ArtKit.Torus(p,"Salvage hook",new Vector3(.2f,3.78f,0),.25f,.15f,.12f,"SteelLight",Quaternion.Euler(90,0,0),12);}
+        {
+            for(int s=-1;s<=1;s+=2)
+            {
+                B(p,"Salvage gantry column",new Vector3(s*4.4f,3,0),new Vector3(.60f,6,1.0f),"RustDark",.075f);
+                B(p,"Column hazard band",new Vector3(s*4.4f,1.6f,0),new Vector3(.66f,.48f,1.06f),"Yellow",.03f);
+                B(p,"Column broad base",new Vector3(s*4.4f,.25f,0),new Vector3(1.7f,.50f,1.7f),"RockShade",.11f);
+                Beam(p,"Knee bracket",new Vector3(s*4.2f,4.5f,0),new Vector3(s*2.7f,6,0),.19f,"Steel");
+                ArtKit.Ellipsoid(p,"Gantry top beacon "+s,new Vector3(s*4.4f,6.55f,0),new Vector3(.38f,.38f,.38f),"Glow",8,5);
+            }
+            B(p,"Overhead salvage beam",new Vector3(0,6.1f,0),new Vector3(10,.58f,1.1f),"Rust",.075f);
+            B(p,"Gantry header sign",new Vector3(0,6.12f,-.58f),new Vector3(3.8f,.36f,.08f),"Yellow",.02f);
+            B(p,"Empty crane trolley",new Vector3(.2f,5.72f,0),new Vector3(.85f,.29f,.74f),"Steel",.05f);
+            Beam(p,"Crane cable",new Vector3(.2f,5.6f,0),new Vector3(.2f,3.95f,0),.055f,"Steel");
+            ArtKit.Torus(p,"Salvage hook",new Vector3(.2f,3.78f,0),.25f,.15f,.12f,"Yellow",Quaternion.Euler(90,0,0),12);
+        }
         static void Bunker(Transform p)
-        {B(p,"Sandstone bunker casing",new Vector3(0,2.4f,0),new Vector3(6,4.8f,1),"RockShade",.20f);B(p,"Inset steel bunker door",new Vector3(0,2.08f,-.64f),new Vector3(4.2f,3.8f,.28f),"Steel",.10f);for(int s=-1;s<=1;s+=2){B(p,"Ivory door frame",new Vector3(s*2.38f,2,-.79f),new Vector3(.34f,4.0f,.14f),"IvoryShade",.035f);B(p,"Door locking bar",new Vector3(s*.72f,2.1f,-.83f),new Vector3(.13f,3.4f,.10f),"Rust",.025f);}for(int i=0;i<6;i++)B(p,"Door reinforcing rib",new Vector3(0,.65f+i*.56f,-.83f),new Vector3(3.8f,.10f,.10f),"SteelLight",.022f);B(p,"Sealed bunker red plaque",new Vector3(0,3.38f,-.91f),new Vector3(1.39f,.48f,.07f),"Red",.03f);B(p,"Bunker lintel",new Vector3(0,4.49f,-.25f),new Vector3(6.1f,.44f,1.6f),"Rock",.14f);}
+        {
+            B(p,"Sandstone bunker casing",new Vector3(0,2.4f,0),new Vector3(6,4.8f,1),"RockShade",.20f);
+            B(p,"Inset steel bunker door",new Vector3(0,2.08f,-.64f),new Vector3(4.2f,3.8f,.28f),"Steel",.10f);
+            for(int s=-1;s<=1;s+=2)
+            {
+                B(p,"Ivory door frame",new Vector3(s*2.38f,2,-.79f),new Vector3(.34f,4.0f,.14f),"Yellow",.035f);
+                B(p,"Door locking bar",new Vector3(s*.72f,2.1f,-.83f),new Vector3(.13f,3.4f,.10f),"Rust",.025f);
+                ArtKit.Ellipsoid(p,"Bunker security beacon "+s,new Vector3(s*2.38f,4.15f,-.88f),new Vector3(.28f,.28f,.20f),"Glow",8,5);
+            }
+            for(int i=0;i<6;i++)B(p,"Door reinforcing rib",new Vector3(0,.65f+i*.56f,-.83f),new Vector3(3.8f,.10f,.10f),"SteelLight",.022f);
+            ArtKit.Torus(p,"Blast door wheel lock",new Vector3(0,2.08f,-.92f),.48f,.36f,.10f,"Red",Quaternion.Euler(90,0,0),12);
+            B(p,"Sealed bunker red plaque",new Vector3(0,3.38f,-.91f),new Vector3(1.39f,.48f,.07f),"Red",.03f);
+            B(p,"Bunker lintel",new Vector3(0,4.49f,-.25f),new Vector3(6.1f,.44f,1.6f),"Rock",.14f);
+        }
         static void WindPump(Transform p)
-        {for(int s=-1;s<=1;s+=2){Beam(p,"Wind pump braced foot",new Vector3(s*1.3f,0,s*.8f),new Vector3(s*.48f,5.5f,0),.18f,"RustDark");Beam(p,"Wind pump diagonal",new Vector3(s*1.2f,.6f,s*.73f),new Vector3(-s*.53f,4.8f,0),.08f,"Steel");}C(p,"Wind pump axle",new Vector3(0,5.85f,0),.26f,.65f,"Steel",new Vector3(90,0,0));for(int i=0;i<8;i++){float a=i*45*Mathf.Deg2Rad;var t=N(p,"Broad salvaged fan blade",new Vector3(Mathf.Sin(a)*1.4f,6+Mathf.Cos(a)*1.4f,0),Quaternion.Euler(0,0,-i*45));WornPanel(t,"Fan blade",Vector3.zero,new Vector3(.58f,1.56f,.07f),i%3==0?"Ivory":"Rust",new Vector3(0,12,0),i);}Beam(p,"Dry pump piston",new Vector3(0,.3f,0),new Vector3(0,5.5f,0),.065f,"SteelLight");B(p,"Dry pump base",new Vector3(0,.35f,0),new Vector3(1.33f,.7f,1.2f),"Rust",.10f);}
+        {
+            for(int s=-1;s<=1;s+=2){Beam(p,"Wind pump braced foot",new Vector3(s*1.3f,0,s*.8f),new Vector3(s*.48f,5.5f,0),.18f,"RustDark");Beam(p,"Wind pump diagonal",new Vector3(s*1.2f,.6f,s*.73f),new Vector3(-s*.53f,4.8f,0),.08f,"Steel");}
+            C(p,"Wind pump axle",new Vector3(0,5.85f,0),.26f,.65f,"Steel",new Vector3(90,0,0));
+            for(int i=0;i<8;i++){float a=i*45*Mathf.Deg2Rad;var t=N(p,"Broad salvaged fan blade",new Vector3(Mathf.Sin(a)*1.4f,6+Mathf.Cos(a)*1.4f,0),Quaternion.Euler(0,0,-i*45));WornPanel(t,"Fan blade",Vector3.zero,new Vector3(.58f,1.56f,.07f),i%2==0?"Ivory":i%3==0?"Yellow":"Rust",new Vector3(0,12,0),i);}
+            B(p,"Wind pump tail vane",new Vector3(0,6.1f,.95f),new Vector3(.12f,.95f,1.45f),"Red",.03f);
+            Beam(p,"Dry pump piston",new Vector3(0,.3f,0),new Vector3(0,5.5f,0),.065f,"SteelLight");
+            B(p,"Dry pump base",new Vector3(0,.35f,0),new Vector3(1.33f,.7f,1.2f),"TealDark",.10f);
+        }
         static void Concrete(Transform p)
         {B(p,"Broken roadside foundation",new Vector3(0,.75f,0),new Vector3(4,1.50f,1.0f),"RockLight",.18f);RockMass(p,new Vector3(1.15f,0,0),new Vector3(.94f,2.8f,1.3f),2);for(int i=0;i<3;i++)Beam(p,"Exposed old rebar",new Vector3(-1.3f+i*.71f,1.4f,0),new Vector3(-1.4f+i*.71f,1.97f,.11f),.055f,"RustDark");}
         static void Sign(Transform p,bool danger)
-        {B(p,"Road sign support",new Vector3(0,1.25f,0),new Vector3(.15f,2.5f,.18f),"Wood",.025f);WornPanel(p,"Reclaimed ivory signboard",new Vector3(0,2.4f,0),new Vector3(2.65f,.80f,.13f),danger?"Red":"IvoryShade",default,danger?1:0);if(danger){B(p,"Caution vertical stroke",new Vector3(0,2.49f,-.085f),new Vector3(.13f,.32f,.025f),"Ivory",.015f);B(p,"Caution dot",new Vector3(0,2.22f,-.085f),new Vector3(.13f,.10f,.025f),"Ivory",.012f);}else{B(p,"Route arrow shaft",new Vector3(-.10f,2.40f,-.085f),new Vector3(1.16f,.13f,.025f),"Steel",.018f);for(int s=-1;s<=1;s+=2)B(p,"Route arrow chevron",new Vector3(.58f,2.40f+s*.17f,-.085f),new Vector3(.46f,.13f,.025f),"Steel",.018f,new Vector3(0,0,s*43));}for(int s=-1;s<=1;s+=2)C(p,"Sign bolt",new Vector3(s*1.1f,2.4f,-.085f),.04f,.02f,"SteelLight",new Vector3(90,0,0),8);}
+        {
+            B(p,"Road sign support",new Vector3(0,1.25f,0),new Vector3(.15f,2.5f,.18f),"Wood",.025f);
+            WornPanel(p,"Reclaimed ivory signboard",new Vector3(0,2.4f,0),new Vector3(2.65f,.80f,.13f),danger?"Red":"Yellow",default,danger?1:0);
+            if(danger){B(p,"Caution vertical stroke",new Vector3(0,2.49f,-.085f),new Vector3(.15f,.34f,.03f),"Ivory",.015f);B(p,"Caution dot",new Vector3(0,2.22f,-.085f),new Vector3(.15f,.12f,.03f),"Ivory",.012f);ArtKit.Ellipsoid(p,"Hazard topper beacon",new Vector3(0,2.92f,0),new Vector3(.26f,.26f,.22f),"Glow",8,5);}
+            else{B(p,"Route arrow shaft",new Vector3(-.10f,2.40f,-.085f),new Vector3(1.16f,.15f,.03f),"Steel",.018f);for(int s=-1;s<=1;s+=2)B(p,"Route arrow chevron",new Vector3(.58f,2.40f+s*.17f,-.085f),new Vector3(.46f,.15f,.03f),"Steel",.018f,new Vector3(0,0,s*43));}
+            for(int s=-1;s<=1;s+=2)C(p,"Sign bolt",new Vector3(s*1.1f,2.4f,-.085f),.04f,.02f,"SteelLight",new Vector3(90,0,0),8);
+        }
         static void Stakes(Transform p)
         {for(int i=0;i<4;i++){B(p,"Rough mismatched timber stake",new Vector3(i*.7f-1,.68f,0),new Vector3(.24f,1.36f+i%2*.19f,.18f),i%2==0?"Wood":"WoodLight",.035f,new Vector3(0,i*11,-3+i*2));}B(p,"Salvaged horizontal fence strap",new Vector3(0,.59f,-.13f),new Vector3(2.45f,.16f,.09f),"Rust",.02f);}
         static void Vegetation(Transform p,bool cactus)
         {
-            if(cactus){C(p,"Chunky cactus main stem",new Vector3(0,.94f,0),.19f,1.72f,"Cactus",default,10);ArtKit.Ellipsoid(p,"Rounded cactus crown",new Vector3(0,1.83f,0),new Vector3(.38f,.29f,.38f),"Cactus",10,5);for(int s=-1;s<=1;s+=2){Beam(p,"Cactus side arm",new Vector3(0,.65f+s*.15f,0),new Vector3(s*.43f,.65f+s*.15f,0),.19f,"Cactus");C(p,"Upright cactus arm",new Vector3(s*.43f,.97f+s*.15f,0),.12f,.65f,"Cactus",default,10);ArtKit.Ellipsoid(p,"Rounded cactus arm",new Vector3(s*.43f,1.32f+s*.15f,0),new Vector3(.24f,.22f,.24f),"Cactus",10,5);}for(int i=0;i<4;i++){float a=i*90*Mathf.Deg2Rad;Beam(p,"Broad cactus rib",new Vector3(Mathf.Cos(a)*.19f,.18f,Mathf.Sin(a)*.19f),new Vector3(Mathf.Cos(a)*.19f,1.68f,Mathf.Sin(a)*.19f),.025f,"WoodLight");}}
-            else for(int i=0;i<7;i++){float a=i*2.4f;Vector3 top=new Vector3(Mathf.Sin(a)*.42f,.21f+(i%3)*.15f,Mathf.Cos(a)*.42f);Beam(p,"Dry scrub branch",Vector3.zero,top,.035f,"Wood");ArtKit.Ellipsoid(p,"Dusty dry foliage",top,new Vector3(.23f,.26f,.22f),i%3==0?"WoodLight":"DryLeaves",7,4);}
+            if(cactus)
+            {
+                C(p,"Chunky cactus main stem",new Vector3(0,.94f,0),.19f,1.72f,"Cactus",default,10);
+                ArtKit.Ellipsoid(p,"Rounded cactus crown",new Vector3(0,1.83f,0),new Vector3(.38f,.29f,.38f),"Cactus",10,5);
+                // Desert cactus crown blossom
+                ArtKit.Ellipsoid(p,"Cactus crown flower",new Vector3(0,1.98f,0),new Vector3(.22f,.16f,.22f),"Red",8,4);
+                ArtKit.Ellipsoid(p,"Cactus flower stamen",new Vector3(0,2.05f,0),new Vector3(.11f,.10f,.11f),"Yellow",6,4);
+                for(int s=-1;s<=1;s+=2)
+                {
+                    Beam(p,"Cactus side arm",new Vector3(0,.65f+s*.15f,0),new Vector3(s*.43f,.65f+s*.15f,0),.19f,"Cactus");
+                    C(p,"Upright cactus arm",new Vector3(s*.43f,.97f+s*.15f,0),.12f,.65f,"Cactus",default,10);
+                    ArtKit.Ellipsoid(p,"Rounded cactus arm",new Vector3(s*.43f,1.32f+s*.15f,0),new Vector3(.24f,.22f,.24f),"Cactus",10,5);
+                    ArtKit.Ellipsoid(p,"Cactus arm bud "+s,new Vector3(s*.43f,1.45f+s*.15f,0),new Vector3(.14f,.12f,.14f),s==1?"Yellow":"Red",7,4);
+                }
+                for(int i=0;i<4;i++){float a=i*90*Mathf.Deg2Rad;Beam(p,"Broad cactus rib",new Vector3(Mathf.Cos(a)*.19f,.18f,Mathf.Sin(a)*.19f),new Vector3(Mathf.Cos(a)*.19f,1.68f,Mathf.Sin(a)*.19f),.025f,"WoodLight");}
+            }
+            else
+            {
+                for(int i=0;i<7;i++)
+                {
+                    float a=i*2.4f;Vector3 top=new Vector3(Mathf.Sin(a)*.42f,.21f+(i%3)*.15f,Mathf.Cos(a)*.42f);
+                    Beam(p,"Dry scrub branch",Vector3.zero,top,.035f,"Wood");
+                    ArtKit.Ellipsoid(p,"Dusty dry foliage",top,new Vector3(.24f,.27f,.23f),i%3==0?"WoodLight":"DryLeaves",7,4);
+                }
+                ArtKit.Ellipsoid(p,"Desert scrub bloom",new Vector3(0,.42f,0),new Vector3(.18f,.14f,.18f),"Yellow",6,4);
+            }
         }
         static void Cliff(Transform p,Bounds bounds,string kind)
         {
             if(bounds.size.sqrMagnitude<.01f)bounds=kind=="Cliff"?new Bounds(new Vector3(0,2,0),new Vector3(7,4,7)):new Bounds(new Vector3(0,.85f,0),new Vector3(3,1.7f,2.7f));
-            // Geographical collision remains unchanged. Broad surfaces replace the old faceted/flat cap treatment.
+            // Geographical collision and Boulder envelope remain unchanged.
             RockMass(p,bounds.center-new Vector3(0,bounds.size.y*.5f,0),bounds.size,13);
             if(kind!="Cliff")return;
             var size=bounds.size;for(int i=0;i<3;i++){float x=(-.30f+i*.31f)*size.x;RockMass(p,new Vector3(bounds.center.x+x,bounds.min.y,bounds.center.z+size.z*.20f),new Vector3(size.x*.31f,size.y*(.28f+i%2*.18f),size.z*.31f),20+i);}
         }
         static void RockMass(Transform p,Vector3 at,Vector3 size,int seed)
         {
-            // Five rings and ten broad planes; bevel strips at crown/foot soften silhouettes without noisy detail.
             const int seg=10;float[] ys={0,.07f,.28f,.72f,.94f,1};float[] rs={.75f,.98f,1,.91f,.69f,.53f};var vv=new List<Vector3>();
             for(int j=0;j<ys.Length;j++)for(int i=0;i<seg;i++){float a=(i*360f/seg+seed*13)*Mathf.Deg2Rad;float irregular=.90f+Mathf.Sin(i*2.17f+seed)*.10f;float y=ys[j];if(j>0&&j<ys.Length-1)y+=Mathf.Sin(i*1.9f+seed)*.025f;vv.Add(new Vector3(Mathf.Cos(a)*.5f*size.x*rs[j]*irregular,y*size.y,Mathf.Sin(a)*.5f*size.z*rs[j]*irregular));}
             var verts=new List<Vector3>();var normals=new List<Vector3>();var tris=new List<int>();var groups=new[]{new List<int>(),new List<int>(),new List<int>()};
@@ -316,8 +448,6 @@ namespace RoadGunner.ConceptArt.Editor
                 WornRoof(p,"Salvaged ivory side canopy",new Vector3(s*9.75f,5.66f,0),new Vector2(3.20f,13.35f),new Vector3(90,0,s*4),s==1?1:4);
                 Beam(p,"Long canopy edge channel",new Vector3(s*8.15f,5.52f,-6.7f),new Vector3(s*8.15f,5.52f,6.7f),.17f,"RustDark");
             }
-            // Independent salvaged side awnings leave the complete playable service circle unobscured.
-            // No front/back cross-bay girder sweeps over the player from the fixed gameplay camera.
             for(int z=-1;z<=1;z+=2)for(int side=-1;side<=1;side+=2){B(p,"Side awning end girder",new Vector3(side*9.75f,5.62f,z*6),new Vector3(3.55f,.27f,.34f),"RustDark",.045f);for(int i=0;i<2;i++)B(p,"Awning end binding plate",new Vector3(side*9.75f+(i-.5f)*1.98f,5.62f,z*6+.20f),new Vector3(.22f,.38f,.055f),"Rust",.023f);}
             var sign=N(p,"Workshop salvaged sign on side awning",new Vector3(-9.75f,5.58f,-6.87f));WornPanel(sign,"Offwhite workshop sign",Vector3.zero,new Vector3(3.08f,.93f,.12f),"Ivory",new Vector3(0,180,0),1);Wrench(sign,"Workshop wrench pictogram",new Vector3(0,-.01f,-.085f),.53f,"Steel",new Vector3(-90,0,0));
             var cabinet=N(p,"Camera-facing tool station",new Vector3(-10.65f,0,-3.7f));ToolCabinet(cabinet,Vector3.zero);Shelf(p,new Vector3(-10.55f,0,.10f));
@@ -327,7 +457,6 @@ namespace RoadGunner.ConceptArt.Editor
             for(int i=0;i<3;i++)Tire(p,new Vector3(-10.65f,.17f+i*.34f,3.10f),.61f,.32f);Tire(p,new Vector3(-10.70f,.67f,4.56f),.65f,.36f,Quaternion.Euler(90,0,0));
             Drum(p,new Vector3(10.92f,0,3.94f),"Rust");Drum(p,new Vector3(10.86f,0,2.80f),"Teal");Jerry(p,new Vector3(10.37f,0,-3.82f),"Red");Jerry(p,new Vector3(11.02f,0,-3.84f),"IvoryShade");Crate(p,new Vector3(10.57f,0,-1.92f),true,.91f);
             for(int i=0;i<2;i++){C(p,"Small salvaged oil tin",new Vector3(10.26f+i*.53f,1.24f,-1.92f),.14f,.34f,i==0?"Red":"IvoryShade",default,12);C(p,"Oil tin capped neck",new Vector3(10.26f+i*.53f,1.43f,-1.92f),.065f,.07f,"Steel",default,10);Beam(p,"Oil-tin carrying grip",new Vector3(10.18f+i*.53f,1.48f,-1.92f),new Vector3(10.34f+i*.53f,1.48f,-1.92f),.035f,"Steel");}
-            // Hydraulic jack and work light make the equipment purpose readable without filling the bay.
             B(p,"Hydraulic jack foot",new Vector3(-10.14f,.13f,-5.11f),new Vector3(.74f,.26f,.91f),"Red",.06f);C(p,"Hydraulic jack ram",new Vector3(-10.14f,.70f,-5.11f),.13f,.95f,"SteelLight");Beam(p,"Jack handle",new Vector3(-9.86f,.29f,-5.11f),new Vector3(-9.66f,1.25f,-5.11f),.07f,"Steel");
             for(int s=-1;s<=1;s+=2){B(p,"Service fluorescent housing",new Vector3(s*9.4f,4.92f,-4.5f),new Vector3(1.63f,.15f,.25f),"Steel",.035f);B(p,"Warm service strip light",new Vector3(s*9.4f,4.83f,-4.5f),new Vector3(1.41f,.045f,.18f),"Ivory",.02f);}
             ArtKit.Bake(p,"Env_AutoRepairWorkshop");

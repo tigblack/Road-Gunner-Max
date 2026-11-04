@@ -92,7 +92,7 @@ CAPTURE outputs/scenery-crush-2026-11-03/exploration/region-ash-ridge.png — ac
 CAPTURE outputs/scenery-crush-2026-11-03/exploration/region-ash-ridge-landscape.png — actual gameplay camera, world labels and HUD; 960 x 540; fixture car position=(104.30, 0.70, 79.55); region=ash-ridge
 PASS new solid landmarks block both vehicle collision and line of sight: Actual authored non-trigger scenery colliders=14; all belong to the collision and exploration LOS masks
 PASS repair hub has an unobstructed full-car drive-through: Entry=(-8.49, 0.70, -50.91); exit=(8.49, 0.70, -33.94)
-PASS real physical vehicle can enter heal and leave the service hub: Actual healing frames=240; grounded frames=344; HP=60 -> 100; exit reason=endpoint; physics budget=10.65s; pre-freeze car=(7.8554, 0.5152, -34.5802); progress=11.1027; upright=1.0000; post-freeze car=(7.8289, 0.5152, -34.6067); progress=11.0652; elapsed game/fixed/realtime=5.850/5.840/5.847s
+PASS real physical vehicle can enter heal and leave the service hub: Actual healing frames=240; grounded frames=344; HP=60 -> 100; exit reason=endpoint; physics budget=10.65s; pre-freeze car=(7.7777, 0.5152, -34.6445); progress=11.0023; upright=1.0000; post-freeze car=(7.7465, 0.5152, -34.6758); progress=10.9581; elapsed game/fixed/realtime=5.833/5.840/5.831s
 PASS real Restart resets exploration without changing the original arena: Run serial=13 -> 14; shot=5.25; HP=100
 PASS Restart restores cache durability visuals and eligible map markers: Original reward objects are rearmed once for the new run; secret visibility follows new-run discovery
 PASS Restart forgets distant secret discovery and clears reward feedback: Previously found secret is hidden again; old run bonus toast is absent

@@ -9,9 +9,10 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 3 November update makes small scenery break under cars
-and adds solid collision to large decorative rocks and wreckage. The tracked
-player, moving tread shoes, differential steering and half-speed handling remain.
+Press Play. The latest 5 November release contains the Argon visual overhaul:
+updated player/crew, tracks, Raiders, Buggies, bosses, pickups, props and site
+meshes. Small scenery still breaks under cars; large rocks and structures remain
+solid. Differential steering, half-speed handling and gameplay balance remain.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -46,6 +47,13 @@ RESTART RUN starts again: score, kills and upgrades reset, enemies return and
 player health is restored. Pause/Resume preserves run and tutorial progress.
 Pause also provides music volume and a summary of current damage and run stats.
 The volume preference is saved locally.
+
+ARGON VISUAL AUTHORING
+The saved scene already contains the new models and refreshed scenery collision
+catalog. Build this saved scene directly. The coordinated art regeneration command
+RoadGunner.Editor.ArgonVisualOverhaul.ApplyBatch is an authoring tool and is not
+needed for packaging; it replaces art and rebuilds scenery/nav data. Release
+validation and source preservation: Documentation/RoadGunner/WebGL-2026-11-05-Argon/.
 
 SCENERY CONTACT
 Drive into cacti, small wooden/metal crates, barrels, loose pipes, tyre stacks
@@ -143,13 +151,18 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 3 November scenery destruction update, built with Unity 6000.6.4f1.
-The static payload is 26,186,699 bytes. Build provenance, source preservation,
-clearance corrections and acceptance reports:
-Documentation/RoadGunner/SceneryCrush-2026-11-03/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=42a3746
-Publication evidence: Documentation/RoadGunner/SceneryCrush-2026-11-03/Publication.txt.
-The tracked-player release 466ff61 remains a historical snapshot.
+WebBuild/ contains the 5 November Argon visual update, built with Unity 6000.6.4f1.
+Seven static artifacts total 26,771,613 bytes. Fresh native acceptance:
+scenery26 + physics21 + tracked9 + gameplay204 + exploration88 = 348 PASS with
+zero failures and runtime Console errors. All requested game assets were retained;
+one editor-only input-focus fixture correction made Space testing independent of
+Game View focus, with unchanged physical assertions and exact settings restoration.
+Build/input hashes, source audits and publication evidence:
+Documentation/RoadGunner/WebGL-2026-11-05-Argon/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=c5531b3
+Publication evidence: Documentation/RoadGunner/WebGL-2026-11-05-Argon/Publication.txt.
+The previous scenery release 42a3746 and tracked-player release 466ff61 remain
+historical snapshots in their corresponding documentation folders.
 Earlier audio player d3c19c3, Arcade player 63dc9c0 and exploration player fc89028
 remain historical snapshots; their own publication reports are retained.
 

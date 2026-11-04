@@ -1,0 +1,73 @@
+Argon saved-scene and scenery data audit — 2026-11-05
+
+Scope: read-only inspection of the current Unity working tree versus HEAD 6a24f9c.
+No Unity, authoring, build, git mutation, or production-file edits were performed.
+This report is the only file written by this audit.
+
+RESULT: no saved-scene/catalog/asset consistency release blocker found.
+
+New-version intent
+- Argon visual overhaul: revised player/crew/weapons/tracks, enemies, environment and
+  regional dressing; rooftop workshop landmark, attack/health totems and cache trim/glow.
+- The new coordinated Editor/ArgonVisualOverhaul.cs is the authoring source for the
+  already-saved art. Building the saved scene does not require running it again.
+- Five new Arcade mesh assets and their .meta files are required: cache glow, cache
+  trim, attack totem, health totem and workshop rooftop. All five are referenced by
+  the saved scene (8/8/1/1/1 references respectively).
+- New Hard mesh assets and matching .meta files replace deleted generated assets.
+  Include their additions and deletions together with scene, catalog and NavMesh.
+
+Current catalog and serialized geometry
+- Functional catalog remains Documentation/RoadGunner/SceneryCrush-2026-11-03/Authoring.json.
+  Its verifiedAtUtc is 2026-11-04T17:35:34.6105960Z, after the Argon rebuild.
+- 1067 primary Arcade items, 29 chunks, 235332 vertices (previously 207432).
+  79 Concept shoulder instances and 354 recovered members remain.
+- All 1725 item IDs, handling/category counts and the eight replaced-soft-collider
+  IDs are retained. Counts remain 208 mutable sources, 688 soft probes, 209 generated
+  hard colliders plus three reused existing hard colliders; 136 protected solids.
+- Independently decoded all 46 unique source mesh assets used by 336 source records.
+  Reproducing the installer hash over serialized positions/normals/UVs/submesh indices
+  matched every catalog geometryHash, vertex count and index count. All referenced
+  source meshes/material GUIDs exist. All item ranges are valid triangle triples;
+  non-composite ownership ranges are disjoint.
+- The 29 rebuilt Arcade source IDs are reflected in the new catalog. Other shared
+  source IDs retain their poses. Protected-solid signatures are unchanged from HEAD.
+- The fresh catalog has clearanceRepairVersion=0 and no relocation entries because
+  it was regenerated against the updated art. This is a new geometry baseline;
+  earlier three whole-composition relocation provenance remains in git history.
+
+Saved scene and collision wiring
+- Scene has one ArenaDecorationCrush manager and 208 DecorationCrushChunk components.
+- Independent serialized cross-check found 688 unique item IDs/probes and 208 unique
+  manager chunk refs, with source IDs, kinds and ranges matching the catalog.
+- All 688 owned BoxCollider probes are enabled triggers on layer12. All 209 owned
+  MeshColliders are enabled solid non-convex Default-layer colliders, as expected.
+  Collision component counts are unchanged from HEAD; 19 new objects are visual
+  MeshFilter/MeshRenderer additions. No new scene script GUIDs appeared.
+- No deleted asset GUID remains referenced by the saved scene. No new unresolved
+  asset GUID appears versus HEAD. Required new art is present with .meta files.
+- Scene RenderSettings, LightmapSettings, occlusion and NavMeshSettings sections
+  are unchanged. No ProjectSettings changes were present at audit time.
+
+Roads, map and navigation
+- Exploration layout, road surface assets, minimap textures/UI and map bounds have
+  no working-tree diff. The existing map is deliberately baked without small Arcade
+  dressing; the Argon changes do not introduce a new route or region layout.
+- Saved Navigation.asset changed with the new collision geometry. Authoring reports
+  all 14 exact car routes / 736 samples and all 14 NavMesh path guards passing.
+- The route checks preserve the existing actual chassis-box dimensions and margins.
+  Workshop opening and route checks passed before the new scene/catalog were saved.
+
+Latest prepublication reports already present
+- The five reports in SceneryCrush-2026-11-03 were refreshed on 2026-11-04 after
+  authoring: Props26, Gameplay204, Exploration88, Physics21 and Tracked9, all zero
+  failures, each reporting zero runtime console errors/exceptions/asserts.
+- These are diagnostic/fixture results, not a natural full playthrough, browser
+  acceptance, measured display FPS, or proof of the forthcoming WebGL build.
+  Root is running fresh read-only verification/build for publication.
+
+Staging notes
+- No inspected changed asset exceeded 100MiB; the saved scene is about10MB.
+- Exclude unrelated untracked AntonSkill/, _anton/, skills/, GODOT_PROJECT_SUMMARY.txt
+  and UNREAL_ENGINE_5_PROJECT_SUMMARY.txt. Keep outputs/ as local diagnostic artifacts.
+- Preserve the current saved scene; do not rerun full art/world installers for release.

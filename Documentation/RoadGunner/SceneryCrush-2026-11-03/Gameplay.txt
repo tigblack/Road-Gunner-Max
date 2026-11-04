@@ -48,9 +48,9 @@ PASS white ring captured over varied actual terrain: Actual road mesh found=True
 PASS one original Arena music source is connected: One dedicated music AudioSource on the existing GameSession; gun/impact/pickup source remains separate
 PASS Arena music automatically plays the loaded loop: Playing=True; loop=True; starts=1; clip=Dustlight Road; length=48.064s; load=Loaded
 PASS music reaches moderate volume without changing SFX: Music source volume=0.300; SFX volume retained=1
-PASS small gameplay notifications do not restart music: Playhead=2.11 -> 2.43s; starts=1
+PASS small gameplay notifications do not restart music: Playhead=2.13 -> 2.43s; starts=1
 PASS Arena restart keeps one continuous music voice: Restart playhead=2.43 -> 2.75s; starts=1
-PASS music playback wraps the loop without a second source: Playhead across native loop=47.664 -> 0.773s; starts=1; audible encoded seam requires browser/listening verification
+PASS music playback wraps the loop without a second source: Playhead across native loop=47.664 -> 0.795s; starts=1; audible encoded seam requires browser/listening verification
 PASS pause smoothly fades music using unscaled time: Volume=0.300 -> 0.161 -> 0.000; pause Music control visible=True
 PASS pause Music slider persists separately from SFX: Saved/reloaded music=0.17; key=RoadGunner.Audio.MusicVolume; SFX unchanged
 PASS gameplay capture pause-music-control: outputs/scenery-crush-2026-11-03/gameplay/pause-music-control.png — actual gameplay camera and HUD, 540 x 960
@@ -65,7 +65,7 @@ PASS upgrade only applies once: Remaining in radius and retrying do not increase
 PASS HEALTH +1 uses existing health: Maximum=100 -> 120; current=80.00001; HUD=ATK 2    HP 2
 PASS health upgrade explains its actual run effect: Actual max HP increase=20.00001; toast=MAX HP +20 · CURRENT +20
 <size=27>THIS RUN</size>
-PASS workshop heals upgraded health: Healed=9.81; expected=9.80; current maximum=120
+PASS workshop heals upgraded health: Healed=9.80; expected=9.80; current maximum=120
 PASS death retains levels until restart: Defeat uses the original session flow
 PASS defeat overlay shows real run effects and reset consequence: Defeat keeps upgraded damage/maximum in the result and offers a disclosed fresh run
 PASS gameplay capture anton-defeated: outputs/scenery-crush-2026-11-03/gameplay/anton-defeated.png — actual gameplay camera and HUD, 540 x 960
@@ -77,28 +77,28 @@ PASS roof gun needs multiple Raider hits: Actual shots=9; initial HP=45; player 
 PASS human Metal Gear and rear harpoon: Metal Gear visible=True; launch=True; retract=True; scrap=1
 PASS dead Raider leaves minimap: Death removes the enemy marker while the corpse can remain
 PASS moving vehicle map marker follows: Cached marker follows position changes without rediscovering targets
-PASS enemy roof gun still damages player: Hostile shots=3; player HP=100 -> 85
+PASS enemy roof gun still damages player: Hostile shots=2; player HP=100 -> 90
 PASS Buggy tougher than Raider and rewards once: Raider shots=9; Buggy shots=20; reward=3
 PASS vehicle Metal Gear and rear harpoon: Metal Gear=True; launch=True; retract=True; scrap=3
 PASS dead Buggy leaves minimap: Vehicle destruction hides its map marker
 PASS harpoon has faster configurable cycle: Launch18->36; retract/pull12->30; search.15->0.05; cooldown.3->0.08; aim480->960
-PASS previous harpoon baseline measured: Two identical 4.5m drops; elapsed=2.36s; resources=2; collections=2
+PASS previous harpoon baseline measured: Two identical 4.5m drops; elapsed=2.38s; resources=2; collections=2
 PASS faster harpoon collects consecutive gear exactly once: Two identical 4.5m drops; elapsed=1.36s; resources=2; collections=2
-PASS collection is faster while animation remains visible: Previous/current two-drop cycles=2.36/1.36s; improvement=1.73x; visible launch/retract=True/True; maximum reservations=1
-PASS profile speed in real vehicle physics: Peak=5.27m/s; limit=5.85; travelled=24.0
-PASS visible range follows the moving player: Observed after production LateUpdate; frames=361; maximum centre error squared=0.000395; actual weapon radius=10
+PASS collection is faster while animation remains visible: Previous/current two-drop cycles=2.38/1.36s; improvement=1.75x; visible launch/retract=True/True; maximum reservations=1
+PASS profile speed in real vehicle physics: Peak=5.27m/s; limit=5.85; travelled=23.9
+PASS visible range follows the moving player: Observed after production LateUpdate; frames=361; maximum centre error squared=0.000397; actual weapon radius=10
 PASS brake remains predictable: Stop time=0.75s; speed=0.60
 PASS phone input surface exists: Existing EventSystem and floating joystick are active
 INPUT POLICY before real touch: applicationFocused=True; editorWindow=none; editorPolicy=AllDeviceInputAlwaysGoesToGameView (original PointersAndKeyboardsRespectGameViewFocus); background=IgnoreFocus (original ResetAndDisableNonBackgroundDevices); keyboard=enabled=True; touchEnabled=True; driveComponentEnabled=True; driveEnabled=True; testInput=False; state=Playing
 PASS floating joystick hides before a touch: Activation zone stays available while its ring/thumb are hidden
 PASS TEST A origin is exactly the lower-left touch: Touch=(12.10, 24.58); displayed origin error=0.000px; centered magnitude=0
 PASS joystick dead zone remains configurable: Configured dead zone=0.12; small touch delta generates no motion
-PASS sustained touch reaches the profile's forward-speed band: Production Touchscreen/UI peak=4.82m/s; configured=5.85; continuously above 4.50m/s with grounded wheels=0.42s
+PASS sustained touch reaches the profile's forward-speed band: Production Touchscreen/UI peak=4.81m/s; configured=5.85; continuously above 4.50m/s with grounded wheels=0.40s
 PASS TEST B screen UP uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=0.0; forward speed=2.40; travel along request=0.94m; minimum signed speed=0.00
 PASS TEST F release outside control area clears input: Pointer remained captured outside=True; release hides ring and clears input
-PASS TEST C screen LEFT uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=12.0; forward speed=5.03; travel along request=2.27m; minimum signed speed=0.00
+PASS TEST C screen LEFT uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.8; forward speed=5.03; travel along request=2.27m; minimum signed speed=0.00
 PASS TEST C screen LEFT release clears input: Pointer remained captured outside=True; release hides ring and clears input
-PASS TEST D screen DOWN turns around uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.8; forward speed=5.03; travel along request=2.19m; minimum signed speed=-0.01
+PASS TEST D screen DOWN turns around uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.9; forward speed=5.03; travel along request=2.27m; minimum signed speed=-0.01
 PASS gameplay capture joystick-down-forward: outputs/scenery-crush-2026-11-03/gameplay/joystick-down-forward.png — actual gameplay camera and HUD, 540 x 960
 PASS TEST D screen DOWN turns around release clears input: Pointer remained captured outside=True; release hides ring and clears input
 PASS TEST E screen DOWN-RIGHT diagonal uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.9; forward speed=5.03; travel along request=2.27m; minimum signed speed=-0.01
