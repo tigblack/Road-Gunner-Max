@@ -1,0 +1,29 @@
+PUBLIC CHROME STARTUP AND CONTROLS SMOKE — SPEED +60%
+5 November 2026 (Asia/Yerevan)
+
+URL: https://tigblack.github.io/Road-Gunner-Max/?build=51d237e
+Native Chrome on the current Mac, a new dedicated window after the exact Pages
+commit reported built. Existing user windows/tabs were preserved. No script
+injection, developer-console runtime probe or editor gameplay was used.
+
+Observed through the actual public page:
+- PLAY appeared; clicking it loaded the Unity player and Arena1 successfully.
+- The tracked Argon player, crew, roadside props, white10m ring, circular minimap
+  and portrait HUD rendered. No startup error overlay, pink materials or missing
+  player geometry was observed.
+- Held W for6.5seconds moved the player along the road with track imprints and
+  camera follow. The post-input screenshot displayed29km/h, exceeding the previous
+  release's5.85m/s (21.06km/h) configured limit and confirming the faster payload.
+  This is a visible controls smoke, not a timed browser cruise benchmark.
+- Space brought displayed speed to00. Automatic combat progressed; the pause
+  result showedKILLS2, SCRAP0,HP100,ATK1/HP1,DAMAGE5.51/SHOT,LOOTDMG+5%,MUSIC30%.
+- Clicking Pause opened PAUSED with Resume/Restart. The new test window was left
+  paused. Chrome exposed its audio-playing tab indicator; this does not establish
+  a listening test or verify every sound bank.
+
+Scope: public startup, visual and controls smoke. The controlled native benchmark
+measured8.452767m/s actual cruise against5.310999m/s previously; its348 checks are
+recorded separately. No display-FPS, full browser playthrough, browser-specific
+scenery-crush test, mobile emulation or physical-phone result is claimed. Browser
+screenshots/observations remain in the tool transcript; no separate public PNG
+artifact was saved for this speed-only release.

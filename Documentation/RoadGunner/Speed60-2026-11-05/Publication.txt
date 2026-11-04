@@ -1,0 +1,41 @@
+ROAD GUNNER — PUBLISHED PLAYER SPEED +60%
+5 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=51d237e
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: 7a6aa8561acccc8c39557c3320e1df17161c2bc4
+Pages commit: 51d237e8e59138678e9004b782f5823d24e831b5
+Previous source: 5cca1c2352c049e20da6a9fa76a64a2213970092
+Previous Pages: c5531b33e8d11bd804d751f1950b155a7eb05910
+Source was pushed to main and feature/speed60-20261105 with the exact WebGL
+payload pushed to gh-pages in one normal atomic Git push, without force.
+
+The player speed limit is9.36m/s, exactly60% above5.85m/s. The identical native
+flat-course benchmark rose5.310999 ->8.452767m/s, +59.16% actual cruise
+(about19.12 ->30.43km/h). Acceleration and other handling settings were retained.
+
+Fresh native acceptance: tracked9 + physics21 + scenery26 + gameplay204 +
+exploration88 =348PASS, zero failures and runtime Console errors. The fixture
+adaptations and first-attempt failures are recorded in Delivery.txt. No world/art
+installer was rerun. Frozen2119 production inputs and their exact file set stayed
+unchanged through packaging after restoring five automatic Unity metadata rewrites
+to prebuild bytes. The build contains seven static artifacts totaling26,772,000bytes.
+Build UTC:2026-11-04T22:54:49.1290440Z.
+
+GitHub Pages: built; error.message=null for the exact Pages commit.
+Pages updated UTC:2026-11-04T22:57:38Z.
+Pages duration:26163milliseconds.
+Workflow:completed/success:https://github.com/tigblack/Road-Gunner-Max/actions/runs/41929686937
+GitHub-pages deployment7560113334:success for the same SHA.
+
+All six ordinary HTTPS payload URLs returned200 with verifiedTLS and exact bytes
+andSHA256 equality with the local build on the first attempt. The empty.nojekyll
+seventh artifact was checked as a blob at the exact Pages commit. Total payload:
+26,772,000bytes. LiveManifest.json records each response/hash and deployment status.
+The public Chrome page loaded Arena1; W displayed29km/h, Space stopped the vehicle,
+and Pause opened successfully. Browser.txt records the exact scope and limitations.
+
+Public deployment, exact HTTP hashes and browser observations are recorded in
+LiveManifest.json and Browser.txt. Follow-up commits add release evidence only;
+they do not change frozen production inputs or the exact WebGL artifacts.
