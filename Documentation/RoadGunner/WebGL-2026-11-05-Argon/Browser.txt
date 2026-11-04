@@ -1,0 +1,28 @@
+PUBLIC CHROME STARTUP AND CONTROLS SMOKE — ARGON RELEASE
+5 November 2026 (Asia/Yerevan)
+
+URL: https://tigblack.github.io/Road-Gunner-Max/?build=c5531b3
+Native Chrome on the current Mac, new dedicated window after exact Pages build
+reported built. Existing user tabs/windows were preserved. No browser script
+injection, developer-console runtime probes or editor gameplay was used.
+
+Observed through the actual public page:
+- PLAY appeared; clicking it loaded the Unity player and Arena1 successfully.
+- The new detailed Argon player/crew/track model rendered, with both track sides,
+  new roadside props, white range ring, circular minimap and portrait HUD. No pink
+  materials, missing player geometry or startup error overlay was observed.
+- Held W moved the car along the road with visible track imprints and camera
+  follow; displayed speed was18km/h in the observed post-input frame.
+- Combat/rewards progressed; the HUD later showed SCRAP2 and KILLS2, fullHP100.
+- Space brought the displayed speed to00. The pause-button click opened PAUSED.
+- Pause displayed SCRAP SCORE2, KILLS2, DAMAGE5.51/SHOT, MAXHP100, ATK1/HP1,
+  LOOT DMG+5%, MUSIC30%, Resume and Restart. The new test window was left paused.
+- Chrome exposed an audio-playing tab indicator. This does not establish an
+  isolated listening test or verify every sound bank.
+
+Scope: public startup, visual and controls smoke only. No timed acceleration or
+stop/FPS benchmark, full browser playthrough, browser scenery-crush-specific test,
+mobile emulation or physical-phone result is claimed. The 348 controlled native
+checks and their actual captures are recorded separately. Browser observations
+are retained in the tool transcript; PNG files in this folder are native suite
+captures and are not presented as public-browser screenshots.

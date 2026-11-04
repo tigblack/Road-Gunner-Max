@@ -1,0 +1,39 @@
+ROAD GUNNER — PUBLISHED ARGON VISUAL OVERHAUL
+5 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=c5531b3
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: 6b1fa85f30498e91a1afd458552d403ea64ca565
+Pages commit: c5531b33e8d11bd804d751f1950b155a7eb05910
+Previous source: 6a24f9c5a8f8c5392064f0bb376ab99cc81dc4f8
+Previous Pages: 42a3746b9893e4c5a445f5caedae635685b99180
+Source was pushed to main and feature/argon-webgl-20261105 with the exact WebGL
+payload pushed to gh-pages in one normal atomic Git push, without force.
+
+GitHub Pages: built; error.message=null for the exact Pages commit.
+Pages updated UTC: 2026-11-04T22:14:52Z.
+Pages duration: 34342 milliseconds.
+Workflow: completed / success: https://github.com/tigblack/Road-Gunner-Max/actions/runs/41923481841
+GitHub-pages deployment7559313030: success for the same SHA.
+
+All six ordinary HTTPS payload URLs returned200 with verifiedTLS, exact bytes and
+SHA256 equality with the local build on the first attempt. The empty.nojekyll
+seventh artifact was checked as a blob at the exact Pages commit. Total payload:
+26,771,613 bytes. Build UTC: 2026-11-04T22:13:14.0959560Z.
+LiveManifest.json records each URL/hash/response and deployment status.
+
+Fresh native acceptance: scenery26 + physics21 + tracked9 + gameplay204 +
+exploration88 =348PASS, zero failures and runtime Console errors. The wheel-physics
+fixture's initial focus-routing failure and scoped editor-only correction are
+recorded in Delivery.txt/SourceReview.txt; physical assertions were unchanged.
+No Argon/world art installer was rerun. Requested assets were preserved; frozen
+2119 production inputs and their exact file set stayed unchanged through packaging
+after restoring five automatic Unity render-metadata rewrites to prebuild bytes.
+
+The public Chrome page loaded the new model and HUD. Driving, auto combat/rewards,
+Space brake and Pause were observed successfully. See Browser.txt for exact scope.
+No physical-phone, display-FPS or full public-playthrough result is claimed.
+
+Follow-up commits add release evidence only and do not change frozen production
+input or the exact WebGL artifacts published here.
