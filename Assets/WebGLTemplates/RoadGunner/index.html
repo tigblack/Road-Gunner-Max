@@ -26,11 +26,14 @@
   </main>
   <script>
     const canvas=document.getElementById('unity-canvas'),launch=document.getElementById('launch'),play=document.getElementById('play'),progress=document.getElementById('progress'),status=document.getElementById('status');
+    // A release link selects fresh player files as well as fresh HTML on static hosting.
+    const buildTag=new URLSearchParams(window.location.search).get('build');
+    const versionedAsset=path=>buildTag?path+'?build='+encodeURIComponent(buildTag):path;
     const config={
-      dataUrl:'Build/{{{ DATA_FILENAME }}}',
-      frameworkUrl:'Build/{{{ FRAMEWORK_FILENAME }}}',
+      dataUrl:versionedAsset('Build/{{{ DATA_FILENAME }}}'),
+      frameworkUrl:versionedAsset('Build/{{{ FRAMEWORK_FILENAME }}}'),
 #if USE_WASM
-      codeUrl:'Build/{{{ CODE_FILENAME }}}',
+      codeUrl:versionedAsset('Build/{{{ CODE_FILENAME }}}'),
 #endif
       streamingAssetsUrl:'StreamingAssets',companyName:{{{ JSON.stringify(COMPANY_NAME) }}},productName:{{{ JSON.stringify(PRODUCT_NAME) }}},productVersion:{{{ JSON.stringify(PRODUCT_VERSION) }}},
       devicePixelRatio:Math.min(window.devicePixelRatio||1,2),
@@ -66,7 +69,7 @@
       // iOS 17+/Safari: play game audio even when the ringer is set to silent.
       try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
       play.disabled=true;play.hidden=true;progress.hidden=false;status.textContent='Loading arena…';
-      const loader=document.createElement('script');loader.src='Build/{{{ LOADER_FILENAME }}}';
+      const loader=document.createElement('script');loader.src=versionedAsset('Build/{{{ LOADER_FILENAME }}}');
       loader.onerror=()=>{status.textContent='Could not load the game. Reload to try again.';};
       loader.onload=()=>createUnityInstance(canvas,config,value=>{progress.value=value;}).then(instance=>{
         window.roadGunnerInstance=instance;launch.hidden=true;launch.style.display='none';canvas.focus();

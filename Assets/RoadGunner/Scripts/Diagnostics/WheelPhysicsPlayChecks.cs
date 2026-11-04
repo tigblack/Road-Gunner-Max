@@ -52,7 +52,7 @@ namespace RoadGunner
         bool originalSpawns, originalTurret, running, restored;
         string phase = "setup";
         bool TrackedProfile => car.tuning.trackedDrive;
-        float ProfileSpeedScale => TrackedProfile ? .5f : 1f;
+        float ProfileSpeedScale => car.tuning.maxSpeed / 11.7f;
         float ExpectedCruise => 10.49496f * ProfileSpeedScale;
 
         public void Begin()
@@ -156,7 +156,7 @@ namespace RoadGunner
                 body.collisionDetectionMode == CollisionDetectionMode.ContinuousDynamic,
                 "Mass=" + body.mass + "; constraints=" + originalConstraints + "; CCD=" + body.collisionDetectionMode);
             report.Add("Drive profile=" + (TrackedProfile ? "tracked" : "wheeled") + "; limit=" + F(car.tuning.maxSpeed) +
-                "m/s; coast setup=" + F(6 * ProfileSpeedScale) + "m/s; measured baseline reference=10.49496m/s. Actual half-speed ratio is a separate A/B acceptance.");
+                "m/s; coast setup=" + F(6 * ProfileSpeedScale) + "m/s; measured wheeled baseline reference=10.49496m/s. Current relative-speed ratio is a separate A/B acceptance.");
             yield return ResetAt(-45);
             Check("authored suspension settles on four-wheel test ground", car.GroundedWheels >= 3 && car.Speed < .3f && Tilt() < 5 &&
                 Array.TrueForAll(car.wheels, wheel => wheel.enabled && wheel.suspensionDistance > .05f && wheel.suspensionSpring.spring > 1000),

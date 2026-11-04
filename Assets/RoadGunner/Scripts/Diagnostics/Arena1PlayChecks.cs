@@ -37,8 +37,21 @@ namespace RoadGunner
         RigidbodyConstraints carConstraints;
         int humanShots;
         bool TrackedProfile => s.vehicle.tuning.trackedDrive;
-        float ProfileSpeedScale => TrackedProfile ? .5f : 1f;
-        float ExpectedProfileLimit => 11.7f * ProfileSpeedScale;
+        const string SpeedBaselinePath = "Documentation/RoadGunner/Speed60-2026-11-05/Baseline.json";
+        float? expectedTrackedLimit;
+        float ProfileSpeedScale => ExpectedProfileLimit / 11.7f;
+        float ExpectedProfileLimit
+        {
+            get
+            {
+                if (!TrackedProfile) return 11.7f;
+                if (!expectedTrackedLimit.HasValue)
+                    expectedTrackedLimit = File.Exists(SpeedBaselinePath)
+                        ? JsonUtility.FromJson<TrackedVehiclePlayChecks.Measurement>(File.ReadAllText(SpeedBaselinePath)).configuredMax * 1.6f
+                        : 5.85f;
+                return expectedTrackedLimit.Value;
+            }
+        }
         bool running;
         bool explorationWasEnabled;
         bool trackRange;
@@ -155,7 +168,7 @@ namespace RoadGunner
                 s.turret.tuning.playerDamageMultiplier >= .33f && s.turret.tuning.playerDamageMultiplier <= .4f,
                 "Profile=" + (TrackedProfile ? "tracked" : "wheeled") + "; configured limit=" + s.vehicle.tuning.maxSpeed +
                 "; expected=" + ExpectedProfileLimit + "; outgoing multiplier=" + s.turret.tuning.playerDamageMultiplier +
-                "; actual half-speed ratio is measured separately against the frozen wheeled baseline");
+                "; actual steady-speed ratio is measured separately against the selected published baseline");
             Check("base run stats and HUD", s.runStats.AttackLevel == 1 && s.runStats.HealthLevel == 1 &&
                 s.hud.statsText.text.Contains("ATK 1") && s.hud.statsText.text.Contains("HP 1") &&
                 Mathf.Approximately(s.health.Maximum, s.health.tuning.vehicleHealth), s.hud.statsText.text);
@@ -646,6 +659,7 @@ namespace RoadGunner
             Vector2 roadDrag = new Vector2(Vector3.Dot(roadDirection, touchRight), Vector3.Dot(roadDirection, touchForward)).normalized;
             Touch(105, UnityEngine.InputSystem.TouchPhase.Moved, point + roadDrag * screenRadius * 1.15f);
             float touchPeak = 0, sustainedFast = 0;
+            // Keep the full real-input acceleration window; exit only after the current profile's band is sustained.
             end = Time.realtimeSinceStartup + 12;
             while (Time.realtimeSinceStartup < end && sustainedFast < .4f)
             {

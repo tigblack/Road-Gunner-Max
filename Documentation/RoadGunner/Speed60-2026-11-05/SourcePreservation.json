@@ -1,0 +1,14 @@
+{
+  "previousPublishedSource": "5cca1c2352c049e20da6a9fa76a64a2213970092",
+  "previousFrozenProductionFiles": 2119,
+  "unchangedOriginalProductionFiles": 2113,
+  "changedFiles": [
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 vehicle handling.asset",
+    "Assets/RoadGunner/Scripts/Diagnostics/Arena1PlayChecks.cs",
+    "Assets/RoadGunner/Scripts/Diagnostics/SceneryCrushPlayChecks.cs",
+    "Assets/RoadGunner/Scripts/Diagnostics/TrackedVehiclePlayChecks.cs",
+    "Assets/RoadGunner/Scripts/Diagnostics/WheelPhysicsPlayChecks.cs",
+    "Assets/WebGLTemplates/RoadGunner/index.html"
+  ],
+  "gameplayDataDelta": "Only player maxSpeed5.85\u21929.36; no vehicle-controller, combat, enemy, visual or world asset changes. Editor-only test adaptations and versioned WebGL asset URLs are recorded in Delivery.txt."
+}

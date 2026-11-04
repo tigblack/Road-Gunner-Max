@@ -1,0 +1,13 @@
+PASS dynamic chassis settles: contacts=4; speed=0.01129722
+PASS two visible physical-contact track assemblies: track component=True
+PASS ordinary tyres hidden and no decorative collisions: original four WheelColliders remain on chassis; track meshes cannot hook obstacles
+PASS steady straight course reaches finite cruise: mean=8.452767; range=8.45194..8.453321; configured=9.36
+PASS track belts advance with actual straight movement: left=106.1751; right=106.1749
+PASS configured speed matches selected release baseline: baseline=Documentation/RoadGunner/Speed60-2026-11-05/Baseline.json; old=5.85; new=9.36; requested ratio=1.6; configured ratio=1.6
+PASS measured steady speed scales with configured speed: old=5.310999; new=8.452767; measured ratio=1.591559; expected configured ratio=1.6; relative error=0.5275831% (limit3%)
+PASS parked belts remain still: speed=3.705949E-05
+PASS one supported track cannot activate yaw assist: contacts=2; peak assist=0; pivot force=0
+RESULT checks=9; failures=0; saved scene not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

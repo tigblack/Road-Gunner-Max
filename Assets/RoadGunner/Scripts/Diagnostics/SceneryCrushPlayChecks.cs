@@ -312,7 +312,12 @@ namespace RoadGunner
                 hardRoot.transform.SetPositionAndRotation(hard.transform.position+course-hard.bounds.center+Vector3.up*hard.bounds.extents.y,hard.transform.rotation);
                 hardRoot.transform.localScale=hard.transform.lossyScale;
                 var solid=hardRoot.AddComponent<BoxCollider>();solid.center=hard.center;solid.size=hard.size;Physics.SyncTransforms();
-                yield return PlaceCar(0,solid.bounds.min.z-course.z-10);
+                // A long rotated foundation's AABB corner can be far ahead of its actual centreline face.
+                // Keep the exact authored box, but start ten metres before the surface this drive can hit.
+                float faceHeight=Mathf.Min(.75f,solid.bounds.size.y*.5f);
+                bool hasFace=solid.Raycast(new Ray(new Vector3(course.x,solid.bounds.min.y+faceHeight,solid.bounds.min.z-3),Vector3.forward),out var face,solid.bounds.size.z+6);
+                float approachZ=(hasFace?face.point.z:solid.bounds.min.z)-course.z-10;
+                yield return PlaceCar(0,approachZ);
                 var collision=car.gameObject.AddComponent<SceneryCrushCollisionProbe>();collision.Target=solid;
                 var ledger=Snapshot();float began=Time.fixedTime,peak=0,furthest=car.Body.position.z;
                 Command(Vector3.forward);
@@ -320,9 +325,10 @@ namespace RoadGunner
                 Command(Vector3.zero,true);began=Time.fixedTime;
                 while(Time.fixedTime-began<.4f){yield return new WaitForFixedUpdate();furthest=Mathf.Max(furthest,car.Body.position.z);}
                 bool ray=solid.Raycast(new Ray(solid.bounds.center-Vector3.forward*(solid.bounds.extents.z+3),Vector3.forward),out _,solid.bounds.size.z+6);
-                Check(category+" remains a hard physical obstacle at real driving speed", collision.Contacts>0 && peak>2 && collision.Impulse>car.Body.mass*.2f &&
+                Check(category+" remains a hard physical obstacle at real driving speed", hasFace && collision.Contacts>0 && peak>2 && collision.Impulse>car.Body.mass*.2f &&
                     furthest<solid.bounds.center.z && solid.enabled && hard.enabled && ray && SameLedger(ledger) && manager.BrokenCount==0,
-                    "Actual source="+Hierarchy(hard.transform)+"; contact="+collision.Contacts+"; impulse="+collision.Impulse+"; peak="+peak+"; furthestZ="+furthest+"; solidCentreZ="+solid.bounds.center.z);
+                    "Actual source="+Hierarchy(hard.transform)+"; realFace="+hasFace+"; faceZ="+face.point.z+"; approachZ="+(course.z+approachZ)+
+                    "; contact="+collision.Contacts+"; impulse="+collision.Impulse+"; peak="+peak+"; furthestZ="+furthest+"; solidCentreZ="+solid.bounds.center.z);
                 Destroy(collision);hardRoot.SetActive(false);
             }
         }

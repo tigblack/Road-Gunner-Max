@@ -9,10 +9,10 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 5 November release contains the Argon visual overhaul:
-updated player/crew, tracks, Raiders, Buggies, bosses, pickups, props and site
-meshes. Small scenery still breaks under cars; large rocks and structures remain
-solid. Differential steering, half-speed handling and gameplay balance remain.
+Press Play. The latest 5 November speed update raises the player maxSpeed by60%:
+5.85 ->9.36m/s. The detailed Argon art, tracked steering and existing combat rules
+are retained. Small scenery breaks under cars; large rocks and structures remain
+solid.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -123,15 +123,19 @@ Documentation/RoadGunner/AntonFeedback-2026-10-29/Implementation.txt
 ARENA AUTHORING AND TUNING
 Tools / Road Gunner / Level Editor opens the existing scene-based authoring
 tools. Per-level settings live under Assets/RoadGunner/Levels/Greenwood/Arena1.
-The Arena 1 player profile now has trackedDrive=true, maxSpeed=5.85 m/s and
-acceleration=2.2 m/s2 (previously 11.7 and 4.4). A matching 15-second straight-course
-comparison measured 10.49496 -> 5.31100 m/s (50.6% of the old speed). Four existing
+The Arena 1 player profile has trackedDrive=true, maxSpeed=9.36m/s and unchanged
+acceleration=2.2m/s2. The speed limit is60% above the previous5.85m/s profile. The
+same15-second flat-course comparison measured5.31100 ->8.45277m/s (59.16% faster),
+approximately19.1 ->30.4km/h actual cruise. Initial wheel-only and half-speed
+track conversion measurements remain historical in their own release folders.
+Four existing
 WheelColliders provide suspension and ground contacts; visible tyres are hidden
 behind two animated track assemblies. Motor torque differs between the sides;
 wheel steering stays zero. A bounded 9000 Nm yaw assist acts only with support
 on both sides, never by replacing body velocity/rotation. Recover/Restart still
 reset pose explicitly. Buggies retain their wheeled profile. Combat HP/ATK and
-arena geometry are unchanged. Evidence: Documentation/RoadGunner/TrackedVehicle-2026-11-03/.
+arena geometry are retained. Current speed evidence: Documentation/RoadGunner/Speed60-2026-11-05/.
+Track conversion history: Documentation/RoadGunner/TrackedVehicle-2026-11-03/.
 
 The saved scene already has tracks. To regenerate only their visual assets:
 Tools / Road Gunner / Player / Install Tracked Visuals Only
@@ -151,16 +155,18 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 5 November Argon visual update, built with Unity 6000.6.4f1.
-Seven static artifacts total 26,771,613 bytes. Fresh native acceptance:
+WebBuild/ contains the 5 November player speed +60% update, built with Unity 6000.6.4f1.
+The player limit is 9.36m/s; measured cruise rose from 5.311 to 8.453m/s.
+Seven static artifacts total 26,772,000 bytes. Fresh native acceptance:
 scenery26 + physics21 + tracked9 + gameplay204 + exploration88 = 348 PASS with
-zero failures and runtime Console errors. All requested game assets were retained;
-one editor-only input-focus fixture correction made Space testing independent of
-Game View focus, with unchanged physical assertions and exact settings restoration.
+zero failures and runtime Console errors. Art, world and gameplay settings other
+than player maxSpeed were retained. Editor fixtures use the new speed profile;
+the scenery fixture approaches the actual face of the same copied hard collider.
 Build/input hashes, source audits and publication evidence:
-Documentation/RoadGunner/WebGL-2026-11-05-Argon/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=c5531b3
-Publication evidence: Documentation/RoadGunner/WebGL-2026-11-05-Argon/Publication.txt.
+Documentation/RoadGunner/Speed60-2026-11-05/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=51d237e
+Publication evidence: Documentation/RoadGunner/Speed60-2026-11-05/Publication.txt.
+The preceding Argon visual release c5531b3 is documented in WebGL-2026-11-05-Argon/.
 The previous scenery release 42a3746 and tracked-player release 466ff61 remain
 historical snapshots in their corresponding documentation folders.
 Earlier audio player d3c19c3, Arcade player 63dc9c0 and exploration player fc89028

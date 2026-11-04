@@ -1,0 +1,47 @@
+ROAD GUNNER — PLAYER SPEED +60%
+5 November 2026 (Asia/Yerevan)
+
+Player vehicle maxSpeed:5.85 ->9.36m/s, exactly+60% (21.06 ->33.696km/h limit).
+Acceleration remains2.2m/s2; motor torque, brakes, yaw/pivot assistance, suspension,
+friction, enemy profiles, damage formulas, art, HUD, minimap and audio were retained.
+No world/art/track installer was rerun. The only gameplay data edit is player maxSpeed.
+
+The identical15-second flat-course measurement compares the previously published
+Argon baseline (Baseline.json) with this release (Tracked.json):5.310999 ->
+8.452767m/s, approximately19.12 ->30.43km/h, +59.16% actual cruise. Physical drag
+keeps measured speed below its configured limit; the actual ratio is0.53% below
+an exact1.6 multiplier. The benchmark checks a stable final2-second cruise window.
+
+Editor verification was updated for the new requested speed: configured speed
+must be1.6 times the previous published profile and actual cruise ratio must be
+within3% relative error; seven remaining track checks retain their physical gates.
+The wheel-physics suite now derives setup speed from the configured max, so Space
+and coast are compared starting near4.8m/s rather than the older3m/s setup. The
+204-check gameplay fixture reads the same selected expected limit instead of its
+previous hardcoded5.85m/s; its realTouchscreen/UI sustained band rises4.5 ->7.2m/s,
+with the existing12-second window and0.4-second continuous grounded requirement.
+Its first report rejected the old expected limit after all actual controls ran;
+that first-attempt report/log is retained as Gameplay-first.* in ignored outputs.
+
+The scenery suite initially chose a264m diagonal cliff foundation. Its AABB-corner
+start was about102m before the real centreline face and its10-second drive did not
+reach the wall. The test now raycasts the exact same copied source collider and
+starts10m before its real face. Source dimensions and contact/impulse/no-pass/reward
+assertions were retained, with an additional required real-face assertion. The
+first-attempt report/log remain in ignored outputs/Speed60-2026-11-05/Props-first.*.
+This correction changes only the opt-in editor fixture, not scenery collisions.
+
+The WebGL launch template forwards the release link's build tag to all four player
+asset URLs. Successive releases with identical filenames therefore select fresh
+HTTP/Unity-cache entries, including when published less than ten minutes apart.
+The PLAY, canvas/input, audio and resize flows otherwise retain their existing code.
+
+Final native acceptance: tracked9 + physics21 + scenery26 + gameplay204 +
+exploration88 =348 PASS,0 failures,0 runtime Console errors. WebGL packaging
+succeeded; seven static artifacts total26,772,000bytes. All2119 frozen production
+inputs matched after packaging, with automatic Unity metadata restored exactly.
+
+Tracked, physics, scenery, gameplay and exploration reports plus WebBuild.json
+record the final checks and exact frozen source/artifact hashes. Publication.txt,
+LiveManifest.json and Browser.txt record delivery/public verification separately.
+Controlled native suites are not physical-phone or display-FPS measurements.

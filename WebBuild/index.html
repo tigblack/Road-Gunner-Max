@@ -26,10 +26,13 @@
   </main>
   <script>
     const canvas=document.getElementById('unity-canvas'),launch=document.getElementById('launch'),play=document.getElementById('play'),progress=document.getElementById('progress'),status=document.getElementById('status');
+    // A release link selects fresh player files as well as fresh HTML on static hosting.
+    const buildTag=new URLSearchParams(window.location.search).get('build');
+    const versionedAsset=path=>buildTag?path+'?build='+encodeURIComponent(buildTag):path;
     const config={
-      dataUrl:'Build/WebBuild.data.unityweb',
-      frameworkUrl:'Build/WebBuild.framework.js.unityweb',
-      codeUrl:'Build/WebBuild.wasm.unityweb',
+      dataUrl:versionedAsset('Build/WebBuild.data.unityweb'),
+      frameworkUrl:versionedAsset('Build/WebBuild.framework.js.unityweb'),
+      codeUrl:versionedAsset('Build/WebBuild.wasm.unityweb'),
       streamingAssetsUrl:'StreamingAssets',companyName:"Road Gunner",productName:"Road Gunner",productVersion:"0.1.0",
       devicePixelRatio:Math.min(window.devicePixelRatio||1,2),
       matchWebGLToCanvasSize:false,
@@ -64,7 +67,7 @@
       // iOS 17+/Safari: play game audio even when the ringer is set to silent.
       try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
       play.disabled=true;play.hidden=true;progress.hidden=false;status.textContent='Loading arena…';
-      const loader=document.createElement('script');loader.src='Build/WebBuild.loader.js';
+      const loader=document.createElement('script');loader.src=versionedAsset('Build/WebBuild.loader.js');
       loader.onerror=()=>{status.textContent='Could not load the game. Reload to try again.';};
       loader.onload=()=>createUnityInstance(canvas,config,value=>{progress.value=value;}).then(instance=>{
         window.roadGunnerInstance=instance;launch.hidden=true;launch.style.display='none';canvas.focus();
