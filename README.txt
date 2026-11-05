@@ -9,10 +9,21 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 5 November update makes small stones crumble under cars.
+Press Play. The latest 5 November update adds enemy respawn countdowns.
 The player speed limit remains 9.36m/s from the preceding +60% speed release.
 Detailed Argon art, tracked steering and existing combat rules are retained.
 Large rocks and structures remain solid.
+
+ENEMY RETURNS
+After a Raider, Buggy or Ashmaw dies, a circular timer appears at its death site.
+The gold arc and seconds count down for 30 seconds of active gameplay. The same
+enemy then returns there with full health. There are 15 eligible enemies, with
+one reusable timer each. The final Boss Raider Warlord still ends the arena.
+Pause freezes the timers; Restart clears them and restores the starting roster.
+Defeat and Arena Clear cancel pending returns. An occupied site waits at READY
+until the vehicle/enemy footprint is clear; enemies do not appear inside a car
+or wall. Each new life awards its usual kill and Gear reward once.
+Edit ArenaEnemyRespawns.respawnDelaySeconds on the saved GameSession to tune delay.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -155,16 +166,18 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 5 November crushable-small-stone update, built with Unity 6000.6.4f1.
+WebBuild/ contains the 5 November enemy-respawn-countdown update, built with Unity 6000.6.4f1.
 The player limit remains 9.36m/s with the current tracked handling.
-Seven static artifacts total 26,771,979 bytes. Fresh native acceptance:
-scenery31 + gameplay204 + exploration88 = 323 PASS with zero failures and runtime
-Console errors. Small stones crumble, large obstacles retain hard collision,
-and Restart restores the original stones. Vehicle and combat tuning are unchanged.
+Seven static artifacts total 26,788,350 bytes. Fresh native acceptance:
+respawn15 + gameplay204 + exploration88 = 307 PASS with zero failures and runtime
+Console errors. Circular timers show 30 active seconds until Raiders, Buggies and
+Ashmaw return at their death sites. Warlord still ends Arena 1. The preceding
+small-stone destruction, vehicle tuning, combat values and world art are retained.
 Build/input hashes, source audits and publication evidence:
-Documentation/RoadGunner/SmallStones-2026-11-05/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=c65fd56
-Publication evidence: Documentation/RoadGunner/SmallStones-2026-11-05/Publication.txt.
+Documentation/RoadGunner/EnemyRespawn-2026-11-05/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=8a38955
+Publication evidence: Documentation/RoadGunner/EnemyRespawn-2026-11-05/Publication.txt.
+The preceding small-stone release c65fd56 is documented in SmallStones-2026-11-05/.
 The preceding +60% speed release 51d237e is documented in Speed60-2026-11-05/.
 The preceding Argon visual release c5531b3 is documented in WebGL-2026-11-05-Argon/.
 The previous scenery release 42a3746 and tracked-player release 466ff61 remain

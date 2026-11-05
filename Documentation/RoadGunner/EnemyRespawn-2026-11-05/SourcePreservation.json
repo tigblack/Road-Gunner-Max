@@ -1,0 +1,31 @@
+{
+  "previousPublishedSource": "1652a73dac75a9716f331ece9d67304d3f662b82",
+  "previousFrozenProductionFiles": 2119,
+  "unchangedOriginalProductionFiles": 2110,
+  "changedFiles": [
+    "Assets/RoadGunner/README.txt",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+    "Assets/RoadGunner/Scripts/Diagnostics/Arena1PlayChecks.cs",
+    "Assets/RoadGunner/Scripts/EnemyBuggy.cs",
+    "Assets/RoadGunner/Scripts/GameSession.cs",
+    "Assets/RoadGunner/Scripts/Raider.cs",
+    "Assets/RoadGunner/Scripts/SpawnDirector.cs",
+    "Assets/RoadGunner/Scripts/Zone1/WastelandMutant.cs",
+    "Assets/RoadGunner/Scripts/Zone1/Zone1EnemyRoster.cs"
+  ],
+  "newProductionFiles": [
+    "Assets/RoadGunner/Editor/EnemyRespawnInstaller.cs",
+    "Assets/RoadGunner/Editor/EnemyRespawnInstaller.cs.meta",
+    "Assets/RoadGunner/Editor/EnemyRespawnVerification.cs",
+    "Assets/RoadGunner/Editor/EnemyRespawnVerification.cs.meta",
+    "Assets/RoadGunner/Scripts/ArenaEnemyRespawns.cs",
+    "Assets/RoadGunner/Scripts/ArenaEnemyRespawns.cs.meta",
+    "Assets/RoadGunner/Scripts/Diagnostics/EnemyRespawnPlayChecks.cs",
+    "Assets/RoadGunner/Scripts/Diagnostics/EnemyRespawnPlayChecks.cs.meta",
+    "Assets/RoadGunner/Scripts/EnemyRespawnMarker.cs",
+    "Assets/RoadGunner/Scripts/EnemyRespawnMarker.cs.meta"
+  ],
+  "invariants": "Existing meshes, materials, textures, fonts, audio, navigation, arena geography and all saved combat/vehicle tuning assets are unchanged. Scene delta adds only the respawn component and GameSession reference.",
+  "newBehavior": "15 authored nonfinal enemies receive one death-site countdown per rewarded life; default30s of Playing time, same-actor full-health return if site free. Boss completion cancels pending returns.",
+  "legacyTestIsolation": "Arena1 first validates the enabled production manager. Its later temporary combat fixtures disable timed returns with exact enabled-state restore; the15new targeted checks keep the production manager enabled."
+}

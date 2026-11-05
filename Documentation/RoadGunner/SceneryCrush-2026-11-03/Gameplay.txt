@@ -2,7 +2,7 @@ Arena 1 wheel-driven handling regression — actual Unity Play Mode; 6000.6.4f1
 Synthetic touch uses the production InputSystem UI route; physical phone/browser performance is not measured here.
 PASS saved gameplay references: LevelLayout, stats, HUD, minimap and rear harpoon are wired on the gameplay scene
 PASS fallback roster and ranks: Authored Raiders=12, Buggies=2, Monster=1, Boss Raider=1; temporary fallback, not verified The War data
-PASS finite authored encounters: All authored enemies spawned; legacy random encounter respawn is disabled
+PASS bounded authored roster with death-site respawn timers: All authored enemies spawned; death-site timer owns repeat lives, legacy random groups remain disabled
 PASS saved drive profile has the intended speed and combat balance: Profile=tracked; configured limit=9.36; expected=9.36; outgoing multiplier=0.35; actual steady-speed ratio is measured separately against the selected published baseline
 PASS base run stats and HUD: ATK 1    HP 1
 PASS encounters connected to start: Navigation paths reach ordinary encounters, both vehicles, Monster and Boss Raider
@@ -48,8 +48,8 @@ PASS white ring captured over varied actual terrain: Actual road mesh found=True
 PASS one original Arena music source is connected: One dedicated music AudioSource on the existing GameSession; gun/impact/pickup source remains separate
 PASS Arena music automatically plays the loaded loop: Playing=True; loop=True; starts=1; clip=Dustlight Road; length=48.064s; load=Loaded
 PASS music reaches moderate volume without changing SFX: Music source volume=0.300; SFX volume retained=1
-PASS small gameplay notifications do not restart music: Playhead=2.12 -> 2.44s; starts=1
-PASS Arena restart keeps one continuous music voice: Restart playhead=2.44 -> 2.76s; starts=1
+PASS small gameplay notifications do not restart music: Playhead=2.11 -> 2.43s; starts=1
+PASS Arena restart keeps one continuous music voice: Restart playhead=2.43 -> 2.75s; starts=1
 PASS music playback wraps the loop without a second source: Playhead across native loop=47.664 -> 0.773s; starts=1; audible encoded seam requires browser/listening verification
 PASS pause smoothly fades music using unscaled time: Volume=0.300 -> 0.161 -> 0.000; pause Music control visible=True
 PASS pause Music slider persists separately from SFX: Saved/reloaded music=0.17; key=RoadGunner.Audio.MusicVolume; SFX unchanged
@@ -77,17 +77,17 @@ PASS roof gun needs multiple Raider hits: Actual shots=9; initial HP=45; player 
 PASS human Metal Gear and rear harpoon: Metal Gear visible=True; launch=True; retract=True; scrap=1
 PASS dead Raider leaves minimap: Death removes the enemy marker while the corpse can remain
 PASS moving vehicle map marker follows: Cached marker follows position changes without rediscovering targets
-PASS enemy roof gun still damages player: Hostile shots=2; player HP=100 -> 90
+PASS enemy roof gun still damages player: Hostile shots=3; player HP=100 -> 85
 PASS Buggy tougher than Raider and rewards once: Raider shots=9; Buggy shots=20; reward=3
 PASS vehicle Metal Gear and rear harpoon: Metal Gear=True; launch=True; retract=True; scrap=3
 PASS dead Buggy leaves minimap: Vehicle destruction hides its map marker
 PASS harpoon has faster configurable cycle: Launch18->36; retract/pull12->30; search.15->0.05; cooldown.3->0.08; aim480->960
-PASS previous harpoon baseline measured: Two identical 4.5m drops; elapsed=2.39s; resources=2; collections=2
+PASS previous harpoon baseline measured: Two identical 4.5m drops; elapsed=2.40s; resources=2; collections=2
 PASS faster harpoon collects consecutive gear exactly once: Two identical 4.5m drops; elapsed=1.33s; resources=2; collections=2
-PASS collection is faster while animation remains visible: Previous/current two-drop cycles=2.39/1.33s; improvement=1.80x; visible launch/retract=True/True; maximum reservations=1
+PASS collection is faster while animation remains visible: Previous/current two-drop cycles=2.40/1.33s; improvement=1.80x; visible launch/retract=True/True; maximum reservations=1
 PASS profile speed in real vehicle physics: Peak=8.25m/s; limit=9.36; travelled=31.1
-PASS visible range follows the moving player: Observed after production LateUpdate; frames=358; maximum centre error squared=0.000390; actual weapon radius=10
-PASS brake remains predictable: Stop time=1.20s; speed=0.64
+PASS visible range follows the moving player: Observed after production LateUpdate; frames=361; maximum centre error squared=0.000384; actual weapon radius=10
+PASS brake remains predictable: Stop time=1.22s; speed=0.63
 PASS phone input surface exists: Existing EventSystem and floating joystick are active
 INPUT POLICY before real touch: applicationFocused=True; editorWindow=none; editorPolicy=AllDeviceInputAlwaysGoesToGameView (original PointersAndKeyboardsRespectGameViewFocus); background=IgnoreFocus (original ResetAndDisableNonBackgroundDevices); keyboard=enabled=True; touchEnabled=True; driveComponentEnabled=True; driveEnabled=True; testInput=False; state=Playing
 PASS floating joystick hides before a touch: Activation zone stays available while its ring/thumb are hidden
@@ -96,12 +96,12 @@ PASS joystick dead zone remains configurable: Configured dead zone=0.12; small t
 PASS sustained touch reaches the profile's forward-speed band: Production Touchscreen/UI peak=7.61m/s; configured=9.36; continuously above 7.20m/s with grounded wheels=0.42s
 PASS TEST B screen UP uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=0.0; forward speed=2.42; travel along request=0.90m; minimum signed speed=0.00
 PASS TEST F release outside control area clears input: Pointer remained captured outside=True; release hides ring and clears input
-PASS TEST C screen LEFT uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=12.0; forward speed=6.78; travel along request=2.85m; minimum signed speed=0.00
+PASS TEST C screen LEFT uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.8; forward speed=6.81; travel along request=2.97m; minimum signed speed=0.00
 PASS TEST C screen LEFT release clears input: Pointer remained captured outside=True; release hides ring and clears input
-PASS TEST D screen DOWN turns around uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.9; forward speed=6.79; travel along request=2.96m; minimum signed speed=-0.01
+PASS TEST D screen DOWN turns around uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.8; forward speed=6.81; travel along request=2.97m; minimum signed speed=-0.01
 PASS gameplay capture joystick-down-forward: outputs/scenery-crush-2026-11-03/gameplay/joystick-down-forward.png — actual gameplay camera and HUD, 540 x 960
 PASS TEST D screen DOWN turns around release clears input: Pointer remained captured outside=True; release hides ring and clears input
-PASS TEST E screen DOWN-RIGHT diagonal uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=12.0; forward speed=6.80; travel along request=2.96m; minimum signed speed=-0.01
+PASS TEST E screen DOWN-RIGHT diagonal uses forward directional driving: Routed=True; reverse ever=False; first-frame turn=0.0; heading error=11.9; forward speed=6.80; travel along request=2.97m; minimum signed speed=-0.01
 PASS TEST E screen DOWN-RIGHT diagonal release clears input: Pointer remained captured outside=True; release hides ring and clears input
 PASS TEST G origin respawns at a different touch: New touch/origin=(235.87, 199.68); fixed prior origin was not reused
 PASS touch joystick and second-finger pause: Actual UI touch drag=True; second pointer paused=True

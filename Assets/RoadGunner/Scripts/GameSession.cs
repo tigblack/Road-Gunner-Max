@@ -9,6 +9,7 @@ namespace RoadGunner
         public DriveInput input;
         public FollowCamera follow;
         public SpawnDirector spawns;
+        public ArenaEnemyRespawns respawns;
         public PickupPool pickups;
         public TurretController turret;
         public CombatEffects effects;
@@ -32,13 +33,19 @@ namespace RoadGunner
         public float PlayerDamage(float baseDamage, bool ram = false) => runStats ? runStats.Damage(baseDamage, ram) :
             turret && turret.tuning ? turret.tuning.ScalePlayerDamage(baseDamage) : baseDamage;
         float nextRecover;
-        void Awake() { Application.targetFrameRate=60; Time.timeScale=1; }
+        void Awake() {
+            Application.targetFrameRate=60; Time.timeScale=1;
+            if(!respawns)respawns=GetComponent<ArenaEnemyRespawns>();
+            if(!respawns)respawns=gameObject.AddComponent<ArenaEnemyRespawns>();
+            respawns.Bind(this);
+        }
         void Start() {
             input.PausePressed+=TogglePause;input.RecoverPressed+=Recover;input.DebugPressed+=hud.ToggleDebug;
             health.Died+=Defeat; Restart();
         }
         public void Restart() {
             RunSerial++;
+            if(respawns)respawns.ResetForRun();
             Time.timeScale=1; State=SessionState.Playing; Scrap=0;Kills=0;ScrapEarned=0;nextRecover=0;
             input.testInput=false;input.testBrake=false;input.Clear();input.Enabled=true;vehicle.CanDrive=true;
             vehicle.ResetPose(startPosition,startRotation); if(vehicle.engine)vehicle.engine.UnPause(); if(runStats)runStats.ResetRun(); health.ResetHealth();turret.ResetCombat();effects.ResetPool();pickups.ResetPool();

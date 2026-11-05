@@ -17,6 +17,8 @@ namespace RoadGunner
         public override bool UsesBossHealthHud => arenaBoss;
         public override bool Alive => gameObject.activeInHierarchy && State!=RaiderState.Dead && Health>0;
         public int Group { get; private set; }
+        public int SpawnIndex => slot;
+        public int LifeSerial { get; private set; }
         public override Vector3 AimPoint => transform.TransformPoint(new Vector3(0,1.05f,0));
         public GameSession session;
         public CombatTuning tuning;
@@ -44,7 +46,8 @@ namespace RoadGunner
         void SetWarning(bool shown) {if(bossWarning)bossWarning.gameObject.SetActive(shown);}
         bool AgentReady => agent && agent.enabled && agent.isOnNavMesh;
         public void Spawn(Vector3 point,int group,int index) {
-            Group=group;slot=index;Health=MaximumHealth;State=RaiderState.Idle;pendingAttack=false;nextRam=0;nextAttack=Time.time+.5f;recoverUntil=flashUntil=0;RewardGranted=false;AIEnabled=true;
+            LifeSerial++;
+            Group=group;slot=index;Health=MaximumHealth;State=RaiderState.Idle;pendingAttack=false;nextRam=0;nextAttack=Time.time+.5f;recoverUntil=flashUntil=strikeAt=reactionUntil=deathAt=0;RewardGranted=false;AIEnabled=true;
             transform.position=point;transform.rotation=Quaternion.Euler(0,index*137.5f,0);visual.localRotation=Quaternion.identity;visual.localPosition=Vector3.zero;visual.localScale=Vector3.one;
             gameObject.SetActive(true);hitbox.enabled=true;agent.enabled=true;agent.Warp(point);agent.speed=tuning.moveSpeed;
             if(AgentReady){agent.isStopped=true;agent.ResetPath();}nextDestination=Time.time+(index%5)*.04f;
@@ -125,7 +128,7 @@ namespace RoadGunner
                 RewardGranted=true;
                 if(feedback)feedback.EnemyKilled(this,transform.position,arenaBoss?bossGearReward:1);
                 if(arenaBoss){session.EnemyDefeated(transform.position,bossGearReward,true,direction);session.CompleteArena();}
-                else session.RaiderDefeated(transform.position,direction);
+                else {session.RaiderDefeated(transform.position,direction);if(session.respawns)session.respawns.QueueDeath(this);}
                 return;
             }
             Flash(true);

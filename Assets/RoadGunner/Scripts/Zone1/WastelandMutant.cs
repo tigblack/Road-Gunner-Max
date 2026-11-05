@@ -48,6 +48,7 @@ namespace RoadGunner
         public float AttackProgress => IsTelegraphing ? Mathf.Clamp01((Time.time - warningStartedAt) / Mathf.Max(.25f, windupDuration)) : 0;
         public bool AIEnabled { get; set; } = true;
         public bool RewardGranted { get; private set; }
+        public int LifeSerial { get; private set; }
         public int SmashesStarted { get; private set; }
         public int SmashesLanded { get; private set; }
         public event Action Changed;
@@ -129,6 +130,13 @@ namespace RoadGunner
             CaptureHome(); BindVisuals();
             var position = spawnPoint ? spawnPoint.position : homePosition;
             var rotation = spawnPoint ? spawnPoint.rotation : homeRotation;
+            RespawnAt(position, rotation);
+        }
+        /// <summary>Restores this encounter at a validated death-site without changing its restart home.</summary>
+        public void RespawnAt(Vector3 position, Quaternion rotation)
+        {
+            LifeSerial++;
+            CaptureHome(); BindVisuals();
             if (agent) agent.enabled = false;
             transform.SetPositionAndRotation(position, rotation); gameObject.SetActive(true);
             Health = MaximumHealth; State = MutantState.Idle; AIEnabled = true; RewardGranted = false;
@@ -306,6 +314,7 @@ namespace RoadGunner
                 if (hitbox) hitbox.enabled = false;
                 despawnAt = Time.time + Mathf.Max(.1f, corpseLifetime); ClearFlash();
                 if (!RewardGranted) { RewardGranted = true; if (feedback) feedback.EnemyKilled(this, transform.position, scrapReward); session.EnemyDefeated(transform.position, scrapReward, true, direction); }
+                if (session.respawns) session.respawns.QueueDeath(this);
                 return;
             }
             // Heavy attacks are committed; small bullets do not silently cancel a warning the player is dodging.

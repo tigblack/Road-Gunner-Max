@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RoadGunner
 {
-    /// <summary>Explicit scene roster. Bosses reset only with the run, never through ordinary respawn pools.</summary>
+    /// <summary>Explicit scene roster. Final bosses reset with the run; the optional Monster has a death-site job.</summary>
     [DisallowMultipleComponent]
     public sealed class Zone1EnemyRoster : MonoBehaviour
     {

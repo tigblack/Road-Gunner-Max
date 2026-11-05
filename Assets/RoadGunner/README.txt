@@ -10,7 +10,7 @@ and examples, with different layouts/tuning; their old notes are historical.
 The 31 October exploration revision extends the open Arena 1 with Dust Flats,
 Salvage Yard, Rustworks and Ash Ridge, alternate routes and optional rewards.
 The player's four WheelColliders still produce driving, steering and braking.
-The finite enemy roster, free terminals and workshop remain part of the run.
+The fixed enemy roster, free terminals and workshop remain part of the run.
 
 PLAYING THE ARENA
 DEFEAT WARLORD to clear Arena 1. Monster Ashmaw is an optional mini-boss.
@@ -174,8 +174,13 @@ pickup pool merges overflow rewards rather than dropping their value.
 Rust Vulture Buggies use Rigidbody / WheelCollider driving guided by NavMesh
 routes and obstacle probes. Their roof gun aims independently; cover blocks
 bullets. Destruction uses the existing explosion, debris, sound and loot paths.
-Finite Arena 1 encounters do not automatically replenish. Older prototype
-scenes may have pooled repeating encounters; use their own documentation.
+Arena 1 Raiders, Buggies and Ashmaw return after 30 seconds of Playing time.
+A circular countdown remains at the death site; the same enemy returns there
+at full health when its footprint is free. Pause freezes the countdown, Restart
+restores the starting roster, and final states cancel pending returns. Warlord
+does not return: his death still gives Arena Clear. Each life awards rewards once.
+The saved ArenaEnemyRespawns component owns these timers; the older prototype
+group-based/offscreen replenishment remains disabled for authored Arena 1 actors.
 
 Warm sand, rose sandstone, teal glass, cream armor, rust and raider scarves
 define the stylized 3D art. Vehicles, props, lights and effects are real scene

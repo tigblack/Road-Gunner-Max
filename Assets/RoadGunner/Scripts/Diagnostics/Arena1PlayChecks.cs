@@ -54,6 +54,7 @@ namespace RoadGunner
         }
         bool running;
         bool explorationWasEnabled;
+        bool respawnsWereEnabled;
         bool trackRange;
         AttackRangeIndicator trackedRange;
         int rangeTrackingFrames;
@@ -139,6 +140,7 @@ namespace RoadGunner
             s = GetComponent<GameSession>();
             if (!s) throw new InvalidOperationException("Attach checks to the actual GameSession.");
             explorationWasEnabled = s.exploration && s.exploration.enabled;
+            respawnsWereEnabled = s.respawns && s.respawns.enabled;
             layout = Object.FindAnyObjectByType<LevelLayout>();
             harpoon = s.vehicle.GetComponent<HarpoonCollector>();
             carConstraints = s.vehicle.Body.constraints;
@@ -159,9 +161,10 @@ namespace RoadGunner
                 human.GetComponent<EnemyIdentity>().Rank == EnemyRank.Normal && buggy.GetComponent<EnemyIdentity>().Rank == EnemyRank.VehicleElite &&
                 monster.GetComponent<EnemyIdentity>().Rank == EnemyRank.MiniBoss && boss.GetComponent<EnemyIdentity>().Rank == EnemyRank.Boss,
                 "Authored Raiders=" + raiders + ", Buggies=" + buggies + ", Monster=1, Boss Raider=1; temporary fallback, not verified The War data");
-            Check("finite authored encounters", !s.spawns.repeatAuthoredEnemies && s.spawns.GroupCount == 0 &&
+            Check("bounded authored roster with death-site respawn timers", s.respawns && s.respawns.isActiveAndEnabled &&
+                !s.spawns.repeatAuthoredEnemies && s.spawns.GroupCount == 0 &&
                 s.spawns.authoredRaiders.All(r => r.Alive && r.agent.isOnNavMesh) && s.spawns.authoredBuggies.All(b => b.Alive),
-                "All authored enemies spawned; legacy random encounter respawn is disabled");
+                "All authored enemies spawned; death-site timer owns repeat lives, legacy random groups remain disabled");
             Check("saved drive profile has the intended speed and combat balance", Mathf.Abs(s.vehicle.tuning.maxSpeed - ExpectedProfileLimit) < .05f &&
                 s.vehicle.tuning.maxSpeed < 18 && (TrackedProfile ? s.vehicle.tuning.trackedMaxYawRate > 0 &&
                 s.vehicle.tuning.trackedYawAcceleration > 0 : s.vehicle.tuning.steeringRate >= 120) &&
@@ -314,6 +317,9 @@ namespace RoadGunner
             // Exploration has its own production-scene suite. Keep these combat/input fixtures
             // free of unrelated auto targets and proximity rewards while retaining their geometry.
             if (s.exploration) s.exploration.enabled = false;
+            // Timed returns have their own enabled-production suite. These isolated historical
+            // combat cases place actors on temporary courses and require their own fixed ledger.
+            if (s.respawns) s.respawns.enabled = false;
             s.Restart(); s.spawns.enabled = false; s.turret.enabled = false; s.health.DamageEnabled = false;
             foreach (var r in s.spawns.pool) if (r) r.Despawn();
             foreach (var b in s.spawns.buggyPool) if (b) b.Despawn();
@@ -923,6 +929,7 @@ namespace RoadGunner
             if (monster) { monster.enabled = true; monster.AIEnabled = true; }
             if (boss) { boss.enabled = true; boss.AIEnabled = true; }
             if (s.exploration) s.exploration.enabled = explorationWasEnabled;
+            if (s.respawns) s.respawns.enabled = respawnsWereEnabled;
             s.vehicle.Body.constraints = carConstraints; s.spawns.enabled = true; s.turret.enabled = true; s.Restart();
         }
 

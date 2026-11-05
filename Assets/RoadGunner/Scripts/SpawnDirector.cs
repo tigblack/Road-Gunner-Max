@@ -72,6 +72,9 @@ namespace RoadGunner
         }
         void Update() {
             if(!session.Playing||Time.time<nextCheck)return;nextCheck=Time.time+.5f;Count();
+            // Explicit death-site jobs own authored lives; legacy off-screen replenishment must
+            // never race the countdown or revive a different member of the pool.
+            if(session.respawns && session.respawns.OwnsAuthoredRoster)return;
             if(repeatAuthoredEnemies) {
                 for(int i=0;i<authoredRaiders.Length;i++) {
                     var r=authoredRaiders[i];if(!r)continue;
@@ -95,6 +98,7 @@ namespace RoadGunner
             }
         }
         void Count(){poolActiveCount=0;foreach(var r in pool)if(r.Alive)poolActiveCount++;if(buggyPool!=null)foreach(var buggy in buggyPool)if(buggy && buggy.Alive)poolActiveCount++;}
+        public void RefreshActiveCount() { Count(); }
         bool SpawnBuggy(int slot,bool initial) {
             if(buggyPool==null || ActiveCount>=tuning.activeCap || !buggySpawnPoints[slot])return false;
             var marker=buggySpawnPoints[slot];

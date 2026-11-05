@@ -6300,6 +6300,7 @@ GameObject:
   - component: {fileID: 45168800}
   - component: {fileID: 45168801}
   - component: {fileID: 45168802}
+  - component: {fileID: 45168803}
   m_Layer: 0
   m_Name: "Session \u2022 Road Gunner"
   m_TagString: Untagged
@@ -6324,6 +6325,7 @@ MonoBehaviour:
   input: {fileID: 299235531}
   follow: {fileID: 109874603}
   spawns: {fileID: 2018648152}
+  respawns: {fileID: 45168803}
   pickups: {fileID: 1348477973}
   turret: {fileID: 9033761664128615775}
   effects: {fileID: 1009072192}
@@ -6595,6 +6597,25 @@ MonoBehaviour:
   regionName: {fileID: 1528957774}
   regionHint: {fileID: 1797269114}
   progress: {fileID: 1350686280}
+--- !u!114 &45168803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45168793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8daf7e63864a278ab1f9ef98d480bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoadGunner.ArenaEnemyRespawns
+  session: {fileID: 45168794}
+  respawnDelaySeconds: 30
+  retryInterval: 0.5
+  view: {fileID: 109874602}
+  ringMaterial: {fileID: 2100000, guid: ea1c59f65cbf24d76874701eb6e2a547, type: 2}
+  labelFont: {fileID: 12800000, guid: 7c3645fe148424e0aabebbc8e59b557b, type: 3}
+  ground: {fileID: 1274128682}
 --- !u!1 &45452091
 GameObject:
   m_ObjectHideFlags: 0

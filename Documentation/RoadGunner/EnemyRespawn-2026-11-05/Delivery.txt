@@ -1,0 +1,70 @@
+ROAD GUNNER — DEATH-SITE ENEMY RESPAWN COUNTDOWNS
+5 November 2026 (Asia/Yerevan)
+
+The12 authored Raiders,2 Buggies and1 Ashmaw now receive a circular countdown at
+their death site. Default delay is30 seconds of Playing time, editable on the
+saved ArenaEnemyRespawns component. The same actor returns there with full health,
+reset AI/attacks/weapon state and a fresh one-per-life reward. Warlord is excluded:
+his death still completes Arena1 and settles earned rewards.
+
+One cached marker per eligible actor draws a dark ground ring, a remaining-time
+arc that shifts gold toward mint, and camera-facing seconds using the existing
+LilitaOne HUD font. READY replaces zero while a site is occupied. The marker has
+no Collider, CombatTarget, raycast target or input-intercepting GraphicRaycaster.
+Mesh buffers, shared material/property blocks and cached digit strings are reused.
+The scheduler receives actual rewarded deaths directly, indexed by actor/life,
+with no per-frame scene search or polling of administratively despawned enemies.
+
+Pause freezes time/progress. Restart clears jobs/markers before resetting the
+original roster and counters. Defeated/Completed immediately cancel jobs. The
+fixed death-site remains unchanged when blocked; the scheduler retries rather
+than appearing inside a car, wall or another live enemy. Legacy offscreen/group
+replenishment stays disabled for these scene-authored identities. Minimap and
+world HP bars reuse the original actors' Alive/health notifications.
+
+A narrow installer added only the new component and GameSession reference to the
+saved scene, with explicit existing camera/ground/material/font references.
+No world, vehicle, scenery, art or navigation installer was rerun. Existing source
+meshes/materials/poses, navigation,9.36m/s tuning, combat values and small-stone
+crushing assets/code remain unchanged. SourcePreservation.json records the delta.
+
+The new15-case suite keeps the production manager enabled. It temporarily selects
+a2-second delay and isolates AI/auto-guns, then restores the30-second configuration.
+It uses actual saved actors, normal Hit/death paths, actual NavMesh/physical body
+shapes, resource conservation, real pause/terminal transitions, a player-occupied
+site and a temporary solid wall. The legacy204-case gameplay suite first validates
+the enabled timer manager; only its later temporary combat fixtures suppress
+timed returns and restore the original enabled state. The new suite independently
+covers enabled timers throughout. Exploration uses the saved scene separately.
+
+Initial compile rejected obsolete GetInstanceID in the new editor diagnostic on
+Unity6000.6.4f1; it now uses the supported GetEntityId. The first native run found
+an actual predicted-body-height bug: the timer used bare terrainY while humanoids
+stand on the higher baked NavMesh. Safety checks and actual Spawn now share that
+NavMesh standing height while retaining the original timer/death-site coordinates.
+A second run exposed Monster's0.05m query skin touching the local road despite
+its actual capsule being clear. Only the exact cached combined road support now
+uses a local upward floor ray and actual primitive ComputePenetration. Skin-only
+floor contact or shallow upward contact is accepted; walls/player/other obstacles
+retain their original occupancy rules. No global height tolerance was increased.
+First/second reports and logs remain in ignored outputs/EnemyRespawn-2026-11-05/.
+
+respawn-countdown.png is a controlled native marker-readability render: the real
+world camera was temporarily centred on a distant real death site, with camera
+state restored afterward. It uses the2-second test timer. Overlay HUD is omitted;
+it is not a public-browser or natural-playthrough screenshot.
+
+Final fresh acceptance: respawn15 + gameplay204 + exploration88 =307 PASS,
+zero failures and runtime Console errors. The Monster support trace records
+local roadY=.0336, actual body bottomY=.0750, penetration0: a query-skin-only
+floor hit. Player and wall deferral/retry cases passed with their original gates.
+After all suites, the same nine original production files differ and all2,110
+other original inputs remain unchanged; ten new C#/metadata files are present.
+
+Release WebGL packaging completed successfully with Unity 6000.6.4f1.
+Seven static artifacts total 26,788,350 bytes. Gzip CRCs, Unity data header,
+WASM validation and JavaScript syntax passed. The 2,129 frozen production input
+hashes and complete input file set match after packaging. Five automatic Unity
+metadata changes were backed up and restored exactly; generated Burst sidecar
+output is retained only under ignored outputs. WebBuild.json records the inputs
+and payload hashes. Pages payload commit: 8a38955e0c0e88e36b83a33f9a31786abd88678e.

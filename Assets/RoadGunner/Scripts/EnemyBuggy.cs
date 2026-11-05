@@ -25,6 +25,8 @@ namespace RoadGunner
         public override Vector3 AimPoint => transform.TransformPoint(new Vector3(0, .55f, 0));
         public int SpawnSlot { get; private set; }
         public int GroundedWheels { get; private set; }
+        public bool RewardGranted { get; private set; }
+        public int LifeSerial { get; private set; }
         public bool AIEnabled { get; set; } = true;
         NavMeshPath path;
         readonly Vector3[] corners = new Vector3[64];
@@ -32,6 +34,8 @@ namespace RoadGunner
         float repathAt, nextPlayerRam, flashUntil, wreckUntil, steering, stuckFor, reverseUntil;
         Vector3 lastPosition;
         MaterialPropertyBlock block;
+        Quaternion gunYawHome, gunPitchHome;
+        bool gunPoseCaptured;
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
         // Hue-keeping warm flash on the armour panels with a per-target cooldown; see ArcadeVfxFlash.
         readonly ArcadeVfxFlash flashFx = new ArcadeVfxFlash();
@@ -42,26 +46,40 @@ namespace RoadGunner
             Body.interpolation = RigidbodyInterpolation.Interpolate;
             Body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             path = new NavMeshPath(); block = new MaterialPropertyBlock();
+            CaptureGunPose();
             foreach (var wheel in wheels) wheel.ConfigureVehicleSubsteps(5, 8, 4);
         }
         public void Spawn(Vector3 ground, Quaternion rotation, int slot)
         {
+            LifeSerial++;
             gameObject.SetActive(true);
-            SpawnSlot = slot; Health = tuning.health; State = BuggyState.Idle; AIEnabled = true;
+            SpawnSlot = slot; Health = MaximumHealth; State = BuggyState.Idle; AIEnabled = true; RewardGranted = false;
             Body.isKinematic = false;
             Body.position = ground + Vector3.up * .65f; Body.rotation = rotation;
             transform.SetPositionAndRotation(Body.position, rotation);
             Body.linearVelocity = Vector3.zero; Body.angularVelocity = Vector3.zero;
             foreach (var collider in bodyColliders) collider.enabled = true;
             foreach (var wheel in wheels) { wheel.enabled = true; wheel.motorTorque = 0; wheel.brakeTorque = 500; wheel.steerAngle = 0; }
-            steering = 0; repathAt = 0; cornerCount = 0; stuckFor = 0; reverseUntil = 0;
+            steering = 0; repathAt = 0; cornerCount = corner = 0; stuckFor = 0; reverseUntil = wreckUntil = 0; GroundedWheels = 0;
             nextPlayerRam = 0; flashUntil = 0;
             lastPosition = transform.position;
             flashFx.Cancel(); flashFx.ResetCooldown();
             foreach (var panel in armor) panel.SetPropertyBlock(null);
             if (dust) dust.Clear(); if (smoke) { smoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); }
-            if (gun) { gun.CanShoot = true; gun.ResetCombat(); }
+            CaptureGunPose();
+            if (gun) {
+                if (gun.yaw) gun.yaw.localRotation = gunYawHome;
+                if (gun.pitch) gun.pitch.localRotation = gunPitchHome;
+                gun.CanShoot = true; gun.ResetCombat();
+            }
             NotifyHealthChanged();
+        }
+        void CaptureGunPose()
+        {
+            if (gunPoseCaptured || !gun) return;
+            if (gun.yaw) gunYawHome = gun.yaw.localRotation;
+            if (gun.pitch) gunPitchHome = gun.pitch.localRotation;
+            gunPoseCaptured = true;
         }
         public void Despawn()
         {
@@ -198,8 +216,10 @@ namespace RoadGunner
             Body.linearVelocity = Vector3.zero; Body.angularVelocity = Vector3.zero; Body.isKinematic = true;
             if (dust) { var em = dust.emission; em.rateOverTime = 0; }
             if (smoke) { smoke.Play(); smoke.Emit(8); }
+            RewardGranted = true;
             if (feedback) feedback.EnemyKilled(this, transform.position, tuning.scrapReward);
             session.EnemyDefeated(transform.position, tuning.scrapReward, true, direction);
+            if (session.respawns) session.respawns.QueueDeath(this);
             block.Clear(); block.SetColor("_BaseColor", new Color(.22f, .18f, .14f));
             foreach (var panel in armor) panel.SetPropertyBlock(block);
             session.effects.Explode(transform.position);
