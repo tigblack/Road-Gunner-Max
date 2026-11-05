@@ -48,6 +48,11 @@ namespace RoadGunner.Editor
         }
         [Serializable] public sealed class SolidRecord { public string id, signature; }
         [Serializable] public sealed class CountRecord { public string category; public int soft, hard, surface, composite; }
+        [Serializable] public sealed class StoneBoundsRecord
+        {
+            public string id, sourceId;
+            public Vector3 worldCenter, exactWorldSize, previousTransformedBoxSize;
+        }
         [Serializable] public sealed class RelocationRecord
         {
             public string id, sourceId, ownerId, oldPose, newPose, reason;
@@ -65,6 +70,9 @@ namespace RoadGunner.Editor
             public int mutableChunks, softProbes, hardColliders, reusedHardColliders, routeGuards;
             public int clearanceRepairVersion, carClearanceRoutes, carClearanceSamples;
             public int smallStoneVersion, smallStoneItems;
+            public int smallStoneBoulders, smallStonePebbleClusters;
+            public string smallStoneBoundsMethod;
+            public StoneBoundsRecord[] smallStoneBoundsCorrections;
             public RelocationRecord[] relocations;
         }
         sealed class Context
@@ -507,7 +515,7 @@ namespace RoadGunner.Editor
                 case "Pebbles": record.kind = DecorationCrushKind.Stone; break;
                 case "Spire": case "Hull": case "Girder": record.handling = "hard"; break;
                 case "Boulder":
-                    Bounds world = TransformBounds(filter.transform.localToWorldMatrix, bounds);
+                    Bounds world = ClassificationWorldBounds(context, record);
                     bool small = IsSmallBoulder(world);
                     record.handling = small ? "soft" : "hard";
                     if (small) record.kind = DecorationCrushKind.Stone;
@@ -522,12 +530,38 @@ namespace RoadGunner.Editor
 
         static bool IsSmallBoulder(Bounds world) => world.size.y <= .6f && Mathf.Max(world.size.x, world.size.z) <= 1f;
 
+        // Rotating a local AABB encloses empty corners and can make an .8m stone appear >1m.
+        // Classify the actual preserved mesh triangles; localBounds still serves probes and FX.
+        static Bounds ClassificationWorldBounds(Context context, ItemRecord item)
+        {
+            var filter = context.filters[item.sourceId];
+            var vertices = filter.sharedMesh.vertices; var indices = context.indices[item.sourceId];
+            var matrix = filter.transform.localToWorldMatrix;
+            if (item.starts == null || item.counts == null || item.starts.Length != item.counts.Length)
+                throw new InvalidOperationException("Invalid stone classification ranges: " + item.id);
+            bool first = true; Bounds result = default;
+            for (int range = 0; range < item.starts.Length; range++)
+            {
+                int start = item.starts[range], count = item.counts[range];
+                if (start < 0 || start % 3 != 0 || count <= 0 || count % 3 != 0 || (long)start + count > indices.Length)
+                    throw new InvalidOperationException("Out-of-range stone classification triangles: " + item.id);
+                for (int i = start; i < start + count; i++)
+                {
+                    Vector3 point = matrix.MultiplyPoint3x4(vertices[indices[i]]);
+                    if (first) { result = new Bounds(point, Vector3.zero); first = false; }
+                    else result.Encapsulate(point);
+                }
+            }
+            if (first) throw new InvalidOperationException("Empty stone classification geometry: " + item.id);
+            return result;
+        }
+
         static void ApplySmallStonePolicy(Context context, Catalog catalog)
         {
             // Migrate the verified triangle ranges, never regenerate the saved dressing or move its art.
             // The explicit category/size whitelist cannot turn cliffs, buildings or large boulders into props.
             var stones = catalog.items.Where(item => item.category == "Pebbles" ||
-                item.category == "Boulder" && IsSmallBoulder(TransformBounds(context.filters[item.sourceId].transform.localToWorldMatrix, item.localBounds))).ToArray();
+                item.category == "Boulder" && IsSmallBoulder(ClassificationWorldBounds(context, item))).ToArray();
             if (stones.Length == 0) throw new InvalidOperationException("No verified small stone sources in the saved arena.");
             foreach (var item in stones)
             {
@@ -536,7 +570,19 @@ namespace RoadGunner.Editor
                     throw new InvalidOperationException("Small stone migration would replace an original protected collider: " + item.id);
                 item.handling = "soft"; item.kind = DecorationCrushKind.Stone;
             }
-            catalog.smallStoneVersion = 1; catalog.smallStoneItems = stones.Length;
+            catalog.smallStoneVersion = 2; catalog.smallStoneItems = stones.Length;
+            catalog.smallStoneBoulders = stones.Count(item => item.category == "Boulder");
+            catalog.smallStonePebbleClusters = stones.Count(item => item.category == "Pebbles");
+            catalog.smallStoneBoundsMethod = "Exact selected triangle vertices transformed by the verified source localToWorld matrix; ranges/source IDs unchanged; height<=0.6m and max(world X,Z)<=1m.";
+            // Persist the old-box false positives on every repeat, so the migration remains
+            // reviewable after the records already have soft/Stone handling.
+            catalog.smallStoneBoundsCorrections = stones.Where(item => item.category == "Boulder" &&
+                !IsSmallBoulder(TransformBounds(context.filters[item.sourceId].transform.localToWorldMatrix, item.localBounds)))
+                .OrderBy(item => item.id, StringComparer.Ordinal).Select(item => {
+                    var exact = ClassificationWorldBounds(context, item);
+                    return new StoneBoundsRecord { id = item.id, sourceId = item.sourceId, worldCenter = exact.center,
+                        exactWorldSize = exact.size, previousTransformedBoxSize = TransformBounds(context.filters[item.sourceId].transform.localToWorldMatrix, item.localBounds).size };
+                }).ToArray();
             catalog.counts = catalog.items.GroupBy(i => i.category).OrderBy(g => g.Key, StringComparer.Ordinal).Select(g => new CountRecord {
                 category = g.Key, soft = g.Count(i => i.handling == "soft"), hard = g.Count(i => i.handling == "hard"),
                 surface = g.Count(i => i.handling == "surface"), composite = g.Count(i => i.handling == "composite") }).ToArray();
@@ -828,6 +874,14 @@ namespace RoadGunner.Editor
             text.AppendLine("Concept mixed instances=" + c.shoulderInstances + "; recovered members=" + c.shoulderMembers);
             text.AppendLine("Mutable original sources=" + c.mutableChunks + "; soft query probes=" + c.softProbes + "; compact exact hard colliders=" + c.hardColliders + "; reused original hard colliders=" + c.reusedHardColliders);
             text.AppendLine("Small-stone policy version=" + c.smallStoneVersion + "; crushable stones/pebble clusters=" + c.smallStoneItems + "; Boulder limits: height <=0.6m and horizontal extent <=1m; larger rocks remain hard.");
+            if (c.smallStoneVersion >= 2)
+            {
+                text.AppendLine("Exact world-triangle classification: Boulder=" + c.smallStoneBoulders + "; pebble clusters=" + c.smallStonePebbleClusters + "; rotated local-box false positives corrected=" + (c.smallStoneBoundsCorrections?.Length ?? 0));
+                text.AppendLine(c.smallStoneBoundsMethod);
+                if (c.smallStoneBoundsCorrections != null) foreach (var correction in c.smallStoneBoundsCorrections)
+                    text.AppendLine("Exact stone bounds " + correction.id + ": world centre=" + correction.worldCenter.ToString("F5") +
+                        "; actual size=" + correction.exactWorldSize.ToString("F5") + "; previous box size=" + correction.previousTransformedBoxSize.ToString("F5") + "; source=" + correction.sourceId);
+            }
             text.AppendLine("Replaced standalone soft solids=" + (c.replacedSoftColliders?.Length ?? 0) + "; existing protected solids=" + (c.protectedSolids?.Length ?? 0) + "; complete route guards=" + c.routeGuards);
             text.AppendLine("Exact unchanged car-box route guard: routes=" + c.carClearanceRoutes + "; samples=" + c.carClearanceSamples + "; clearance repair version=" + c.clearanceRepairVersion);
             if (c.relocations != null) foreach (var move in c.relocations)

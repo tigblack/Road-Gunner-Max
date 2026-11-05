@@ -1,0 +1,8 @@
+Saved-world Stone contact — Unity 6000.6.4f1
+Original scene rocks/probes/source transforms/terrain and full crush registry are retained. Only the actual player's setup pose is changed. AI is administratively despawned, automatic combat/rewards isolated; respawn manager remains enabled. No direct crush calls, substituted probes, copied props, injected moving velocity or scene/asset writes.
+FAIL all five exact-small saved Boulders have original enabled registered Stone probes: Original chunks=217; registered=1015; expected5 found=0; missing/wrong=shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-2105868946/0-Boulder | shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-372142831/0-Boulder | shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-482917732/0-Boulder | shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-1660182604/0-Boulder | shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-992461607/0-Boulder
+Dependent driving checks skipped: a missing saved-world Stone entry is the baseline authoring failure, not repaired by this fixture.
+RESULT checks=1; failures=1; original settings restored, saved world/assets not written.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

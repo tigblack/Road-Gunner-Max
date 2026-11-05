@@ -1,0 +1,66 @@
+ROAD GUNNER — ROTATED SMALL STONE DESTRUCTION FIX
+5 November 2026 (Asia/Yerevan)
+
+The user reported that a small stone could not be destroyed. The provided image
+is a close vehicle crop without an identifiable arena location; this report does
+not claim to identify the exact stone in that image. Auditing the saved arena
+found five concrete small Boulder misclassifications, including Main route
+shoulder 01 roughly 15 metres from the start.
+
+The classifier previously transformed a mesh's local axis-aligned bounding box.
+Its empty corners expanded after rotation, making an approximately 0.79 x 0.57 x
+0.82 metre rock appear 1.076 metres across and therefore solid. Classification
+now transforms only vertices referenced by that item's verified triangle ranges.
+The existing thresholds remain 0.6m high and 1m maximum horizontal dimension.
+The same five original objects become crushable, with no art or placement change.
+
+Policy version2 records exact and previous dimensions for all five corrections.
+The saved arena now has91 small Boulders and241 Pebbles clusters:332 Stone items,
+1020 soft query probes and217 mutable original sources. Five generated hard
+proxies were replaced with query probes;140 generated hard colliders plus3
+reused original colliders remain. All336 original scenery source geometry,
+materials and transforms, all136 protected solid signatures, every original item
+ID/triangle range/local bounds and existing scenery relocations are unchanged.
+One navigation bake used the existing surface/settings; all14 navigation paths
+and736 original full-car route-clearance samples passed.
+
+Before installation, the new saved-world regression failed because all five
+expected Stone entries were missing. BeforeFix.txt preserves that expected
+baseline failure with zero runtime Console errors; dependent driving was skipped
+rather than constructing replacement props to make the test pass.
+
+After installation, all6 targeted saved-world checks passed with Console0.
+The player drove through the actual Main01 stone on its saved terrain using
+normal physical input, with the complete original crush registry and probes.
+No stone, collider, source transform or ground was replaced or moved. The low
+input impact measured0.4581899m/s with4 grounded wheels; full input measured
+4.099051m/s. Geometry changes matched actual broken item ranges; unbroken
+neighbour ranges and original mesh buffers were retained. HP, kills, rewards
+and upgrades stayed unchanged. Restart restored the same stone and probe for
+the second pass. A real large Boulder produced a4849.603 collision impulse
+and stopped the car; it remained solid.
+
+The four before/debris PNGs are controlled native saved-world captures through
+the actual camera and HUD. The player setup pose was moved for repeatability;
+AI was administratively despawned and automatic gameplay interactions isolated.
+Respawn timers stayed enabled, with no death jobs created by administrative
+Despawn. These images are not a natural playthrough or public-browser captures.
+
+Existing vehicle physics,9.36m/s speed profile, combat,30-second enemy respawns,
+art, camera, minimap and reward behavior remain unchanged. New diagnostic files
+are editor-only. Runtime scenery detection/removal code and impact threshold
+are unchanged; this fix corrects the missing authored crush probes.
+
+Final fresh acceptance: stone6 + scenery31 + gameplay204 + exploration88 + respawn15
+=344 PASS, zero failures and runtime Console errors. Historic fixed-path native
+reports were copied to this release and restored to their original bytes;
+the original release evidence was retained. No physics-only suite is counted
+as a new run for this authoring correction.
+
+WebGL packaging completed successfully. Seven static artifacts total
+26,789,667 bytes. Gzip CRCs, Unity data headers, WASM validation
+and JavaScript syntax passed. All2,133 frozen production input hashes and the
+complete input file set matched after packaging. Automatic Unity render metadata
+was backed up and restored exactly where rewritten. SourcePreservation.json and
+WebBuild.json record the source delta and packaged payload hashes.
+Pages payload commit: c0934feb033afbb1e6407bd717aac8da9d88fe6e.

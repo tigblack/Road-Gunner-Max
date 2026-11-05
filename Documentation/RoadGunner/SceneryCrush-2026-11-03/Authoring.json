@@ -6,7 +6,7 @@
     "shoulderInstances": 79,
     "shoulderMembers": 354,
     "sceneGuid": "c699e8c72621f4262ab2e9410c7a77d8",
-    "verifiedAtUtc": "2026-11-05T12:50:22.4850160Z",
+    "verifiedAtUtc": "2026-11-05T16:04:42.1800190Z",
     "verification": "PASS: original visual geometry/materials/poses unchanged; all item triples/ranges validated. Repeat used the previously replay-verified catalog because collision semantics now differ from the original placement scene.",
     "sources": [
         {
@@ -37306,8 +37306,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-2105868946",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -37566,8 +37566,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-372142831",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -37696,8 +37696,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-482917732",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -41674,8 +41674,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1660182604",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -42142,8 +42142,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-992461607",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -48802,8 +48802,8 @@
         },
         {
             "category": "Boulder",
-            "soft": 86,
-            "hard": 61,
+            "soft": 91,
+            "hard": 56,
             "surface": 0,
             "composite": 0
         },
@@ -48949,14 +48949,114 @@
         }
     ],
     "mutableChunks": 217,
-    "softProbes": 1015,
-    "hardColliders": 145,
+    "softProbes": 1020,
+    "hardColliders": 140,
     "reusedHardColliders": 3,
     "routeGuards": 14,
     "clearanceRepairVersion": 0,
     "carClearanceRoutes": 14,
     "carClearanceSamples": 736,
-    "smallStoneVersion": 1,
-    "smallStoneItems": 327,
+    "smallStoneVersion": 2,
+    "smallStoneItems": 332,
+    "smallStoneBoulders": 91,
+    "smallStonePebbleClusters": 241,
+    "smallStoneBoundsMethod": "Exact selected triangle vertices transformed by the verified source localToWorld matrix; ranges/source IDs unchanged; height<=0.6m and max(world X,Z)<=1m.",
+    "smallStoneBoundsCorrections": [
+        {
+            "id": "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-2105868946/0-Boulder",
+            "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-2105868946",
+            "worldCenter": {
+                "x": -99.40724182128906,
+                "y": 0.2962400019168854,
+                "z": -88.17890930175781
+            },
+            "exactWorldSize": {
+                "x": 0.790435791015625,
+                "y": 0.5684800148010254,
+                "z": 0.8153076171875
+            },
+            "previousTransformedBoxSize": {
+                "x": 1.0764236450195313,
+                "y": 0.5684800148010254,
+                "z": 1.076416015625
+            }
+        },
+        {
+            "id": "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-372142831/0-Boulder",
+            "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-372142831",
+            "worldCenter": {
+                "x": -29.158376693725586,
+                "y": 0.2962400019168854,
+                "z": -12.616943359375
+            },
+            "exactWorldSize": {
+                "x": 0.8153190612792969,
+                "y": 0.5684800148010254,
+                "z": 0.790435791015625
+            },
+            "previousTransformedBoxSize": {
+                "x": 1.0764274597167969,
+                "y": 0.5684800148010254,
+                "z": 1.0764245986938477
+            }
+        },
+        {
+            "id": "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-482917732/0-Boulder",
+            "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-482917732",
+            "worldCenter": {
+                "x": 103.02392578125,
+                "y": 0.2962400019168854,
+                "z": 92.69145202636719
+            },
+            "exactWorldSize": {
+                "x": 0.770782470703125,
+                "y": 0.5684800148010254,
+                "z": 0.81549072265625
+            },
+            "previousTransformedBoxSize": {
+                "x": 1.069976806640625,
+                "y": 0.5684800148010254,
+                "z": 1.079559326171875
+            }
+        },
+        {
+            "id": "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-1660182604/0-Boulder",
+            "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1660182604",
+            "worldCenter": {
+                "x": -29.241310119628906,
+                "y": 0.2962400019168854,
+                "z": -44.7393684387207
+            },
+            "exactWorldSize": {
+                "x": 0.788299560546875,
+                "y": 0.5684800148010254,
+                "z": 0.7013626098632813
+            },
+            "previousTransformedBoxSize": {
+                "x": 1.1288700103759766,
+                "y": 0.5684800148010254,
+                "z": 1.1400299072265625
+            }
+        },
+        {
+            "id": "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-992461607/0-Boulder",
+            "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-992461607",
+            "worldCenter": {
+                "x": 0.3969620168209076,
+                "y": 0.2962400019168854,
+                "z": 66.84640502929688
+            },
+            "exactWorldSize": {
+                "x": 0.7092633247375488,
+                "y": 0.5684800148010254,
+                "z": 0.785797119140625
+            },
+            "previousTransformedBoxSize": {
+                "x": 1.1130613088607788,
+                "y": 0.5684800148010254,
+                "z": 1.135772705078125
+            }
+        }
+    ],
     "relocations": []
 }

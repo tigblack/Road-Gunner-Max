@@ -9,7 +9,7 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 5 November update adds enemy respawn countdowns.
+Press Play. The latest 5 November update corrects destruction of rotated small boulders.
 The player speed limit remains 9.36m/s from the preceding +60% speed release.
 Detailed Argon art, tracked steering and existing combat rules are retained.
 Large rocks and structures remain solid.
@@ -73,7 +73,7 @@ and living enemy Buggies can crush these props. Decorative destruction does
 not change HP, kills, upgrades or Scrap. Restart restores the props and clears
 fragments. Marked gameplay reward caches retain their existing rules.
 
-The saved arena has 241 crushable pebble clusters and 86 small boulders. Boulders
+The saved arena has 241 crushable pebble clusters and 91 small boulders. Boulders
 up to 0.6m high and 1m across crumble with stone fragments, dust and an impact
 sound. Larger boulders, rock spires, cliffs, hulls and buildings are solid and block
 chassis and shots. Grass, dunes and ground drifts remain surface detail.
@@ -84,9 +84,13 @@ Tools / Road Gunner / Scenery / Install Vehicle Crush Collisions Only
 Batch: RoadGunner.Editor.DecorationCollisionInstaller.InstallBatch
 Read-only saved-catalog check: DecorationCollisionInstaller.DumpManifestBatch
 Do not rerun legacy full art/world installers just to package this saved scene.
-Current stone authoring and verification: Documentation/RoadGunner/SmallStones-2026-11-05/.
-The catalog preserves all 136 original protected solids. Its 64 former small-rock
-hard proxies become crush probes; 145 generated and 3 reused hard colliders remain.
+Current stone authoring and verification: Documentation/RoadGunner/StoneFix-2026-11-05/.
+Size is measured from actual world-space triangle vertices, so rotating a small
+rock cannot incorrectly turn it into a hard obstacle. Five previously solid
+small boulders now have crush probes, including one near the start.
+The catalog preserves all 136 original protected solids. There are now 140
+generated and 3 reused hard colliders; the preceding 327 Stone items remain
+crushable alongside the five corrected boulders.
 All 14 full-car routes (736 samples) and navigation paths remain clear after one
 existing-configuration navigation bake. Vehicle tuning and visual assets are unchanged.
 Historical scenery implementation: Documentation/RoadGunner/SceneryCrush-2026-11-03/.
@@ -166,17 +170,18 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 5 November enemy-respawn-countdown update, built with Unity 6000.6.4f1.
+WebBuild/ contains the 5 November rotated-small-stone fix, built with Unity 6000.6.4f1.
 The player limit remains 9.36m/s with the current tracked handling.
-Seven static artifacts total 26,788,350 bytes. Fresh native acceptance:
-respawn15 + gameplay204 + exploration88 = 307 PASS with zero failures and runtime
-Console errors. Circular timers show 30 active seconds until Raiders, Buggies and
-Ashmaw return at their death sites. Warlord still ends Arena 1. The preceding
-small-stone destruction, vehicle tuning, combat values and world art are retained.
-Build/input hashes, source audits and publication evidence:
-Documentation/RoadGunner/EnemyRespawn-2026-11-05/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=8a38955
-Publication evidence: Documentation/RoadGunner/EnemyRespawn-2026-11-05/Publication.txt.
+Seven static artifacts total 26,789,667 bytes. Fresh native acceptance:
+actual-world stone6 + scenery31 + gameplay204 + exploration88 + respawn15 = 344 PASS,
+with zero failures and runtime Console errors. Five small rotated boulders now
+crumble correctly; real saved-world driving, Restart and large-rock collision
+are checked. The 30-second enemy return timers and existing game rules remain.
+Build/input hashes, source audit, before/after captures and publication evidence:
+Documentation/RoadGunner/StoneFix-2026-11-05/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=c0934fe
+Publication evidence: Documentation/RoadGunner/StoneFix-2026-11-05/Publication.txt.
+The preceding respawn release 8a38955 is documented in EnemyRespawn-2026-11-05/.
 The preceding small-stone release c65fd56 is documented in SmallStones-2026-11-05/.
 The preceding +60% speed release 51d237e is documented in Speed60-2026-11-05/.
 The preceding Argon visual release c5531b3 is documented in WebGL-2026-11-05-Argon/.

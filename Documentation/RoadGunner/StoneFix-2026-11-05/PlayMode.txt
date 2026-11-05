@@ -1,0 +1,12 @@
+Saved-world Stone contact — Unity 6000.6.4f1
+Original scene rocks/probes/source transforms/terrain and full crush registry are retained. Only the actual player's setup pose is changed. AI is administratively despawned, automatic combat/rewards isolated; respawn manager remains enabled. No direct crush calls, substituted probes, copied props, injected moving velocity or scene/asset writes.
+PASS all five exact-small saved Boulders have original enabled registered Stone probes: Original chunks=217; registered=1020; expected5 found=5; missing/wrong=
+PASS actual saved Main01 rock crumbles under low physical input without corrupting neighbours or gameplay: ID=shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-2105868946/0-Boulder; speed=0.4581899; mapped input=0.04991823; grounded=4; crossed=True; debris=True; ledger unchanged=True
+PASS Restart restores this same authored rock and probe in the untouched registry: Restored=True; actual probe enabled=True; same registry=True
+PASS full input re-crushes the original saved rock with real contacts and unchanged rewards: Speed=4.099051; peak=6.53017; mapped input=1; crossed=True; grounded=4; geometry correct=True; ledger unchanged=True
+PASS saved source asset, transforms and complete manager registry survive real contact: Asset indices/vertices unchanged; original pose=True; registered=1020; respawns enabled=True
+PASS an unchanged large Boulder physically blocks the real saved-world vehicle: Actual hard=standalone/concept-roadside/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-6101300767503800227-1092554088/Boulder; contacts=1; impulse=4849.603; peak=4.247631; furthest beyond face=-3.209137; ledger unchanged=True
+RESULT checks=6; failures=0; original settings restored, saved world/assets not written.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

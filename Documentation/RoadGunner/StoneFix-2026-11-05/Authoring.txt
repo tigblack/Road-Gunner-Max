@@ -1,0 +1,42 @@
+Saved-scene vehicle scenery collision authoring
+Verified catalog schema=1; repeat=True; scene=Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Arcade original primary items=1067; chunks=29; unchanged vertices=235332
+Concept mixed instances=79; recovered members=354
+Mutable original sources=217; soft query probes=1020; compact exact hard colliders=140; reused original hard colliders=3
+Small-stone policy version=2; crushable stones/pebble clusters=332; Boulder limits: height <=0.6m and horizontal extent <=1m; larger rocks remain hard.
+Exact world-triangle classification: Boulder=91; pebble clusters=241; rotated local-box false positives corrected=5
+Exact selected triangle vertices transformed by the verified source localToWorld matrix; ranges/source IDs unchanged; height<=0.6m and max(world X,Z)<=1m.
+Exact stone bounds shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-2105868946/0-Boulder: world centre=(-99.40724, 0.29624, -88.17891); actual size=(0.79044, 0.56848, 0.81531); previous box size=(1.07642, 0.56848, 1.07642); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-2105868946
+Exact stone bounds shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-372142831/0-Boulder: world centre=(-29.15838, 0.29624, -12.61694); actual size=(0.81532, 0.56848, 0.79044); previous box size=(1.07643, 0.56848, 1.07643); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-372142831
+Exact stone bounds shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-482917732/0-Boulder: world centre=(103.02390, 0.29624, 92.69145); actual size=(0.77078, 0.56848, 0.81549); previous box size=(1.06998, 0.56848, 1.07956); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-482917732
+Exact stone bounds shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-1660182604/0-Boulder: world centre=(-29.24131, 0.29624, -44.73937); actual size=(0.78830, 0.56848, 0.70136); previous box size=(1.12887, 0.56848, 1.14003); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1660182604
+Exact stone bounds shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-992461607/0-Boulder: world centre=(0.39696, 0.29624, 66.84641); actual size=(0.70926, 0.56848, 0.78580); previous box size=(1.11306, 0.56848, 1.13577); source=GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-992461607
+Replaced standalone soft solids=8; existing protected solids=136; complete route guards=14
+Exact unchanged car-box route guard: routes=14; samples=736; clearance repair version=0
+Barrel: soft=76, hard=0, surface=0, composite=0
+Barrels: soft=0, hard=0, surface=0, composite=38
+Bones: soft=35, hard=0, surface=0, composite=0
+Boulder: soft=91, hard=56, surface=0, composite=0
+Cactus: soft=168, hard=0, surface=0, composite=0
+DeadTree: soft=87, hard=0, surface=0, composite=0
+Drift: soft=0, hard=0, surface=52, composite=0
+Dry scrub: soft=0, hard=0, surface=233, composite=0
+Dune: soft=0, hard=0, surface=61, composite=0
+Fuel drums: soft=24, hard=0, surface=0, composite=0
+Girder: soft=0, hard=21, surface=0, composite=0
+Hull: soft=0, hard=20, surface=0, composite=0
+Metal storage crate: soft=4, hard=0, surface=0, composite=0
+Pebbles: soft=241, hard=0, surface=0, composite=0
+Pipe: soft=34, hard=0, surface=0, composite=0
+Plate: soft=62, hard=0, surface=0, composite=0
+ScrapPile: soft=52, hard=0, surface=0, composite=0
+Spire: soft=0, hard=46, surface=0, composite=0
+Tire and scrap pile: soft=35, hard=0, surface=0, composite=0
+Tire stack: soft=34, hard=0, surface=0, composite=0
+Tuft: soft=0, hard=0, surface=178, composite=0
+Tyre: soft=22, hard=0, surface=0, composite=0
+TyreStack: soft=31, hard=0, surface=0, composite=0
+Wooden supply crate: soft=24, hard=0, surface=0, composite=0
+PASS: original visual geometry/materials/poses unchanged; all item triples/ranges validated. Repeat used the previously replay-verified catalog because collision semantics now differ from the original placement scene.
+Only query probes on RG_SceneryCrush/12 can break; large hard scenery is Default/0. Gameplay targets, upgrades, workshop, crew and actors are excluded.
+Original visual meshes/materials and generation recipes retained; only recorded whole-instance clearance poses changed. One existing-config collider navigation bake; no full visual/world/minimap installer.

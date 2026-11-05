@@ -1,0 +1,39 @@
+{
+  "previousPublishedSource": "408d971aae1d75a7cf7c4b28147855c8ba471e94",
+  "previousProductionFiles": 2129,
+  "unchangedOriginalProductionFiles": 2126,
+  "changedOriginalProductionFiles": [
+    "Assets/RoadGunner/Editor/DecorationCollisionInstaller.cs",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Navigation.asset"
+  ],
+  "newProductionFiles": [
+    "Assets/RoadGunner/Editor/StoneContactVerification.cs",
+    "Assets/RoadGunner/Editor/StoneContactVerification.cs.meta",
+    "Assets/RoadGunner/Scripts/Diagnostics/StoneContactPlayChecks.cs",
+    "Assets/RoadGunner/Scripts/Diagnostics/StoneContactPlayChecks.cs.meta"
+  ],
+  "changedCatalogItems": [
+    "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-2105868946/0-Boulder",
+    "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-372142831/0-Boulder",
+    "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4386920637868705970-482917732/0-Boulder",
+    "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-1660182604/0-Boulder",
+    "shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8863308609420397489-992461607/0-Boulder"
+  ],
+  "allOriginalVisualSourcesUnchanged": 336,
+  "protectedCollidersUnchanged": 136,
+  "sourceIdsRangesLocalBoundsAndPosesUnchanged": true,
+  "existingSceneryRelocationsUnchanged": true,
+  "stonePolicy": {
+    "version": 2,
+    "method": "Exact selected triangle vertices transformed by the verified source localToWorld matrix; ranges/source IDs unchanged; height<=0.6m and max(world X,Z)<=1m.",
+    "boulders": 91,
+    "pebbleClusters": 241,
+    "total": 332,
+    "thresholdsChanged": false
+  },
+  "collisionProbes": 1020,
+  "hardGeneratedColliders": 140,
+  "reusedHardColliders": 3,
+  "navigationBake": "Existing surface/settings;14complete paths and736unchanged full-car clearance samples passed."
+}
