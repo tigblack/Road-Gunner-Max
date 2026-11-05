@@ -1,0 +1,43 @@
+ROAD GUNNER — ENEMY RETURN COUNTDOWNS PUBLISHED
+5 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=8a38955
+Source and WebGL artifact commit: 94bcdbbe0a79206d9c5d250cac76feb5a09aa8b4
+Pages payload commit: 8a38955e0c0e88e36b83a33f9a31786abd88678e
+Previous source: 1652a73dac75a9716f331ece9d67304d3f662b82
+Previous Pages: c65fd564a8fedddfa6a2a4837ce3609c8a01d798
+
+The source update was pushed atomically to main and
+feature/enemy-respawn-20261105 together with the gh-pages payload update.
+No force push or replacement of existing source history was used. A subsequent
+documentation-only commit records these observed publication results.
+
+Exact-SHA Pages build: built; error: none.
+GitHub Action: https://github.com/tigblack/Road-Gunner-Max/actions/runs/42037066309
+Action status/conclusion: completed/success.
+Deployment 7575030934: success.
+Pages build duration: 21138 milliseconds.
+Public verification finished: 2026-11-05T13:35:51.924332+00:00.
+
+Six ordinary HTTPS URLs without cache-busting query parameters returned HTTP 200
+with TLS certificate verification and exact expected bytes/SHA-256 on the first
+attempt. Payload total: 26,788,350 bytes. The seventh artifact, .nojekyll, was
+verified as the exact empty Git blob at the Pages commit. Full hashes, headers,
+request identities and deployment observations are in LiveManifest.json.
+
+The saved scene uses a 30-second Playing-time countdown for 12 Raiders, two
+Buggies and Ashmaw. The circular arc and seconds appear at the fixed death site;
+the same enemy returns fully reset. Occupied sites wait at READY and retry in
+place. Pause freezes the clock, Restart clears jobs, terminal states cancel them.
+Warlord remains the final boss and completes Arena 1 rather than returning.
+
+Fresh native acceptance: respawn15 + gameplay204 + exploration88 = 307 PASS,
+zero failures and runtime Console errors. The 2,129 frozen production inputs
+matched after packaging. World/art/navigation, vehicle/combat tuning and the
+preceding small-stone crushing implementation were preserved.
+
+Browser.txt records the limited public UI attempt: the dedicated Chrome window
+became unavailable before startup/gameplay could be observed. The controlled
+native timer image is described in Delivery.txt; it is not public-browser proof.
+These results do not claim a complete natural playthrough, physical-phone test
+or frame-rate benchmark for this update.

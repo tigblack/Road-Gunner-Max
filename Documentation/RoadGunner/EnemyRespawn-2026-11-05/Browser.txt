@@ -1,0 +1,20 @@
+PUBLIC BROWSER SMOKE — 5 NOVEMBER 2026
+Target: https://tigblack.github.io/Road-Gunner-Max/?build=8a38955
+
+A separate native Chrome window was opened for this release, preserving existing
+user windows/tabs. Navigation was submitted to the exact release URL through the
+address bar. The immediate accessibility observation still showed the New Tab
+page while its address field contained the requested game URL.
+
+The next combined accessibility/screenshot call failed with cgWindowNotFound.
+A read-only accessibility retry failed with the same error. No gameplay key,
+PLAY click, Pause click or other UI input was sent after the window became
+unavailable. No public startup, driving, countdown or respawn was observed during
+this attempt; no public-browser runtime Console or performance result is claimed.
+
+Separate evidence: native saved-scene suites passed 307 checks with zero runtime
+Console errors, including actual death/countdown/respawn cases. The controlled
+native respawn-countdown.png verifies marker readability and is explicitly not
+a public-browser screenshot. LiveManifest.json independently verifies the exact
+successful deployment and all ordinary public payload bytes/SHA-256 over HTTPS.
+No physical-phone or browser frame-rate verification was performed for this update.
