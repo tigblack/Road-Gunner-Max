@@ -1,0 +1,57 @@
+ROAD GUNNER — CRUSHABLE SMALL STONES
+5 November 2026 (Asia/Yerevan)
+
+Small stones now crumble on contact with the moving player vehicle or a living
+Buggy. The saved arena contains 241 pebble-cluster items (952 connected stones)
+and 86 small Boulder items. Boulder qualification uses actual world bounds:
+height <=0.6m and maximum horizontal dimension <=1m. Each pebble cluster remains
+one original authored item, so its 3–5 stones crumble together on contact.
+
+The verified catalog reclassifies 327 original item ranges as soft Stone scenery.
+Of these, 64 small boulders previously had owned hard mesh proxies; those proxies
+are removed. The other 263 were previously surface detail. There are now 1,015
+soft query probes across 217 mutable original source chunks. The 61 larger Boulder
+items, rock spires, cliffs, wreck hulls and buildings remain solid: 145 generated
+hard colliders plus 3 reused colliders, with all 136 original protected collider
+signatures unchanged.
+
+Stone is appended as enum value5, preserving prior serialized values. It uses the
+existing measured-vehicle/contact sweep, selected-triangle removal and bounded
+96-piece cosmetic pool, with stone-coloured fragments, dust and a quiet impact.
+No CombatTarget, HP, kills, Scrap or other reward is introduced for decorative
+stones. Pause, terminal-state rejection, recover-sweep reset, minimum impact speed
+and run-reset logic retain their existing production code. Restart restores the
+original source triangles and contact probes and clears the debris.
+
+The narrow collision installer binds the existing verified catalog and stable IDs.
+No art, world, shoulder, minimap or vehicle installer was rerun; geometry, materials
+and poses were retained exactly. One navigation bake uses the existing settings;
+all 14 navigation paths and all 736 full-car route samples passed authoring guards.
+The current 9.36m/s speed profile, vehicle physics, enemies and combat are unchanged.
+
+Five added editor acceptance cases use copied actual Stone source geometry with
+normal production input/physics: low-input Boulder, full-input Pebbles cruise,
+selected-only triangle changes with neighbouring geometry retained, visible debris
+without HP/rewards, Restart/repass, and a near miss outside the track footprint.
+The coverage assertion and grouped checks total five new checks, for31 in Props.
+This is a controlled flat-course fixture, not a natural arena playthrough. The
+full-input case records before/early-debris images through the real camera/HUD.
+Gameplay and exploration regressions also exercise the saved scene. Unchanged
+vehicle-only physics and speed suites are retained as prior release evidence and
+are not counted as fresh checks here.
+
+SourcePreservation.json records six intended production-file changes, all2,113
+other original input files unchanged, exact source visuals/poses, and unchanged
+protected solids. Authoring.json/.txt describe the final saved scene. Native
+reports, WebBuild.json and delivery records describe their own verification scope.
+
+Final fresh native acceptance: Props31 + Gameplay204 + Exploration88 =323 PASS,
+zero failures and runtime Console errors. Low-input stone impact:0.467571m/s;
+full-input impact:8.446910m/s (about30.41km/h). Source preservation was rechecked
+after all three suites; only the same six intended production files differ.
+The two stone PNGs are controlled native fixture captures, not browser captures.
+
+WebGL packaging succeeded. Seven static payload files total 26,771,979 bytes;
+gzip CRCs, Unity data/WASM headers, WASM validity and JavaScript syntax passed.
+All 2,119 frozen production inputs matched after packaging. The five automatic
+Unity render-metadata rewrites were restored to their exact prebuild bytes.

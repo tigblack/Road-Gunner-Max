@@ -9,10 +9,10 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 5 November speed update raises the player maxSpeed by60%:
-5.85 ->9.36m/s. The detailed Argon art, tracked steering and existing combat rules
-are retained. Small scenery breaks under cars; large rocks and structures remain
-solid.
+Press Play. The latest 5 November update makes small stones crumble under cars.
+The player speed limit remains 9.36m/s from the preceding +60% speed release.
+Detailed Argon art, tracked steering and existing combat rules are retained.
+Large rocks and structures remain solid.
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
@@ -56,29 +56,29 @@ needed for packaging; it replaces art and rebuilds scenery/nav data. Release
 validation and source preservation: Documentation/RoadGunner/WebGL-2026-11-05-Argon/.
 
 SCENERY CONTACT
-Drive into cacti, small wooden/metal crates, barrels, loose pipes, tyre stacks
+Drive into small stones, cacti, small wooden/metal crates, barrels, loose pipes, tyre stacks
 and dead branches to crumble them into short-lived cosmetic fragments. Player
 and living enemy Buggies can crush these props. Decorative destruction does
 not change HP, kills, upgrades or Scrap. Restart restores the props and clears
 fragments. Marked gameplay reward caches retain their existing rules.
 
-Large boulders, rock spires, cliffs, hulls and buildings are solid and block
-chassis and shots. Grass, flat pebbles, dunes and ground drifts remain surface
-detail. Terrain/roads and the existing arena layout remain recognisable.
+The saved arena has 241 crushable pebble clusters and 86 small boulders. Boulders
+up to 0.6m high and 1m across crumble with stone fragments, dust and an impact
+sound. Larger boulders, rock spires, cliffs, hulls and buildings are solid and block
+chassis and shots. Grass, dunes and ground drifts remain surface detail.
+Terrain, roads and all original visual geometry/materials/poses are retained.
 
 The saved scene already includes this wiring. Narrow authoring only:
 Tools / Road Gunner / Scenery / Install Vehicle Crush Collisions Only
 Batch: RoadGunner.Editor.DecorationCollisionInstaller.InstallBatch
 Read-only saved-catalog check: DecorationCollisionInstaller.DumpManifestBatch
 Do not rerun legacy full art/world installers just to package this saved scene.
-Implementation and evidence: Documentation/RoadGunner/SceneryCrush-2026-11-03/.
-Acceptance: scenery26 + physics21 + tracked9 + gameplay204 + exploration88 =
-348 PASS, zero failures and runtime Console errors. Three complete shoulder
-compositions were shifted about 3 m off the driving lanes after enabling rock
-collision; all 14 full-car routes (736 samples) and navigation paths remain clear.
-Physics/tracked suites ran before these pose-only corrections; scenery/gameplay/
-exploration suites were repeated on the final saved scene. Vehicle tuning and
-original visual mesh/material assets remained unchanged.
+Current stone authoring and verification: Documentation/RoadGunner/SmallStones-2026-11-05/.
+The catalog preserves all 136 original protected solids. Its 64 former small-rock
+hard proxies become crush probes; 145 generated and 3 reused hard colliders remain.
+All 14 full-car routes (736 samples) and navigation paths remain clear after one
+existing-configuration navigation bake. Vehicle tuning and visual assets are unchanged.
+Historical scenery implementation: Documentation/RoadGunner/SceneryCrush-2026-11-03/.
 
 EXPLORATION AND WORLD REWARDS
 Five supply caches are destructible auto-fire targets. Unobstructed enemies
@@ -155,17 +155,17 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 5 November player speed +60% update, built with Unity 6000.6.4f1.
-The player limit is 9.36m/s; measured cruise rose from 5.311 to 8.453m/s.
-Seven static artifacts total 26,772,000 bytes. Fresh native acceptance:
-scenery26 + physics21 + tracked9 + gameplay204 + exploration88 = 348 PASS with
-zero failures and runtime Console errors. Art, world and gameplay settings other
-than player maxSpeed were retained. Editor fixtures use the new speed profile;
-the scenery fixture approaches the actual face of the same copied hard collider.
+WebBuild/ contains the 5 November crushable-small-stone update, built with Unity 6000.6.4f1.
+The player limit remains 9.36m/s with the current tracked handling.
+Seven static artifacts total 26,771,979 bytes. Fresh native acceptance:
+scenery31 + gameplay204 + exploration88 = 323 PASS with zero failures and runtime
+Console errors. Small stones crumble, large obstacles retain hard collision,
+and Restart restores the original stones. Vehicle and combat tuning are unchanged.
 Build/input hashes, source audits and publication evidence:
-Documentation/RoadGunner/Speed60-2026-11-05/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=51d237e
-Publication evidence: Documentation/RoadGunner/Speed60-2026-11-05/Publication.txt.
+Documentation/RoadGunner/SmallStones-2026-11-05/.
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=c65fd56
+Publication evidence: Documentation/RoadGunner/SmallStones-2026-11-05/Publication.txt.
+The preceding +60% speed release 51d237e is documented in Speed60-2026-11-05/.
 The preceding Argon visual release c5531b3 is documented in WebGL-2026-11-05-Argon/.
 The previous scenery release 42a3746 and tracked-player release 466ff61 remain
 historical snapshots in their corresponding documentation folders.

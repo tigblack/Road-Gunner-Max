@@ -6,8 +6,8 @@
     "shoulderInstances": 79,
     "shoulderMembers": 354,
     "sceneGuid": "c699e8c72621f4262ab2e9410c7a77d8",
-    "verifiedAtUtc": "2026-11-04T17:35:34.6105960Z",
-    "verification": "PASS: original visual geometry/materials/poses unchanged; all item triples/ranges validated. All Arcade replay positions/normals/UV/indices matched the saved chunks; all Concept template triangles matched original members.",
+    "verifiedAtUtc": "2026-11-05T12:50:22.4850160Z",
+    "verification": "PASS: original visual geometry/materials/poses unchanged; all item triples/ranges validated. Repeat used the previously replay-verified catalog because collision semantics now differ from the original placement scene.",
     "sources": [
         {
             "id": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-109568812-0",
@@ -3584,8 +3584,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3528
             ],
@@ -3636,8 +3636,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3954
             ],
@@ -3740,8 +3740,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4392
             ],
@@ -3766,8 +3766,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4548
             ],
@@ -3844,8 +3844,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5016
             ],
@@ -3870,8 +3870,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5184
             ],
@@ -3974,8 +3974,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 702
             ],
@@ -4078,8 +4078,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7389
             ],
@@ -4208,8 +4208,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8397
             ],
@@ -4312,8 +4312,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8985
             ],
@@ -4390,8 +4390,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9441
             ],
@@ -4416,8 +4416,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9573
             ],
@@ -4572,8 +4572,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10308
             ],
@@ -4728,8 +4728,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11376
             ],
@@ -4988,8 +4988,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1563
             ],
@@ -5014,8 +5014,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1706584256-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1719
             ],
@@ -5066,8 +5066,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -5144,8 +5144,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2118
             ],
@@ -5222,8 +5222,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2781
             ],
@@ -5248,8 +5248,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2937
             ],
@@ -5326,8 +5326,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3225
             ],
@@ -5352,8 +5352,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3381
             ],
@@ -5508,8 +5508,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4443
             ],
@@ -5560,8 +5560,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4773
             ],
@@ -5716,8 +5716,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5451
             ],
@@ -5924,8 +5924,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7338
             ],
@@ -6366,8 +6366,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10860
             ],
@@ -6548,8 +6548,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12018
             ],
@@ -6574,8 +6574,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12186
             ],
@@ -6730,8 +6730,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-877213449-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1032
             ],
@@ -7224,8 +7224,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5595
             ],
@@ -7432,8 +7432,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7083
             ],
@@ -7588,8 +7588,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8475
             ],
@@ -7614,8 +7614,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8631
             ],
@@ -7666,8 +7666,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8820
             ],
@@ -7692,8 +7692,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 837
             ],
@@ -7770,8 +7770,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2012855858-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1581
             ],
@@ -7848,8 +7848,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -7926,8 +7926,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2049
             ],
@@ -7952,8 +7952,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2157
             ],
@@ -8082,8 +8082,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3573
             ],
@@ -8212,8 +8212,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4113
             ],
@@ -8316,8 +8316,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4701
             ],
@@ -8446,8 +8446,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 261
             ],
@@ -8498,8 +8498,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6333
             ],
@@ -8914,8 +8914,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10473
             ],
@@ -8940,8 +8940,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10605
             ],
@@ -9434,8 +9434,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 14034
             ],
@@ -9538,8 +9538,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 15231
             ],
@@ -9590,8 +9590,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 927
             ],
@@ -9642,8 +9642,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 15738
             ],
@@ -9668,8 +9668,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 15846
             ],
@@ -9746,8 +9746,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 16470
             ],
@@ -9772,8 +9772,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-261922651-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 16578
             ],
@@ -10344,8 +10344,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2829
             ],
@@ -10396,8 +10396,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3000
             ],
@@ -10630,8 +10630,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5028
             ],
@@ -10656,8 +10656,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5184
             ],
@@ -10734,8 +10734,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5814
             ],
@@ -10760,8 +10760,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5922
             ],
@@ -10968,8 +10968,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7635
             ],
@@ -11072,8 +11072,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8895
             ],
@@ -11098,8 +11098,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9051
             ],
@@ -11254,8 +11254,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1167
             ],
@@ -11306,8 +11306,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1804930255-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1755
             ],
@@ -11410,8 +11410,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-763337714-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 234
             ],
@@ -11488,8 +11488,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-763337714-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1074
             ],
@@ -11514,8 +11514,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-763337714-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1266
             ],
@@ -11540,8 +11540,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -11644,8 +11644,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2049
             ],
@@ -11670,8 +11670,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2205
             ],
@@ -11904,8 +11904,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3600
             ],
@@ -12060,8 +12060,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4518
             ],
@@ -12112,8 +12112,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4707
             ],
@@ -12164,8 +12164,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4815
             ],
@@ -12372,8 +12372,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6492
             ],
@@ -12450,8 +12450,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6798
             ],
@@ -12502,8 +12502,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7224
             ],
@@ -12684,8 +12684,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1193481779-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8604
             ],
@@ -13022,8 +13022,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2259
             ],
@@ -13074,8 +13074,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2685
             ],
@@ -13204,8 +13204,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3738
             ],
@@ -13230,8 +13230,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3870
             ],
@@ -13256,8 +13256,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4002
             ],
@@ -13412,8 +13412,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5088
             ],
@@ -13516,8 +13516,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5736
             ],
@@ -13776,8 +13776,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7719
             ],
@@ -13802,8 +13802,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7887
             ],
@@ -13828,8 +13828,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8019
             ],
@@ -13880,8 +13880,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8127
             ],
@@ -14010,8 +14010,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8685
             ],
@@ -14036,8 +14036,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8877
             ],
@@ -14114,8 +14114,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9270
             ],
@@ -14218,8 +14218,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9828
             ],
@@ -14322,8 +14322,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10587
             ],
@@ -14452,8 +14452,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11430
             ],
@@ -14478,8 +14478,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11586
             ],
@@ -14504,8 +14504,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11694
             ],
@@ -14556,8 +14556,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12276
             ],
@@ -14634,8 +14634,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12801
             ],
@@ -14660,8 +14660,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12933
             ],
@@ -14686,8 +14686,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2098319424-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1479
             ],
@@ -14894,8 +14894,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -14972,8 +14972,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2226
             ],
@@ -15050,8 +15050,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2904
             ],
@@ -15076,8 +15076,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3036
             ],
@@ -15414,8 +15414,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5499
             ],
@@ -15466,8 +15466,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5772
             ],
@@ -15544,8 +15544,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5976
             ],
@@ -15752,8 +15752,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 396
             ],
@@ -15804,8 +15804,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-976222071-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 972
             ],
@@ -15908,8 +15908,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-485792218-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 264
             ],
@@ -16090,8 +16090,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1603214153-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2283
             ],
@@ -16402,8 +16402,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1603214153-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4596
             ],
@@ -16584,8 +16584,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1603214153-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6123
             ],
@@ -16714,8 +16714,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1603214153-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6726
             ],
@@ -16818,8 +16818,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1603214153-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1218
             ],
@@ -16844,8 +16844,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1603214153-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1386
             ],
@@ -17078,8 +17078,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-753707189-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1098
             ],
@@ -17182,8 +17182,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 222
             ],
@@ -17338,8 +17338,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3132
             ],
@@ -17416,8 +17416,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3438
             ],
@@ -17598,8 +17598,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4344
             ],
@@ -17650,8 +17650,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4692
             ],
@@ -17676,8 +17676,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4824
             ],
@@ -17936,8 +17936,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6408
             ],
@@ -17988,8 +17988,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6564
             ],
@@ -18222,8 +18222,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7716
             ],
@@ -18274,8 +18274,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8130
             ],
@@ -18300,8 +18300,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8262
             ],
@@ -18430,8 +18430,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8766
             ],
@@ -18456,8 +18456,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8910
             ],
@@ -18586,8 +18586,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9840
             ],
@@ -18638,8 +18638,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9978
             ],
@@ -18742,8 +18742,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-257506981-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1800
             ],
@@ -18898,8 +18898,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1245039368-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -18950,8 +18950,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1245039368-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2031
             ],
@@ -19158,8 +19158,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1245039368-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3981
             ],
@@ -19210,8 +19210,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1245039368-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 558
             ],
@@ -19366,8 +19366,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1245039368-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5301
             ],
@@ -19548,8 +19548,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1245039368-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6333
             ],
@@ -19938,8 +19938,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-814438593-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 456
             ],
@@ -19964,8 +19964,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-814438593-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 624
             ],
@@ -20328,8 +20328,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1796132079-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2658
             ],
@@ -21212,8 +21212,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -21290,8 +21290,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2928
             ],
@@ -21368,8 +21368,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3522
             ],
@@ -21394,8 +21394,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3714
             ],
@@ -21472,8 +21472,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4326
             ],
@@ -21576,8 +21576,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5022
             ],
@@ -21602,8 +21602,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5154
             ],
@@ -21732,8 +21732,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6213
             ],
@@ -21862,8 +21862,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6933
             ],
@@ -21992,8 +21992,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8325
             ],
@@ -22070,8 +22070,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8568
             ],
@@ -22200,8 +22200,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9732
             ],
@@ -22356,8 +22356,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11070
             ],
@@ -22460,8 +22460,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11781
             ],
@@ -22486,8 +22486,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11949
             ],
@@ -22590,8 +22590,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 13419
             ],
@@ -22616,8 +22616,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 13647
             ],
@@ -22850,8 +22850,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 16284
             ],
@@ -22902,8 +22902,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 16512
             ],
@@ -22980,8 +22980,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1358255670-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 16716
             ],
@@ -23292,8 +23292,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4479
             ],
@@ -23318,8 +23318,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4623
             ],
@@ -23344,8 +23344,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4779
             ],
@@ -23422,8 +23422,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5274
             ],
@@ -23448,8 +23448,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5418
             ],
@@ -23474,8 +23474,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5550
             ],
@@ -23578,8 +23578,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5958
             ],
@@ -23630,8 +23630,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -23812,8 +23812,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8646
             ],
@@ -23890,8 +23890,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9234
             ],
@@ -24046,8 +24046,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10857
             ],
@@ -24072,8 +24072,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11001
             ],
@@ -24124,8 +24124,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11658
             ],
@@ -24202,8 +24202,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12315
             ],
@@ -24306,8 +24306,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1795540356-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 13086
             ],
@@ -24722,8 +24722,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1175733494-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 0
             ],
@@ -24774,8 +24774,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1175733494-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 729
             ],
@@ -24800,8 +24800,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1175733494-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 837
             ],
@@ -25190,8 +25190,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3312
             ],
@@ -25736,8 +25736,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6300
             ],
@@ -25788,8 +25788,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6438
             ],
@@ -25814,8 +25814,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 864
             ],
@@ -26022,8 +26022,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7776
             ],
@@ -26048,8 +26048,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7884
             ],
@@ -26230,8 +26230,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8262
             ],
@@ -26256,8 +26256,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8454
             ],
@@ -26568,8 +26568,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10338
             ],
@@ -27348,8 +27348,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 14082
             ],
@@ -27374,8 +27374,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 14238
             ],
@@ -27478,8 +27478,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-10972554-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 14676
             ],
@@ -27764,8 +27764,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-964712468-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 684
             ],
@@ -27920,8 +27920,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2082
             ],
@@ -27946,8 +27946,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2238
             ],
@@ -28180,8 +28180,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4800
             ],
@@ -28206,8 +28206,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5028
             ],
@@ -28336,8 +28336,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6180
             ],
@@ -28362,8 +28362,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6288
             ],
@@ -28414,8 +28414,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6492
             ],
@@ -28622,8 +28622,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9159
             ],
@@ -28934,8 +28934,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1644
             ],
@@ -28960,8 +28960,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1836
             ],
@@ -28986,8 +28986,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-701533592-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1944
             ],
@@ -29428,8 +29428,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7614
             ],
@@ -29454,8 +29454,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7746
             ],
@@ -29532,8 +29532,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8910
             ],
@@ -29558,8 +29558,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9066
             ],
@@ -29636,8 +29636,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9597
             ],
@@ -29766,8 +29766,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11049
             ],
@@ -29844,8 +29844,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12108
             ],
@@ -30312,8 +30312,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 17190
             ],
@@ -30338,8 +30338,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-745173045-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 17382
             ],
@@ -30702,8 +30702,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-109568812-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2667
             ],
@@ -30910,8 +30910,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-109568812-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1428
             ],
@@ -30936,8 +30936,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-109568812-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1596
             ],
@@ -31014,8 +31014,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-109568812-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2139
             ],
@@ -31196,8 +31196,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2718
             ],
@@ -31222,8 +31222,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2850
             ],
@@ -31248,8 +31248,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2958
             ],
@@ -31352,8 +31352,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 3741
             ],
@@ -31482,8 +31482,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 4317
             ],
@@ -31612,8 +31612,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5037
             ],
@@ -31690,8 +31690,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5751
             ],
@@ -31716,8 +31716,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 5919
             ],
@@ -31846,8 +31846,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7035
             ],
@@ -31872,8 +31872,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 7179
             ],
@@ -32002,8 +32002,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 8433
             ],
@@ -32080,8 +32080,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1530
             ],
@@ -32158,8 +32158,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 9267
             ],
@@ -32236,8 +32236,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 10125
             ],
@@ -32418,8 +32418,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 11736
             ],
@@ -32470,8 +32470,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12237
             ],
@@ -32652,8 +32652,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2058
             ],
@@ -32678,8 +32678,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-616836976-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2166
             ],
@@ -32782,8 +32782,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-396868626-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2235
             ],
@@ -32834,8 +32834,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-396868626-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 2892
             ],
@@ -32938,8 +32938,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-396868626-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1308
             ],
@@ -32990,8 +32990,8 @@
             "category": "Pebbles",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-396868626-0",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 1536
             ],
@@ -33120,8 +33120,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-1266830702",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -33250,8 +33250,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-1445372579",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -33380,8 +33380,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-1520818383",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -33510,8 +33510,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-1804860849",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -33640,8 +33640,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-1974770403",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -33770,8 +33770,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-2110893893",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -33900,8 +33900,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-337264088",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34030,8 +34030,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-765640526",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34160,8 +34160,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-795398156",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34290,8 +34290,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-2686136442633785595-809273968",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34420,8 +34420,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-114274097",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34550,8 +34550,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-1185158030",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34680,8 +34680,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-1207042125",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34810,8 +34810,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-141792523",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -34940,8 +34940,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-1428870379",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35070,8 +35070,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-1678550511",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35200,8 +35200,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-1774596750",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35330,8 +35330,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-2012052011",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35460,8 +35460,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-2141491977",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35590,8 +35590,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-262316190",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35720,8 +35720,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-418136083",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35850,8 +35850,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-793276756",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -35980,8 +35980,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1673699337415760351-843050507",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36110,8 +36110,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-1882961654",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36214,8 +36214,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-2003288657",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36318,8 +36318,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-2026408668",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36422,8 +36422,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-206362768",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36526,8 +36526,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-329506333",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36630,8 +36630,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-338183479",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36734,8 +36734,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-533130219",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36838,8 +36838,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-4164660880435187231-863636354",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -36942,8 +36942,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-1909506235",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37072,8 +37072,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-1915033436",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37202,8 +37202,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-1994667937",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37332,8 +37332,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-2105868946",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37462,8 +37462,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-301807272",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37592,8 +37592,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-372142831",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37722,8 +37722,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-482917732",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37852,8 +37852,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-532542449",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -37982,8 +37982,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-81415359",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -38112,8 +38112,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-1911589457093346173-818301914",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -38268,8 +38268,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-1462834145",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38372,8 +38372,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-2058143365",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38476,8 +38476,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-2141122656",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38580,8 +38580,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-25242294",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38684,8 +38684,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-501895403",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38788,8 +38788,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-62569569",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38892,8 +38892,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-753623930",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -38996,8 +38996,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-757243554",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -39100,8 +39100,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-8020739160359889593-860260165",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 26868
             ],
@@ -39178,8 +39178,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-113270629",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39282,8 +39282,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-1359891579",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39386,8 +39386,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-1716105239",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39490,8 +39490,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-1727352040",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39594,8 +39594,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-1810522974",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39698,8 +39698,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-1842240950",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39802,8 +39802,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-2012795601",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -39906,8 +39906,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-2040711382",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -40010,8 +40010,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-377943933",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -40114,8 +40114,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-51926777",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -40218,8 +40218,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-747275012",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -40322,8 +40322,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-82322789",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -40426,8 +40426,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3789533643343184610-832425257",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 6480
             ],
@@ -40530,8 +40530,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-1007202937",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -40608,8 +40608,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-1166674037",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -40686,8 +40686,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-1183659093",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -40764,8 +40764,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-1243905794",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -40842,8 +40842,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-1349533627",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -40920,8 +40920,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-1494989770",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -40998,8 +40998,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-408000061",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -41076,8 +41076,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-432298955",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -41154,8 +41154,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-5499540395196701911-500539934",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 19794
             ],
@@ -41232,8 +41232,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-102506985",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -41336,8 +41336,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-102506985",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -41388,8 +41388,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1461864983",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -41492,8 +41492,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1461864983",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -41544,8 +41544,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1503188710",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -41648,8 +41648,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1503188710",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -41700,8 +41700,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1660182604",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -41804,8 +41804,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1660182604",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -41856,8 +41856,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1872015251",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -41960,8 +41960,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-1872015251",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -42012,8 +42012,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-228640147",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -42116,8 +42116,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-228640147",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -42168,8 +42168,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-992461607",
             "ownerId": "",
-            "handling": "hard",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 330
             ],
@@ -42272,8 +42272,8 @@
             "category": "Boulder",
             "sourceId": "GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3359618207790847027-992461607",
             "ownerId": "",
-            "handling": "surface",
-            "kind": 2,
+            "handling": "soft",
+            "kind": 5,
             "starts": [
                 12072
             ],
@@ -48802,9 +48802,9 @@
         },
         {
             "category": "Boulder",
-            "soft": 0,
-            "hard": 125,
-            "surface": 22,
+            "soft": 86,
+            "hard": 61,
+            "surface": 0,
             "composite": 0
         },
         {
@@ -48872,9 +48872,9 @@
         },
         {
             "category": "Pebbles",
-            "soft": 0,
+            "soft": 241,
             "hard": 0,
-            "surface": 241,
+            "surface": 0,
             "composite": 0
         },
         {
@@ -48948,13 +48948,15 @@
             "composite": 0
         }
     ],
-    "mutableChunks": 208,
-    "softProbes": 688,
-    "hardColliders": 209,
+    "mutableChunks": 217,
+    "softProbes": 1015,
+    "hardColliders": 145,
     "reusedHardColliders": 3,
     "routeGuards": 14,
     "clearanceRepairVersion": 0,
     "carClearanceRoutes": 14,
     "carClearanceSamples": 736,
+    "smallStoneVersion": 1,
+    "smallStoneItems": 327,
     "relocations": []
 }

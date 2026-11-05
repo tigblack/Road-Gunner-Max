@@ -352,7 +352,7 @@ namespace RoadGunner
             // A low contact sound, not the cache/kill/explosion feedback paths that announce rewards.
             var effects = session ? session.effects : null;
             if (!effects || !effects.isActiveAndEnabled || !effects.source || !effects.impact) return;
-            float volume = kind == DecorationCrushKind.Metal ? .08f : kind == DecorationCrushKind.Wood ? .045f : .025f;
+            float volume = kind == DecorationCrushKind.Metal ? .08f : kind == DecorationCrushKind.Stone ? .055f : kind == DecorationCrushKind.Wood ? .045f : .025f;
             effects.source.PlayOneShot(effects.impact, volume);
         }
 
@@ -402,6 +402,7 @@ namespace RoadGunner
                 case DecorationCrushKind.Wood: return new Color(.67f, .43f, .25f);
                 case DecorationCrushKind.Metal: return new Color(.62f, .48f, .37f);
                 case DecorationCrushKind.Rubber: return new Color(.19f, .22f, .22f);
+                case DecorationCrushKind.Stone: return new Color(.68f, .61f, .57f);
                 default: return new Color(.87f, .81f, .65f);
             }
         }

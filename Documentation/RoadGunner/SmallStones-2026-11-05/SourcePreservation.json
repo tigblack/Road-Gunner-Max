@@ -1,0 +1,24 @@
+{
+  "previousPublishedSource": "1e1647cc112a816758889f31c78e4a07a637cf6a",
+  "previousFrozenProductionFiles": 2119,
+  "unchangedOriginalProductionFiles": 2113,
+  "changedFiles": [
+    "Assets/RoadGunner/Editor/DecorationCollisionInstaller.cs",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+    "Assets/RoadGunner/Scenes/Level01_Greenwood_Data/Navigation.asset",
+    "Assets/RoadGunner/Scripts/ArenaDecorationCrush.cs",
+    "Assets/RoadGunner/Scripts/DecorationCrushChunk.cs",
+    "Assets/RoadGunner/Scripts/Diagnostics/SceneryCrushPlayChecks.cs"
+  ],
+  "originalSourceMeshesMaterialsAndPosesUnchanged": true,
+  "protectedOriginalSolidsUnchanged": 136,
+  "catalogRecordsChangedOnlyHandlingAndKind": 327,
+  "policy": {
+    "pebbleClusters": 241,
+    "smallBoulders": 86,
+    "removedOwnedHardProxies": 64,
+    "remainingLargeBoulders": 61,
+    "newStoneKindEnumIndex": 5
+  },
+  "invariants": "Vehicle9.36m/s profile, combat/HP/rewards, original meshes/materials/poses, camera/HUD/map/audio assets unchanged; only small-stone contact semantics, Stone feedback, diagnostic and required navigation data updated."
+}

@@ -69,7 +69,7 @@ namespace RoadGunner
         IEnumerator Guarded()
         {
             yield return null; yield return null;
-            foreach (var section in new Func<IEnumerator>[] { Setup, SourceDrives, NearMissAndRecover, StateGuardsAndRestart, ExactMeshImpact, HardImpacts, FinalContracts })
+            foreach (var section in new Func<IEnumerator>[] { Setup, SourceDrives, StoneDrives, NearMissAndRecover, StateGuardsAndRestart, ExactMeshImpact, HardImpacts, FinalContracts })
             {
                 var stack=new Stack<IEnumerator>(); stack.Push(section()); bool failed=false;
                 while (stack.Count>0 && !failed)
@@ -204,6 +204,117 @@ namespace RoadGunner
                     "Selected index slots="+selected.Count+"; total="+fixtureIndices.Length+"; all neighbours/hard slots unchanged="+outsideUnchanged+
                     "; broken after second pass="+manager.BrokenCount+"; immutable gameplay ledger="+SameLedger(ledger));
             }
+        }
+        sealed class StonePass
+        {
+            public float impactSpeed=-1, inputMagnitude, peakSpeed;
+            public int groundedAtImpact, debris;
+            public bool visibleDebris, crossed;
+        }
+        IEnumerator DriveStone(float rawInput, float timeout, StonePass result, bool capture=false)
+        {
+            Command(Vector3.forward*rawInput);float began=Time.fixedTime,brokeAt=-1;bool before=false,after=false;
+            while(car.Body.position.z<fixtureBounds.max.z+3 && Time.fixedTime-began<timeout)
+            {
+                yield return new WaitForFixedUpdate();
+                result.peakSpeed=Mathf.Max(result.peakSpeed,car.HorizontalSpeed);
+                result.debris=Mathf.Max(result.debris,manager.ActiveDebrisCount);
+                peakDebris=Mathf.Max(peakDebris,manager.ActiveDebrisCount);
+                observedDebris|=manager.ActiveDebrisCount>0 && manager.DebrisSpawned>0;
+                if(capture && !before && !fixtureChunk.IsBroken(0) && car.Body.position.z>=fixtureBounds.min.z-5)
+                {Capture("stone-before-full-input");before=true;}
+                if(fixtureChunk.IsBroken(0) && brokeAt<0)
+                {
+                    brokeAt=Time.fixedTime;
+                    // Read the actual body point speed on the first observed break; never feed a speed to TryCrush.
+                    result.impactSpeed=car.Body.GetPointVelocity(fixtureBounds.ClosestPoint(car.Body.worldCenterOfMass)).magnitude;
+                    result.inputMagnitude=s.input.Magnitude;result.groundedAtImpact=car.GroundedWheels;
+                    result.visibleDebris=manager.ActiveDebrisCount>0 && manager.GetComponentsInChildren<MeshRenderer>(true)
+                        .Any(r=>r.enabled && r.gameObject.activeInHierarchy && r.sharedMaterial && r.name.StartsWith("Fragment ",StringComparison.Ordinal));
+                }
+                if(capture && !after && brokeAt>=0 && Time.fixedTime-brokeAt>=.12f)
+                {Capture("stone-full-input-debris");after=true;}
+            }
+            result.crossed=car.Body.position.z>=fixtureBounds.max.z+3;
+            Command(Vector3.zero,true);
+        }
+        bool OnlySelectedStoneRemoved()
+        {
+            var mesh=fixtureChunk.RuntimeMesh;
+            if(!mesh)return false;
+            var after=Flatten(mesh);var selected=new HashSet<int>();
+            for(int r=0;r<selectedStarts.Length;r++)for(int i=selectedStarts[r];i<selectedStarts[r]+selectedCounts[r];i++)selected.Add(i);
+            if(after.Length!=fixtureIndices.Length || selected.Count==0 || selected.Count==after.Length)return false;
+            bool removed=true;
+            for(int r=0;r<selectedStarts.Length;r++)for(int i=selectedStarts[r];i<selectedStarts[r]+selectedCounts[r];i+=3)
+                removed&=after[i]==after[i+1] && after[i]==after[i+2];
+            return removed && selected.Any(i=>after[i]!=fixtureIndices[i]) &&
+                Enumerable.Range(0,after.Length).Where(i=>!selected.Contains(i)).All(i=>after[i]==fixtureIndices[i]) &&
+                mesh.vertices.SequenceEqual(originalVertices[fixtureChunk.OriginalMesh]) &&
+                Flatten(fixtureChunk.OriginalMesh).SequenceEqual(originalIndices[fixtureChunk.OriginalMesh]);
+        }
+        IEnumerator StoneDrives()
+        {
+            var catalog=JsonUtility.FromJson<AuthoredCatalog>(File.ReadAllText("Documentation/RoadGunner/SceneryCrush-2026-11-03/Authoring.json"));
+            var records=catalog.items.ToDictionary(i=>i.id,StringComparer.Ordinal);
+            var stones=Samples().Where(x=>x.item.kind==DecorationCrushKind.Stone).ToArray();
+            var pebbles=stones.Where(x=>records.TryGetValue(x.item.id,out var record) && record.category=="Pebbles" && record.handling=="soft")
+                .OrderByDescending(x=>x.chunk.items.Count(i=>i!=null && i.kind==DecorationCrushKind.Stone)).ThenBy(x=>x.item.id,StringComparer.Ordinal).FirstOrDefault();
+            var boulder=stones.Where(x=>records.TryGetValue(x.item.id,out var record) && record.category=="Boulder" && record.handling=="soft")
+                .OrderBy(x=>x.item.id,StringComparer.Ordinal).FirstOrDefault();
+            bool small=false;
+            if(boulder!=null)
+            {
+                var size=boulder.chunk.GetWorldBounds(Array.IndexOf(boulder.chunk.items,boulder.item)).size;
+                small=size.y<=.601f && Mathf.Max(size.x,size.z)<=1.001f;
+            }
+            bool neighbours=pebbles!=null && pebbles.chunk.items.Any(i=>i!=null && i!=pebbles.item && i.kind==DecorationCrushKind.Stone);
+            Check("saved Stone coverage includes small Boulder and Pebbles with independent neighbours", stones.Length>0 && small && neighbours,
+                "Authored Stone items="+stones.Length+"; low-input Boulder="+(boulder!=null?boulder.item.id:"missing")+
+                "; small dimensions="+small+"; full-input Pebbles="+(pebbles!=null?pebbles.item.id:"missing")+"; same-source Stone neighbours="+neighbours);
+            if(!small || !neighbours)yield break;
+
+            FreshRun();MakeFixture(boulder);yield return PlaceCar(0,fixtureBounds.min.z-course.z-5);
+            var lowLedger=Snapshot();var low=new StonePass();yield return DriveStone(.2f,45,low);
+            Check("small Boulder breaks under real low input without touching neighbouring geometry or gameplay", low.crossed &&
+                low.impactSpeed>=manager.minimumImpactSpeed && low.impactSpeed<=2 && low.inputMagnitude>0 && low.inputMagnitude<.2f && low.groundedAtImpact>=3 &&
+                fixtureChunk.IsBroken(0) && manager.BrokenCount==1 && OnlySelectedStoneRemoved() && low.visibleDebris && low.debris>=6 &&
+                low.debris<=manager.DebrisCapacity && SameLedger(lowLedger) && s.health.DamageEnabled,
+                "Source="+fixtureId+"; raw input=.2; mapped input="+low.inputMagnitude+"; actual first-break point speed="+low.impactSpeed+
+                "m/s; crossed="+low.crossed+"; grounded="+low.groundedAtImpact+"; rendered fragments/peak="+low.visibleDebris+"/"+low.debris+
+                "; selected-only indices="+OnlySelectedStoneRemoved()+"; unchanged HP/rewards="+SameLedger(lowLedger));
+
+            FreshRun();MakeFixture(pebbles);yield return PlaceCar(0,fixtureBounds.min.z-course.z-75);
+            var cruiseLedger=Snapshot();var cruise=new StonePass();yield return DriveStone(1,25,cruise,true);
+            Check("saved Pebbles break at actual full-input cruise while all other source geometry survives", cruise.crossed &&
+                cruise.impactSpeed>=car.tuning.maxSpeed*.8f && cruise.inputMagnitude>.99f && cruise.groundedAtImpact>=3 &&
+                fixtureChunk.IsBroken(0) && manager.BrokenCount==1 && OnlySelectedStoneRemoved() && cruise.visibleDebris && cruise.debris>=6 &&
+                cruise.debris<=manager.DebrisCapacity && SameLedger(cruiseLedger) && s.health.DamageEnabled,
+                "Source="+fixtureId+"; raw input=1; actual first-break point speed="+cruise.impactSpeed+"m/s; configured max="+car.tuning.maxSpeed+
+                "; peak="+cruise.peakSpeed+"; crossed="+cruise.crossed+"; rendered fragments/peak="+cruise.visibleDebris+"/"+cruise.debris+
+                "; selected-only indices="+OnlySelectedStoneRemoved()+"; unchanged HP/rewards="+SameLedger(cruiseLedger));
+
+            bool wasBroken=fixtureChunk.IsBroken(0);int serial=s.RunSerial;FreshRun();yield return null;
+            bool reset=wasBroken && s.RunSerial==serial+1 && !fixtureChunk.IsBroken(0) && manager.BrokenCount==0 && manager.ActiveDebrisCount==0 &&
+                fixtureChunk.items[0].probe.enabled && Flatten(fixtureChunk.source.sharedMesh).SequenceEqual(fixtureIndices);
+            var restartLedger=Snapshot();yield return PlaceCar(0,fixtureBounds.min.z-course.z-10);
+            var again=new StonePass();yield return DriveStone(1,12,again);
+            Check("Restart restores the same Stone indices and probe for another real vehicle pass", reset && again.crossed &&
+                fixtureChunk.IsBroken(0) && manager.BrokenCount==1 && OnlySelectedStoneRemoved() && again.visibleDebris && SameLedger(restartLedger),
+                "Was broken="+wasBroken+"; restored before redrive="+reset+"; RunSerial="+serial+" -> "+s.RunSerial+
+                "; new actual first-break point speed="+again.impactSpeed+"m/s; broken="+manager.BrokenCount+"; unchanged HP/rewards="+SameLedger(restartLedger));
+
+            FreshRun();MakeFixture(pebbles);
+            float half=car.GetComponents<BoxCollider>().Max(c=>c.bounds.extents.x);
+            var tracks=car.GetComponentInChildren<PlayerTrackVisuals>(true);float halfTrack=tracks?tracks.trackWidth*.5f+.06f:0;
+            foreach(var wheel in car.wheels)half=Mathf.Max(half,Mathf.Abs(car.transform.InverseTransformPoint(wheel.transform.TransformPoint(wheel.center)).x)+Mathf.Max(wheel.radius*.32f,halfTrack));
+            yield return PlaceCar(fixtureBounds.extents.x+half+1,fixtureBounds.min.z-course.z-10);
+            var missLedger=Snapshot();var miss=new StonePass();yield return DriveStone(1,12,miss);
+            Check("real near miss outside the track footprint leaves Stone geometry and debris untouched", miss.crossed && miss.peakSpeed>2 &&
+                !fixtureChunk.IsBroken(0) && manager.BrokenCount==0 && manager.ActiveDebrisCount==0 && manager.DebrisSpawned==0 &&
+                Flatten(fixtureChunk.source.sharedMesh).SequenceEqual(fixtureIndices) && SameLedger(missLedger),
+                "Source="+fixtureId+"; track/chassis half-width="+half+"m; extra clearance=1m; actual peak="+miss.peakSpeed+
+                "m/s; crossed="+miss.crossed+"; broken="+manager.BrokenCount+"; debris spawned="+manager.DebrisSpawned);
         }
         IEnumerator NearMissAndRecover()
         {

@@ -1,0 +1,35 @@
+Saved-scene vehicle scenery collision authoring
+Verified catalog schema=1; repeat=True; scene=Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Arcade original primary items=1067; chunks=29; unchanged vertices=235332
+Concept mixed instances=79; recovered members=354
+Mutable original sources=217; soft query probes=1015; compact exact hard colliders=145; reused original hard colliders=3
+Small-stone policy version=1; crushable stones/pebble clusters=327; Boulder limits: height <=0.6m and horizontal extent <=1m; larger rocks remain hard.
+Replaced standalone soft solids=8; existing protected solids=136; complete route guards=14
+Exact unchanged car-box route guard: routes=14; samples=736; clearance repair version=0
+Barrel: soft=76, hard=0, surface=0, composite=0
+Barrels: soft=0, hard=0, surface=0, composite=38
+Bones: soft=35, hard=0, surface=0, composite=0
+Boulder: soft=86, hard=61, surface=0, composite=0
+Cactus: soft=168, hard=0, surface=0, composite=0
+DeadTree: soft=87, hard=0, surface=0, composite=0
+Drift: soft=0, hard=0, surface=52, composite=0
+Dry scrub: soft=0, hard=0, surface=233, composite=0
+Dune: soft=0, hard=0, surface=61, composite=0
+Fuel drums: soft=24, hard=0, surface=0, composite=0
+Girder: soft=0, hard=21, surface=0, composite=0
+Hull: soft=0, hard=20, surface=0, composite=0
+Metal storage crate: soft=4, hard=0, surface=0, composite=0
+Pebbles: soft=241, hard=0, surface=0, composite=0
+Pipe: soft=34, hard=0, surface=0, composite=0
+Plate: soft=62, hard=0, surface=0, composite=0
+ScrapPile: soft=52, hard=0, surface=0, composite=0
+Spire: soft=0, hard=46, surface=0, composite=0
+Tire and scrap pile: soft=35, hard=0, surface=0, composite=0
+Tire stack: soft=34, hard=0, surface=0, composite=0
+Tuft: soft=0, hard=0, surface=178, composite=0
+Tyre: soft=22, hard=0, surface=0, composite=0
+TyreStack: soft=31, hard=0, surface=0, composite=0
+Wooden supply crate: soft=24, hard=0, surface=0, composite=0
+PASS: original visual geometry/materials/poses unchanged; all item triples/ranges validated. Repeat used the previously replay-verified catalog because collision semantics now differ from the original placement scene.
+Only query probes on RG_SceneryCrush/12 can break; large hard scenery is Default/0. Gameplay targets, upgrades, workshop, crew and actors are excluded.
+Original visual meshes/materials and generation recipes retained; only recorded whole-instance clearance poses changed. One existing-config collider navigation bake; no full visual/world/minimap installer.

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RoadGunner
 {
-    public enum DecorationCrushKind { Vegetation, Wood, Metal, Rubber, Bone }
+    public enum DecorationCrushKind { Vegetation, Wood, Metal, Rubber, Bone, Stone }
 
     /// <summary>Authored soft scenery ranges in a combined mesh. Never a combat or reward target.</summary>
     [DisallowMultipleComponent]

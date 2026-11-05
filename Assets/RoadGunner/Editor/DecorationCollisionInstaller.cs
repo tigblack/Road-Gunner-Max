@@ -64,6 +64,7 @@ namespace RoadGunner.Editor
             public CountRecord[] counts;
             public int mutableChunks, softProbes, hardColliders, reusedHardColliders, routeGuards;
             public int clearanceRepairVersion, carClearanceRoutes, carClearanceSamples;
+            public int smallStoneVersion, smallStoneItems;
             public RelocationRecord[] relocations;
         }
         sealed class Context
@@ -107,6 +108,7 @@ namespace RoadGunner.Editor
             }
             else catalog = BuildVerifiedCatalog(context);
 
+            ApplySmallStonePolicy(context, catalog);
             // Every source and every replayed triangle has been checked before any scene/asset mutation.
             var paths = CapturePathGuards(context);
             ApplyCatalog(context, catalog);
@@ -501,17 +503,43 @@ namespace RoadGunner.Editor
             var record = new ItemRecord { id = id, category = category, sourceId = sourceId, starts = starts, counts = counts, localBounds = bounds, handling = "soft", kind = DecorationCrushKind.Metal };
             switch (category)
             {
-                case "Tuft": case "Dry scrub": case "Pebbles": case "Dune": case "Drift": record.handling = "surface"; break;
+                case "Tuft": case "Dry scrub": case "Dune": case "Drift": record.handling = "surface"; break;
+                case "Pebbles": record.kind = DecorationCrushKind.Stone; break;
                 case "Spire": case "Hull": case "Girder": record.handling = "hard"; break;
                 case "Boulder":
                     Bounds world = TransformBounds(filter.transform.localToWorldMatrix, bounds);
-                    record.handling = world.size.y >= .32f || Mathf.Max(world.size.x, world.size.z) >= 1 ? "hard" : "surface"; break;
+                    bool small = IsSmallBoulder(world);
+                    record.handling = small ? "soft" : "hard";
+                    if (small) record.kind = DecorationCrushKind.Stone;
+                    break;
                 case "Cactus": case "DeadTree": record.kind = DecorationCrushKind.Vegetation; break;
                 case "Wooden supply crate": record.kind = DecorationCrushKind.Wood; break;
                 case "Tyre": case "TyreStack": case "Tire stack": record.kind = DecorationCrushKind.Rubber; break;
                 case "Bones": record.kind = DecorationCrushKind.Bone; break;
             }
             return record;
+        }
+
+        static bool IsSmallBoulder(Bounds world) => world.size.y <= .6f && Mathf.Max(world.size.x, world.size.z) <= 1f;
+
+        static void ApplySmallStonePolicy(Context context, Catalog catalog)
+        {
+            // Migrate the verified triangle ranges, never regenerate the saved dressing or move its art.
+            // The explicit category/size whitelist cannot turn cliffs, buildings or large boulders into props.
+            var stones = catalog.items.Where(item => item.category == "Pebbles" ||
+                item.category == "Boulder" && IsSmallBoulder(TransformBounds(context.filters[item.sourceId].transform.localToWorldMatrix, item.localBounds))).ToArray();
+            if (stones.Length == 0) throw new InvalidOperationException("No verified small stone sources in the saved arena.");
+            foreach (var item in stones)
+            {
+                var owner = string.IsNullOrEmpty(item.ownerId) ? null : Resolve<GameObject>(item.ownerId);
+                if (owner && owner.GetComponentsInChildren<Collider>(true).Any(c => c.enabled && !c.isTrigger))
+                    throw new InvalidOperationException("Small stone migration would replace an original protected collider: " + item.id);
+                item.handling = "soft"; item.kind = DecorationCrushKind.Stone;
+            }
+            catalog.smallStoneVersion = 1; catalog.smallStoneItems = stones.Length;
+            catalog.counts = catalog.items.GroupBy(i => i.category).OrderBy(g => g.Key, StringComparer.Ordinal).Select(g => new CountRecord {
+                category = g.Key, soft = g.Count(i => i.handling == "soft"), hard = g.Count(i => i.handling == "hard"),
+                surface = g.Count(i => i.handling == "surface"), composite = g.Count(i => i.handling == "composite") }).ToArray();
         }
 
         static void BindSources(Context context, Catalog catalog)
@@ -799,6 +827,7 @@ namespace RoadGunner.Editor
             text.AppendLine("Arcade original primary items=" + c.arcadePrimaryItems + "; chunks=" + c.arcadeChunks + "; unchanged vertices=" + c.arcadeVertices);
             text.AppendLine("Concept mixed instances=" + c.shoulderInstances + "; recovered members=" + c.shoulderMembers);
             text.AppendLine("Mutable original sources=" + c.mutableChunks + "; soft query probes=" + c.softProbes + "; compact exact hard colliders=" + c.hardColliders + "; reused original hard colliders=" + c.reusedHardColliders);
+            text.AppendLine("Small-stone policy version=" + c.smallStoneVersion + "; crushable stones/pebble clusters=" + c.smallStoneItems + "; Boulder limits: height <=0.6m and horizontal extent <=1m; larger rocks remain hard.");
             text.AppendLine("Replaced standalone soft solids=" + (c.replacedSoftColliders?.Length ?? 0) + "; existing protected solids=" + (c.protectedSolids?.Length ?? 0) + "; complete route guards=" + c.routeGuards);
             text.AppendLine("Exact unchanged car-box route guard: routes=" + c.carClearanceRoutes + "; samples=" + c.carClearanceSamples + "; clearance repair version=" + c.clearanceRepairVersion);
             if (c.relocations != null) foreach (var move in c.relocations)

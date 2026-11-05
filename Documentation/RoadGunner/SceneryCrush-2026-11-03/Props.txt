@@ -1,7 +1,7 @@
 Scenery crush: saved scene source geometry; Unity 6000.6.4f1
 Disclosure: actual player is positioned on a temporary flat course. Props use copied original chunks with one selected item enabled, not a natural arena playthrough. Driving uses normal input and physics; no moving-case body velocity/rotation assignments.
 Pause/terminal rejection calls TryCrush explicitly; external collisions use copied actual hard BoxCollider dimensions. Captures use the actual camera and HUD.
-PASS production manager covers every existing scenery layer: Required prefixes=arcade/, shoulder/, standalone/concept-roadside/, standalone/legacy/; authored chunks=208; registered=688; authored items=688
+PASS production manager covers every existing scenery layer: Required prefixes=arcade/, shoulder/, standalone/concept-roadside/, standalone/legacy/; authored chunks=217; registered=1015; authored items=1015
 PASS decoration excludes reward systems and actors: No CombatTarget/reward/station/workshop/player ancestry=True; actual caches=8; actual stations=2 (one Attack, one Health in the unchanged saved scene)
 PASS arcade/ real drive crushes once and passes its source geometry: Actual source=arcade/1,1/4; broken=1; carZ=903.5356; targetEnd=903.4683; no reward/HP changes=True
 PASS arcade/ only selected geometry changes and a second pass cannot break or pay twice: Selected index slots=453; total=18597; all neighbours/hard slots unchanged=True; broken after second pass=1; immutable gameplay ledger=True
@@ -15,22 +15,29 @@ PASS standalone/legacy/ real drive crushes once and passes its source geometry: 
 PASS standalone/legacy/ only selected geometry changes and a second pass cannot break or pay twice: Selected index slots=2916; total=2916; all neighbours/hard slots unchanged=True; broken after second pass=1; immutable gameplay ledger=True
 PASS material/rubber real drive crushes once and passes its source geometry: Actual source=arcade/-2,-1/31; broken=1; carZ=903.4755; targetEnd=903.4138; no reward/HP changes=True
 PASS material/rubber only selected geometry changes and a second pass cannot break or pay twice: Selected index slots=252; total=9357; all neighbours/hard slots unchanged=True; broken after second pass=1; immutable gameplay ledger=True
+PASS saved Stone coverage includes small Boulder and Pebbles with independent neighbours: Authored Stone items=327; low-input Boulder=shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3074309845473792686-1266830702/1-Boulder; small dimensions=True; full-input Pebbles=arcade/-2,-2/10; same-source Stone neighbours=True
+PASS small Boulder breaks under real low input without touching neighbouring geometry or gameplay: Source=shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-3074309845473792686-1266830702/1-Boulder; raw input=.2; mapped input=0.04991822; actual first-break point speed=0.4675711m/s; crossed=True; grounded=4; rendered fragments/peak=True/8; selected-only indices=True; unchanged HP/rewards=True
+CAPTURE outputs/scenery-crush-2026-11-03/stone-before-full-input.png; actual camera/HUD on disclosed source-copy course; prop=arcade/-2,-2/10
+CAPTURE outputs/scenery-crush-2026-11-03/stone-full-input-debris.png; actual camera/HUD on disclosed source-copy course; prop=arcade/-2,-2/10
+PASS saved Pebbles break at actual full-input cruise while all other source geometry survives: Source=arcade/-2,-2/10; raw input=1; actual first-break point speed=8.44691m/s; configured max=9.36; peak=8.450063; crossed=True; rendered fragments/peak=True/8; selected-only indices=True; unchanged HP/rewards=True
+PASS Restart restores the same Stone indices and probe for another real vehicle pass: Was broken=True; restored before redrive=True; RunSerial=4 -> 5; new actual first-break point speed=5.060122m/s; broken=1; unchanged HP/rewards=True
+PASS real near miss outside the track footprint leaves Stone geometry and debris untouched: Source=arcade/-2,-2/10; track/chassis half-width=2.566795m; extra clearance=1m; actual peak=7.094195m/s; crossed=True; broken=0; debris spawned=0
 PASS near miss outside the actual chassis footprint preserves scenery: Lateral clearance exceeds prop half-width plus chassis half-width by1m; car passed alongside
 PASS real Recover cannot sweep a destruction bridge across scenery: Recovered to=(900.00, 800.62, 910.94); expected=(900.00, 800.63, 910.94); broken=0
 PASS paused run rejects an explicit valid-body crush attempt: Direct API guard test; actual point speed=5.484308; normal paused physics cannot advance
 PASS completed run rejects scenery mutation: Completion invoked as isolated terminal fixture, not as a natural win
 PASS defeated run rejects scenery mutation: Lethal HP change is explicit terminal setup
-PASS real Restart restores broken source indices and probe: RunSerial=4 -> 5; broken=0; active debris=0
+PASS real Restart restores broken source indices and probe: RunSerial=8 -> 9; broken=0; active debris=0
 CAPTURE outputs/scenery-crush-2026-11-03/concept-shoulder-after-restart.png; actual camera/HUD on disclosed source-copy course; prop=shoulder/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-6621907754636159819-113270629/0-Wooden supply crate
 PASS second Restart neither duplicates props nor retains debris: Registered=1 -> 1; debris=0
 PASS new authored Boulder mesh blocks an actual physical drive: Catalog source=standalone/concept-roadside/GlobalObjectId_V1-2-c699e8c72621f4262ab2e9410c7a77d8-6101300767503800227-1092554088/Boulder; exact shared mesh=Hard 339e6f2062c55655f229; vertices=330; real face=True; faceZ=898.8116; contacts=1; impulse=7172.057; peak=5.145527; furthestZ=895.6207; no asset/HP/reward mutation=True
-PASS Boulder remains a hard physical obstacle at real driving speed: Actual source=Level Authoring/Authored Content/Arena exploration/Region landmarks/ash-ridge/ash-ridge shoulder · Boulder; realFace=True; faceZ=899.11; approachZ=889.11; contact=1; impulse=7110.69; peak=5.031644; furthestZ=895.9791; solidCentreZ=900
-PASS Cliff remains a hard physical obstacle at real driving speed: Actual source=Level Authoring/Authored Content/Gameplay Obstacles/01 · Rock boundaries and islands/Cliff/Collision; realFace=True; faceZ=890.5067; approachZ=880.5067; contact=1; impulse=6670.53; peak=4.97445; furthestZ=887.2078; solidCentreZ=900
+PASS Boulder remains a hard physical obstacle at real driving speed: Actual source=Level Authoring/Authored Content/Arena exploration/Region landmarks/dust-flats/dust-flats shoulder · Boulder; realFace=True; faceZ=899.11; approachZ=889.11; contact=1; impulse=7110.69; peak=5.031644; furthestZ=895.9791; solidCentreZ=900
+PASS Cliff remains a hard physical obstacle at real driving speed: Actual source=Level Authoring/Authored Content/Gameplay Obstacles/01 · Rock boundaries and islands/Cliff/Collision; realFace=True; faceZ=888.4438; approachZ=878.4438; contact=1; impulse=6103.409; peak=4.88858; furthestZ=884.9365; solidCentreZ=900
 PASS bunker remains a hard physical obstacle at real driving speed: Actual source=Level Authoring/Authored Content/Gameplay Obstacles/G · Northeast camp and sealed entrance/Sealed industrial bunker/Smooth driving collision; realFace=True; faceZ=897; approachZ=887; contact=1; impulse=7113.111; peak=5.031644; furthestZ=893.8691; solidCentreZ=900
-PASS original shared source assets retain every vertex and index: Original shared meshes checked=42; runtime copies cannot mutate other source instances
+PASS original shared source assets retain every vertex and index: Original shared meshes checked=44; runtime copies cannot mutate other source instances
 PASS scenery probes cannot intercept player or Buggy LOS: Layer12 excluded from actual saved player/Buggy masks; reward-cache/upgrade contracts are exercised separately by the unchanged gameplay/exploration suites
 PASS debris pool remains bounded and cosmetic: Observed debris=True; peak/capacity=8/96; final active=0; spawned=0; gameplay loot remains empty
-RESULT checks=26; failures=0; runtime fixtures removed; saved scene/assets not written.
+RESULT checks=31; failures=0; runtime fixtures removed; saved scene/assets not written.
 
 PASS runtime Console: errors/exceptions/asserts=0
 
