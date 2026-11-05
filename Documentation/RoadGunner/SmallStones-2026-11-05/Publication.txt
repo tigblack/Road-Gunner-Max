@@ -1,0 +1,49 @@
+ROAD GUNNER — PUBLISHED CRUSHABLE SMALL STONES
+5 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=c65fd56
+Repository: https://github.com/tigblack/Road-Gunner-Max
+
+Source/build commit: 0c02fbbe0e34acc714c2701c739ab0afa911435a
+Pages commit: c65fd564a8fedddfa6a2a4837ce3609c8a01d798
+Previous source: 1e1647cc112a816758889f31c78e4a07a637cf6a
+Previous Pages: 51d237e8e59138678e9004b782f5823d24e831b5
+Source was pushed to main and feature/small-stones-20261105 with the exact WebGL
+payload pushed to gh-pages in one normal atomic Git push, without force.
+
+Small stones now crumble with fragments, dust and a quiet impact. The verified
+catalog contains 241 pebble clusters and 86 small boulders as Stone scenery.
+Large boulders, cliffs and buildings retain hard collisions. All 136 original
+protected colliders and all original source geometry/materials/poses were preserved.
+The speed limit remains 9.36m/s; combat, rewards and vehicle tuning are unchanged.
+
+Fresh native acceptance: Props31 + Gameplay204 + Exploration88 =323 PASS, zero
+failures and runtime Console errors. Actual Stone break speeds were 0.467571m/s
+with low input and 8.446910m/s with full input. Restart/repass, near miss, neighbouring
+geometry, rendered debris, hard impacts and reward/HP contracts passed.
+
+WebGL packaging succeeded. Seven static artifacts total 26,771,979 bytes.
+Build UTC: 2026-11-05T12:58:00.7642220Z.
+Frozen 2,119 production inputs and their exact file set stayed unchanged through
+packaging after restoring five automatic Unity metadata rewrites to prebuild bytes.
+
+GitHub Pages: built, error.message=null for the exact Pages commit.
+Pages updated UTC: 2026-11-05T13:00:45Z.
+Pages duration: 52877 milliseconds.
+Workflow completed/success: https://github.com/tigblack/Road-Gunner-Max/actions/runs/42031845251
+GitHub-pages deployment 7574244648: success at the same SHA.
+
+All six ordinary HTTPS payload URLs returned200 with verified TLS, exact bytes and
+SHA-256 equality with the local build on the first attempt. The empty .nojekyll
+seventh artifact was checked as a blob at the exact Pages commit.
+
+LiveManifest.json records exact deployment identity and ordinary HTTPS hashes;
+Browser.txt records the public Chrome smoke and its limits. The two stone PNGs
+are controlled native fixture captures. Follow-up commits record release evidence
+only and do not change frozen production inputs or published WebGL artifacts.
+
+The public Chrome player loaded Arena1 and drove with the expected model/HUD,
+track imprints and dust. A post-input frame showed26km/h. Browser focus changed
+outside the test window before further controls checks; Browser.txt limits its
+claim to startup/visual/driving smoke. Stone semantics are verified by the native
+real-driving suite and exact public data/WASM hashes.

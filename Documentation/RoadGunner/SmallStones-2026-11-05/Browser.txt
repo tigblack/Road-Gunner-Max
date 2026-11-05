@@ -1,0 +1,28 @@
+PUBLIC CHROME STARTUP AND DRIVING SMOKE — SMALL STONES
+5 November 2026 (Asia/Yerevan)
+
+URL: https://tigblack.github.io/Road-Gunner-Max/?build=c65fd56
+Native Chrome on the current Mac, a new dedicated window after the exact Pages
+commit reported built. Existing user windows/tabs were preserved. No browser
+script injection, developer-console probe or editor gameplay was used.
+
+Observed through the actual public page:
+- PLAY appeared and loaded the Unity player and Arena1 successfully.
+- The tracked Argon player and crew, scenery, white range ring, circular minimap
+  and portrait HUD rendered. No startup error overlay, pink materials or missing
+  player geometry was observed. HP100/100, ATK1/HP1 and zero starting score/kills
+  appeared correctly.
+- Holding W for4seconds moved the car along the road. Camera follow, track imprints
+  and wheel dust were visible; the observed post-input HUD showed26km/h.
+- Chrome exposed an audio-playing indicator. This is not an isolated listening test.
+
+Browser focus then changed outside the test window. Further keyboard actions
+stopped; no new public Space/Pause result or paused-window state is claimed.
+The controlled native31-check scenery suite separately verifies actual Stone
+crushing, rendered fragments, geometry preservation, Restart and hard obstacles.
+
+Scope: public startup, visual and driving smoke only. No browser-specific Stone
+crush capture, timed stop/FPS benchmark, full browser playthrough, mobile emulation
+or physical-phone result is claimed. The two stone PNGs in this folder are native
+flat-course fixture captures. Public browser observations remain in the tool
+transcript; no separate public-browser PNG artifact was saved.

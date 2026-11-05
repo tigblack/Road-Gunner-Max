@@ -1,0 +1,410 @@
+{
+  "checkedAtUtc": "2026-11-05T13:01:12.124330+00:00",
+  "siteUrl": "https://tigblack.github.io/Road-Gunner-Max/",
+  "sourceCommit": "0c02fbbe0e34acc714c2701c739ab0afa911435a",
+  "pagesCommit": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+  "expectedManifest": "Documentation/RoadGunner/SmallStones-2026-11-05/WebBuild.json",
+  "expectedManifestSha256": "37e1f079cf49687fb7f690623a85942d1171c63f71865b11d4feded6c050ab26",
+  "pages": {
+    "commit": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+    "status": "built",
+    "error": null,
+    "rawError": {
+      "message": null
+    },
+    "createdAtUtc": "2026-11-05T12:59:53Z",
+    "updatedAtUtc": "2026-11-05T13:00:45Z",
+    "durationMilliseconds": 52877,
+    "apiUrl": "https://api.github.com/repos/tigblack/Road-Gunner-Max/pages/builds/1343526659",
+    "endpoint": "repos/tigblack/Road-Gunner-Max/pages/builds/latest",
+    "startedAtUtc": "2026-11-05T13:01:01.696158+00:00",
+    "finishedAtUtc": "2026-11-05T13:01:02.365052+00:00",
+    "returnCode": 0,
+    "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/pages.json"
+  },
+  "action": {
+    "id": 42031845251,
+    "headSha": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42031845251",
+    "createdAtUtc": "2026-11-05T12:59:54Z",
+    "updatedAtUtc": "2026-11-05T13:00:57Z",
+    "endpoint": "repos/tigblack/Road-Gunner-Max/actions/runs?head_sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+    "startedAtUtc": "2026-11-05T13:01:01.697115+00:00",
+    "finishedAtUtc": "2026-11-05T13:01:02.483564+00:00",
+    "returnCode": 0,
+    "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/actions.json"
+  },
+  "deployment": {
+    "id": 7574244648,
+    "sha": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+    "environment": "github-pages",
+    "state": "success",
+    "environmentUrl": "https://tigblack.github.io/Road-Gunner-Max/",
+    "logUrl": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42031845251/job/127260118334",
+    "createdAtUtc": "2026-11-05T13:00:07Z",
+    "statusCreatedAtUtc": "2026-11-05T13:00:58Z",
+    "statusUpdatedAtUtc": "2026-11-05T13:00:58Z",
+    "rawRequests": [
+      {
+        "endpoint": "repos/tigblack/Road-Gunner-Max/deployments?sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+        "startedAtUtc": "2026-11-05T13:01:01.697370+00:00",
+        "finishedAtUtc": "2026-11-05T13:01:02.358332+00:00",
+        "returnCode": 0,
+        "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/deployments.json"
+      },
+      {
+        "endpoint": "repos/tigblack/Road-Gunner-Max/deployments/7574244648/statuses",
+        "startedAtUtc": "2026-11-05T13:01:02.484446+00:00",
+        "finishedAtUtc": "2026-11-05T13:01:03.040926+00:00",
+        "returnCode": 0,
+        "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/statuses.json"
+      }
+    ]
+  },
+  "deploymentPolls": [
+    {
+      "observedAtUtc": "2026-11-05T13:00:30.536890+00:00",
+      "pagesCommit": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+      "pagesStatus": "building",
+      "pagesError": null,
+      "actionId": 42031845251,
+      "actionStatus": "in_progress",
+      "actionConclusion": null,
+      "deploymentId": 7574244648,
+      "deploymentState": "in_progress",
+      "rawRequests": [
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/pages/builds/latest",
+          "startedAtUtc": "2026-11-05T13:00:28.422572+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:28.983423+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-01/pages.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/actions/runs?head_sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+          "startedAtUtc": "2026-11-05T13:00:28.423560+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:30.016341+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-01/actions.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/deployments?sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+          "startedAtUtc": "2026-11-05T13:00:28.422732+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:29.040178+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-01/deployments.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/deployments/7574244648/statuses",
+          "startedAtUtc": "2026-11-05T13:00:30.019163+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:30.536328+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-01/statuses.json"
+        }
+      ]
+    },
+    {
+      "observedAtUtc": "2026-11-05T13:00:46.692947+00:00",
+      "pagesCommit": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+      "pagesStatus": "built",
+      "pagesError": null,
+      "actionId": 42031845251,
+      "actionStatus": "in_progress",
+      "actionConclusion": null,
+      "deploymentId": 7574244648,
+      "deploymentState": "in_progress",
+      "rawRequests": [
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/pages/builds/latest",
+          "startedAtUtc": "2026-11-05T13:00:45.541995+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:46.045310+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-02/pages.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/actions/runs?head_sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+          "startedAtUtc": "2026-11-05T13:00:45.542034+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:46.143601+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-02/actions.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/deployments?sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+          "startedAtUtc": "2026-11-05T13:00:45.544337+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:46.053666+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-02/deployments.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/deployments/7574244648/statuses",
+          "startedAtUtc": "2026-11-05T13:00:46.144536+00:00",
+          "finishedAtUtc": "2026-11-05T13:00:46.692339+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-02/statuses.json"
+        }
+      ]
+    },
+    {
+      "observedAtUtc": "2026-11-05T13:01:03.041410+00:00",
+      "pagesCommit": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+      "pagesStatus": "built",
+      "pagesError": null,
+      "actionId": 42031845251,
+      "actionStatus": "completed",
+      "actionConclusion": "success",
+      "deploymentId": 7574244648,
+      "deploymentState": "success",
+      "rawRequests": [
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/pages/builds/latest",
+          "startedAtUtc": "2026-11-05T13:01:01.696158+00:00",
+          "finishedAtUtc": "2026-11-05T13:01:02.365052+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/pages.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/actions/runs?head_sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+          "startedAtUtc": "2026-11-05T13:01:01.697115+00:00",
+          "finishedAtUtc": "2026-11-05T13:01:02.483564+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/actions.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/deployments?sha=c65fd564a8fedddfa6a2a4837ce3609c8a01d798&per_page=20",
+          "startedAtUtc": "2026-11-05T13:01:01.697370+00:00",
+          "finishedAtUtc": "2026-11-05T13:01:02.358332+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/deployments.json"
+        },
+        {
+          "endpoint": "repos/tigblack/Road-Gunner-Max/deployments/7574244648/statuses",
+          "startedAtUtc": "2026-11-05T13:01:02.484446+00:00",
+          "finishedAtUtc": "2026-11-05T13:01:03.040926+00:00",
+          "returnCode": 0,
+          "rawResponsePath": "outputs/SmallStones-2026-11-05/public/ci/poll-03/statuses.json"
+        }
+      ]
+    }
+  ],
+  "downloadPolicy": {
+    "binary": "/usr/bin/curl",
+    "ordinaryHttpsUrlsWithoutQuery": true,
+    "tlsCertificateVerification": "default; no -k/--insecure",
+    "transparentDecompression": false,
+    "parallelDownloads": 6,
+    "rawEvidenceDirectory": "outputs/SmallStones-2026-11-05/public"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAtUtc": "2026-11-05T13:01:03.752953+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:12.124099+00:00",
+      "allMatch": true,
+      "rawAttemptPath": "outputs/SmallStones-2026-11-05/public/attempt-01/attempt.json",
+      "files": 6
+    }
+  ],
+  "files": [
+    {
+      "path": "WebBuild/Build/WebBuild.data.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb",
+      "startedAtUtc": "2026-11-05T13:01:03.753719+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:12.113506+00:00",
+      "curlExitCode": 0,
+      "httpStatus": 200,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb",
+      "sslVerifyResult": 0,
+      "downloadSeconds": 8.341199,
+      "bytes": 16637443,
+      "sha256": "ed001f885c42380f3a96ccaf737cef5e6e521ace0804d1b4b98b4b2d9c162e54",
+      "expectedBytes": 16637443,
+      "expectedSha256": "ed001f885c42380f3a96ccaf737cef5e6e521ace0804d1b4b98b4b2d9c162e54",
+      "rawBodyPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.data.unityweb.body",
+      "rawHeadersPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.data.unityweb.headers.txt",
+      "curlMetadataPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.data.unityweb.curl.json",
+      "curlStderrPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.data.unityweb.curl-stderr.txt",
+      "match": true,
+      "responseHeaders": {
+        "content-type": "application/vnd.unity",
+        "content-length": "16637443",
+        "etag": "\"6aec7dfd-fdde03\"",
+        "last-modified": "Thu, 05 Nov 2026 13:00:45 GMT",
+        "age": "0",
+        "cache-control": "max-age=600"
+      }
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.framework.js.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb",
+      "startedAtUtc": "2026-11-05T13:01:03.760219+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:04.131640+00:00",
+      "curlExitCode": 0,
+      "httpStatus": 200,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb",
+      "sslVerifyResult": 0,
+      "downloadSeconds": 0.360364,
+      "bytes": 74863,
+      "sha256": "0728a7acfae79e2cfecf89a42864bcc06bef2cb553d98ab6b483e8a595eb37f7",
+      "expectedBytes": 74863,
+      "expectedSha256": "0728a7acfae79e2cfecf89a42864bcc06bef2cb553d98ab6b483e8a595eb37f7",
+      "rawBodyPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.framework.js.unityweb.body",
+      "rawHeadersPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.framework.js.unityweb.headers.txt",
+      "curlMetadataPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.framework.js.unityweb.curl.json",
+      "curlStderrPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.framework.js.unityweb.curl-stderr.txt",
+      "match": true,
+      "responseHeaders": {
+        "content-type": "application/vnd.unity",
+        "content-length": "74863",
+        "etag": "\"6aec7dfc-1246f\"",
+        "last-modified": "Thu, 05 Nov 2026 13:00:44 GMT",
+        "age": "0",
+        "cache-control": "max-age=600"
+      }
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.loader.js",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js",
+      "startedAtUtc": "2026-11-05T13:01:03.755708+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:04.079644+00:00",
+      "curlExitCode": 0,
+      "httpStatus": 200,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js",
+      "sslVerifyResult": 0,
+      "downloadSeconds": 0.308586,
+      "bytes": 48779,
+      "sha256": "1ce1bdaeed6529b15a63baff8ff5f3140ca0435f2d21024abc0500786546766f",
+      "expectedBytes": 48779,
+      "expectedSha256": "1ce1bdaeed6529b15a63baff8ff5f3140ca0435f2d21024abc0500786546766f",
+      "rawBodyPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.loader.js.body",
+      "rawHeadersPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.loader.js.headers.txt",
+      "curlMetadataPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.loader.js.curl.json",
+      "curlStderrPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.loader.js.curl-stderr.txt",
+      "match": true,
+      "responseHeaders": {
+        "content-type": "application/javascript; charset=utf-8",
+        "content-length": "48779",
+        "etag": "\"6aec7dfd-be8b\"",
+        "last-modified": "Thu, 05 Nov 2026 13:00:45 GMT",
+        "age": "0",
+        "cache-control": "max-age=600"
+      }
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.wasm.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb",
+      "startedAtUtc": "2026-11-05T13:01:03.757833+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:09.364592+00:00",
+      "curlExitCode": 0,
+      "httpStatus": 200,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb",
+      "sslVerifyResult": 0,
+      "downloadSeconds": 5.592252,
+      "bytes": 10005061,
+      "sha256": "438c830c65d1694d713001b6ae0c2c36bd5d5c6640118f37fb09ec5859728ca0",
+      "expectedBytes": 10005061,
+      "expectedSha256": "438c830c65d1694d713001b6ae0c2c36bd5d5c6640118f37fb09ec5859728ca0",
+      "rawBodyPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.wasm.unityweb.body",
+      "rawHeadersPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.wasm.unityweb.headers.txt",
+      "curlMetadataPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.wasm.unityweb.curl.json",
+      "curlStderrPath": "outputs/SmallStones-2026-11-05/public/attempt-01/Build/WebBuild.wasm.unityweb.curl-stderr.txt",
+      "match": true,
+      "responseHeaders": {
+        "content-type": "application/vnd.unity",
+        "content-length": "10005061",
+        "etag": "\"6aec7dfc-98aa45\"",
+        "last-modified": "Thu, 05 Nov 2026 13:00:44 GMT",
+        "age": "0",
+        "cache-control": "max-age=600"
+      }
+    },
+    {
+      "path": "WebBuild/build-info.json",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/build-info.json",
+      "startedAtUtc": "2026-11-05T13:01:03.760275+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:04.026205+00:00",
+      "curlExitCode": 0,
+      "httpStatus": 200,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/build-info.json",
+      "sslVerifyResult": 0,
+      "downloadSeconds": 0.254106,
+      "bytes": 240,
+      "sha256": "69eafca25f5e5d26c41137429d0889122c5afce6b2af597d27e38c466e358d81",
+      "expectedBytes": 240,
+      "expectedSha256": "69eafca25f5e5d26c41137429d0889122c5afce6b2af597d27e38c466e358d81",
+      "rawBodyPath": "outputs/SmallStones-2026-11-05/public/attempt-01/build-info.json.body",
+      "rawHeadersPath": "outputs/SmallStones-2026-11-05/public/attempt-01/build-info.json.headers.txt",
+      "curlMetadataPath": "outputs/SmallStones-2026-11-05/public/attempt-01/build-info.json.curl.json",
+      "curlStderrPath": "outputs/SmallStones-2026-11-05/public/attempt-01/build-info.json.curl-stderr.txt",
+      "match": true,
+      "responseHeaders": {
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "240",
+        "etag": "\"6aec7dfd-f0\"",
+        "last-modified": "Thu, 05 Nov 2026 13:00:45 GMT",
+        "age": "0",
+        "cache-control": "max-age=600"
+      }
+    },
+    {
+      "path": "WebBuild/index.html",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/index.html",
+      "startedAtUtc": "2026-11-05T13:01:03.760069+00:00",
+      "finishedAtUtc": "2026-11-05T13:01:04.055419+00:00",
+      "curlExitCode": 0,
+      "httpStatus": 200,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/index.html",
+      "sslVerifyResult": 0,
+      "downloadSeconds": 0.283832,
+      "bytes": 5593,
+      "sha256": "129f5ff60eeee4ce49bbb967d3ec6838e660cd9907b9215d22b8c253e621f7f7",
+      "expectedBytes": 5593,
+      "expectedSha256": "129f5ff60eeee4ce49bbb967d3ec6838e660cd9907b9215d22b8c253e621f7f7",
+      "rawBodyPath": "outputs/SmallStones-2026-11-05/public/attempt-01/index.html.body",
+      "rawHeadersPath": "outputs/SmallStones-2026-11-05/public/attempt-01/index.html.headers.txt",
+      "curlMetadataPath": "outputs/SmallStones-2026-11-05/public/attempt-01/index.html.curl.json",
+      "curlStderrPath": "outputs/SmallStones-2026-11-05/public/attempt-01/index.html.curl-stderr.txt",
+      "match": true,
+      "responseHeaders": {
+        "content-type": "text/html; charset=utf-8",
+        "content-length": "5593",
+        "etag": "\"6aec7dfc-15d9\"",
+        "last-modified": "Thu, 05 Nov 2026 13:00:44 GMT",
+        "age": "0",
+        "cache-control": "max-age=600"
+      }
+    }
+  ],
+  "nojekyll": {
+    "path": ".nojekyll",
+    "pagesCommit": "c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+    "gitBlobSha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "verifiedGitBlobSha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "expectedBytes": 0,
+    "expectedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "match": true,
+    "endpoint": "repos/tigblack/Road-Gunner-Max/contents/.nojekyll?ref=c65fd564a8fedddfa6a2a4837ce3609c8a01d798",
+    "startedAtUtc": "2026-11-05T13:01:03.041894+00:00",
+    "finishedAtUtc": "2026-11-05T13:01:03.752292+00:00",
+    "returnCode": 0,
+    "rawResponsePath": "outputs/SmallStones-2026-11-05/public/nojekyll-commit.json"
+  },
+  "summary": {
+    "result": "PASS",
+    "publicFiles": 6,
+    "http200": 6,
+    "verifiedTlsResponses": 6,
+    "exactBytesAndSha256Matches": 6,
+    "publicBytes": 26771979,
+    "expectedPayloadFilesIncludingNojekyll": 7,
+    "expectedPayloadBytes": 26771979,
+    "nojekyllEmptyAtExactPagesCommit": true,
+    "deploymentAtExactPagesCommit": "success",
+    "attemptCount": 1,
+    "allMatch": true
+  },
+  "scope": "GitHub deployment identity and ordinary public HTTP byte/SHA256 verification only. Browser/UI smoke is reported separately."
+}
