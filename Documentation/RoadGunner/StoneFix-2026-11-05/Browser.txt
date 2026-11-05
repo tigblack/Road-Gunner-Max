@@ -1,0 +1,16 @@
+PUBLIC BROWSER ATTEMPT — 5 NOVEMBER 2026
+Target: https://tigblack.github.io/Road-Gunner-Max/?build=c0934fe
+
+No managed browser was available. Native Chrome was selected and a separate
+New Tab window was opened. The following native paste did not remain targeted
+to that window: the game URL was appended to an unrelated editable filter.
+The accidental suffix was immediately removed using the current accessible
+field, and a fresh observation confirmed that the game URL was absent. No
+further browser UI actions were sent. No private page content or identifiers
+are recorded in this report.
+
+No public game startup, driving or stone destruction was observed in this
+browser attempt. No public-browser Console, phone or performance test is claimed.
+LiveManifest.json verifies the exact successful deployment and all public
+payload bytes. PlayMode.txt and the four PNGs instead document real physical
+contact with the actual saved-world stone in a controlled native Editor run.

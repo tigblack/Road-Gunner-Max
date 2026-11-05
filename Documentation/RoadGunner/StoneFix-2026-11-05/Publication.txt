@@ -1,0 +1,41 @@
+ROAD GUNNER — SMALL STONE FIX PUBLISHED
+5 November 2026 (Asia/Yerevan)
+
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=c0934fe
+Source and WebGL artifacts: 97642c7de007b350cf96ae7a2504dabc1fadd650
+Pages payload: c0934feb033afbb1e6407bd717aac8da9d88fe6e
+Previous source: 408d971aae1d75a7cf7c4b28147855c8ba471e94
+Previous Pages: 8a38955e0c0e88e36b83a33f9a31786abd88678e
+
+The first atomic push received GitHub's transient fatal error in commit_refs.
+A read-only remote-ref check confirmed that no target reference had changed.
+The same normal atomic push then succeeded: main, fix/small-stone-bounds-20261105
+and gh-pages were updated together. No force push was used. A subsequent
+source documentation-only commit records the observed verification below.
+
+Exact Pages commit: built; error: none.
+Action: https://github.com/tigblack/Road-Gunner-Max/actions/runs/42063957405
+Action status/conclusion: completed/success.
+Deployment 7579036566: success.
+Pages build duration: 21460 milliseconds.
+Public verification finished: 2026-11-05T16:24:28.719646+00:00.
+
+All six ordinary HTTPS URLs, without query parameters, returned HTTP 200 with
+TLS verification and exact bytes/SHA-256 on the first attempt. Total payload:
+26,789,667 bytes. The seventh artifact, .nojekyll, is the exact empty Git blob
+at the Pages commit. Complete deployment/request identities and content hashes
+are in LiveManifest.json.
+
+Five rotated small Boulders incorrectly classified as solid now use actual
+world-space triangle dimensions and receive crush probes. The actual Main01
+stone was driven over with low and full physical input; Restart restored it.
+A real large Boulder retained collision and stopped the car. The controlled
+native saved-world checks passed6/6; scenery31 + gameplay204 + exploration88 +
+respawn15 also passed, for344 fresh checks with zero failures/Console errors.
+All2,133 frozen production input hashes and the complete file set matched after
+packaging. Existing art, vehicle/combat tuning and 30-second enemy timers remain.
+
+Browser.txt records a native window-routing failure and restoration of an
+accidental URL insertion in an unrelated filter. No public-browser startup or
+stone-contact result is claimed. The four native saved-world PNGs are controlled
+Editor evidence; no natural playthrough, phone or FPS benchmark is claimed.
