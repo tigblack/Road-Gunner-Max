@@ -1,0 +1,20 @@
+PUBLIC SAFARI SMOKE CHECK — 6 NOVEMBER 2026
+
+URL: https://tigblack.github.io/Road-Gunner-Max/?build=981233b
+Actual macOS Safari, through native browser UI; public HTTPS, not localhost.
+
+Observed the new launcher text (joystick to walk / cannon auto-fire), clicked PLAY,
+and waited for actual rendered Arena1. The detailed biped is visible without the
+old car body. HUD, minimap, gun-range ring and onboarding render in portrait layout.
+Held W for2seconds through native keyboard input: the player moved, the goal distance
+changed to28m and separate left/right sole footprints appeared. On key release the
+HUD showed00KM/H, without a Space/brake command. Held S for0.8seconds: the walker
+faced and walked downward, then stopped at00KM/H after release. Escape displayed
+PAUSED. The browser audio indicator was active after the user-triggered PLAY.
+No loading/error overlay remained. Screenshots were inspected in the tool session.
+
+This is a browser startup/movement/visual/Pause smoke check, not a complete natural
+playthrough or browser Console capture. Precise first-Fixed velocity/stop timing and
+touch lifecycle are covered by the separately recorded native acceptance suites.
+No physical phone, Safari iOS/Android hardware performance or network latency was
+measured. Use the public URL on a phone and tap PLAY to start its browser session.

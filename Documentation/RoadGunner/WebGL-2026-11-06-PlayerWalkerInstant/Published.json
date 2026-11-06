@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS",
+  "verifiedAtUtc": "2026-11-06T16:40:29.587425+00:00",
+  "writtenAtUtc": "2026-11-06 16:40:57 UTC",
+  "scope": "Read-only exact remote refs, GitHub Pages CI/deployment and public compressed artifact verification. Browser UI/gameplay/performance is a separate root task and is not claimed here.",
+  "repository": "tigblack/Road-Gunner-Max",
+  "sourceCommit": "3344569c590df1c757f50397f04ed016cd033c59",
+  "sourceBranch": "feature/arena1-reference-layout-20261106",
+  "pagesCommit": "981233bdd312347bb8ec72e47e87335b31be0c95",
+  "playUrl": "https://tigblack.github.io/Road-Gunner-Max/?build=981233b",
+  "manifest": {
+    "path": "Documentation/RoadGunner/WebGL-2026-11-06-PlayerWalkerInstant/WebBuild.json",
+    "sha256": "4c30efef40cb3f90fea0415b31665c74a74bcca8f4328a91d78ed4532dc281ae"
+  },
+  "remoteRefs": {
+    "method": "git ls-remote origin for the exact three branch refs (no fetch or mutations)",
+    "refs": {
+      "refs/heads/feature/arena1-reference-layout-20261106": "3344569c590df1c757f50397f04ed016cd033c59",
+      "refs/heads/gh-pages": "981233bdd312347bb8ec72e47e87335b31be0c95",
+      "refs/heads/main": "3344569c590df1c757f50397f04ed016cd033c59"
+    },
+    "allMatch": true
+  },
+  "pagesConfig": {
+    "html_url": "https://tigblack.github.io/Road-Gunner-Max/",
+    "status": "built",
+    "build_type": "legacy",
+    "source": {
+      "branch": "gh-pages",
+      "path": "/"
+    },
+    "https_enforced": true
+  },
+  "pagesBuild": {
+    "apiUrl": "https://api.github.com/repos/tigblack/Road-Gunner-Max/pages/builds/1346804908",
+    "commit": "981233bdd312347bb8ec72e47e87335b31be0c95",
+    "status": "built",
+    "error": {
+      "message": null
+    },
+    "durationMilliseconds": 84765,
+    "createdAtUtc": "2026-11-06T16:37:45Z",
+    "updatedAtUtc": "2026-11-06T16:39:09Z"
+  },
+  "action": {
+    "id": 42254167091,
+    "head_sha": "981233bdd312347bb8ec72e47e87335b31be0c95",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091",
+    "created_at": "2026-11-06T16:37:46Z",
+    "updated_at": "2026-11-06T16:39:21Z",
+    "run_started_at": "2026-11-06T16:37:46Z"
+  },
+  "deployment": {
+    "id": 7605397600,
+    "sha": "981233bdd312347bb8ec72e47e87335b31be0c95",
+    "environment": "github-pages",
+    "statusesApiUrl": "https://api.github.com/repos/tigblack/Road-Gunner-Max/deployments/7605397600/statuses",
+    "statuses": [
+      {
+        "state": "success",
+        "environment_url": "https://tigblack.github.io/Road-Gunner-Max/",
+        "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "created_at": "2026-11-06T16:39:21Z",
+        "updated_at": "2026-11-06T16:39:21Z",
+        "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "description": ""
+      },
+      {
+        "state": "in_progress",
+        "environment_url": "",
+        "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "created_at": "2026-11-06T16:38:06Z",
+        "updated_at": "2026-11-06T16:38:06Z",
+        "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "description": ""
+      },
+      {
+        "state": "queued",
+        "environment_url": "",
+        "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "created_at": "2026-11-06T16:38:04Z",
+        "updated_at": "2026-11-06T16:38:04Z",
+        "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "description": ""
+      },
+      {
+        "state": "queued",
+        "environment_url": "",
+        "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "created_at": "2026-11-06T16:38:04Z",
+        "updated_at": "2026-11-06T16:38:04Z",
+        "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "description": ""
+      },
+      {
+        "state": "waiting",
+        "environment_url": "",
+        "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "created_at": "2026-11-06T16:38:03Z",
+        "updated_at": "2026-11-06T16:38:03Z",
+        "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+        "description": ""
+      }
+    ],
+    "success": true
+  },
+  "ciObservations": [
+    {
+      "checkedAtUtc": "2026-11-06 16:39:06 UTC",
+      "pages": {
+        "commit": "981233bdd312347bb8ec72e47e87335b31be0c95",
+        "created_at": "2026-11-06T16:37:45Z",
+        "duration": 0,
+        "error": {
+          "message": null
+        },
+        "status": "building",
+        "updated_at": "2026-11-06T16:37:45Z",
+        "url": "https://api.github.com/repos/tigblack/Road-Gunner-Max/pages/builds/1346804908"
+      },
+      "action": {
+        "conclusion": null,
+        "created_at": "2026-11-06T16:37:46Z",
+        "head_sha": "981233bdd312347bb8ec72e47e87335b31be0c95",
+        "html_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091",
+        "id": 42254167091,
+        "run_started_at": "2026-11-06T16:37:46Z",
+        "status": "in_progress",
+        "updated_at": "2026-11-06T16:38:05Z"
+      },
+      "deployment": [
+        {
+          "created_at": "2026-11-06T16:38:06Z",
+          "description": "",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "state": "in_progress",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "updated_at": "2026-11-06T16:38:06Z"
+        },
+        {
+          "created_at": "2026-11-06T16:38:04Z",
+          "description": "",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "state": "queued",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "updated_at": "2026-11-06T16:38:04Z"
+        },
+        {
+          "created_at": "2026-11-06T16:38:04Z",
+          "description": "",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "state": "queued",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "updated_at": "2026-11-06T16:38:04Z"
+        },
+        {
+          "created_at": "2026-11-06T16:38:03Z",
+          "description": "",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "state": "waiting",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "updated_at": "2026-11-06T16:38:03Z"
+        }
+      ]
+    },
+    {
+      "checkedAtUtc": "2026-11-06T16:39:52.756764+00:00",
+      "pages": {
+        "url": "https://api.github.com/repos/tigblack/Road-Gunner-Max/pages/builds/1346804908",
+        "status": "built",
+        "error": {
+          "message": null
+        },
+        "commit": "981233bdd312347bb8ec72e47e87335b31be0c95",
+        "duration": 84765,
+        "created_at": "2026-11-06T16:37:45Z",
+        "updated_at": "2026-11-06T16:39:09Z"
+      },
+      "action": {
+        "id": 42254167091,
+        "head_sha": "981233bdd312347bb8ec72e47e87335b31be0c95",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091",
+        "created_at": "2026-11-06T16:37:46Z",
+        "updated_at": "2026-11-06T16:39:21Z",
+        "run_started_at": "2026-11-06T16:37:46Z"
+      },
+      "deployment": [
+        {
+          "state": "success",
+          "environment_url": "https://tigblack.github.io/Road-Gunner-Max/",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "created_at": "2026-11-06T16:39:21Z",
+          "updated_at": "2026-11-06T16:39:21Z",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "description": ""
+        },
+        {
+          "state": "in_progress",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "created_at": "2026-11-06T16:38:06Z",
+          "updated_at": "2026-11-06T16:38:06Z",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "description": ""
+        },
+        {
+          "state": "queued",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "created_at": "2026-11-06T16:38:04Z",
+          "updated_at": "2026-11-06T16:38:04Z",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "description": ""
+        },
+        {
+          "state": "queued",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "created_at": "2026-11-06T16:38:04Z",
+          "updated_at": "2026-11-06T16:38:04Z",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "description": ""
+        },
+        {
+          "state": "waiting",
+          "environment_url": "",
+          "log_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "created_at": "2026-11-06T16:38:03Z",
+          "updated_at": "2026-11-06T16:38:03Z",
+          "target_url": "https://github.com/tigblack/Road-Gunner-Max/actions/runs/42254167091/job/128016935097",
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "transport": {
+    "client": "/usr/bin/curl",
+    "https": true,
+    "tlsVerificationEnabled": true,
+    "insecureOptionUsed": false,
+    "decompressionRequested": false,
+    "queryUsed": false,
+    "attemptsPerFile": 1,
+    "retriesNeeded": 0,
+    "bodyRetention": "Bodies hashed in memory; response headers and exact byte/hash results retained below. No raw response files were written."
+  },
+  "publicFiles": [
+    {
+      "path": "WebBuild/build-info.json",
+      "checkedAtUtc": "2026-11-06T16:39:53.104276+00:00",
+      "attempt": 1,
+      "url": "https://tigblack.github.io/Road-Gunner-Max/build-info.json",
+      "curlExit": 0,
+      "status": 200,
+      "curlDownloadedBytes": 240,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/build-info.json",
+      "tlsVerifyResult": 0,
+      "timeSeconds": 0.27948,
+      "bytes": 240,
+      "sha256": "303707035aa132f5800dc5d93c1b58f2c3182cf4bd2b8907a8442613ac471663",
+      "expectedBytes": 240,
+      "expectedSha256": "303707035aa132f5800dc5d93c1b58f2c3182cf4bd2b8907a8442613ac471663",
+      "headers": [
+        "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: application/json; charset=utf-8\r\nx-origin-cache: HIT\r\nlast-modified: Fri, 06 Nov 2026 16:39:09 GMT\r\naccess-control-allow-origin: *\r\nstrict-transport-security: max-age=31556952\r\netag: \"6aee02ad-f0\"\r\nexpires: Fri, 06 Nov 2026 16:49:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: AD8A:2C1863:C30BC7:C47E80:6AEE02D8\r\nx-github-edge-region: fra\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Fri, 06 Nov 2026 16:39:53 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-sof1510021-SOF\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1793983193.025762,VS0,VE128\r\nvary: Accept-Encoding\r\nx-fastly-request-id: ed55c8c74c701f868a024f0e2acffe52e6f8696d\r\ncontent-length: 240"
+      ],
+      "queryUsed": false,
+      "match": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.data.unityweb",
+      "checkedAtUtc": "2026-11-06T16:39:56.079784+00:00",
+      "attempt": 1,
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb",
+      "curlExit": 0,
+      "status": 200,
+      "curlDownloadedBytes": 11142860,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb",
+      "tlsVerifyResult": 0,
+      "timeSeconds": 3.254522,
+      "bytes": 11142860,
+      "sha256": "3219a84a09d7f4ff696cd032dc132b534cb6d144d58a3a2e04fedd986dd7bcef",
+      "expectedBytes": 11142860,
+      "expectedSha256": "3219a84a09d7f4ff696cd032dc132b534cb6d144d58a3a2e04fedd986dd7bcef",
+      "headers": [
+        "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: application/vnd.unity\r\nx-origin-cache: HIT\r\nlast-modified: Fri, 06 Nov 2026 16:39:09 GMT\r\naccess-control-allow-origin: *\r\nstrict-transport-security: max-age=31556952\r\netag: \"6aee02ad-aa06cc\"\r\nexpires: Fri, 06 Nov 2026 16:49:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: 7248:FE03:C36314:C4D664:6AEE02D8\r\nx-github-edge-region: fra\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Fri, 06 Nov 2026 16:39:53 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-sof1510046-SOF\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1793983193.025568,VS0,VE381\r\nvary: Accept-Encoding\r\nx-fastly-request-id: d299b1cd005b599d753401cba1c3bc696f339262\r\ncontent-length: 11142860"
+      ],
+      "queryUsed": false,
+      "match": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.framework.js.unityweb",
+      "checkedAtUtc": "2026-11-06T16:39:53.134090+00:00",
+      "attempt": 1,
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb",
+      "curlExit": 0,
+      "status": 200,
+      "curlDownloadedBytes": 74863,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb",
+      "tlsVerifyResult": 0,
+      "timeSeconds": 0.311911,
+      "bytes": 74863,
+      "sha256": "3c31029f9d0c476e3896333f5846a0291fc6c33d0ca1857d9b902df0920e5886",
+      "expectedBytes": 74863,
+      "expectedSha256": "3c31029f9d0c476e3896333f5846a0291fc6c33d0ca1857d9b902df0920e5886",
+      "headers": [
+        "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: application/vnd.unity\r\nx-origin-cache: HIT\r\nlast-modified: Fri, 06 Nov 2026 16:39:09 GMT\r\naccess-control-allow-origin: *\r\nstrict-transport-security: max-age=31556952\r\netag: \"6aee02ad-1246f\"\r\nexpires: Fri, 06 Nov 2026 16:49:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: 5B7C:24E846:C892B8:CA05C0:6AEE02D8\r\nx-github-edge-region: fra\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Fri, 06 Nov 2026 16:39:53 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-sof1510032-SOF\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1793983193.006054,VS0,VE133\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 00d2fa980ce26b35ff325c7a2b7ab9bb29a304a8\r\ncontent-length: 74863"
+      ],
+      "queryUsed": false,
+      "match": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.loader.js",
+      "checkedAtUtc": "2026-11-06T16:39:53.157182+00:00",
+      "attempt": 1,
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js",
+      "curlExit": 0,
+      "status": 200,
+      "curlDownloadedBytes": 48779,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js",
+      "tlsVerifyResult": 0,
+      "timeSeconds": 0.334324,
+      "bytes": 48779,
+      "sha256": "1ce1bdaeed6529b15a63baff8ff5f3140ca0435f2d21024abc0500786546766f",
+      "expectedBytes": 48779,
+      "expectedSha256": "1ce1bdaeed6529b15a63baff8ff5f3140ca0435f2d21024abc0500786546766f",
+      "headers": [
+        "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: application/javascript; charset=utf-8\r\nlast-modified: Fri, 06 Nov 2026 16:39:09 GMT\r\naccess-control-allow-origin: *\r\nstrict-transport-security: max-age=31556952\r\netag: \"6aee02ad-be8b\"\r\nexpires: Fri, 06 Nov 2026 16:49:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: 4754:233EA6:C3B64A:C52979:6AEE02D8\r\nx-github-edge-region: fra\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Fri, 06 Nov 2026 16:39:53 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-sof1510020-SOF\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1793983193.033514,VS0,VE137\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 2518fefdcbabb9392eb623d113d80fe341a44510\r\ncontent-length: 48779"
+      ],
+      "queryUsed": false,
+      "match": true
+    },
+    {
+      "path": "WebBuild/Build/WebBuild.wasm.unityweb",
+      "checkedAtUtc": "2026-11-06T16:39:55.482932+00:00",
+      "attempt": 1,
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb",
+      "curlExit": 0,
+      "status": 200,
+      "curlDownloadedBytes": 10029827,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb",
+      "tlsVerifyResult": 0,
+      "timeSeconds": 2.657913,
+      "bytes": 10029827,
+      "sha256": "e068487fdc82ae9a4877a7c437fc4c36b8e571d42560b3a5f518bd5234922647",
+      "expectedBytes": 10029827,
+      "expectedSha256": "e068487fdc82ae9a4877a7c437fc4c36b8e571d42560b3a5f518bd5234922647",
+      "headers": [
+        "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: application/vnd.unity\r\nlast-modified: Fri, 06 Nov 2026 16:39:09 GMT\r\naccess-control-allow-origin: *\r\nstrict-transport-security: max-age=31556952\r\netag: \"6aee02ad-990b03\"\r\nexpires: Fri, 06 Nov 2026 16:49:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: 312E:1547:101E28C5:103D4B1E:6AEE02D8\r\nx-github-edge-region: fra\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Fri, 06 Nov 2026 16:39:53 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-sof1510051-SOF\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1793983193.029643,VS0,VE347\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 0359b9cf359d6da62e7aae5b0e6042f563b86a8d\r\ncontent-length: 10029827"
+      ],
+      "queryUsed": false,
+      "match": true
+    },
+    {
+      "path": "WebBuild/index.html",
+      "checkedAtUtc": "2026-11-06T16:39:30.696874+00:00",
+      "attempt": 1,
+      "url": "https://tigblack.github.io/Road-Gunner-Max/index.html",
+      "curlExit": 0,
+      "status": 200,
+      "curlDownloadedBytes": 5590,
+      "effectiveUrl": "https://tigblack.github.io/Road-Gunner-Max/index.html",
+      "tlsVerifyResult": 0,
+      "timeSeconds": 0.320441,
+      "bytes": 5590,
+      "sha256": "44c0ba2bb2f0be7d2295b6164d2100617783bb967c598359a1cdbd321a2e0b2c",
+      "expectedBytes": 5590,
+      "expectedSha256": "44c0ba2bb2f0be7d2295b6164d2100617783bb967c598359a1cdbd321a2e0b2c",
+      "headers": [
+        "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: text/html; charset=utf-8\r\nlast-modified: Fri, 06 Nov 2026 16:39:09 GMT\r\naccess-control-allow-origin: *\r\nstrict-transport-security: max-age=31556952\r\netag: \"6aee02ad-15d6\"\r\nexpires: Fri, 06 Nov 2026 16:49:30 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: 54D0:2833EB:C465CC:C5D819:6AEE02C2\r\nx-github-edge-region: fra\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Fri, 06 Nov 2026 16:39:30 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-sof1510026-SOF\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1793983171.598730,VS0,VE150\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 1c59b5e3a9f9feeeaf839828cd7fd01a97959fe4\r\ncontent-length: 5590"
+      ],
+      "queryUsed": false,
+      "match": true
+    }
+  ],
+  "publicFileCount": 6,
+  "publicCompressedBytes": 21302159,
+  "allSixOrdinaryUrlsMatch": true,
+  "nojekyll": {
+    "commit": "981233bdd312347bb8ec72e47e87335b31be0c95",
+    "path": ".nojekyll",
+    "contentsApiEvidence": {
+      "content": "",
+      "encoding": "base64",
+      "git_url": "https://api.github.com/repos/tigblack/Road-Gunner-Max/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "html_url": "https://github.com/tigblack/Road-Gunner-Max/blob/981233bdd312347bb8ec72e47e87335b31be0c95/.nojekyll",
+      "name": ".nojekyll",
+      "path": ".nojekyll",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    "blobEvidence": {
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "encoding": "base64",
+      "content": "",
+      "url": "https://api.github.com/repos/tigblack/Road-Gunner-Max/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "emptyBlobVerified": true
+  },
+  "changesPerformed": "Only this Published.json was written; no Unity, browser, source edits, Git mutation or publication was performed by this verifier."
+}

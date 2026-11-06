@@ -1,0 +1,31 @@
+PUBLISHED WEBGL — INSTANT DETAILED WALKER / 6 NOVEMBER 2026
+
+PLAY: https://tigblack.github.io/Road-Gunner-Max/?build=981233b
+Open this link on the phone, tap PLAY and use the floating stick.
+
+Source/runtime release commit:3344569c590df1c757f50397f04ed016cd033c59
+Pages payload commit:981233bdd312347bb8ec72e47e87335b31be0c95
+Source/main, feature branch and gh-pages were pushed together without force.
+The subsequent documentation-only source commit records delivery verification;
+it does not change the WebGL artifacts or Pages commit.
+
+Changes: immediate grounded walking/facing and stopping, collision-aware sliding,
+detailed mechanical walker presentation, alternating actual sole impressions.
+Existing arena, maximum speed, player damage/HP and reward rules are retained.
+Native acceptance:256 assertions (33 instantaneous movement,19 walker/footprints,
+204 gameplay/input), all passing with zero runtime Console errors/exceptions/asserts.
+
+WebGL build:Unity6000.6.4f1, savedLevel01_Greenwood scene, Gzip with JavaScript
+fallback, seven static files totaling21,302,159bytes. WebBuild.json validates all
+files, Gzip CRCs, WASM/JS, the release cache tag and2,220 frozen production-input
+hashes. All frozen input bytes match after restoring the five known Unity graphics
+serialization changes made during packaging. Local ZIP is described by Archive.json.
+
+Published.json records actual GitHub refs, the successful exact Pages build/Actions/
+deployment and matching six public HTTPS payload hashes plus the empty.nojekyll blob.
+Browser.txt records actual public Safari startup, walking/release/reversal, footprints
+and Pause. Physical-phone performance and a full natural playthrough are unmeasured.
+
+An unrelated pre-existing local change in the historical ConceptVehicle.cs car
+installer was deliberately left uncommitted. It is Editor-only, is not invoked by
+the new narrow walker authoring commands and does not enter the WebGL runtime.

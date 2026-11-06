@@ -45,7 +45,7 @@ installer pass preserves the same geometry/assets without duplicate gameplay.
 The current6 November WebGL contains the detailed walker, instant character
 movement and rebuilt reference arena. Release evidence:
 Documentation/RoadGunner/WebGL-2026-11-06-PlayerWalkerInstant/.
-Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/?build=walker-instant-20261106
+Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/?build=981233b
 Tap PLAY to start the game and audio; use the floating touch stick.
 
 ENEMY RETURNS
