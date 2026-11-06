@@ -1,0 +1,64 @@
+ROAD GUNNER — WALKER-ONLY PLAYER MODEL AND FOOTSTEPS
+6 November 2026. Unity6000.6.4f1.
+
+DELIVERED
+The actual saved player now renders only the articulated bipedal walker: compact
+armoured torso, head/visor, pelvis, right arm, shoulder autocannon, left harpoon arm
+and two animated legs with mechanical claw feet. Seven combined upper meshes use
+one shared teal/ivory/brass palette, matching the existing articulated legs.
+All26 old player car/cabin/crew/tyre/weapon mesh references were detached on the
+first install. Their MeshFilter/SkinnedMeshRenderer bindings are null and old
+renderer materials empty, so there is no hidden car model beneath the walker.
+Empty original functional anchors remain; historical shared art/prefabs used by
+other authoring work were not deleted. Fresh scene reopening confirms no car mesh.
+The body and legs share a true ground-space visual origin. Weapon and collector
+components/pivots survive; barrel tips follow their actual firing/launch points.
+
+FOOTSTEPS
+Only actual supported swing-to-stance foot landings emit the player's ground
+impressions. The marks have separate heel, sole, two splayed claws and side pad;
+no wheel tread texture or connecting track strip is used. Left/right contact
+position, normal and heading come from the animated sole's real ground ray hit.
+Standing, paused, finished and airborne motion cannot paint continuous marks.
+A fixed640-stamp pool with14-second fade is cleared by Restart. Existing player
+continuous wheel dust is suppressed; three world-space dust particles emit at an
+actual landing. Non-walker vehicles keep their wheel-mark behavior.
+
+PRESERVED
+This is a visual/footprint replacement; the existing dynamic driving rig,
+WheelCollider contacts, input, physics tuning, HP/damage, attack range/rate,
+rewards, progression, repair and run state rules are retained. No new walking
+physics or Chaos implementation is claimed. Arena geometry, navigation, map,
+tuning/audio/package/project settings:896 protected files remained byte-identical.
+The source, saved scene and local WebGL player contain the walker update.
+No GitHub Pages publication was performed.
+
+VALIDATION
+PlayMode.txt:19 focused assertions,0 failures, runtime Console0. Includes no legacy
+car/wheel geometry, articulated vertex motion, production input travel23.57572m,
+actual19 landings/19 prints (left9/right10, wheel0, invalidgroundhits0), no extra
+stamps at rest/pause/in air, and clean Restart. Screenshots use the real gameplay
+camera/HUD; the closer three-quarter/trail views use temporary inspection cameras.
+Gameplay.txt:204 additional combat/input/weapon/harpoon/repair/state/reset checks,
+0 failures and runtime Console0. Historical prior report bytes were restored.
+Total fresh native acceptance223 PASS. Setup ResetPose, enemy despawn and airborne
+height fixtures are disclosed; no moving velocity or rotation override was added.
+Reinstall.json:32 generated files byte-identical on repeat;7387 protected component
+settings unchanged; seven original physical colliders/four wheels retained.
+Authoring-first.json.gz retains the initial26-mesh removal proof; Authoring.json
+records the latest repeat authoring guard. Temporary gameplay tests do not save.
+
+AUTHORING
+Open Assets/RoadGunner/Scenes/Level01_Greenwood.unity and press Play.
+Narrow installer: RoadGunner.Editor.PlayerWalkerVisualInstaller.InstallBatch
+Menu: Tools / Road Gunner / Player / Install Walker Visuals Only
+Verification: RoadGunner.Editor.PlayerWalkerVerification.Run (without -quit).
+Generated source assets: Assets/RoadGunner/Art/PlayerWalker/ and the existing
+PlayerTracks leg-preview mesh files. Do not run an old full car/world installer.
+
+WEBGL
+The latest local build and archive are in WebGL-2026-11-06-PlayerWalker evidence.
+Open http://127.0.0.1:8765/?build=walker-only-20261106 on this computer.
+The real Safari run shows only the walker, moving legs and discrete alternating
+footprints, with normal HUD/range ring/minimap, braking and Pause. Native evidence
+and browser observations are separate; no physical-phone/FPS result is claimed.

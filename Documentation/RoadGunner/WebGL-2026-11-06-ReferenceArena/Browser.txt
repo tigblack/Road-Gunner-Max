@@ -1,0 +1,22 @@
+LOCAL SAFARI WEBGL SMOKE — REFERENCE ARENA
+6 November 2026. Actual Safari on the current Mac.
+URL: http://127.0.0.1:8765/?build=reference-arena-20261106
+Served through Python HTTP server bound only to127.0.0.1:8765.
+
+PLAY loaded the freshly packaged Unity player successfully. The actual new
+crossroads map, actor placements, player model, white range ring, portrait HUD
+and circular map rendered without an error overlay or missing/pink materials.
+A native W hold drove the car forward; camera and map marker followed, with
+visible track imprints and displayed30km/h. Space produced displayed00km/h.
+A native S hold turned the nose and drove back. Automatic combat and collection
+progressed to KILLS4/SCRAP4 with HP100/100. Escape opened PAUSED and displayed
+DAMAGE5.25/SHOT, MAXHP100, ATK1/HP1, MUSIC30%, Resume and Restart.
+The test was left paused. Safari also exposed its audio-playing tab indicator;
+this is not an isolated listening test of every sound bank.
+
+Actual browser screenshots are retained in the computer-use tool transcript;
+the earlier ReferenceArena/Screenshots files are native Unity captures and are
+not presented as WebGL captures. No JavaScript injection/runtime telemetry,
+mobile emulation, physical-phone test, timed FPS benchmark or full browser
+arena completion is claimed. Existing user Chrome pages were left intact;
+Safari was used for an independent test window.

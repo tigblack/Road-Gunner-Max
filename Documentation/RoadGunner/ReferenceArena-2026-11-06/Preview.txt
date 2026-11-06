@@ -1,0 +1,18 @@
+Reference-shaped Arena1 — actual saved world, Unity 6000.6.4f1
+PREVIEW ONLY: saved-scene assertions and native captures; physical route/stone/workshop/gate cases are not run. The independent full PlayMode report is preserved.
+The1.5 width ratio is our normalized vehicle adaptation, not measured reference metres. Setup ResetPose and administrative enemy despawn are disclosed fixtures. Every moving case uses production DriveInput and Rigidbody/WheelCollider physics; no moving velocity/rotation writes. Closed gates and roads are never substituted or moved.
+PASS saved baseline keeps16 actors and15 eligible respawns: Alive=16; eligible=15; delay=30
+PASS geometry preserves HP combat rewards and progression objects: HP=100/100; bullet=5.25; caches=8
+PASS normalized crossroads width is increased by fifty percent: Normalized width scale=1.5; main30m, cross27m, service18m; no claim about original reference metres
+PASS every saved encounter has navigation from the new start: Actual saved16-actor positions; navigationNeedsBake=False
+PASS rebaked minimap contains the new footprint and exact live actors: Footprint corners fit circular view; real background above backdrop; all16 actor marker projections agree
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/start.png; actual game camera + HUD; setup car=(-84.85, 0.70, -84.85)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/crossroads.png; actual game camera + HUD; setup car=(14.14, 0.80, 14.14)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/repair.png; actual game camera + HUD; setup car=(14.14, 0.80, -63.64)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/northeast-camp.png; actual game camera + HUD; setup car=(93.69, 0.80, -8.84)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/boss-northwest.png; actual game camera + HUD; setup car=(-33.59, 0.80, 107.83)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/native-overview.png; actual saved terrain/scenery and live neutralized actors; temporary fitted top-down camera pitch90/yaw45; HUD and distance fog hidden only for this overview, then restored
+RESULT checks=5; failures=0; no scene, mesh, tuning or asset writes.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

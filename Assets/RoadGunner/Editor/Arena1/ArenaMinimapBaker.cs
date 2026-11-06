@@ -59,12 +59,12 @@ namespace RoadGunner.Editor
             readonly Dictionary<Mesh, MeshData> meshes = new Dictionary<Mesh, MeshData>();
             public int meshCount, roadCount, triangleCount;
 
-            public Rasterizer(Bounds worldBounds, int resolution)
+            public Rasterizer(Bounds worldBounds, int resolution, bool transparentOutside)
             {
                 bounds = worldBounds; size = resolution;
                 pixels = new Color[size * size]; heights = new float[pixels.Length];
                 for (int i = 0; i < pixels.Length; i++)
-                { pixels[i] = new Color(.96f, .79f, .51f, 1); heights[i] = float.NegativeInfinity; }
+                { pixels[i] = transparentOutside ? Color.clear : new Color(.96f, .79f, .51f, 1); heights[i] = float.NegativeInfinity; }
             }
 
             SampleTexture ReadTexture(Texture2D source)
@@ -213,7 +213,7 @@ namespace RoadGunner.Editor
         }
 
         public static Texture2D BakeAndConfigure(LevelLayout layout, ArenaMinimap map,
-            string assetPath = DefaultAssetPath, int resolution = 512)
+            string assetPath = DefaultAssetPath, int resolution = 512, bool transparentOutside = false)
         {
             if (EditorApplication.isPlaying) throw new InvalidOperationException("Bake the static map outside Play Mode.");
             if (!layout || !layout.ground || !map || !map.mapRect) throw new InvalidOperationException("Minimap bake requires the existing arena layout, ground and UI map rectangle.");
@@ -222,13 +222,13 @@ namespace RoadGunner.Editor
             Bounds bounds = layout.gameplayBounds;
             if (bounds.size.x <= 0 || bounds.size.z <= 0) throw new InvalidOperationException("Arena bounds must have positive X/Z extents.");
             resolution = Mathf.Clamp(Mathf.NextPowerOfTwo(resolution), 128, 1024);
-            var rasterizer = new Rasterizer(bounds, resolution);
+            var rasterizer = new Rasterizer(bounds, resolution, transparentOutside);
             foreach (var root in layout.gameObject.scene.GetRootGameObjects())
                 foreach (var filter in root.GetComponentsInChildren<MeshFilter>(false))
                     if (Include(filter, layout, bounds, out var renderer)) rasterizer.Draw(filter, renderer);
             if (rasterizer.meshCount == 0) throw new InvalidOperationException("No readable static arena meshes were found.");
             rasterizer.AddReliefEdges();
-            var image = new Texture2D(resolution, resolution, TextureFormat.RGB24, false);
+            var image = new Texture2D(resolution, resolution, transparentOutside ? TextureFormat.RGBA32 : TextureFormat.RGB24, false);
             try
             {
                 image.SetPixels(rasterizer.pixels); image.Apply(false, false);
@@ -239,7 +239,7 @@ namespace RoadGunner.Editor
             AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
             var importer = (TextureImporter)AssetImporter.GetAtPath(assetPath);
             importer.textureType = TextureImporterType.Default; importer.sRGBTexture = true;
-            importer.alphaSource = TextureImporterAlphaSource.None; importer.mipmapEnabled = false;
+            importer.alphaSource = transparentOutside ? TextureImporterAlphaSource.FromInput : TextureImporterAlphaSource.None; importer.mipmapEnabled = false;
             importer.wrapMode = TextureWrapMode.Clamp; importer.filterMode = FilterMode.Bilinear;
             importer.textureCompression = TextureImporterCompression.CompressedHQ;
             importer.maxTextureSize = resolution; importer.isReadable = false; importer.SaveAndReimport();

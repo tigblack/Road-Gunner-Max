@@ -1,0 +1,105 @@
+Arena 1 exploration — saved production scene; Unity 6000.6.4f1
+Opt-in fixtures move the real car between cases and isolate enemies. Auto-gun and proximity claims use production components; direct Hit calls are disclosed threshold/affinity tests, not natural progression.
+PASS production exploration and baseline remain connected: Initial bullet=5.25; max HP=100
+PASS saved reward objects have unique identities and clear labels: Authored caches=8; secret count=3
+PASS four readable regions coexist with the finite enemy roster: Regions=4; live enemy roster=16
+PASS cache markers share the real north-up world projection: All breakables and revealed secrets use cache.transform; unrevealed secret locations remain hidden
+PASS saved minimap bake draws above the opaque sand backdrop: Backdrop sibling=0; baked image sibling=1; the terrain image remains visible after rebaking
+PASS saved minimap texture and markers share the complete fitted projection: Expected image size=(342.39, 342.39); actual=(342.39, 342.39); all four baked-world corners match marker projection=True
+PASS reward targets do not inflate the enemy roster or boss HUD: Breakable targets=5; original ordinary/boss pools remain separate
+PASS player retains physical suspension contacts and dynamic body: Detailed wheel-physics regression is run separately; exploration does not replace the player
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/fresh-start.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(-84.85, 0.50, -84.85); region=dust-flats
+PASS authored cache has a real hittable target collider: Cache=crate-damage-south; car=(-31.82, 0.70, -46.03)
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/cache-before-reward.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(-31.82, 0.70, -46.03); region=dust-flats
+PASS solid cover blocks cache acquisition and damage: Unchanged durability=10.5; solid obstruction lies between real muzzle and cache
+PASS real auto gun discovers and consumes an uncovered cache: Actual acquired=True; shots=2; claimed=True; kills=0
+PASS claimed cache leaves targeting and minimap: Claimed world object pays once and no longer blocks shots
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/cache-after-reward.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(-31.82, 0.70, -46.03); region=dust-flats
+PASS cache requires the full real damage threshold: Sublethal Hit leaves0.25durability and no partial reward
+PASS same-run reset preserves partial damage: ResetCache is not a durability refill exploit
+PASS damage cache changes the actual outgoing shot value: Bullet=5.25 -> 5.5125; bonus=5%; station level remains1
+PASS reward feedback describes the actual run bonus: Health-change subscriber attempted reentrant claim; a single reward produced toast=DAMAGE +5% <size=27>THIS RUN</size>
+PASS rewarded bullet amount reaches real enemy health: Direct Hit through the normal Raider damage path; actual HP delta=5.512501
+PASS reward cannot be duplicated by retry hit or reset: Repeated callbacks preserve a single bonus and create neither kill nor loot
+PASS RAM reward strengthens ram damage without a second bullet buff: Actual ram=11.025 -> 12.1275; bullet retained=5.5125
+PASS max HP reward retains existing damage: Max/current=100/75 -> 105/80
+PASS two equal health rewards each produce fresh feedback: The first toast expired; a separate equal reward starts a new visible toast rather than being deduplicated by text
+PASS pause result describes actual accumulated exploration effects: DAMAGE  5.51 / SHOT   ·   MAX HP 110 ATK 1   ·   HP 1   ·   LOOT DMG +5%  RAM +10% EXTRA HP +10   ·   SECRETS 0 / 3
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/pause-real-stats.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(-84.85, 0.70, -84.85); region=dust-flats
+PASS Damage reward interrupted by real Restart preserves the new run: A one-shot stats.Changed subscriber restarted during production Hit/claim; run=4 -> 5; callbacks=1; cache HP=10.5; player HP=100
+PASS Damage interrupted reward emits no stale result after Restart: Old-run collected callbacks=0; reward serial=0; last reward=''; a new run receives no old bonus, claim or toast
+PASS Health reward interrupted by real Restart preserves the new run: A one-shot stats.Changed subscriber restarted during production Hit/claim; run=6 -> 7; callbacks=1; cache HP=10.5; player HP=100
+PASS Health interrupted reward emits no stale result after Restart: Old-run collected callbacks=0; reward serial=0; last reward=''; a new run receives no old bonus, claim or toast
+PASS distant secret starts absent from the minimap: A fresh run does not advertise the distant hidden cache
+PASS approaching reveals a secret without collecting it: Automatic discovery occurs before the smaller collection radius
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/secret-near.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(-114.90, 0.70, 65.37); region=salvage-yard
+PASS discovery remains on the map after driving away: Discovery is remembered for this run rather than flickering at the reveal boundary
+PASS secret rejects a claim outside its collection radius: Real proximity boundary radius=3
+PASS secret cannot be collected through solid scenery: Distance is inside radius; the production LOS query still rejects the claim
+PASS pause prevents proximity rewards: A nearby clear chest remains unclaimed while paused
+PASS pause also prevents destructible rewards: A late damage callback cannot award a paused run
+PASS normal proximity update claims one secret reward: Secrets=1; score=3; direct earned=3; HP=90
+PASS secret discovery and reward survive same-run reset without duplication: A reset helper cannot farm the chest repeatedly
+PASS completed state cannot award nearby or broken caches: Completion is terminal for exploration rewards
+PASS terminal hit cannot consume a cache: No post-victory damage or bonus award
+PASS defeat cannot award a chest: A dead player cannot receive a late proximity callback
+PASS armored Buggy has an explicit effective RAM weakness: Same10input through enemy.Hit; bullet/RAM HP delta=10/12.5
+PASS Warlord recovery creates a real timed bullet opportunity: A normal committed strike ran before the test hit; normal/recovery HP delta=10/12
+PASS Warlord recovery bonus is specific to bullets: Recovery does not accidentally multiply RAM a second time
+PASS one idempotent exploration root and editable authoring source exist: Saved source=Assets/RoadGunner/Levels/Greenwood/Exploration/Exploration layout.asset; navigationNeedsBake=False
+PASS visible road surface uses a real shared static collision mesh: Road collider/render vertices=10575
+PASS authored route main-south has navigation and chassis clearance: Width=30m; nav=72/72; actual car clear=72; surface width samples=11/11; first obstruction=
+PASS authored route main-north has navigation and chassis clearance: Width=30m; nav=56/56; actual car clear=56; surface width samples=12/12; first obstruction=
+PASS authored route cross-west has navigation and chassis clearance: Width=27m; nav=70/70; actual car clear=70; surface width samples=10/10; first obstruction=
+PASS authored route cross-east has navigation and chassis clearance: Width=27m; nav=70/70; actual car clear=70; surface width samples=10/10; first obstruction=
+PASS authored route workshop-south-access has navigation and chassis clearance: Width=18m; nav=29/29; actual car clear=29; surface width samples=15/15; first obstruction=
+PASS authored route workshop-drive-through has navigation and chassis clearance: Width=18m; nav=29/29; actual car clear=29; surface width samples=15/15; first obstruction=
+PASS authored route workshop-north-access has navigation and chassis clearance: Width=18m; nav=15/15; actual car clear=15; surface width samples=15/15; first obstruction=
+PASS authored route southwest-guard-access has navigation and chassis clearance: Width=18m; nav=47/47; actual car clear=47; surface width samples=12/12; first obstruction=
+PASS authored route west-field-access has navigation and chassis clearance: Width=18m; nav=41/41; actual car clear=41; surface width samples=11/11; first obstruction=
+PASS authored route northeast-camp-access has navigation and chassis clearance: Width=18m; nav=38/38; actual car clear=38; surface width samples=13/13; first obstruction=
+PASS authored route monster-camp-branch has navigation and chassis clearance: Width=18m; nav=25/25; actual car clear=25; surface width samples=13/13; first obstruction=
+PASS authored route northwest-guard-branch has navigation and chassis clearance: Width=18m; nav=30/30; actual car clear=30; surface width samples=10/10; first obstruction=
+PASS authored route bunker-landmark-access has navigation and chassis clearance: Width=18m; nav=19/19; actual car clear=19; surface width samples=19/19; first obstruction=
+PASS authored route secret-west-spur has navigation and chassis clearance: Width=18m; nav=25/25; actual car clear=25; surface width samples=13/13; first obstruction=
+PASS authored route secret-northeast-spur has navigation and chassis clearance: Width=18m; nav=16/16; actual car clear=16; surface width samples=16/16; first obstruction=
+PASS authored route secret-southeast-spur has navigation and chassis clearance: Width=18m; nav=19/19; actual car clear=19; surface width samples=19/19; first obstruction=
+PASS four crossroads arms remain clear and connected through one centre: All4 real arms passed their connected/chassis checks=True; shared endpoint centre=(14.14, 0.06, 14.14); within0.05m=True;4distinct directions=True; north/south and east/west opposite pairs=True
+PASS turning pocket start-turning-bowl fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket first-raider-pocket fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket main-crossroads fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket west-field fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket southwest-guard-pen fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket repair-hub fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket bunker-courtyard fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket northeast-camp fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket monster-arena fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket northwest-guard fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket secret-west-turnaround fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket secret-east-turnaround fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS turning pocket secret-south-turnaround fits the physical car sweep: 24 full-body orientations; tracked chassis corner sweep=3.48m plus2.5m pocket reserve; dynamic turn tested separately
+PASS reward crate-damage-south has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(-31.82, 0.70, -46.03)
+PASS reward crate-health-salvage has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(-65.41, 0.70, 26.45)
+PASS reward crate-health-crossroads has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(19.45, 0.70, -12.45)
+PASS reward crate-ram-ridge has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(-10.61, 0.70, 98.92)
+PASS reward crate-damage-rustworks has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(79.55, 0.70, 8.77)
+PASS reward secret-scrap-gully has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(-114.90, 0.70, 63.87)
+PASS reward secret-wreck-overlook has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(162.63, 0.70, 5.54)
+PASS reward secret-dry-cistern has a real reachable approach: NavMesh plus a chassis-clear connection from an authored route; collection/firing site=(1.77, 0.70, -130.58)
+PASS region dust-flats is reachable and identifies itself: Actual region UI source=DUST FLATS; hint=DEFEAT WARLORD · MONSTER OPTIONAL
+PASS region salvage-yard is reachable and identifies itself: Actual region UI source=GUARD OUTPOST; hint=BREAK SUPPLIES · WATCH THE ROAD
+PASS region rustworks is reachable and identifies itself: Actual region UI source=RUSTWORKS CAMP; hint=MONSTER OPTIONAL · BUGGIES: RAM +25%
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/region-rustworks.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(102.53, 0.70, -7.07); region=rustworks
+PASS region ash-ridge is reachable and identifies itself: Actual region UI source=WARLORD RIDGE; hint=WARLORD: AFTER STRIKE, BULLETS +20%
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/region-ash-ridge.png — actual gameplay camera, world labels and HUD; 540 x 960; fixture car position=(-8.84, 0.70, 114.90); region=ash-ridge
+CAPTURE outputs/scenery-crush-2026-11-03/exploration/region-ash-ridge-landscape.png — actual gameplay camera, world labels and HUD; 960 x 540; fixture car position=(-8.84, 0.70, 114.90); region=ash-ridge
+PASS new solid landmarks block both vehicle collision and line of sight: Root=Level Authoring/Authored Content/Reference arena; actual non-trigger scenery colliders=230; surface-ray verified=230/230; groups=Finished wasteland landmarks=43, Solid scattered rocks=41, Closed gates=12, Continuous rock perimeter=134; player/exploration/authored Buggy gun masks checked; first failure=
+PASS repair hub has an unobstructed full-car drive-through: Entry=(5.66, 0.70, -72.12); exit=(22.63, 0.70, -55.15)
+PASS real physical vehicle can enter heal and leave the service hub: Actual healing frames=208; grounded frames=294; HP=60 -> 94.66394; exit reason=endpoint; physics budget=10.65s; pre-freeze car=(21.9798, 0.5150, -55.8043); progress=11.0825; upright=1.0000; post-freeze car=(21.8880, 0.5150, -55.8962); progress=10.9526; elapsed game/fixed/realtime=5.000/5.000/4.991s
+PASS real Restart resets exploration without changing the original arena: Run serial=13 -> 14; shot=5.25; HP=100
+PASS Restart restores cache durability visuals and eligible map markers: Original reward objects are rearmed once for the new run; secret visibility follows new-run discovery
+PASS Restart forgets distant secret discovery and clears reward feedback: Previously found secret is hidden again; old run bonus toast is absent
+RESULT checks=91; failures=0; saved scene and tuning were not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

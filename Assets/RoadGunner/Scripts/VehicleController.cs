@@ -31,6 +31,10 @@ namespace RoadGunner
         public float AppliedPivotLateralForce { get; private set; }
         public int GroundedWheels { get; private set; }
         public float LargestSlip { get; private set; }
+        public bool WalkerGrounded { get; private set; }
+        public bool WalkerBlocked { get; private set; }
+        public Vector3 WalkerRequestedVelocity { get; private set; }
+        public Vector3 WalkerResolvedVelocity { get; private set; }
         public bool CanDrive { get; set; } = true;
         /// <summary>Set by the arcade audio sink, which mutes the engine drone and voices movement as tyre roll instead.</summary>
         [System.NonSerialized] public bool externalEngineAudio;
@@ -40,15 +44,21 @@ namespace RoadGunner
         readonly float[] trackSide = new float[4];
         Vector3 leftTrackCentre,rightTrackCentre;
         float trackWidth;
+        BoxCollider[] walkerBoxes;
+        readonly RaycastHit[] walkerCastHits=new RaycastHit[64];
+        readonly Collider[] walkerOverlaps=new Collider[64];
+        GameSession walkerSession;
         void Awake() {
             Body=GetComponent<Rigidbody>(); Body.mass=tuning.mass; Body.centerOfMass=tuning.centerOfMass;
             Body.interpolation=RigidbodyInterpolation.Interpolate; Body.collisionDetectionMode=CollisionDetectionMode.ContinuousDynamic;
             foreach(var w in wheels) {
                 w.radius=tuning.wheelRadius; w.suspensionDistance=tuning.suspensionTravel;
                 var s=w.suspensionSpring; s.spring=tuning.spring; s.damper=tuning.damper; s.targetPosition=tuning.suspensionTarget; w.suspensionSpring=s;
-                w.forwardFriction=tuning.forwardFriction.ToWheelCurve();
+                var longitudinal=tuning.forwardFriction.ToWheelCurve();
                 var lateral=tuning.sidewaysFriction.ToWheelCurve();
-                if(tuning.trackedDrive)lateral.stiffness*=Mathf.Clamp(tuning.trackedSidewaysGrip,.1f,1);
+                if(tuning.walkerDrive) {longitudinal.stiffness=0;lateral.stiffness=0;w.motorTorque=w.brakeTorque=w.steerAngle=0;}
+                else if(tuning.trackedDrive)lateral.stiffness*=Mathf.Clamp(tuning.trackedSidewaysGrip,.1f,1);
+                w.forwardFriction=longitudinal;
                 w.sidewaysFriction=lateral;
             }
             // Substep configuration is shared by the vehicle, not a separate simulation per wheel.
@@ -69,6 +79,23 @@ namespace RoadGunner
             }
             leftTrackCentre/=Mathf.Max(1,left);rightTrackCentre/=Mathf.Max(1,right);
             trackWidth=Mathf.Max(.1f,rightTrackCentre.x-leftTrackCentre.x);
+            if(tuning.walkerDrive)walkerBoxes=GetComponentsInChildren<BoxCollider>(true);
+        }
+        void Start(){BindWalkerSession();}
+        void OnEnable(){if(Body)BindWalkerSession();}
+        void BindWalkerSession() {
+            if(!tuning||!tuning.walkerDrive||walkerSession)return;
+            var turret=GetComponent<TurretController>();walkerSession=turret?turret.session:null;
+            if(!walkerSession&&input)walkerSession=input.GetComponentInParent<GameSession>();
+            if(walkerSession)walkerSession.Changed+=WalkerSessionChanged;
+        }
+        void WalkerSessionChanged(){if(walkerSession&&!walkerSession.Playing)StopWalkerPlanar();}
+        void OnDisable(){if(tuning&&tuning.walkerDrive&&Body)StopWalkerPlanar();UnbindWalkerSession();}
+        void OnDestroy(){UnbindWalkerSession();}
+        void UnbindWalkerSession(){if(walkerSession)walkerSession.Changed-=WalkerSessionChanged;walkerSession=null;}
+        void Update() {
+            // Pause/end may stop scaled FixedUpdate entirely. Clear only planar movement immediately.
+            if(tuning&&tuning.walkerDrive&&Body&&(!CanDrive||!input||!input.Enabled||Time.timeScale<=0))StopWalkerPlanar();
         }
         void FixedUpdate() {
             ForwardSpeed=Vector3.Dot(Body.linearVelocity,transform.forward);
@@ -80,6 +107,11 @@ namespace RoadGunner
             }
             LeftTrackSpeed=Vector3.Dot(Body.GetPointVelocity(transform.TransformPoint(leftTrackCentre)),transform.forward);
             RightTrackSpeed=Vector3.Dot(Body.GetPointVelocity(transform.TransformPoint(rightTrackCentre)),transform.forward);
+            if(tuning.walkerDrive) {
+                DriveWalker(supportNormal);
+                AntiRoll(0,1);AntiRoll(2,3);
+                return;
+            }
             float magnitude=CanDrive&&input.Enabled?input.Magnitude:0;
             float speedLimit=Mathf.Max(1,tuning.maxSpeed);
             float heading=magnitude>0?Vector3.SignedAngle(Vector3.ProjectOnPlane(transform.forward,Vector3.up),input.WorldDirection,Vector3.up):0;
@@ -102,6 +134,116 @@ namespace RoadGunner
             // their vertical dynamics; neither linear nor angular velocity is overwritten for driving.
             if(GroundedWheels>0) Body.AddForce(-Vector3.ProjectOnPlane(Body.linearVelocity,Vector3.up)*
                 (tuning.rollingResistance+HorizontalSpeed*tuning.aerodynamicDrag),ForceMode.Force);
+        }
+        void DriveWalker(Vector3 supportNormal) {
+            steering=turnDirection=0;RequestedYawRate=AppliedYawAssistTorque=AppliedPivotLateralForce=0;
+            LeftTrackTorque=RightTrackTorque=AppliedBrakeTorque=0;WalkerBlocked=false;
+            foreach(var wheel in wheels)wheel.motorTorque=wheel.brakeTorque=wheel.steerAngle=0;
+            WalkerGrounded=GroundedWheels>=2&&supportNormal.sqrMagnitude>.01f&&
+                Vector3.Dot(supportNormal.normalized,Vector3.up)>.55f&&Vector3.Dot(transform.up,Vector3.up)>.5f;
+            bool active=CanDrive&&input&&input.Enabled&&!input.Brake&&(!walkerSession||walkerSession.Playing);
+            float magnitude=active?input.Magnitude:0;
+            Vector3 direction=active?Vector3.ProjectOnPlane(input.WorldDirection,Vector3.up).normalized:Vector3.zero;
+            WalkerRequestedVelocity=direction*(Mathf.Max(0,tuning.maxSpeed)*magnitude);
+            Throttle=magnitude;
+            // No airborne propulsion, braking, facing or gravity cancellation. Collision impulses and jumps retain their motion.
+            if(!WalkerGrounded){WalkerResolvedVelocity=Vector3.ProjectOnPlane(Body.linearVelocity,Vector3.up);return;}
+            if(WalkerRequestedVelocity.sqrMagnitude<.000001f){StopWalkerPlanar();return;}
+            Quaternion facing=Body.rotation;
+            Vector3 oldForward=Vector3.ProjectOnPlane(Body.rotation*Vector3.forward,Vector3.up);
+            if(oldForward.sqrMagnitude>.001f) {
+                var requested=Quaternion.AngleAxis(Vector3.SignedAngle(oldForward,direction,Vector3.up),Vector3.up)*Body.rotation;
+                facing=WalkerSafeFacing(requested);
+            }
+            Vector3 displacement=WalkerSweepAndSlide(WalkerRequestedVelocity*Time.fixedDeltaTime,facing);
+            WalkerResolvedVelocity=displacement/Time.fixedDeltaTime;
+            var velocity=Body.linearVelocity;
+            Body.linearVelocity=new Vector3(WalkerResolvedVelocity.x,velocity.y,WalkerResolvedVelocity.z);
+            // Character-facing yaw is immediate when clear, and cannot rotate a compound chassis through a wall.
+            var spin=Body.angularVelocity;spin.y=0;Body.angularVelocity=spin;
+            Body.MoveRotation(facing);
+            ForwardSpeed=Vector3.Dot(Body.linearVelocity,facing*Vector3.forward);
+        }
+        void StopWalkerPlanar() {
+            var velocity=Body.linearVelocity;Body.linearVelocity=new Vector3(0,velocity.y,0);
+            WalkerRequestedVelocity=WalkerResolvedVelocity=Vector3.zero;Throttle=0;ForwardSpeed=0;
+            var spin=Body.angularVelocity;spin.y=0;Body.angularVelocity=spin;
+        }
+        bool WalkerSolid(Collider other) => other&&other.enabled&&!other.isTrigger&&other.attachedRigidbody!=Body&&
+            !other.transform.IsChildOf(transform)&&!Physics.GetIgnoreLayerCollision(gameObject.layer,other.gameObject.layer);
+        bool WalkerBox(BoxCollider box) => box&&box.enabled&&!box.isTrigger&&box.gameObject.activeInHierarchy&&box.attachedRigidbody==Body;
+        void WalkerBoxPose(BoxCollider box,Quaternion facing,Vector3 offset,out Vector3 center,out Vector3 half,out Quaternion orientation,out Vector3 origin) {
+            // Cancel the interpolated render root before rebuilding the shape at the actual physics pose.
+            Quaternion localFrame=Quaternion.Inverse(transform.rotation);
+            center=Body.position+offset+facing*(localFrame*(box.transform.TransformPoint(box.center)-transform.position));
+            origin=Body.position+offset+facing*(localFrame*(box.transform.position-transform.position));
+            orientation=facing*localFrame*box.transform.rotation;
+            Vector3 scale=box.transform.lossyScale;
+            half=Vector3.Scale(box.size*.5f,new Vector3(Mathf.Abs(scale.x),Mathf.Abs(scale.y),Mathf.Abs(scale.z)));
+        }
+        bool WalkerPenetration(BoxCollider box,Vector3 origin,Quaternion orientation,Collider other,out Vector3 normal,out float depth) {
+            if(Physics.ComputePenetration(box,origin,orientation,other,other.transform.position,other.transform.rotation,out normal,out depth)&&
+                Vector3.Dot(normal,Vector3.up)<.6f)return true;
+            normal=Vector3.zero;depth=0;return false;
+        }
+        bool WalkerFacingBlocked(Quaternion facing) {
+            if(walkerBoxes==null)return false;
+            foreach(var box in walkerBoxes) {
+                if(!WalkerBox(box))continue;
+                WalkerBoxPose(box,facing,Vector3.zero,out var center,out var half,out var orientation,out var origin);
+                int count=Physics.OverlapBoxNonAlloc(center,half,walkerOverlaps,orientation,~0,QueryTriggerInteraction.Ignore);
+                for(int i=0;i<count;i++)if(WalkerSolid(walkerOverlaps[i])&&
+                    WalkerPenetration(box,origin,orientation,walkerOverlaps[i],out _,out float depth)&&depth>tuning.walkerCollisionSkin)return true;
+            }
+            return false;
+        }
+        Quaternion WalkerSafeFacing(Quaternion requested) {
+            if(!WalkerFacingBlocked(requested))return requested;
+            WalkerBlocked=true;float safe=0,blocked=1;
+            for(int i=0;i<7;i++) {
+                float fraction=(safe+blocked)*.5f;
+                if(WalkerFacingBlocked(Quaternion.Slerp(Body.rotation,requested,fraction)))blocked=fraction;else safe=fraction;
+            }
+            return Quaternion.Slerp(Body.rotation,requested,safe);
+        }
+        Vector3 WalkerSweepAndSlide(Vector3 requested,Quaternion facing) {
+            if(walkerBoxes==null||walkerBoxes.Length==0)return Vector3.zero;
+            float skin=Mathf.Clamp(tuning.walkerCollisionSkin,.005f,.08f);
+            Vector3 moved=Vector3.zero,remaining=requested;
+            // Cast does not resolve initial overlaps. Allow only tangent/outward input while the solver separates the real bodies.
+            foreach(var box in walkerBoxes) {
+                if(!WalkerBox(box))continue;
+                WalkerBoxPose(box,facing,Vector3.zero,out var center,out var half,out var orientation,out var origin);
+                int count=Physics.OverlapBoxNonAlloc(center,half,walkerOverlaps,orientation,~0,QueryTriggerInteraction.Ignore);
+                for(int i=0;i<count;i++)if(WalkerSolid(walkerOverlaps[i])&&
+                    WalkerPenetration(box,origin,orientation,walkerOverlaps[i],out var normal,out float depth)&&depth>skin) {
+                    normal=Vector3.ProjectOnPlane(normal,Vector3.up).normalized;
+                    float into=Vector3.Dot(remaining,normal);
+                    if(into<0){remaining-=normal*into;WalkerBlocked=true;}
+                }
+            }
+            for(int iteration=0;iteration<3&&remaining.sqrMagnitude>.0000001f;iteration++) {
+                float length=remaining.magnitude;Vector3 direction=remaining/length;float nearest=length+skin;Vector3 wallNormal=Vector3.zero;
+                foreach(var box in walkerBoxes) {
+                    if(!WalkerBox(box))continue;
+                    WalkerBoxPose(box,facing,moved,out var center,out var half,out var orientation,out var origin);
+                    int count=Physics.BoxCastNonAlloc(center,half,direction,walkerCastHits,orientation,length+skin,~0,QueryTriggerInteraction.Ignore);
+                    for(int i=0;i<count;i++) {
+                        var hit=walkerCastHits[i];
+                        if(!WalkerSolid(hit.collider)||Vector3.Dot(hit.normal,Vector3.up)>.6f||hit.distance>=nearest)continue;
+                        Vector3 normal=Vector3.ProjectOnPlane(hit.normal,Vector3.up).normalized;
+                        if(Vector3.Dot(direction,normal)>=-.00001f)continue;
+                        if(hit.distance<=skin&&WalkerPenetration(box,origin,orientation,hit.collider,out var separating,out _)&&
+                            Vector3.Dot(direction,Vector3.ProjectOnPlane(separating,Vector3.up))>=-.00001f)continue;
+                        nearest=hit.distance;wallNormal=normal;
+                    }
+                }
+                if(wallNormal.sqrMagnitude<.5f){moved+=remaining;break;}
+                WalkerBlocked=true;float travel=Mathf.Clamp(nearest-skin,0,length);
+                moved+=direction*travel;remaining-=direction*travel;
+                remaining=Vector3.ProjectOnPlane(remaining,wallNormal);
+            }
+            return moved;
         }
         void DriveWheeled(float magnitude,float heading,float speedLimit) {
             float speed01=Mathf.Clamp01(HorizontalSpeed/speedLimit);
@@ -247,10 +389,11 @@ namespace RoadGunner
         public void ResetPose(Vector3 position,Quaternion rotation) {
             PoseResetSerial++;
             Body.position=position; Body.rotation=rotation; Body.linearVelocity=Vector3.zero; Body.angularVelocity=Vector3.zero;
-            transform.SetPositionAndRotation(position,rotation); steering=0; turnDirection=0; ForwardSpeed=0; Throttle=0; AppliedBrakeTorque=tuning.holdBrakeTorque;
+            transform.SetPositionAndRotation(position,rotation); steering=0; turnDirection=0; ForwardSpeed=0; Throttle=0; AppliedBrakeTorque=tuning.walkerDrive?0:tuning.holdBrakeTorque;
             RequestedYawRate=AppliedYawAssistTorque=LeftTrackSpeed=RightTrackSpeed=LeftTrackTorque=RightTrackTorque=0;
             AppliedPivotLateralForce=0;
-            foreach(var w in wheels) { w.motorTorque=0; w.brakeTorque=tuning.holdBrakeTorque; w.steerAngle=0; }
+            WalkerGrounded=WalkerBlocked=false;WalkerRequestedVelocity=WalkerResolvedVelocity=Vector3.zero;
+            foreach(var w in wheels) { w.motorTorque=0; w.brakeTorque=tuning.walkerDrive?0:tuning.holdBrakeTorque; w.steerAngle=0; }
             if(dust!=null) foreach(var p in dust) if(p) p.Clear();
         }
     }

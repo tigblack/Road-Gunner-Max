@@ -1,0 +1,96 @@
+ROAD GUNNER — REBUILT REFERENCE-SHAPED ARENA 1
+6 November 2026. Unity 6000.6.4f1 / URP17.6.
+
+DELIVERED
+The actual saved first Unity scene has been rebuilt around the researched
+four-arm crossroads topology and adapted to Road Gunner's vehicle and wasteland.
+Open Assets/RoadGunner/Scenes/Level01_Greenwood.unity and press Play.
+Source work is isolated on feature/arena1-reference-layout-20261106.
+This task creates no UE project and does not build/publish WebGL or update Pages.
+The preceding source backup on main remains available.
+
+LAYOUT
+Authored map bounds are350m east-west by310m north-south, W[-70,70] ×[-58,66],
+with1W=2.5m and the existing45-degree world axes. Solid gate-front bands occupy
+part of those bounds. The ground includes an additional7.5m margin.
+The width is1.5 times our normalized233.333m authoring basis. Public footage does
+not establish the reference's real metres, so this is not a measured50% increase
+relative to an independently verified original world. Characters keep their scale.
+
+North/south main arms are30m wide, east/west27m, local approaches18m or wider.
+There are16 routes and13 combat/turnaround pockets. The southern start reaches
+junction W(0,8) directly. The reference's southeast healing pool is our visible
+green repair drive-through W(22,-14), with its existing10m radius and free
+10% maxHP/second healing. The southern portal becomes a sealed industrial bunker.
+The southwest enclosure becomes a Raider/Buggy salvage checkpoint; the west field
+contains a separate Raider group. The northeast camp contains Raiders, a Buggy and
+optional Ashmaw. Warlord occupies the northwest final encounter inside the barriers.
+West, east and north exits are visibly and physically closed; continuous solid
+flanks connect them to the outer boundary. No second arena or gate quest is added.
+
+Exactly12 existing Raiders,2 Buggies,1 Ashmaw and1 Warlord are repositioned.
+The existing HP, damage, weapon cadence, control/physics tuning, rewards, camera,
+HUD, music and15 eligible30-second enemy respawns are preserved. Five supply
+caches, three optional secrets and the two existing upgrade stations are retained.
+Final boss death remains the clear condition. Seven recovery sites follow the map.
+The current saved game's rules take precedence over the older UE summary document.
+No unverified reference HP/damage numbers have been introduced.
+
+WORLD AND MAP
+The new scenery reuses finished saved models and materials without running a full
+vehicle or world-art generator.235 small props use the existing vehicle-crush
+runtime, and216 hard model records plus continuous gate/wall foundation colliders
+remain solid. The live solid hierarchy has230 non-trigger scenery colliders.
+Navigation and the512px map are baked from the actual replacement scene.
+The circular map retains the existing UI and common marker projection; empty
+bake space has transparent pixels so it blends with the round backdrop.
+
+VERIFICATION
+Fresh native Unity Play Mode, not WebGL; no measured packaged FPS claim.
+All372 final assertions passed with0 runtime Console errors/exceptions/asserts:
+- PlayMode.txt:41 checks, saved baseline, all16 routes,7 recovery sites, actual
+  input-driven crossroads passages/turns, small-stone crush, repair,3 gate impacts,
+  Restart and reward/respawn resets. The car uses production WheelCollider physics.
+- Gameplay.txt:204 checks of combat, health, upgrades, loot, states, HUD and reset.
+- Exploration.txt:91 checks of route/reward/region access, caches/secrets and actual
+  collision/LOS. All230 current solids have triangle/primitive ray proof plus
+  player, exploration and both Buggy gun masks; no obsolete-root skip is used.
+- Respawn.txt:15 checks of existing enemy return behavior.
+- Physics.txt:21 checks of saved vehicle, turning, coasting/braking, wall impact,
+  suspension, airborne behavior and30/60/120Hz solver comparison (not display FPS).
+Preview.txt refreshes five saved-scene assertions and native screenshots after the
+final map-only alpha adjustment. Setup ResetPose, temporary physics fixtures and
+neutralized enemies for captures are disclosed in the reports.
+
+Every authoring pass also checks601 full-chassis route samples with additional
+0.20m lateral/0.15m longitudinal clearance,25 complete NavMesh paths to encounters,
+repair and rewards, and3 gate seals. Reinstall.json records a fresh repeat run:
+semantic manifest identical,64 generated files byte-identical,208 protected files
+unchanged and1683 protected existing-component configurations unchanged.
+The scene/NavMesh may regenerate internal serialization IDs; these are not an
+idempotence equality criterion. Original historical regression reports are restored.
+
+Source-preservation.json records205 of206 frozen baseline gameplay files unchanged.
+The sole difference in that set is PlayerTrackVisuals.cs, changed by concurrent
+work outside this task. ConceptVehicle.cs also changed concurrently. Both files
+were preserved, not reverted or treated as arena changes; their current bytes
+were additionally protected during repeat installation. No vehicle-art Apply ran.
+WebBuild is unchanged against baseline1ab784c6c9bf09cdc2d4d71fb6514eafc1630d4d.
+
+REVIEW AND EDIT
+Screenshots/native-overview.png is a fitted native top-down view of the actual
+saved world; distance fog/HUD are temporarily hidden for this overview only.
+Screenshots/start.png, crossroads.png, repair.png, northeast-camp.png and
+boss-northwest.png use the actual portrait game camera and HUD.
+Other frames show the actual crushed stone and three closed gates.
+
+Edit ReferenceArena/Reference layout.asset for encounter/landmark positions and
+its common Exploration layout.asset geometry for roads, pockets, regions/rewards.
+The widthScale field records the normalized design ratio; change actual route
+widths/nodes/bounds explicitly rather than scaling actors or physics.
+Stop Play Mode and run Tools / Road Gunner / Arena 1 /
+Install Reference Crossroads Arena, or the batch entry:
+RoadGunner.Editor.ReferenceArenaInstaller.InstallBatch
+Acceptance entry: RoadGunner.Editor.ReferenceArenaVerification.Run (no -quit).
+Legacy full-world/art/scenery installers describe older releases and should not
+be replayed over the current scene just to open or package it.

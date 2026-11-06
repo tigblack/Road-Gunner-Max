@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbb4a251ff349868f353fecdb3e466b, type: 3}
+  m_Name: Reference layout
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::RoadGunner.Editor.ReferenceArenaLayoutData
+  revision: 1
+  widthScale: 1.5
+  geometry: {fileID: 11400000, guid: 67052c6db01a94f258d8d5399b9e3110, type: 2}
+  crossW: {x: 0, y: 8}
+  spawnW: {x: 0, y: -48}
+  workshopW: {x: 22, y: -14}
+  bunkerW: {x: 25, y: -38}
+  southwestPenW: {x: -34, y: -24}
+  westFieldW: {x: -28, y: -4}
+  northeastCampW: {x: 29, y: 28}
+  bossW: {x: -40, y: 25}
+  monsterW: {x: 40, y: 38}
+  raidersW:
+  - {x: -3, y: -30}
+  - {x: 3, y: -30}
+  - {x: -23, y: -3}
+  - {x: -32, y: -2}
+  - {x: -27, y: -8}
+  - {x: -33, y: -22}
+  - {x: -36, y: -27}
+  - {x: 30, y: -3}
+  - {x: 35, y: 0}
+  - {x: 19, y: 22}
+  - {x: 28, y: 29}
+  - {x: 36, y: 20}
+  buggiesW:
+  - {x: -29, y: -26}
+  - {x: 26, y: 26}
+  gatesW:
+  - {x: -62, y: 8}
+  - {x: 62, y: 8}
+  - {x: 0, y: 58}

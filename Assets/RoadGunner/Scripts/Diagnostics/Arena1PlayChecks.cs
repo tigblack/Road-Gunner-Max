@@ -723,7 +723,7 @@ namespace RoadGunner
                 Vector3 travel = Vector3.ProjectOnPlane(s.vehicle.transform.position - alignedPosition, Vector3.up);
                 Vector3 visualTravel = s.input.view.WorldToViewportPoint(s.vehicle.transform.position) - s.input.view.WorldToViewportPoint(alignedPosition);
                 Check(names[index] + " uses forward directional driving", routed && !reversed && minimumForward > -.4f &&
-                    firstTurn < 25 && headingError < 12 && s.vehicle.ForwardSpeed > 1 &&
+                    (s.vehicle.tuning.walkerDrive ? firstTurn <= requestedTurn + 3 : firstTurn < 25) && headingError < 12 && s.vehicle.ForwardSpeed > 1 &&
                     Vector3.Dot(travel, expected) > .35f && Vector2.Dot(((Vector2)visualTravel).normalized, direction) > .8f &&
                     Vector3.Dot(s.vehicle.transform.up, Vector3.up) > .85f,
                     "Routed=" + routed + "; reverse ever=" + reversed + "; first-frame turn=" + firstTurn.ToString("F1") +

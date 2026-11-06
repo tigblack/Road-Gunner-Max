@@ -1,0 +1,58 @@
+Reference-shaped Arena1 — actual saved world, Unity 6000.6.4f1
+The1.5 width ratio is our normalized vehicle adaptation, not measured reference metres. Setup ResetPose and administrative enemy despawn are disclosed fixtures. Every moving case uses production DriveInput and Rigidbody/WheelCollider physics; no moving velocity/rotation writes. Closed gates and roads are never substituted or moved.
+PASS saved baseline keeps16 actors and15 eligible respawns: Alive=16; eligible=15; delay=30
+PASS geometry preserves HP combat rewards and progression objects: HP=100/100; bullet=5.25; caches=8
+PASS normalized crossroads width is increased by fifty percent: Normalized width scale=1.5; main30m, cross27m, service18m; no claim about original reference metres
+PASS every saved encounter has navigation from the new start: Actual saved16-actor positions; navigationNeedsBake=False
+PASS rebaked minimap contains the new footprint and exact live actors: Footprint corners fit circular view; real background above backdrop; all16 actor marker projections agree
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/start.png; actual game camera + HUD; setup car=(-84.85, 0.70, -84.85)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/crossroads.png; actual game camera + HUD; setup car=(14.14, 0.80, 14.14)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/repair.png; actual game camera + HUD; setup car=(14.14, 0.80, -63.64)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/northeast-camp.png; actual game camera + HUD; setup car=(93.69, 0.80, -8.84)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/boss-northwest.png; actual game camera + HUD; setup car=(-33.59, 0.80, 107.83)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/native-overview.png; actual saved terrain/scenery and live neutralized actors; temporary fitted top-down camera pitch90/yaw45; HUD canvases hidden only for this capture
+PASS route main-south has full saved-car clearance and navigation: width=30; nav=72/72; car=72; width sections=12/12; obstruction=
+PASS route main-north has full saved-car clearance and navigation: width=30; nav=56/56; car=56; width sections=14/14; obstruction=
+PASS route cross-west has full saved-car clearance and navigation: width=27; nav=70/70; car=70; width sections=14/14; obstruction=
+PASS route cross-east has full saved-car clearance and navigation: width=27; nav=70/70; car=70; width sections=14/14; obstruction=
+PASS route workshop-south-access has full saved-car clearance and navigation: width=18; nav=29/29; car=29; width sections=15/15; obstruction=
+PASS route workshop-drive-through has full saved-car clearance and navigation: width=18; nav=29/29; car=29; width sections=15/15; obstruction=
+PASS route workshop-north-access has full saved-car clearance and navigation: width=18; nav=15/15; car=15; width sections=15/15; obstruction=
+PASS route southwest-guard-access has full saved-car clearance and navigation: width=18; nav=47/47; car=47; width sections=16/16; obstruction=
+PASS route west-field-access has full saved-car clearance and navigation: width=18; nav=41/41; car=41; width sections=14/14; obstruction=
+PASS route northeast-camp-access has full saved-car clearance and navigation: width=18; nav=38/38; car=38; width sections=13/13; obstruction=
+PASS route monster-camp-branch has full saved-car clearance and navigation: width=18; nav=25/25; car=25; width sections=13/13; obstruction=
+PASS route northwest-guard-branch has full saved-car clearance and navigation: width=18; nav=30/30; car=30; width sections=15/15; obstruction=
+PASS route bunker-landmark-access has full saved-car clearance and navigation: width=18; nav=19/19; car=19; width sections=19/19; obstruction=
+PASS route secret-west-spur has full saved-car clearance and navigation: width=18; nav=25/25; car=25; width sections=13/13; obstruction=
+PASS route secret-northeast-spur has full saved-car clearance and navigation: width=18; nav=16/16; car=16; width sections=16/16; obstruction=
+PASS route secret-southeast-spur has full saved-car clearance and navigation: width=18; nav=19/19; car=19; width sections=19/19; obstruction=
+PASS saved recovery sites have navigable full-car standing space: Recovery points=7
+PASS a registered saved small stone has a real clear driving approach: Actual authored Stone=reference/scenery-017; 9m approach and5m exit checked at0.5m spacing; no copied/replaced/moved prop or probe
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/small-stone-before.png; actual game camera + HUD; setup car=(-16.52, 0.48, -154.53)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/small-stone-debris.png; actual game camera + HUD; setup car=(-18.80, 0.48, -160.30)
+PASS real input drive breaks the saved small stone without HP or reward changes: ID=reference/scenery-017; reached=True; travel=11.60; grounded steps=172; min up=1.000; peak=6.41; hard contacts=0; broken=True; probe=False; original indices unchanged=True; ledger unchanged=True
+PASS actual crossroads straight drive south to north: reached=True; travel=29.58; grounded steps=290; min up=1.000; peak=8.22; hard contacts=0; HP and reward ledger unchanged=True
+PASS actual crossroads straight drive west to east: reached=True; travel=29.58; grounded steps=290; min up=1.000; peak=8.22; hard contacts=0; HP and reward ledger unchanged=True
+PASS actual crossroads straight drive north to south: reached=True; travel=29.58; grounded steps=290; min up=1.000; peak=8.22; hard contacts=0; HP and reward ledger unchanged=True
+PASS actual crossroads straight drive east to west: reached=True; travel=29.58; grounded steps=290; min up=1.000; peak=8.22; hard contacts=0; HP and reward ledger unchanged=True
+PASS actual crossroads controlled turn from arm 0: reached=True; travel=54.76; grounded steps=943; min up=1.000; peak=6.74; hard contacts=0; alternating left/right turns use only live directional input
+PASS actual crossroads controlled turn from arm 1: reached=True; travel=54.76; grounded steps=943; min up=1.000; peak=6.74; hard contacts=0; alternating left/right turns use only live directional input
+PASS actual crossroads controlled turn from arm 2: reached=True; travel=54.76; grounded steps=943; min up=1.000; peak=6.74; hard contacts=0; alternating left/right turns use only live directional input
+PASS actual crossroads controlled turn from arm 3: reached=True; travel=54.76; grounded steps=943; min up=1.000; peak=6.74; hard contacts=0; alternating left/right turns use only live directional input
+PASS actual vehicle enters repairs and exits the saved workshop: reached=True; travel=27.62; grounded steps=278; min up=1.000; peak=8.17; hard contacts=0; repairing=True; HP=60 -> 90.16604
+PASS Gate West is a real closed barrier with a reachable inside approach: Saved colliders=4; LOS blocked=True; inside path=True
+PASS Gate West stops a real physical vehicle without passage or rewards: contacts=34; impulse=12179.35; travel=13.80907; signed gate plane=-3.690694; car=(-92.85, 0.51, 121.13)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/closed-gate-west.png; actual game camera + HUD; setup car=(-92.85, 0.51, 121.13)
+PASS Gate East is a real closed barrier with a reachable inside approach: Saved colliders=4; LOS blocked=True; inside path=True
+PASS Gate East stops a real physical vehicle without passage or rewards: contacts=34; impulse=12185.92; travel=13.80909; signed gate plane=-3.690683; car=(121.13, 0.51, -92.85)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/closed-gate-east.png; actual game camera + HUD; setup car=(121.13, 0.51, -92.85)
+PASS Gate North is a real closed barrier with a reachable inside approach: Saved colliders=4; LOS blocked=True; inside path=True
+PASS Gate North stops a real physical vehicle without passage or rewards: contacts=34; impulse=12184.13; travel=13.80907; signed gate plane=-3.690688; car=(99.92, 0.51, 99.92)
+CAPTURE Documentation/RoadGunner/ReferenceArena-2026-11-06/Screenshots/closed-gate-north.png; actual game camera + HUD; setup car=(99.92, 0.51, 99.92)
+PASS new-layout Restart restores the original fresh run and spawn: Serial=1 -> 2; live=16; pending=0
+PASS Restart restores broken scenery and the saved small-stone probe: Production broken count=0; same saved selected stone/probe rearmed
+RESULT checks=41; failures=0; no scene, mesh, tuning or asset writes.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

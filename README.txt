@@ -1,6 +1,6 @@
 ROAD GUNNER
 
-Portrait vehicle-combat demo in a stylized wasteland.
+Portrait walker-combat demo in a stylized wasteland.
 Unity Editor: 6000.6.4f1
 Render pipeline: Universal Render Pipeline 17.6.0
 
@@ -9,10 +9,44 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 5 November update corrects destruction of rotated small boulders.
+Press Play. The latest 6 November source revision rebuilds Arena 1 around a wide
+four-arm crossroads, southeast repair hub, southwest guard outpost, northeast
+camp/optional Ashmaw, northwest Warlord and three closed exits. It adapts the
+researched historical Butcher Hero topology to our vehicle and wasteland.
+Map bounds are350m east-west by310m north-south, with30m main and27m cross roads.
+The approximately50% widening is relative to a normalized authoring plan; the
+reference world's real dimensions and complete current balance are unknown.
 The player speed limit remains 9.36m/s from the preceding +60% speed release.
-Detailed Argon art, tracked steering and existing combat rules are retained.
+The player is now an articulated bipedal walker with an armoured torso, shoulder
+cannon and arm-mounted harpoon. Automobile body/crew/tyre mesh references are
+removed from the saved player. Separate planted-foot impressions replace player
+track strips; existing steering and combat tuning are retained.
 Large rocks and structures remain solid.
+
+CURRENT LEVEL AUTHORING
+Edit Levels/Greenwood/ReferenceArena/Reference layout.asset for encounter and
+landmark positions. Its geometry reference points to the common editable
+Exploration layout.asset for roads, clearings, regions, supplies and secrets.
+Stop Play Mode, save other work, then run:
+Tools / Road Gunner / Arena 1 / Install Reference Crossroads Arena
+Batch: RoadGunner.Editor.ReferenceArenaInstaller.InstallBatch
+The versioned installer rebuilds only the environment, keeps the actual existing
+actors/vehicle/workshop/upgrades, checks chassis clearance and reachability,
+then saves navigation and a matching map. Reapply this command after layout edits;
+legacy full-world/exploration installers describe older geometry.
+Acceptance: RoadGunner.Editor.ReferenceArenaVerification.Run (no -quit).
+Design, source evidence and fresh verification:
+Documentation/RoadGunner/ReferenceArena-2026-11-06/
+The arena layout release initially passed372 assertions across gameplay,
+exploration, reference-layout drives, respawns and its former wheel physics.
+The later instant walker has separate fresh acceptance below. Delivery.txt and
+Screenshots/native-overview.png record the saved result and scope. A repeat
+installer pass preserves the same geometry/assets without duplicate gameplay.
+The current6 November WebGL contains the detailed walker, instant character
+movement and rebuilt reference arena. Release evidence:
+Documentation/RoadGunner/WebGL-2026-11-06-PlayerWalkerInstant/.
+Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/?build=walker-instant-20261106
+Tap PLAY to start the game and audio; use the floating touch stick.
 
 ENEMY RETURNS
 After a Raider, Buggy or Ashmaw dies, a circular timer appears at its death site.
@@ -27,11 +61,11 @@ Edit ArenaEnemyRespawns.respawnDelaySeconds on the saved GameSession to tune del
 
 CONTROLS AND GOAL
 Touch or drag in the lower-left control area, or use WASD / arrow keys, to choose
-a camera-relative travel direction. The tracked car turns its nose toward that
-direction and drives forward. S / Down first turns the chassis around; the tracks
-can counter-rotate on the ground. It does not select reverse. Joystick magnitude controls
-speed; a held joystick takes priority. Release input to coast. Space applies the
-brake. Escape / II pauses the run.
+a camera-relative travel direction. The grounded walker immediately faces and
+walks in that direction, including S / Down, with no acceleration ramp or coast.
+Release the stick/keys to stop immediately. Joystick magnitude still controls
+speed; a held joystick takes priority. Space stops movement. Escape / II pauses
+the run. Solid obstacles block the walker; falling keeps its vertical physics.
 
 DEFEAT WARLORD to clear Arena 1. The Ashmaw Monster mini-boss is optional; a
 16/16 enemy clear is not required. The goal card first points toward a nearby
@@ -49,17 +83,37 @@ Drive close to the free, one-use upgrade terminals:
 - ATTACK +1: +20% damage for this run, 5.25 -> 6.3 damage per bullet at ATK 2.
 - HEALTH +1: +20 maximum and current HP, 100 -> 120 maximum at HP 2, retaining
   damage already taken.
-The workshop repairs a living damaged car for free inside its 10 m service area,
+The workshop repairs a living damaged walker for free inside its 10 m service area,
 restoring 10% of the current maximum HP per second of play.
 
-R / RECOVER CAR returns the car upright to the nearest clear recovery point,
+R / RECOVER returns the walker upright to the nearest clear recovery point,
 with a 3-second cooldown. Recover itself does not restore HP or reset the run.
 RESTART RUN starts again: score, kills and upgrades reset, enemies return and
 player health is restored. Pause/Resume preserves run and tutorial progress.
 Pause also provides music volume and a summary of current damage and run stats.
 The volume preference is saved locally.
 
-ARGON VISUAL AUTHORING
+PLAYER WALKER PRESENTATION
+The current saved player contains only the bipedal walker presentation; obsolete
+car-body, cabin, crew, tyre and weapon meshes have been detached from the player.
+The vertical physical rig and combat balance are retained. The player-only
+VehicleTuning.walkerDrive profile replaces the old acceleration/coasting behavior. Footprints are separate
+mechanical soles emitted on verified left/right foot landings, with step dust;
+standing, paused or airborne feet do not paint continuous tracks.
+Narrow authoring: Tools / Road Gunner / Player / Install Instant Walker
+Batch: RoadGunner.Editor.PlayerWalkerInstantInstaller.InstallBatch
+Acceptance (each without -quit):
+RoadGunner.Editor.PlayerWalkerInstantVerification.Run
+RoadGunner.Editor.PlayerWalkerVerification.Run
+RoadGunner.Editor.Arena1Verification.Run
+Fresh evidence and actual game/detail captures: PlayerWalkerInstant-2026-11-06/.
+All256 current assertions pass (33 instant movement +19 gait/visuals +204 gameplay),
+with zero runtime Console errors/exceptions/asserts.
+The upper model has layered armour, fasteners, vents, hydraulic components, hoses
+and machined weapon details, combined into the same seven shared-material meshes.
+Do not rerun the older full car/art/world installers over this saved version.
+
+ARGON VISUAL AUTHORING (HISTORICAL VEHICLE RELEASE)
 The saved scene already contains the new models and refreshed scenery collision
 catalog. Build this saved scene directly. The coordinated art regeneration command
 RoadGunner.Editor.ArgonVisualOverhaul.ApplyBatch is an authoring tool and is not
@@ -73,13 +127,18 @@ and living enemy Buggies can crush these props. Decorative destruction does
 not change HP, kills, upgrades or Scrap. Restart restores the props and clears
 fragments. Marked gameplay reward caches retain their existing rules.
 
-The saved arena has 241 crushable pebble clusters and 91 small boulders. Boulders
+The preceding 5 November arena had241 crushable pebble clusters and91 small boulders.
+Boulders
 up to 0.6m high and 1m across crumble with stone fragments, dust and an impact
 sound. Larger boulders, rock spires, cliffs, hulls and buildings are solid and block
 chassis and shots. Grass, dunes and ground drifts remain surface detail.
-Terrain, roads and all original visual geometry/materials/poses are retained.
+The6 November layout explicitly replaces the old environment. Its new scenery
+reuses finished models/materials and the same vehicle-only destruction runtime;
+new small stones, cacti, crates, drums and tyres have reusable crush probes.
+The current placement/handling manifest is ReferenceArena-2026-11-06/Authoring.json.
 
-The saved scene already includes this wiring. Narrow authoring only:
+The following narrow authoring commands and counts describe the5 November world;
+do not replay that historical catalog against the rebuilt6 November geometry:
 Tools / Road Gunner / Scenery / Install Vehicle Crush Collisions Only
 Batch: RoadGunner.Editor.DecorationCollisionInstaller.InstallBatch
 Read-only saved-catalog check: DecorationCollisionInstaller.DumpManifestBatch
@@ -109,15 +168,10 @@ Rust Vulture takes 25% extra ram damage. After a committed Warlord strike,
 bullets deal 20% extra damage during recovery; the boss HUD shows that window.
 The new routes provide room to manoeuvre and optional approaches to encounters.
 
-Edit Levels/Greenwood/Exploration/Exploration layout.asset for routes, widths,
-turning clearings, regions, rewards and recovery laybys. Edit Exploration
-tuning.asset for reward defaults, reveal/range settings and counterplay.
-After edits, stop Play Mode and run:
-Tools / Road Gunner / Arena1 / Install Exploration Arena
-Batch entry: RoadGunner.Editor.ExplorationArenaInstaller.InstallBatch
-This rebuilds the saved scene, road surface, navigation, map and region HUD.
-Apply any legacy presentation installer before this exploration installer.
-Implementation and acceptance evidence:
+Edit the common Exploration layout.asset through the current Reference layout
+workflow above. Exploration tuning.asset retains reward defaults, reveal/range
+settings and counterplay. The earlier exploration installer and its loop-based
+geometry remain historical authoring code. Earlier implementation evidence:
 Documentation/RoadGunner/Exploration-2026-10-31/
 
 ANTON FEEDBACK AUTHORING
@@ -217,8 +271,9 @@ physics checks plus 204 full Arena 1 regression checks, with zero failures and
 zero Console errors/exceptions/asserts. Reports: WheelPhysics-2026-10-30/PlayMode.txt
 and Gameplay.txt. No FPS, retention or cross-platform physics determinism is
 asserted here.
-Exact The War reference data was unavailable; Arena 1 remains the documented
-authored fallback layout. Unity caches, local IDE state and generated build
+Exact modern reference balance remains unavailable. The6 November layout adapts
+observed historical connectivity; it does not claim exact reference coordinates.
+Unity caches, local IDE state and generated build
 folders can be recreated by the editor.
 
 EXPLORATION ACCEPTANCE — 31 OCTOBER 2026

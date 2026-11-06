@@ -1,0 +1,39 @@
+Actual saved walker instantaneous movement; Unity 6000.6.4f1
+Synthetic InputSystem Keyboard events -> normal DriveInput.Update -> normal VehicleController.FixedUpdate -> actual Rigidbody. No testInput override, manual InputSystem.Update, physics simulation, driving transform or velocity injection. ResetPose is used only between fixtures; enemies are administratively despawned. This is focused regression, not natural playthrough.
+PASS saved player uses opt-in dynamic walker: walkerDrive=True; chassis boxes=2; max=9.36; dt=0.01999999; damping=0
+PASS original suspension reaches real ground: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.004, 0.050, 0.004)
+PASS first Fixed start up: production=True; along=9.360001; grounded=4; walkerGrounded=True; blocked=False; input=(0.707, 0.000, 0.707); requested=(6.619, 0.000, 6.619); resolved=(6.619, 0.000, 6.619); actual=(6.619, 0.047, 6.619)
+PASS first Fixed release up: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.003, 0.034, 0.003)
+PASS first Fixed start up-right: production=True; along=9.36; grounded=4; walkerGrounded=True; blocked=False; input=(1.000, 0.000, 0.000); requested=(9.360, 0.000, 0.000); resolved=(9.360, 0.000, 0.000); actual=(9.360, 0.047, 0.000)
+PASS first Fixed release up-right: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.004, 0.034, 0.000)
+PASS first Fixed start right: production=True; along=9.36; grounded=4; walkerGrounded=True; blocked=False; input=(0.707, 0.000, -0.707); requested=(6.619, 0.000, -6.619); resolved=(6.619, 0.000, -6.619); actual=(6.619, 0.046, -6.619)
+PASS first Fixed release right: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.002, 0.033, -0.002)
+PASS first Fixed start down-right: production=True; along=9.36; grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, -1.000); requested=(0.000, 0.000, -9.360); resolved=(0.000, 0.000, -9.360); actual=(0.000, 0.045, -9.360)
+PASS first Fixed release down-right: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.000, 0.036, -0.001)
+PASS first Fixed start down: production=True; along=9.360001; grounded=4; walkerGrounded=True; blocked=False; input=(-0.707, 0.000, -0.707); requested=(-6.619, 0.000, -6.619); resolved=(-6.619, 0.000, -6.619); actual=(-6.619, 0.045, -6.619)
+PASS first Fixed release down: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(-0.001, 0.035, -0.001)
+PASS first Fixed start down-left: production=True; along=9.36; grounded=4; walkerGrounded=True; blocked=False; input=(-1.000, 0.000, 0.000); requested=(-9.360, 0.000, 0.000); resolved=(-9.360, 0.000, 0.000); actual=(-9.360, 0.045, 0.000)
+PASS first Fixed release down-left: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(-0.001, 0.036, 0.000)
+PASS first Fixed start left: production=True; along=9.36; grounded=4; walkerGrounded=True; blocked=False; input=(-0.707, 0.000, 0.707); requested=(-6.619, 0.000, 6.619); resolved=(-6.619, 0.000, 6.619); actual=(-6.619, 0.046, 6.619)
+PASS first Fixed release left: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(-0.002, 0.033, 0.002)
+PASS first Fixed start up-left: production=True; along=9.36; grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 1.000); requested=(0.000, 0.000, 9.360); resolved=(0.000, 0.000, 9.360); actual=(0.000, 0.047, 9.360)
+PASS first Fixed release up-left: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.000, 0.034, 0.004)
+PASS abrupt reversal has no acceleration ramp or turn arc: grounded=4; walkerGrounded=True; blocked=False; input=(-0.707, 0.000, -0.707); requested=(-6.619, 0.000, -6.619); resolved=(-6.619, 0.000, -6.619); actual=(-6.619, 0.040, -6.619)
+PASS Space brake stops within first Fixed: grounded=4; walkerGrounded=True; blocked=False; input=(-0.707, 0.000, -0.707); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(-0.001, 0.026, -0.001)
+PASS pause clears actual planar speed synchronously: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.000, 0.021, 0.000)
+PASS paused body does not drift: distance=0
+PASS resume with released input remains stopped: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.002, 0.010, 0.002)
+PASS fresh input after resume is immediate: grounded=4; walkerGrounded=True; blocked=False; input=(0.707, 0.000, 0.707); requested=(6.619, 0.000, 6.619); resolved=(6.619, 0.000, 6.619); actual=(6.619, 0.008, 6.619)
+PASS completed state stops synchronously: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.000, 0.008, 0.000)
+PASS terminal input cannot restart movement: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.000, 0.008, 0.000)
+PASS restart restores enabled idle movement without ledger changes: grounded=4; walkerGrounded=True; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.004, 0.052, 0.004)
+PASS airborne input preserves falling motion without propulsion or yaw: grounded=0; walkerGrounded=False; blocked=False; input=(0.707, 0.000, -0.707); requested=(6.619, 0.000, -6.619); resolved=(0.000, 0.000, 0.000); actual=(0.000, -0.981, 0.000)
+PASS airborne brake does not cancel gravity: beforeY=-0.9809996; grounded=0; walkerGrounded=False; blocked=False; input=(0.000, 0.000, 0.000); requested=(0.000, 0.000, 0.000); resolved=(0.000, 0.000, 0.000); actual=(0.000, -1.373, 0.000)
+PASS real saved gate prevents full-speed tunneling: blocked Fixed=89; travel=13.78962; max signed plane=-3.711642; exact compound penetration=0; grounded=4; walkerGrounded=True; blocked=True; input=(0.707, 0.000, 0.707); requested=(6.619, 0.000, 6.619); resolved=(0.000, 0.000, 0.000); actual=(0.000, 0.000, 0.000)
+PASS wall contact permits immediate escape: grounded=4; walkerGrounded=True; blocked=False; input=(-0.707, 0.000, -0.707); requested=(-6.619, 0.000, -6.619); resolved=(-6.619, 0.000, -6.619); actual=(-6.619, 0.003, -6.619)
+PASS diagonal input slides along real gate without bypass: blocked Fixed=58; tangent travel=10.19232; max signed plane=-3.450879; exact compound penetration=0; grounded=4; walkerGrounded=True; blocked=True; input=(1.000, 0.000, 0.000); requested=(9.360, 0.000, 0.000); resolved=(4.680, 0.000, -4.680); actual=(4.680, 0.002, -4.680)
+PASS movement fixtures do not award combat or upgrades: kills=0; scrap=0; HP=100; ATK=1; HP level=1
+RESULT checks=33; failures=0; no saved scene/assets modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

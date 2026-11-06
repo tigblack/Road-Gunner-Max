@@ -1,0 +1,53 @@
+{
+  "historical_reports_restored": true,
+  "suites": [
+    {
+      "suite": "Gameplay",
+      "exit_code": 0,
+      "seconds": 83.98,
+      "report_sha256": "f339909ca2d56876fcf86aca4c92e40dd34924d676b00ea1a9d8d3d53f173bb1",
+      "report": "Documentation/RoadGunner/ReferenceArena-2026-11-06/Gameplay.txt",
+      "fail_lines": [],
+      "summary": [
+        "RESULT checks=204; failures=0; saved scene was not modified.",
+        "PASS runtime Console: errors/exceptions/asserts=0"
+      ]
+    },
+    {
+      "suite": "Exploration",
+      "exit_code": 0,
+      "seconds": 21.42,
+      "report_sha256": "a2110de939a658d269c245b0e8f86a55271c6710291fc771456229c99ca1972a",
+      "report": "Documentation/RoadGunner/ReferenceArena-2026-11-06/Exploration.txt",
+      "fail_lines": [],
+      "summary": [
+        "RESULT checks=91; failures=0; saved scene and tuning were not modified.",
+        "PASS runtime Console: errors/exceptions/asserts=0"
+      ]
+    },
+    {
+      "suite": "Respawn",
+      "exit_code": 0,
+      "seconds": 26.77,
+      "report_sha256": "84526340d62826bbdd674a11e63c4c1474a5f3be3a18b198cdfccdcd4a63ea2b",
+      "report": "Documentation/RoadGunner/ReferenceArena-2026-11-06/Respawn.txt",
+      "fail_lines": [],
+      "summary": [
+        "RESULT checks=15; failures=0; original delay/settings restored, saved scene not written.",
+        "PASS runtime Console: errors/exceptions/asserts=0"
+      ]
+    },
+    {
+      "suite": "Physics",
+      "exit_code": 0,
+      "seconds": 69.48,
+      "report_sha256": "3c9e0327cf4ce4b1940dbef664a97c92b03184452cdc3151e7f66ec005450675",
+      "report": "Documentation/RoadGunner/ReferenceArena-2026-11-06/Physics.txt",
+      "fail_lines": [],
+      "summary": [
+        "RESULT checks=21; failures=0; temporary physics fixtures removed; saved scene/tuning not modified.",
+        "PASS runtime Console: errors/exceptions/asserts=0"
+      ]
+    }
+  ]
+}

@@ -6,9 +6,11 @@ using UnityEngine.Rendering;
 namespace RoadGunner
 {
     /// <summary>
-    /// Visual suspension-following track units. The four original WheelColliders remain the
-    /// sole wheel contacts; this component never applies forces, changes inputs or adds colliders.
-    /// Each side advances by its own measured chassis-point displacement, including pivot turns.
+    /// Articulated Armored Core-style bipedal walker leg & torso locomotion visuals.
+    /// The four original WheelColliders remain the sole physical ground contacts; this component
+    /// never applies forces, changes inputs, or adds colliders. Each leg's stride phase advances
+    /// from its measured ground-contact displacement and drives 2-bone analytical IK (Hip -> Knee -> Ankle -> Foot)
+    /// plus synchronized pelvis, torso, shoulder-cannon, and left-arm harpoon motion.
     /// </summary>
     [DefaultExecutionOrder(12000)]
     [DisallowMultipleComponent]
@@ -25,6 +27,27 @@ namespace RoadGunner
         [Range(.02f, .07f)] public float grouserHeight = .045f;
         [Range(0, .12f)] public float returnSag = .045f;
 
+        const float StrideLength = 2.48f;
+        const float ThighLength = 0.68f;
+        const float ShinLength = 0.74f;
+        const float FootAnkleHeight = 0.16f;
+        const float HipHeightAboveGround = 1.38f;
+        const float HipLateralOffset = 0.72f;
+        const float FootLateralOffset = 0.78f;
+        const float StanceFraction = 0.54f;
+
+        public readonly struct FootContact
+        {
+            public readonly Vector3 Position, Normal, Forward;
+            public readonly bool IsLeft;
+            public FootContact(Vector3 position, Vector3 normal, Vector3 forward, bool isLeft)
+            { Position = position; Normal = normal; Forward = forward; IsLeft = isLeft; }
+        }
+        /// <summary>One actual, supported swing-to-stance landing; never a wheel-track sample.</summary>
+        public event Action<FootContact> FootPlanted;
+        public int PlantedFootCount { get; private set; }
+        public bool IsWalkingRig => left != null && right != null && HasValidRig();
+
         public float LeftPhase => left == null ? 0 : Mathf.Repeat(LeftDistanceMeters / left.LoopLength, 1);
         public float RightPhase => right == null ? 0 : Mathf.Repeat(RightDistanceMeters / right.LoopLength, 1);
         public float LeftDistanceMeters { get; private set; }
@@ -39,12 +62,39 @@ namespace RoadGunner
 
         Side left, right;
         Vector3 previousLeft, previousRight, previousForward;
-        int runSerial;
+        int runSerial, poseResetSerial;
         bool sampled;
+        readonly RaycastHit[] footGroundHits = new RaycastHit[16];
+
+        // Upper mech visual hierarchy nodes (under "Replaceable visuals")
+        Transform visualRoot;
+        Transform pelvisNode;      // "Concept · Hunched harpoon mechanic" -> Mech Pelvis & Waist Core
+        Transform torsoNode;       // "Concept · Body and open cargo bed"  -> Mech Upper Chest, Head & Booster Pack
+        Transform rightArmNode;    // "Concept · Cabin driver"             -> Mech Right Arm & Stabilizer Gauntlet
+        Transform shoulderGunNode; // "RoofMachineGun"                     -> Right Shoulder Heavy Autocannon Mount
+        Transform leftArmMount;    // "RearCompanionArea/HarpoonMount"     -> Left Shoulder Harpoon Arm Socket
+        Transform leftArmVisual;   // "Concept · Rear mechanical harpoon launcher" -> Left Arm Harpoon Gauntlet Mesh
+        HarpoonCollector harpoon;
+
+        Vector3 baseShoulderGunPos = new Vector3(0.56f, 1.965f, -0.12f);
+        Vector3 baseLeftArmMountPos = new Vector3(-0.84f, 1.92f, 0.14f);
+        float walkBlend;
+        float smoothedForwardSpeed;
+        float smoothedTurnSpeed;
+        float leftArmAimBlend;
+        float launchRecoilTimer;
+        HarpoonState previousHarpoonState;
+
+        // Shared stride state computed each frame for both legs + upper torso synchronization
+        float currentPelvisBobY;
+        float currentPelvisSwayX;
+        float currentPelvisBobZ;
+        Quaternion currentPelvisRot = Quaternion.identity;
 
         void Awake()
         {
             if (!HasValidRig()) { Debug.LogError("PLAYER TRACKS: incomplete player-only visual rig.", this); enabled = false; return; }
+            BindUpperMechNodes();
             left = BuildSide(true); right = BuildSide(false);
             left.Mesh.hideFlags = right.Mesh.hideFlags = HideFlags.DontSave;
             leftMesh.sharedMesh = left.Mesh; rightMesh.sharedMesh = right.Mesh;
@@ -54,22 +104,96 @@ namespace RoadGunner
 
         bool HasValidRig() => vehicle && frontLeft && rearLeft && frontRight && rearRight && leftMesh && rightMesh;
 
+        void BindUpperMechNodes()
+        {
+            if (!vehicle) return;
+            harpoon = vehicle.GetComponent<HarpoonCollector>();
+            visualRoot = vehicle.transform.Find("Replaceable visuals");
+            if (!visualRoot) return;
+
+            torsoNode = Preferred(visualRoot, "Walker torso", "Concept \u00B7 Body and open cargo bed");
+            rightArmNode = Preferred(visualRoot, "Walker right arm", "Concept \u00B7 Cabin driver");
+            pelvisNode = Preferred(visualRoot, "Walker pelvis", "Concept \u00B7 Hunched harpoon mechanic");
+            shoulderGunNode = visualRoot.Find("RoofMachineGun");
+            if (shoulderGunNode) baseShoulderGunPos = shoulderGunNode.localPosition;
+
+            leftArmMount = visualRoot.Find("RearCompanionArea/HarpoonMount");
+            if (leftArmMount)
+            {
+                baseLeftArmMountPos = leftArmMount.localPosition;
+                var pivot = leftArmMount.Find("HarpoonPivot");
+                if (pivot)
+                {
+                    leftArmVisual = Preferred(pivot, "Walker harpoon arm", "Concept \u00B7 Rear mechanical harpoon launcher");
+                }
+            }
+
+            // Include all mech body & leg renderers in the warm damage flash when hit
+            var health = vehicle.GetComponent<VehicleHealth>();
+            if (health)
+            {
+                var panels = new List<Renderer>();
+                if (torsoNode) panels.AddRange(torsoNode.GetComponentsInChildren<MeshRenderer>(true));
+                if (pelvisNode) panels.AddRange(pelvisNode.GetComponentsInChildren<MeshRenderer>(true));
+                if (rightArmNode) panels.AddRange(rightArmNode.GetComponentsInChildren<MeshRenderer>(true));
+                if (leftArmVisual) panels.AddRange(leftArmVisual.GetComponentsInChildren<MeshRenderer>(true));
+                if (leftMesh && leftMesh.TryGetComponent<Renderer>(out var lr)) panels.Add(lr);
+                if (rightMesh && rightMesh.TryGetComponent<Renderer>(out var rr)) panels.Add(rr);
+                if (panels.Count > 0) health.bodyPanels = panels.ToArray();
+            }
+        }
+
+        static Transform Preferred(Transform parent, string current, string legacy)
+        { var node = parent.Find(current); return node ? node : parent.Find(legacy); }
+
         /// <summary>Visual phase reset only. Does not alter any physical body or wheel.</summary>
         public void ResetMotion()
         {
             LeftDistanceMeters = RightDistanceMeters = LeftBeltSpeed = RightBeltSpeed = 0;
+            walkBlend = smoothedForwardSpeed = smoothedTurnSpeed = leftArmAimBlend = launchRecoilTimer = 0;
+            currentPelvisBobY = currentPelvisSwayX = currentPelvisBobZ = 0;
+            currentPelvisRot = Quaternion.identity;
+            previousHarpoonState = HarpoonState.Idle;
+            PlantedFootCount = 0;
+            ResetFootTracking();
             sampled = false;
             if (session) runSerial = session.RunSerial;
+            if (vehicle) poseResetSerial = vehicle.PoseResetSerial;
+            ResetUpperMechPose();
+        }
+
+        void ResetFootTracking()
+        {
+            if (left != null) left.ContactSampled = false;
+            if (right != null) right.ContactSampled = false;
+        }
+
+        void OnDisable() { sampled = false; ResetFootTracking(); }
+
+        void ResetUpperMechPose()
+        {
+            if (pelvisNode) { pelvisNode.localPosition = Vector3.zero; pelvisNode.localRotation = Quaternion.identity; }
+            if (torsoNode) { torsoNode.localPosition = Vector3.zero; torsoNode.localRotation = Quaternion.identity; }
+            if (rightArmNode) { rightArmNode.localPosition = Vector3.zero; rightArmNode.localRotation = Quaternion.identity; }
+            if (shoulderGunNode) shoulderGunNode.localPosition = baseShoulderGunPos;
+            if (leftArmMount) leftArmMount.localPosition = baseLeftArmMountPos;
+            if (leftArmVisual) { leftArmVisual.localPosition = Vector3.zero; leftArmVisual.localRotation = Quaternion.identity; }
         }
 
         void LateUpdate()
         {
             if (left == null || right == null || !HasValidRig()) return;
-            if (session && runSerial != session.RunSerial) ResetMotion();
+            if ((session && runSerial != session.RunSerial) || poseResetSerial != vehicle.PoseResetSerial) ResetMotion();
+            if ((session && !session.Playing) || Time.deltaTime <= .00001f)
+            {
+                LeftBeltSpeed = RightBeltSpeed = 0;
+                sampled = false; ResetFootTracking();
+                return;
+            }
             Vector3 l = SideAnchor(frontLeft, rearLeft), r = SideAnchor(frontRight, rearRight);
             Vector3 forward = vehicle.transform.forward;
             float dt = Time.deltaTime;
-            // Recover/Restart can reposition the chassis. A teleport is not belt travel.
+            // Recover/Restart can reposition the chassis. A teleport is not stride travel.
             float discontinuity = Mathf.Max(4, 80 * dt);
             if (sampled && ((l - previousLeft).sqrMagnitude > discontinuity * discontinuity ||
                             (r - previousRight).sqrMagnitude > discontinuity * discontinuity ||
@@ -83,8 +207,140 @@ namespace RoadGunner
             }
             else LeftBeltSpeed = RightBeltSpeed = 0;
             previousLeft = l; previousRight = r; previousForward = forward; sampled = true;
+
+            ComputeLocomotionState(dt);
             UpdateSide(left, true, LeftDistanceMeters);
             UpdateSide(right, false, RightDistanceMeters);
+            AnimateUpperMech(dt);
+        }
+
+        void ComputeLocomotionState(float dt)
+        {
+            if (!Application.isPlaying)
+            {
+                walkBlend = 0f;
+                currentPelvisBobY = currentPelvisSwayX = currentPelvisBobZ = 0f;
+                currentPelvisRot = Quaternion.identity;
+                return;
+            }
+
+            float avgSpeed = 0.5f * (LeftBeltSpeed + RightBeltSpeed);
+            float diffSpeed = RightBeltSpeed - LeftBeltSpeed;
+            float maxSideSpeed = Mathf.Max(Mathf.Abs(LeftBeltSpeed), Mathf.Abs(RightBeltSpeed));
+            float targetWalk = Mathf.Clamp01((maxSideSpeed - 0.04f) / 1.45f);
+
+            float rate = dt > 0f ? dt : 0.016f;
+            walkBlend = Mathf.MoveTowards(walkBlend, targetWalk, rate * 6.5f);
+            smoothedForwardSpeed = Mathf.Lerp(smoothedForwardSpeed, avgSpeed, Mathf.Clamp01(rate * 8f));
+            smoothedTurnSpeed = Mathf.Lerp(smoothedTurnSpeed, diffSpeed, Mathf.Clamp01(rate * 8f));
+
+            // Unified walk cycle angle from actual ground distance
+            float meanDist = 0.5f * (LeftDistanceMeters + RightDistanceMeters);
+            float turnDist = 0.5f * (LeftDistanceMeters - RightDistanceMeters);
+            float cyclePhase = Mathf.Repeat((Mathf.Abs(meanDist) > 0.01f ? meanDist : turnDist) / StrideLength, 1f);
+            float walkRad = cyclePhase * Mathf.PI * 2f;
+
+            // Idle reactor breathing when stationary
+            float idlePulse = Mathf.Sin(Time.time * 2.4f) * (1f - walkBlend);
+
+            // Double-frequency vertical pelvis bounce (peaks during mid-stance of each leg, dips at heel-strike)
+            float strideBounce = -Mathf.Cos(walkRad * 2f) * 0.068f * walkBlend;
+            currentPelvisBobY = strideBounce + idlePulse * 0.016f;
+
+            // Lateral weight transfer toward whichever leg is planted in stance
+            currentPelvisSwayX = -Mathf.Sin(walkRad) * 0.062f * walkBlend;
+            currentPelvisBobZ = Mathf.Sin(walkRad * 2f) * 0.024f * walkBlend;
+
+            // Pelvis hip-twist & roll with stride
+            float pelvisYaw = Mathf.Sin(walkRad) * 6.5f * walkBlend;
+            float pelvisRoll = -Mathf.Sin(walkRad) * 3.2f * walkBlend;
+            float pelvisPitch = Mathf.Clamp(smoothedForwardSpeed / 5.85f, -0.5f, 1f) * 3.0f * walkBlend;
+            currentPelvisRot = Quaternion.Euler(pelvisPitch, pelvisYaw, pelvisRoll);
+        }
+
+        void AnimateUpperMech(float dt)
+        {
+            if (!Application.isPlaying || !visualRoot) return;
+
+            float meanDist = 0.5f * (LeftDistanceMeters + RightDistanceMeters);
+            float turnDist = 0.5f * (LeftDistanceMeters - RightDistanceMeters);
+            float cyclePhase = Mathf.Repeat((Mathf.Abs(meanDist) > 0.01f ? meanDist : turnDist) / StrideLength, 1f);
+            float walkRad = cyclePhase * Mathf.PI * 2f;
+            float idlePulse = Mathf.Sin(Time.time * 2.4f) * (1f - walkBlend);
+
+            Vector3 pelvisOffset = new Vector3(currentPelvisSwayX, currentPelvisBobY, currentPelvisBobZ);
+            Vector3 pelvisPivot = new Vector3(0f, 1.38f, 0f);
+            if (pelvisNode)
+            {
+                pelvisNode.localRotation = currentPelvisRot;
+                pelvisNode.localPosition = pelvisOffset + pelvisPivot - (currentPelvisRot * pelvisPivot);
+            }
+
+            // Torso leans into forward acceleration, banks into turns, and counter-rotates against the pelvis
+            float forwardLean = Mathf.Clamp(smoothedForwardSpeed / 5.85f, -0.6f, 1f) * 8.5f * walkBlend + idlePulse * 1.1f;
+            float turnBank = Mathf.Clamp(-smoothedTurnSpeed * 1.8f, -6.5f, 6.5f) * walkBlend;
+            float torsoCounterYaw = -Mathf.Sin(walkRad) * 7.5f * walkBlend;
+
+            // When the left-arm harpoon fires or reels, twist the upper torso slightly toward the harpoon's aim
+            bool harpoonActive = harpoon && harpoon.State != HarpoonState.Idle;
+            if (harpoon && harpoon.State == HarpoonState.Launching && previousHarpoonState != HarpoonState.Launching)
+                launchRecoilTimer = 1f;
+            previousHarpoonState = harpoon ? harpoon.State : HarpoonState.Idle;
+            if (launchRecoilTimer > 0f)
+                launchRecoilTimer = Mathf.MoveTowards(launchRecoilTimer, 0f, dt * 5.5f);
+
+            leftArmAimBlend = Mathf.MoveTowards(leftArmAimBlend, harpoonActive ? 1f : 0f, dt * (harpoonActive ? 12f : 4.5f));
+
+            Quaternion torsoRot = Quaternion.Euler(forwardLean, torsoCounterYaw, turnBank);
+            Vector3 torsoPivot = new Vector3(0f, 1.56f, 0f);
+            Vector3 torsoOffset = pelvisOffset + new Vector3(0f, Mathf.Sin(walkRad * 2f) * 0.018f * walkBlend, 0f);
+            if (torsoNode)
+            {
+                torsoNode.localRotation = torsoRot;
+                torsoNode.localPosition = torsoOffset + torsoPivot - (torsoRot * torsoPivot);
+            }
+
+            // Right Arm swings in counter-phase to the right leg (i.e. in phase with left leg)
+            if (rightArmNode)
+            {
+                Vector3 rightShoulderPivot = new Vector3(0.88f, 1.94f, 0.0f);
+                Vector3 movedRightShoulder = torsoOffset + torsoPivot + torsoRot * (rightShoulderPivot - torsoPivot);
+                float rightArmPitch = -Mathf.Cos(walkRad) * 19f * walkBlend + idlePulse * 1.8f;
+                float rightArmRoll = -3.5f * walkBlend;
+                Quaternion rightArmRot = torsoRot * Quaternion.Euler(rightArmPitch, 0f, rightArmRoll);
+                rightArmNode.localRotation = rightArmRot;
+                rightArmNode.localPosition = movedRightShoulder - (rightArmRot * rightShoulderPivot);
+            }
+
+            // Right Shoulder Heavy Autocannon follows the torso's right shoulder pylon
+            if (shoulderGunNode)
+            {
+                Vector3 movedPylon = torsoOffset + torsoPivot + torsoRot * (baseShoulderGunPos - torsoPivot);
+                shoulderGunNode.localPosition = movedPylon;
+            }
+
+            // Left Shoulder Harpoon Arm socket follows the torso's left shoulder
+            if (leftArmMount)
+            {
+                Vector3 movedLeftShoulder = torsoOffset + torsoPivot + torsoRot * (baseLeftArmMountPos - torsoPivot);
+                leftArmMount.localPosition = movedLeftShoulder;
+                if (harpoon && harpoon.cable && harpoon.cable.enabled && harpoon.spawnPoint)
+                    harpoon.cable.SetPosition(0, harpoon.spawnPoint.position);
+            }
+
+            // Left Arm Harpoon Gauntlet visual mesh:
+            // - While idle/walking: faces forward and counter-swings opposite the left leg
+            // - While aiming/launching/retracting: aligns with HarpoonPivot toward the target pickup + launch recoil kick
+            if (leftArmVisual && leftArmMount)
+            {
+                var pivot = leftArmVisual.parent;
+                float leftArmPitch = Mathf.Cos(walkRad) * 18f * walkBlend + forwardLean * 0.6f - idlePulse * 1.5f;
+                Quaternion walkArmWorldLocal = torsoRot * Quaternion.Euler(leftArmPitch, -4f, 3.5f * walkBlend);
+                Quaternion idleInPivotSpace = Quaternion.Inverse(pivot.localRotation) * walkArmWorldLocal;
+                Quaternion activeInPivotSpace = Quaternion.Euler(-launchRecoilTimer * 8f, 0f, 0f);
+                leftArmVisual.localRotation = Quaternion.Slerp(idleInPivotSpace, activeInPivotSpace, leftArmAimBlend);
+                leftArmVisual.localPosition = new Vector3(0f, 0f, -launchRecoilTimer * 0.16f);
+            }
         }
 
         Vector3 SideAnchor(WheelCollider a, WheelCollider b) =>
@@ -109,108 +365,135 @@ namespace RoadGunner
             float span = Vector3.Distance(front, rear), width = trackWidth;
             float loopLength = 2 * span + 2 * Mathf.PI * radius;
             var builder = new Geometry();
-            float pitch = loopLength / Mathf.Max(1, treadsPerSide);
-            for (int i = 0; i < treadsPerSide; i++)
-            {
-                builder.Begin(PartKind.Shoe, i / (float)treadsPerSide, 0);
-                builder.BevelBox(Vector3.zero, new Vector3(width, shoeThickness, pitch * .88f), .035f, Steel);
-                // Heavy dual rubber road pads with angled chevron steel grousers and center ice cleat.
-                builder.Box(new Vector3(-width * .24f, shoeThickness * .57f, 0), new Vector3(width * .39f, .024f, pitch * .64f), Rubber);
-                builder.Box(new Vector3(width * .24f, shoeThickness * .57f, 0), new Vector3(width * .39f, .024f, pitch * .64f), Rubber);
-                float gy = shoeThickness * .5f + grouserHeight * .5f;
-                builder.Box(new Vector3(-width * .24f, gy, .008f),
-                    new Vector3(width * .45f, grouserHeight, pitch * .17f), BrightSteel, Quaternion.Euler(0, 16f, 0));
-                builder.Box(new Vector3(width * .24f, gy, .008f),
-                    new Vector3(width * .45f, grouserHeight, pitch * .17f), BrightSteel, Quaternion.Euler(0, -16f, 0));
-                builder.Box(new Vector3(0, gy + .004f, -.012f),
-                    new Vector3(width * .18f, grouserHeight * 1.08f, pitch * .22f), i % 2 == 0 ? Brass : BrightSteel);
-                // Central guide horn on the inside and visible armored end-link hinge pins.
-                builder.Box(new Vector3(0, -shoeThickness * .5f - .038f, 0), new Vector3(.068f, .076f, pitch * .45f), DarkSteel);
-                for (int sign = -1; sign <= 1; sign += 2)
-                {
-                    builder.Cylinder(new Vector3(sign * (width * .5f - .014f), 0, -pitch * .31f), .038f, .058f, Brass, 6);
-                    builder.Box(new Vector3(sign * (width * .5f + .008f), .008f, 0), new Vector3(.022f, shoeThickness * .82f, pitch * .72f), DarkSteel);
-                }
-                builder.End();
-            }
-
-            // Rear drive sprocket, front idler, six independently positioned lower rollers.
-            AddWheel(builder, PartKind.RearWheel, 0, radius * .86f, width, true, isLeft);
-            AddWheel(builder, PartKind.FrontWheel, 1, radius * .86f, width, false, isLeft);
-            float roadRadius = Mathf.Min(.225f, span * .073f);
-            for (int i = 0; i < SupportRollersPerSide; i++)
-                AddWheel(builder, PartKind.RoadWheel, .12f + i * .152f, roadRadius, width, false, isLeft);
-            for (int i = 0; i < 3; i++)
-                AddWheel(builder, PartKind.ReturnWheel, .25f + i * .25f, .105f, width * .72f, false, isLeft);
-
-            builder.Begin(PartKind.Frame, 0, 0);
             float dir = isLeft ? -1f : 1f;
-            float outside = dir * (width * .5f + .020f);
-            // Main armored sponson beam + sloped upper track skirt + lower rock-slider rail.
-            builder.BevelBox(new Vector3(outside, .125f, 0), new Vector3(.072f, .21f, span * .86f), .035f, Teal);
-            builder.Box(new Vector3(outside - dir * .055f, .265f, 0), new Vector3(.18f, .042f, span * .92f), Teal, Quaternion.Euler(0, 0, dir * -14f));
-            builder.Box(new Vector3(outside + dir * .018f, .225f, 0), new Vector3(.048f, .036f, span * .78f), BrightSteel);
-            builder.Box(new Vector3(outside, -.005f, 0), new Vector3(.088f, .072f, span * .95f), DarkSteel);
-            // Bogie suspension struts and armored bolt bosses.
-            for (int i = 0; i < 6; i++)
-            {
-                float z = Mathf.Lerp(-span * .38f, span * .38f, i / 5f);
-                builder.Box(new Vector3(outside - dir * .012f, -.075f, z), new Vector3(.052f, .15f, .075f), Steel, Quaternion.Euler(i % 2 == 0 ? 12f : -12f, 0, 0));
-                builder.Cylinder(new Vector3(outside + dir * .048f, .12f, z), .036f, .028f, Bolt, 6);
-            }
-            // Central brass insignia plate and angled ivory/brass corner mudguards.
-            builder.BevelBox(new Vector3(outside + dir * .038f, .125f, 0), new Vector3(.024f, .095f, .28f), .012f, Brass);
-            for (int sign = -1; sign <= 1; sign += 2)
-            {
-                builder.BevelBox(new Vector3(outside, .145f, sign * span * .39f), new Vector3(.092f, .26f, .25f), .022f, Dust);
-                builder.Box(new Vector3(outside + dir * .052f, .15f, sign * span * .39f), new Vector3(.020f, .065f, .15f), Brass);
-                builder.Box(new Vector3(outside - dir * .04f, .21f, sign * span * .47f), new Vector3(.16f, .045f, .18f), Teal, Quaternion.Euler(sign * 22f, 0, 0));
-            }
+
+            // 1. PartKind.Frame: Hip Ball-Joint Housing, Angled Side Skirt Armor & Lateral Attitude Thruster
+            builder.Begin(PartKind.Frame, 0, 0);
+            // Hip axle bridge connecting pelvis to leg socket
+            builder.Cylinder(new Vector3(-dir * 0.14f, 0f, 0f), 0.115f, 0.30f, DarkSteel, 14);
+            builder.Cylinder(new Vector3(-dir * 0.04f, 0f, 0f), 0.145f, 0.08f, Brass, 14);
+            builder.Cylinder(Vector3.zero, 0.135f, 0.16f, Steel, 14);
+            // Upper Armored Core side hip skirt plate & vernier pod
+            builder.BevelBox(new Vector3(dir * 0.06f, 0.14f, 0.02f), new Vector3(0.22f, 0.24f, 0.56f), 0.04f, Teal);
+            builder.Box(new Vector3(dir * 0.15f, 0.22f, 0.02f), new Vector3(0.08f, 0.07f, 0.48f), Bolt, Quaternion.Euler(0, 0, dir * -12f));
+            builder.Box(new Vector3(dir * 0.175f, 0.12f, 0.04f), new Vector3(0.04f, 0.065f, 0.38f), Brass);
+            // Lateral vernier thruster nozzle on hip skirt
+            builder.Cylinder(new Vector3(dir * 0.19f, 0.14f, -0.14f), 0.068f, 0.08f, DarkSteel, 12);
+            builder.Cylinder(new Vector3(dir * 0.225f, 0.14f, -0.14f), 0.048f, 0.04f, Brass, 10);
             builder.End();
-            var side = builder.Finish(isLeft ? "Player left articulated track" : "Player right articulated track");
+
+            // 2. PartKind.FrontWheel: Upper Thigh Assembly (origin at Hip Joint, extends along -Y to -ThighLength)
+            builder.Begin(PartKind.FrontWheel, 1, ThighLength);
+            float th = ThighLength;
+            // Inner structural femoral beam
+            builder.BevelBox(new Vector3(0f, -th * 0.5f, 0f), new Vector3(0.22f, th * 0.92f, 0.26f), 0.035f, DarkSteel);
+            // Outer sculpted Armored Core thigh armor casing
+            builder.BevelBox(new Vector3(dir * 0.045f, -th * 0.46f, 0.03f), new Vector3(0.32f, th * 0.78f, 0.36f), 0.05f, Teal);
+            // High outer femoral shoulder guard jutting above hip joint
+            builder.Box(new Vector3(dir * 0.11f, -0.06f, 0.04f), new Vector3(0.14f, 0.26f, 0.32f), Bolt, Quaternion.Euler(0, 0, dir * 10f));
+            builder.Box(new Vector3(dir * 0.19f, -th * 0.38f, 0.05f), new Vector3(0.05f, th * 0.52f, 0.12f), Bolt);
+            // Forward angled thigh deflectors & yellow/brass hazard chevrons
+            builder.Box(new Vector3(0f, -th * 0.42f, 0.19f), new Vector3(0.24f, th * 0.68f, 0.08f), Teal, Quaternion.Euler(-8f, 0, 0));
+            builder.Box(new Vector3(dir * 0.02f, -th * 0.28f, 0.235f), new Vector3(0.18f, 0.08f, 0.04f), Brass, Quaternion.Euler(-8f, 0, dir * -12f));
+            // Rear femoral hydraulic actuator cylinder & chrome piston rod
+            builder.Box(new Vector3(0f, -th * 0.24f, -0.17f), new Vector3(0.14f, th * 0.42f, 0.12f), Brass);
+            builder.Box(new Vector3(0f, -th * 0.62f, -0.17f), new Vector3(0.085f, th * 0.46f, 0.085f), BrightSteel);
+            for (int i = 0; i < 3; i++)
+                builder.Cylinder(new Vector3(dir * 0.205f, -0.16f - i * 0.16f, -0.04f), 0.032f, 0.04f, BrightSteel, 8);
+            builder.End();
+
+            // 3. PartKind.RearWheel: Knee Actuator Drum & Forward Knee Breaker Spike (origin at Knee Joint)
+            builder.Begin(PartKind.RearWheel, 0, 0.22f);
+            builder.Cylinder(Vector3.zero, 0.155f, 0.36f, DarkSteel, 16);
+            builder.Cylinder(Vector3.zero, 0.12f, 0.40f, Steel, 14);
+            builder.Cylinder(new Vector3(dir * 0.19f, 0f, 0f), 0.095f, 0.05f, Brass, 12);
+            builder.Cylinder(new Vector3(dir * 0.21f, 0f, 0f), 0.052f, 0.04f, BrightSteel, 8);
+            // Forward projecting Armored Core knee guard & twin ram spikes
+            builder.BevelBox(new Vector3(0f, 0.03f, 0.20f), new Vector3(0.28f, 0.24f, 0.22f), 0.04f, Teal);
+            builder.Box(new Vector3(0f, 0.11f, 0.26f), new Vector3(0.16f, 0.14f, 0.18f), Bolt, Quaternion.Euler(-18f, 0, 0));
+            builder.Box(new Vector3(0f, -0.02f, 0.30f), new Vector3(0.22f, 0.065f, 0.08f), Brass);
+            for (int s = -1; s <= 1; s += 2)
+                builder.Box(new Vector3(s * 0.075f, 0.02f, 0.36f), new Vector3(0.045f, 0.055f, 0.14f), BrightSteel, Quaternion.Euler(8f, 0, 0));
+            builder.End();
+
+            // 4. PartKind.RoadWheel: Lower Shin Greave, Calf Hydraulic Shocks & Jump-Jet Booster (origin at Knee, extends along -Y to -ShinLength)
+            builder.Begin(PartKind.RoadWheel, 0.5f, ShinLength);
+            float sh = ShinLength;
+            // Core structural tibia column
+            builder.BevelBox(new Vector3(0f, -sh * 0.5f, -0.02f), new Vector3(0.24f, sh * 0.94f, 0.26f), 0.035f, Steel);
+            // Swept Armored Core forward blade-greave armor
+            builder.Box(new Vector3(0f, -sh * 0.48f, 0.13f), new Vector3(0.30f, sh * 0.84f, 0.16f), Teal, Quaternion.Euler(6f, 0, 0));
+            builder.Box(new Vector3(0f, -sh * 0.46f, 0.205f), new Vector3(0.12f, sh * 0.76f, 0.06f), Bolt, Quaternion.Euler(6f, 0, 0));
+            builder.Box(new Vector3(0f, -sh * 0.18f, 0.22f), new Vector3(0.24f, 0.08f, 0.05f), Brass, Quaternion.Euler(6f, 0, 0));
+            // Wide flared outer calf armor wing
+            builder.Box(new Vector3(dir * 0.16f, -sh * 0.52f, -0.03f), new Vector3(0.12f, sh * 0.78f, 0.38f), Teal, Quaternion.Euler(0, 0, dir * -8f));
+            builder.Box(new Vector3(dir * 0.22f, -sh * 0.56f, 0.02f), new Vector3(0.045f, sh * 0.54f, 0.18f), Bolt, Quaternion.Euler(0, 0, dir * -8f));
+            builder.Box(new Vector3(dir * 0.21f, -sh * 0.78f, -0.02f), new Vector3(0.06f, 0.14f, 0.34f), Dust);
+            // Rear calf jump-jet booster pod & nozzle
+            builder.BevelBox(new Vector3(0f, -sh * 0.34f, -0.20f), new Vector3(0.28f, 0.32f, 0.22f), 0.035f, DarkSteel);
+            builder.Box(new Vector3(0f, -sh * 0.28f, -0.24f), new Vector3(0.22f, 0.22f, 0.16f), Teal, Quaternion.Euler(18f, 0, 0));
+            builder.Box(new Vector3(0f, -sh * 0.48f, -0.26f), new Vector3(0.18f, 0.10f, 0.14f), Brass, Quaternion.Euler(22f, 0, 0));
+            // Twin rear hydraulic shock absorbers running down the calf
+            for (int s = -1; s <= 1; s += 2)
+            {
+                builder.Box(new Vector3(s * 0.085f, -sh * 0.42f, -0.15f), new Vector3(0.06f, sh * 0.38f, 0.06f), Brass);
+                builder.Box(new Vector3(s * 0.085f, -sh * 0.74f, -0.15f), new Vector3(0.042f, sh * 0.38f, 0.042f), BrightSteel);
+            }
+            // Flared lower ankle armor collar
+            builder.BevelBox(new Vector3(0f, -sh * 0.88f, 0.02f), new Vector3(0.38f, 0.16f, 0.42f), 0.04f, Teal);
+            builder.Box(new Vector3(0f, -sh * 0.88f, 0.22f), new Vector3(0.26f, 0.10f, 0.06f), Bolt);
+            builder.End();
+
+            // 5. PartKind.ReturnWheel: Ankle Universal Actuator & Damper Struts (origin at Ankle Joint)
+            builder.Begin(PartKind.ReturnWheel, 0.5f, 0.14f);
+            builder.Cylinder(Vector3.zero, 0.125f, 0.32f, DarkSteel, 14);
+            builder.Cylinder(Vector3.zero, 0.085f, 0.38f, Brass, 12);
+            for (int s = -1; s <= 1; s += 2)
+                builder.Box(new Vector3(s * 0.14f, -0.04f, 0.06f), new Vector3(0.045f, 0.16f, 0.055f), BrightSteel, Quaternion.Euler(-16f, 0, 0));
+            builder.End();
+
+            // 6. PartKind.Shoe: 3-Clawed Armored Core Mech Foot & Heel Stabilizer Spur (origin at Ankle Joint, sole at y = -FootAnkleHeight)
+            builder.Begin(PartKind.Shoe, 0, FootAnkleHeight);
+            float fy = -FootAnkleHeight;
+            // Central instep bridge & ankle armor hood
+            builder.BevelBox(new Vector3(0f, fy + 0.11f, 0.04f), new Vector3(0.42f, 0.14f, 0.38f), 0.04f, Teal);
+            builder.Box(new Vector3(0f, fy + 0.18f, 0.08f), new Vector3(0.26f, 0.06f, 0.28f), Bolt, Quaternion.Euler(10f, 0, 0));
+            builder.Cylinder(new Vector3(0f, fy + 0.09f, 0.22f), 0.065f, 0.44f, Brass, 12);
+            // Main shock-absorbing rubberized sole plate
+            builder.BevelBox(new Vector3(0f, fy + 0.035f, 0.02f), new Vector3(0.48f, 0.07f, 0.54f), 0.03f, Rubber);
+            // Twin splayed forward talon-toes
+            for (int s = -1; s <= 1; s += 2)
+            {
+                Quaternion toeYaw = Quaternion.Euler(0f, s * 13f, 0f);
+                Vector3 toeCenter = new Vector3(s * 0.145f, fy + 0.065f, 0.36f);
+                builder.Box(toeCenter, new Vector3(0.16f, 0.11f, 0.34f), Teal, toeYaw);
+                builder.Box(toeCenter + new Vector3(0f, -0.04f, 0f), new Vector3(0.17f, 0.05f, 0.36f), Rubber, toeYaw);
+                builder.Box(toeCenter + new Vector3(s * 0.02f, 0.05f, 0.02f), new Vector3(0.09f, 0.04f, 0.24f), Bolt, toeYaw);
+                // Front steel anchor claw tip
+                Vector3 clawPos = new Vector3(s * 0.18f, fy + 0.045f, 0.56f);
+                builder.Box(clawPos, new Vector3(0.11f, 0.075f, 0.14f), BrightSteel, toeYaw * Quaternion.Euler(18f, 0, 0));
+            }
+            // Rear hydraulic heel stabilizer spur
+            builder.Box(new Vector3(0f, fy + 0.06f, -0.34f), new Vector3(0.24f, 0.10f, 0.32f), Steel, Quaternion.Euler(-8f, 0, 0));
+            builder.Box(new Vector3(0f, fy + 0.025f, -0.36f), new Vector3(0.26f, 0.05f, 0.34f), Rubber);
+            builder.Box(new Vector3(0f, fy + 0.05f, -0.52f), new Vector3(0.14f, 0.07f, 0.14f), BrightSteel, Quaternion.Euler(-16f, 0, 0));
+            builder.Box(new Vector3(0f, fy + 0.12f, -0.28f), new Vector3(0.16f, 0.06f, 0.18f), Brass, Quaternion.Euler(-12f, 0, 0));
+            // Outer lateral stabilizer outrigger pad
+            builder.Box(new Vector3(dir * 0.27f, fy + 0.05f, -0.02f), new Vector3(0.12f, 0.08f, 0.28f), Teal, Quaternion.Euler(0, 0, dir * -10f));
+            builder.Box(new Vector3(dir * 0.31f, fy + 0.03f, -0.02f), new Vector3(0.08f, 0.05f, 0.24f), BrightSteel);
+            builder.End();
+
+            var side = builder.Finish(isLeft ? "Player left articulated mech leg" : "Player right articulated mech leg");
+            side.LoopLength = loopLength;
             UpdateSide(side, isLeft, 0);
             return side;
-        }
-
-        static void AddWheel(Geometry builder, PartKind kind, float fraction, float radius, float width, bool sprocket, bool isLeft)
-        {
-            builder.Begin(kind, fraction, radius);
-            bool small = kind == PartKind.ReturnWheel;
-            builder.Cylinder(Vector3.zero, radius, width * .68f, sprocket ? DarkSteel : Rubber, small ? 12 : 18);
-            builder.Cylinder(Vector3.zero, radius * .83f, width * .75f, sprocket ? Steel : Teal, small ? 12 : 18);
-            int outside = isLeft ? -1 : 1;
-            float faceX = outside * width * .395f;
-            builder.Cylinder(new Vector3(faceX, 0, 0), radius * .58f, .068f, sprocket ? Brass : Steel, small ? 10 : 14);
-            builder.Cylinder(new Vector3(faceX + outside * .040f, 0, 0), radius * .28f, .060f, BrightSteel, 8);
-            if (!small)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    float a = i * Mathf.PI / 3;
-                    builder.Cylinder(new Vector3(faceX + outside * .042f, Mathf.Cos(a) * radius * .66f, Mathf.Sin(a) * radius * .66f),
-                        .023f, .030f, Bolt, 6);
-                    Quaternion rq = Quaternion.AngleAxis(i * 60, Vector3.right);
-                    builder.Box(rq * new Vector3(faceX + outside * .018f, radius * .44f, 0), new Vector3(.022f, radius * .36f, .036f), sprocket ? BrightSteel : Brass, rq);
-                }
-            }
-            if (sprocket)
-            {
-                for (int i = 0; i < 12; i++)
-                {
-                    Quaternion q = Quaternion.AngleAxis(i * 30, Vector3.right);
-                    builder.Box(q * new Vector3(0, radius + .016f, 0), new Vector3(width * .72f, .072f, .068f), BrightSteel, q);
-                }
-            }
-            builder.End();
         }
 
         void ReadShape(bool isLeft, out Vector3 rear, out Vector3 front, out float radius)
         {
             var a = isLeft ? rearLeft : rearRight; var b = isLeft ? frontLeft : frontRight;
             rear = WheelCenter(a); front = WheelCenter(b);
-            // The outer grouser reaches the same contact envelope as the retained physical wheel.
             radius = Mathf.Max(.25f, (a.radius + b.radius) * .5f - shoeThickness * .5f - grouserHeight);
-            // Keep a coherent belt plane; actual suspension still changes the height at both ends.
             rear.x = front.x = (rear.x + front.x) * .5f;
         }
 
@@ -227,29 +510,97 @@ namespace RoadGunner
         {
             ReadShape(isLeft, out Vector3 rear, out Vector3 front, out float radius);
             float span = Mathf.Max(.1f, Vector3.Distance(front, rear));
-            Vector3 axis = (front - rear) / span, up = Vector3.Cross(axis, Vector3.right).normalized;
-            Quaternion frame = Quaternion.LookRotation(axis, up);
             side.LoopLength = 2 * span + 2 * Mathf.PI * radius;
+
+            float dir = isLeft ? -1f : 1f;
+            var a = isLeft ? rearLeft : rearRight;
+            var b = isLeft ? frontLeft : frontRight;
+            float wheelRadius = (a.radius + b.radius) * 0.5f;
+            float groundY = (rear.y + front.y) * 0.5f - wheelRadius;
+            Vector3 groundSlopeAxis = (front - rear).normalized;
+            Vector3 groundUp = Vector3.Cross(groundSlopeAxis, Vector3.right).normalized;
+
+            // Left and right legs are 180 degrees (0.5 cycle) out of phase for true alternating bipedal walking
+            float rawPhase = Mathf.Repeat(distance / StrideLength + (isLeft ? 0f : 0.5f), 1f);
+            SampleLegStride(rawPhase, isLeft, walkBlend, out float footZ, out float footLiftY, out float footPitchDeg, out float footOutwardX);
+
+            // Hip joint position follows pelvis bob & sway
+            Vector3 hipPos = new Vector3(
+                dir * HipLateralOffset + currentPelvisSwayX,
+                groundY + HipHeightAboveGround + currentPelvisBobY,
+                currentPelvisBobZ);
+
+            // Ankle joint target position in chassis local space
+            float slopeDeltaY = groundSlopeAxis.y * footZ;
+            Vector3 anklePos = new Vector3(
+                dir * FootLateralOffset + footOutwardX + currentPelvisSwayX * 0.35f,
+                groundY + FootAnkleHeight + slopeDeltaY + footLiftY,
+                footZ);
+
+            // 2-Bone Analytical Inverse Kinematics (Hip -> Knee -> Ankle)
+            Vector3 toAnkle = anklePos - hipPos;
+            float maxReach = ThighLength + ShinLength - 0.015f;
+            float dist = Mathf.Clamp(toAnkle.magnitude, 0.25f, maxReach);
+            Vector3 axisToAnkle = toAnkle.sqrMagnitude > 0.0001f ? toAnkle / toAnkle.magnitude : Vector3.down;
+
+            float cosHip = Mathf.Clamp((ThighLength * ThighLength + dist * dist - ShinLength * ShinLength) / (2f * ThighLength * dist), -1f, 1f);
+            float hipBendRad = Mathf.Acos(cosHip);
+
+            // Knee bends forward (+Z) and slightly outward (dir * X) for an aggressive Armored Core stance
+            float legYawDeg = Mathf.Clamp(-smoothedTurnSpeed * 1.6f, -10f, 10f) * walkBlend + dir * 4f;
+            Quaternion legYawRot = Quaternion.Euler(0f, legYawDeg, 0f);
+            Vector3 kneeForwardHint = legYawRot * new Vector3(dir * 0.10f, 0.20f, 1f).normalized;
+            Vector3 bendNormal = Vector3.Cross(axisToAnkle, kneeForwardHint);
+            if (bendNormal.sqrMagnitude < 0.0001f) bendNormal = Vector3.right;
+            else bendNormal.Normalize();
+            Vector3 bendForward = Vector3.Cross(bendNormal, axisToAnkle).normalized;
+
+            Vector3 thighDir = (axisToAnkle * Mathf.Cos(hipBendRad) + bendForward * Mathf.Sin(hipBendRad)).normalized;
+            Vector3 kneePos = hipPos + thighDir * ThighLength;
+            Vector3 shinDir = (anklePos - kneePos).normalized;
+
+            Vector3 thighFwd = Vector3.ProjectOnPlane(kneeForwardHint, thighDir);
+            if (thighFwd.sqrMagnitude < 0.0001f) thighFwd = Vector3.forward;
+            Quaternion thighRot = Quaternion.LookRotation(thighFwd.normalized, -thighDir);
+
+            Vector3 shinFwd = Vector3.ProjectOnPlane(kneeForwardHint, shinDir);
+            if (shinFwd.sqrMagnitude < 0.0001f) shinFwd = Vector3.forward;
+            Quaternion shinRot = Quaternion.LookRotation(shinFwd.normalized, -shinDir);
+
+            Quaternion kneeRot = Quaternion.Slerp(thighRot, shinRot, 0.5f);
+            Quaternion footRot = Quaternion.LookRotation(groundSlopeAxis, groundUp) * legYawRot * Quaternion.Euler(footPitchDeg, 0f, 0f);
+            Quaternion ankleRot = Quaternion.Slerp(shinRot, footRot, 0.5f);
+
             foreach (var group in side.Groups)
             {
                 Vector3 position; Quaternion rotation;
                 switch (group.Kind)
                 {
-                    case PartKind.Shoe:
-                        SampleLoop(rear, front, axis, up, radius, span, group.Fraction * side.LoopLength + distance,
-                            out position, out Vector3 tangent, out Vector3 normal);
-                        rotation = Quaternion.LookRotation(tangent, normal);
+                    case PartKind.Frame:
+                        position = hipPos;
+                        rotation = currentPelvisRot;
                         break;
-                    case PartKind.FrontWheel: position = front; rotation = WheelRotation(frame, distance, group.Radius); break;
-                    case PartKind.RearWheel: position = rear; rotation = WheelRotation(frame, distance, group.Radius); break;
+                    case PartKind.FrontWheel:
+                        position = hipPos;
+                        rotation = thighRot;
+                        break;
+                    case PartKind.RearWheel:
+                        position = kneePos;
+                        rotation = kneeRot;
+                        break;
                     case PartKind.RoadWheel:
-                        position = Vector3.Lerp(rear, front, group.Fraction) + up * (-radius + shoeThickness * .5f + group.Radius);
-                        rotation = WheelRotation(frame, distance, group.Radius); break;
+                        position = kneePos;
+                        rotation = shinRot;
+                        break;
                     case PartKind.ReturnWheel:
-                        float sag = returnSag * Mathf.Pow(Mathf.Sin(group.Fraction * Mathf.PI), 2);
-                        position = Vector3.Lerp(rear, front, group.Fraction) + up * (radius - shoeThickness * .5f - group.Radius - sag);
-                        rotation = WheelRotation(frame, distance, group.Radius); break;
-                    default: position = (rear + front) * .5f; rotation = frame; break;
+                        position = anklePos;
+                        rotation = ankleRot;
+                        break;
+                    case PartKind.Shoe:
+                    default:
+                        position = anklePos;
+                        rotation = footRot;
+                        break;
                 }
                 int end = group.Start + group.Count;
                 for (int i = group.Start; i < end; i++)
@@ -259,43 +610,94 @@ namespace RoadGunner
                 }
             }
             side.Mesh.SetVertices(side.Vertices); side.Mesh.SetNormals(side.Normals);
-            side.Mesh.bounds = new Bounds((rear + front) * .5f,
-                new Vector3(trackWidth + .3f, Mathf.Abs(front.y - rear.y) + radius * 2 + .45f, Mathf.Abs(front.z - rear.z) + radius * 2 + .4f));
+            side.Mesh.bounds = new Bounds(new Vector3(dir * HipLateralOffset, groundY + 0.85f, 0f), new Vector3(1.4f, 2.2f, 2.4f));
+            SampleFootContact(side, isLeft, distance, rawPhase, anklePos, footRot, a, b);
         }
 
-        static Quaternion WheelRotation(Quaternion frame, float distance, float radius) =>
-            frame * Quaternion.AngleAxis(Mathf.Repeat(distance / Mathf.Max(.01f, radius), Mathf.PI * 2) * Mathf.Rad2Deg, Vector3.right);
-
-        void SampleLoop(Vector3 rear, Vector3 front, Vector3 axis, Vector3 up, float radius, float span, float distance,
-            out Vector3 position, out Vector3 tangent, out Vector3 normal)
+        void SampleFootContact(Side side, bool isLeft, float distance, float phase, Vector3 ankle, Quaternion footRotation,
+            WheelCollider rear, WheelCollider front)
         {
-            float arc = Mathf.PI * radius;
-            float s = Mathf.Repeat(distance, span * 2 + arc * 2);
-            if (s < span)
+            bool swing = phase >= StanceFraction;
+            bool moved = side.ContactSampled && Mathf.Abs(distance - side.ContactDistance) > .0001f;
+            bool landed = side.ContactSampled && side.WasSwing && !swing;
+            side.ContactDistance = distance; side.WasSwing = swing;
+            bool supported = rear.GetGroundHit(out _) && front.GetGroundHit(out _);
+            side.ContactSampled = Application.isPlaying && supported && (!session || session.Playing) && Time.deltaTime > .00001f;
+            if (!side.ContactSampled || !moved || !landed || walkBlend < .1f ||
+                Mathf.Abs(isLeft ? LeftBeltSpeed : RightBeltSpeed) < .04f || Vector3.Dot(vehicle.transform.up, Vector3.up) < .5f) return;
+            var meshTransform = (isLeft ? leftMesh : rightMesh).transform;
+            Vector3 sole = meshTransform.TransformPoint(ankle + footRotation * (Vector3.down * FootAnkleHeight));
+            // Query the actual sole, rather than stamping either of the two supporting wheel centres.
+            // The fixed buffer avoids allocating even when several ground meshes overlap.
+            int hits = Physics.RaycastNonAlloc(sole + Vector3.up * .45f, Vector3.down, footGroundHits, .8f,
+                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+            int nearest = -1; float nearestDistance = float.PositiveInfinity;
+            for (int i = 0; i < hits; i++)
             {
-                float t = s / span, sin = Mathf.Sin(t * Mathf.PI);
-                position = Vector3.Lerp(rear, front, t) + up * (radius - returnSag * sin * sin);
-                tangent = (axis - up * (returnSag * Mathf.PI * Mathf.Sin(t * 2 * Mathf.PI) / span)).normalized;
-                normal = Vector3.Cross(tangent, Vector3.right).normalized;
+                var hit = footGroundHits[i];
+                if (!hit.collider || hit.collider.transform.IsChildOf(vehicle.transform) || Vector3.Dot(hit.normal, Vector3.up) < .5f ||
+                    Mathf.Abs(Vector3.Dot(sole - hit.point, hit.normal)) > .22f || hit.distance >= nearestDistance) continue;
+                nearest = i; nearestDistance = hit.distance;
             }
-            else if ((s -= span) < arc)
+            if (nearest < 0) return;
+            var ground = footGroundHits[nearest]; Vector3 normal = ground.normal.normalized;
+            Vector3 forward = Vector3.ProjectOnPlane(meshTransform.TransformDirection(footRotation * Vector3.forward), normal).normalized;
+            if (forward.sqrMagnitude < .5f) return;
+            PlantedFootCount++;
+            FootPlanted?.Invoke(new FootContact(ground.point, normal, forward, isLeft));
+        }
+
+        static void SampleLegStride(float phase, bool isLeft, float walkBlend, out float footZ, out float footLiftY, out float footPitchDeg, out float footOutwardX)
+        {
+            const float activeHalfSpan = 0.62f;
+            float idleStaggerZ = isLeft ? 0.16f : -0.16f;
+            float dir = isLeft ? -1f : 1f;
+
+            float strideZ;
+            float liftY;
+            float pitchDeg;
+            float outwardX;
+
+            if (phase < StanceFraction)
             {
-                float a = s / radius;
-                normal = up * Mathf.Cos(a) + axis * Mathf.Sin(a);
-                tangent = -up * Mathf.Sin(a) + axis * Mathf.Cos(a);
-                position = front + normal * radius;
-            }
-            else if ((s -= arc) < span)
-            {
-                position = Vector3.Lerp(front, rear, s / span) - up * radius; tangent = -axis; normal = -up;
+                // Stance phase: foot is planted on the ground and sweeps from front (+activeHalfSpan) to rear (-activeHalfSpan)
+                float u = phase / StanceFraction;
+                strideZ = Mathf.Lerp(activeHalfSpan, -activeHalfSpan, u);
+                liftY = 0f;
+                outwardX = 0f;
+
+                // Crisp heel-strike flatten at start of stance, flat plant in mid-stance, and powerful toe-off push at end of stance
+                if (u < 0.14f)
+                    pitchDeg = Mathf.Lerp(-16f, 0f, u / 0.14f);
+                else if (u < 0.76f)
+                    pitchDeg = 0f;
+                else
+                    pitchDeg = Mathf.Lerp(0f, 25f, (u - 0.76f) / 0.24f);
             }
             else
             {
-                float a = (s - span) / radius;
-                normal = -up * Mathf.Cos(a) - axis * Mathf.Sin(a);
-                tangent = up * Mathf.Sin(a) - axis * Mathf.Cos(a);
-                position = rear + normal * radius;
+                // Swing phase: knee bends high and lifts foot cleanly forward to next heel-strike
+                float v = (phase - StanceFraction) / (1f - StanceFraction);
+                float smoothV = v * v * (3f - 2f * v);
+                strideZ = Mathf.Lerp(-activeHalfSpan, activeHalfSpan, smoothV);
+
+                // High, punchy mecha step clearance arc
+                float arc = Mathf.Sin(v * Mathf.PI);
+                float earlyKick = Mathf.Sin(v * Mathf.PI * 2f) * 0.055f;
+                liftY = Mathf.Max(0f, arc * 0.36f + earlyKick);
+                outwardX = dir * arc * 0.045f;
+
+                // Toe-off drag (+25 deg) -> mid-swing level -> heel-strike dorsiflexion (-16 deg)
+                if (v < 0.45f)
+                    pitchDeg = Mathf.Lerp(25f, 4f, v / 0.45f);
+                else
+                    pitchDeg = Mathf.Lerp(4f, -16f, (v - 0.45f) / 0.55f);
             }
+
+            footZ = Mathf.Lerp(idleStaggerZ, strideZ, walkBlend);
+            footLiftY = liftY * walkBlend;
+            footPitchDeg = pitchDeg * walkBlend;
+            footOutwardX = outwardX * walkBlend;
         }
 
         const int Rubber = 0, Steel = 1, BrightSteel = 2, Teal = 3, Brass = 4, Bolt = 5, DarkSteel = 6, Dust = 7;
@@ -307,9 +709,11 @@ namespace RoadGunner
             public Vector3[] RestVertices, RestNormals, Vertices, Normals;
             public Group[] Groups;
             public float LoopLength = 1;
+            public bool ContactSampled, WasSwing;
+            public float ContactDistance;
         }
 
-        // One UV palette material and one combined dynamic mesh per side. There are no per-shoe
+        // One UV palette material and one combined dynamic mesh per side. There are no per-part
         // GameObjects, material instances, allocations or mesh topology rebuilds in LateUpdate.
         sealed class Geometry
         {

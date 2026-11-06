@@ -1,0 +1,31 @@
+Physical player drive — actual saved vehicle and its drive profile; Unity 6000.6.4f1
+Temporary flat track, wall and one-wheel curb. ResetPose is setup only; motion uses the production DriveInput/WheelColliders.
+Impulse case explicitly applies a measured external force. No running-case velocity/rotation replacement. Timesteps are solver rates, not measured display FPS.
+PASS saved player uses four dynamic physical wheels: Mass=1400; constraints=None; CCD=ContinuousDynamic
+Drive profile=tracked; limit=9.360m/s; coast setup=4.800m/s; measured wheeled baseline reference=10.49496m/s. Current relative-speed ratio is a separate A/B acceptance.
+PASS authored suspension settles on four-wheel test ground: Contacts=4; speed=0.011; tilt=0.044; fixed step=0.017
+INPUT POLICY release-coast: applicationFocused=True; editorPolicy=AllDeviceInputAlwaysGoesToGameView (original PointersAndKeyboardsRespectGameViewFocus); background=IgnoreFocus (original ResetAndDisableNonBackgroundDevices); keyboardEnabled=True; syntheticIsCurrent=True; syntheticSpace=False; currentSpace=False; driveEnabled=True; testInput=False; driveBrake=False
+PASS release preserves natural forward momentum: Actual Space=False; speed=4.802 -> 4.240; distance=6.935
+INPUT POLICY space-brake: applicationFocused=True; editorPolicy=AllDeviceInputAlwaysGoesToGameView (original PointersAndKeyboardsRespectGameViewFocus); background=IgnoreFocus (original ResetAndDisableNonBackgroundDevices); keyboardEnabled=True; syntheticIsCurrent=True; syntheticSpace=True; currentSpace=True; driveEnabled=True; testInput=False; driveBrake=True
+PASS Space uses physical service brakes: Actual Space=True; speed=4.802 -> 0.001; distance=1.799
+PASS release coasts farther than Space from comparable speed: Coast/brake travel=6.935/1.799m; end speeds=4.240/0.001
+PASS tracked 90 degree command turns the nose physically: Heading error=19.791; signed yaw=70.209; peak yaw rate=26.905deg/s; rearward-request drift=0.000m; minimum forward=-0.002; time=3.450
+PASS differential tracks supply the 90 degree turn without wheel steering: Front/rear steer=0.000/0.000; sign-correct differential samples=73; counter-rotation samples=0; peak torque difference=567.016Nm; yaw request=45.000deg/s; assist=9000.000Nm
+PASS tracked 180 degree command turns the nose physically: Heading error=19.869; signed yaw=-160.131; peak yaw rate=29.210deg/s; rearward-request drift=0.556m; minimum forward=-0.015; time=7.350
+PASS differential tracks supply the 180 degree turn without wheel steering: Front/rear steer=0.000/0.000; sign-correct differential samples=297; counter-rotation samples=241; peak torque difference=559.788Nm; yaw request=45.000deg/s; assist=9000.000Nm
+PASS grounded differential tracks can pivot a translation-locked chassis: X/Z pinned, yaw free; physical yaw=5.457deg; travel=0.010m; request=45.000; torque difference=740.740
+PASS tracked turn respects the rigidbody yaw constraint: Actual requested turn with FreezeRotationY; yaw=0.040deg; request=45.000; contacts=4; controller cannot replace body rotation
+PASS airborne fixture has fresh zero-contact physics state: After two setup physics steps: contacts=0
+PASS airborne input cannot steer chassis without tire contact: Contacts=0; yaw=0.000; horizontal speed=0.000; fall=1.259; peak grounded-yaw assist=0.000; pivot force=0.000
+PASS external impulse retains lateral and angular physical response: Applied3m/s lateral impulse via AddForceAtPosition; first speed=3.000; travel=0.859; peak angular=0.032; tire slip=1.239
+PASS wall receives a genuine collision impulse without tunnelling: Contacts=1; impulse=10075.770Ns; approach/end speed=7.342/0.000; furthest chassisZ=-8.609
+PASS uneven ground compresses suspension and permits pitch and roll: Peak tilt=3.160; wheel suspension motion=0.138m; settled tilt=0.000; settled angular speed=0.000
+PASS wheel physics remains finite at solver 30Hz: Three-second drive distance/speed=8.971m/5.680m/s; following two-second arc=40.954deg; slip=0.008
+PASS wheel physics remains finite at solver 60Hz: Three-second drive distance/speed=8.928m/5.680m/s; following two-second arc=39.197deg; slip=0.009
+PASS wheel physics remains finite at solver 120Hz: Three-second drive distance/speed=8.901m/5.679m/s; following two-second arc=38.463deg; slip=0.003
+PASS solver-30 agrees with60Hz physical trajectory: Distance deviation=0.490%; speed deviation=0.002%; yaw difference=1.758deg
+PASS solver-120 agrees with60Hz physical trajectory: Distance deviation=0.292%; speed deviation=0.015%; yaw difference=0.734deg
+RESULT checks=21; failures=0; temporary physics fixtures removed; saved scene/tuning not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

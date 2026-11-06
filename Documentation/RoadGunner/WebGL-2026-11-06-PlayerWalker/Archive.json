@@ -1,0 +1,8 @@
+{
+  "path": "outputs/WebGL-2026-11-06-PlayerWalker/RoadGunner-WebGL-Walker-2026-11-06.zip",
+  "bytes": 20798315,
+  "sha256": "80a5ce2417022a9f1e370abd97746d3b92dd93df92b3e5e1ec5f3522d8105b14",
+  "files": 7,
+  "local_preview": "http://127.0.0.1:8765/?build=walker-only-20261106",
+  "published": false
+}

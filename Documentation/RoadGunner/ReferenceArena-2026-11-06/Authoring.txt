@@ -1,0 +1,13 @@
+REFERENCE_CROSSROADS_INSTALLED revision1;4mainarms;3closedgates;16existingcombat encounters;soft235/hard216;no historical full-art installer invoked.
+Replaced only authored environment/old decoration/proxies; historical SceneryCrush catalog/assets retained as research history.
+New ground:350m×310m design bounds, yaw45; flat true collision, finite ground margin7.5m.
+Road source: 16 routes / 13 pockets, common indexed surface; physical support path retained for enemy respawns.
+Continuous perimeter +3 closed gate assemblies; solid flanks connect every gate to outer walls, with no drive-around opening.
+Finished reusable models placed deterministically; soft cacti/crates/drums/tires/smallstones use readable mutable meshes and layer12 triggers, large rocks remain exact hard meshes.
+Full original chassis +0.20m lateral/+0.15m longitudinal margin: 601 route samples clear.
+Three closed gate centreline collision rays verified; continuous flank foundations are authored without gaps.
+New navigation: all16combat encounters +repair +8rewards reachable from ordinary start (25 complete paths).
+World surface: 16 routes, 13 pockets, 4 feathered regions; tone field in A, accents Assets/RoadGunner/Art/Arcade/Textures/Arcade ground accents.png; minimap source Assets/RoadGunner/Art/Arcade/Textures/Arcade minimap ground source.png.
+Arcade ground: Assets/RoadGunner/Levels/Greenwood/Exploration/Exploration world surface.png regenerated (1024px) + road distance Assets/RoadGunner/Art/Arcade/Textures/Arcade road distance.png; detail Assets/RoadGunner/Art/Arcade/Textures/Arcade sand detail.png; 2 desert materials.
+Minimap rebaked (road-painted source, no dressing, +22% sat, +10% contrast): 175 distinct 4-bit colours (need >=12); inner luminance p5 0.00 / p50 0.67 / p95 0.78.
+Preserved exactly12 authored Raiders,2 authored Buggies,1 Monster and1 final Boss Raider; legacy spawn arrays remain empty. Actual-ground spawn/recovery/home markers updated; Workshop radius/rate unchanged; Health W=(9.00, -40.00); Attack W=(-26.00, 17.00). Protected configuration objects=1683; before/after JSON identical. Existing workshop/station/minimap object references retained. Navigation and minimap bake remain the installer's next step.

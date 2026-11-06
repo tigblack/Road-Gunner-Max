@@ -1,0 +1,1252 @@
+{
+  "baseline_commit": "1ab784c6c9bf09cdc2d4d71fb6514eafc1630d4d",
+  "protected_gameplay_files": 206,
+  "unchanged_count": 205,
+  "changes_within_protected_set": [
+    "Assets/RoadGunner/Scripts/PlayerTrackVisuals.cs"
+  ],
+  "external_concurrent_work_preserved": [
+    "Assets/RoadGunner/Scripts/PlayerTrackVisuals.cs",
+    "Assets/RoadGunner/Editor/ConceptArt/ConceptVehicle.cs"
+  ],
+  "external_scope": "Walking-leg/tracks visual source and separate vehicle-art authoring mount adjustment were detected during work, preserved and neither reverted nor included as arena changes. No art generator was invoked. Reinstall separately confirms no further modification.",
+  "WebBuild_unchanged_against_baseline": true,
+  "files": [
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeAudio.cs",
+      "sha256": "5431a6b2e06c1cfd004bc70e18f062f1366ebb8d6881546b569585103fc663bb",
+      "current_sha256": "5431a6b2e06c1cfd004bc70e18f062f1366ebb8d6881546b569585103fc663bb",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeAudio.cs.meta",
+      "sha256": "3ca752fceff099373486d9b0e7ae9dc4842e87a93c024bc31ecedcefc41ce29c",
+      "current_sha256": "3ca752fceff099373486d9b0e7ae9dc4842e87a93c024bc31ecedcefc41ce29c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeAudioRecorder.cs",
+      "sha256": "8c182694a1883229e99688600b417012415650b40287dd6d7e21c40f98122b2a",
+      "current_sha256": "8c182694a1883229e99688600b417012415650b40287dd6d7e21c40f98122b2a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeAudioRecorder.cs.meta",
+      "sha256": "7e52dc2f5abedeabdc511751421c29c6a2542703f3e8d3f0942ca87d41c8953b",
+      "current_sha256": "7e52dc2f5abedeabdc511751421c29c6a2542703f3e8d3f0942ca87d41c8953b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeFeedback.cs",
+      "sha256": "747777e784df721b975c86044eb4527a6cab51568258aa1224a0f2ccf31069b9",
+      "current_sha256": "747777e784df721b975c86044eb4527a6cab51568258aa1224a0f2ccf31069b9",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeFeedback.cs.meta",
+      "sha256": "ed34f126303d53fbe750b67a6ecf9ae10d1b15817d48de4e6d28cbba9b682477",
+      "current_sha256": "ed34f126303d53fbe750b67a6ecf9ae10d1b15817d48de4e6d28cbba9b682477",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudButton.cs",
+      "sha256": "f391fff938b420d36374d00d327ca009ccbd65d75474362f2c004883db7a2004",
+      "current_sha256": "f391fff938b420d36374d00d327ca009ccbd65d75474362f2c004883db7a2004",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudButton.cs.meta",
+      "sha256": "4647041047baef58ae8eebc76c816072893c073981c1f31f99cae2b3e7a7c6e2",
+      "current_sha256": "4647041047baef58ae8eebc76c816072893c073981c1f31f99cae2b3e7a7c6e2",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudJuice.cs",
+      "sha256": "cac8d74dfeb591a6ae1556decd543e1ef07615d5439235facc4786d8c255e8d1",
+      "current_sha256": "cac8d74dfeb591a6ae1556decd543e1ef07615d5439235facc4786d8c255e8d1",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudJuice.cs.meta",
+      "sha256": "53b96b5fb90953c81f13d161ddab2acaf04b2dfe93dd144a5f1bd82689d09a73",
+      "current_sha256": "53b96b5fb90953c81f13d161ddab2acaf04b2dfe93dd144a5f1bd82689d09a73",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudStatPills.cs",
+      "sha256": "1c7eec6738bc56361d2525a3d84f2c37d3bb51202cd9e5d08a8dd6dba20e6a71",
+      "current_sha256": "1c7eec6738bc56361d2525a3d84f2c37d3bb51202cd9e5d08a8dd6dba20e6a71",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudStatPills.cs.meta",
+      "sha256": "200d11d3913a9ce97de85e2b7599ff7333ae855166fad74d7bf80c13c2b0c326",
+      "current_sha256": "200d11d3913a9ce97de85e2b7599ff7333ae855166fad74d7bf80c13c2b0c326",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudStroke.cs",
+      "sha256": "e3286dc88b4906c28a3e11282743513dbb40ac9ee8163cf60576d46dc53d9d71",
+      "current_sha256": "e3286dc88b4906c28a3e11282743513dbb40ac9ee8163cf60576d46dc53d9d71",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudStroke.cs.meta",
+      "sha256": "9022dcb3c6003f87aa35e9166fa10a555277c144ff47118363f140b189796620",
+      "current_sha256": "9022dcb3c6003f87aa35e9166fa10a555277c144ff47118363f140b189796620",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudWorldLabel.cs",
+      "sha256": "7584ef575308dad5477c0610e03acd59a4287cc835af546ffc6cfd4fbf82d2ff",
+      "current_sha256": "7584ef575308dad5477c0610e03acd59a4287cc835af546ffc6cfd4fbf82d2ff",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeHudWorldLabel.cs.meta",
+      "sha256": "a26a7f930553964f08cc2bed94d978f778c41f4f6c46b0a750ebaeb9790820de",
+      "current_sha256": "a26a7f930553964f08cc2bed94d978f778c41f4f6c46b0a750ebaeb9790820de",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfx.cs",
+      "sha256": "9a3e1d16b4b9b12f314ebd0ea6d5130bf73edb34cac24ef3867140ccface8da2",
+      "current_sha256": "9a3e1d16b4b9b12f314ebd0ea6d5130bf73edb34cac24ef3867140ccface8da2",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfx.cs.meta",
+      "sha256": "3c3c1da76eaab7fd7601b795f42d68552f2f1b3aa63e8fcff11fc24e6db8a950",
+      "current_sha256": "3c3c1da76eaab7fd7601b795f42d68552f2f1b3aa63e8fcff11fc24e6db8a950",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfxFlash.cs",
+      "sha256": "a057d3724ed535025f85d7d4370e5ed807266c2de63e2bae0eb87aa6cd5e321a",
+      "current_sha256": "a057d3724ed535025f85d7d4370e5ed807266c2de63e2bae0eb87aa6cd5e321a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfxFlash.cs.meta",
+      "sha256": "2f27010f0504f4dbde2e531a3e3648bdc5474db07576e3581217800ba2f14309",
+      "current_sha256": "2f27010f0504f4dbde2e531a3e3648bdc5474db07576e3581217800ba2f14309",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfxNumbers.cs",
+      "sha256": "85543e08ad1e14f1917c01d97bb9a93033fd315ca2fd59e71b10c376a58b5a62",
+      "current_sha256": "85543e08ad1e14f1917c01d97bb9a93033fd315ca2fd59e71b10c376a58b5a62",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfxNumbers.cs.meta",
+      "sha256": "8b65505b81e78ec63c8e8bfc1d9c8941a8c98abc1d7a917be75c30bdbb56eeb4",
+      "current_sha256": "8b65505b81e78ec63c8e8bfc1d9c8941a8c98abc1d7a917be75c30bdbb56eeb4",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfxWorld.cs",
+      "sha256": "f6c48c8558b1bfe9f634616af8159c902b81ad5f914d0090d693bdbbf15e0327",
+      "current_sha256": "f6c48c8558b1bfe9f634616af8159c902b81ad5f914d0090d693bdbbf15e0327",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeVfxWorld.cs.meta",
+      "sha256": "7842c891a39baca98df01dc615efe392c22d55316743b693f605e6853e510ab0",
+      "current_sha256": "7842c891a39baca98df01dc615efe392c22d55316743b693f605e6853e510ab0",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade.meta",
+      "sha256": "ac6a7c24a3c6cdecf5b713124a4b65eb21db7c6ba78f96f6cbccfd8e079e8b63",
+      "current_sha256": "ac6a7c24a3c6cdecf5b713124a4b65eb21db7c6ba78f96f6cbccfd8e079e8b63",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaCombatAffinity.cs",
+      "sha256": "bdc8a9a0cc8c456b17ddeb578008eec3849b8995ccd9a762f4ecabf4c3875730",
+      "current_sha256": "bdc8a9a0cc8c456b17ddeb578008eec3849b8995ccd9a762f4ecabf4c3875730",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaCombatAffinity.cs.meta",
+      "sha256": "58b4d934bf5d354782c8029bab5a52a5dfa92662275ac645adf188337a402053",
+      "current_sha256": "58b4d934bf5d354782c8029bab5a52a5dfa92662275ac645adf188337a402053",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaDecorationCrush.cs",
+      "sha256": "d405378176b62f0ff8f0a81b9f461fa55d810f33753ecc91386975a71cf2072a",
+      "current_sha256": "d405378176b62f0ff8f0a81b9f461fa55d810f33753ecc91386975a71cf2072a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaDecorationCrush.cs.meta",
+      "sha256": "d20e5340d0864dd6e9f047fa309d46bf16ff6d22ceb350b84741e6a7b7c48e53",
+      "current_sha256": "d20e5340d0864dd6e9f047fa309d46bf16ff6d22ceb350b84741e6a7b7c48e53",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaEnemyRespawns.cs",
+      "sha256": "6325cdd4d3a94be2b003713328d21b30650ac5d8003d9c0ff515d570dedc0f96",
+      "current_sha256": "6325cdd4d3a94be2b003713328d21b30650ac5d8003d9c0ff515d570dedc0f96",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaEnemyRespawns.cs.meta",
+      "sha256": "980c67b34dea770ed473716a41f19ff1830c7fe9730c248914af21ae9bd6883d",
+      "current_sha256": "980c67b34dea770ed473716a41f19ff1830c7fe9730c248914af21ae9bd6883d",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaExploration.cs",
+      "sha256": "cb94e1b777ba83e105ec0c4e9831f706fd86448948fca53b50143488dbbfc713",
+      "current_sha256": "cb94e1b777ba83e105ec0c4e9831f706fd86448948fca53b50143488dbbfc713",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaExploration.cs.meta",
+      "sha256": "5ec9d5e873832ecd6db8f33e09510e94ca684c963e45945db571fc4093423b14",
+      "current_sha256": "5ec9d5e873832ecd6db8f33e09510e94ca684c963e45945db571fc4093423b14",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaExplorationHud.cs",
+      "sha256": "a5639d1c2823cf9527c74e03161011c66bab3b69a15a2a41bb113ca6c7968df5",
+      "current_sha256": "a5639d1c2823cf9527c74e03161011c66bab3b69a15a2a41bb113ca6c7968df5",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaExplorationHud.cs.meta",
+      "sha256": "ec3421dd861301f782bc40ac7616d4d34ef886bf243b66e121ba8bbbea444780",
+      "current_sha256": "ec3421dd861301f782bc40ac7616d4d34ef886bf243b66e121ba8bbbea444780",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaExplorationTuning.cs",
+      "sha256": "f5831f12933b99c34bdca7d449b49b29b5e67addd8f8c50b864f90d9431d9b4d",
+      "current_sha256": "f5831f12933b99c34bdca7d449b49b29b5e67addd8f8c50b864f90d9431d9b4d",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaExplorationTuning.cs.meta",
+      "sha256": "0ac27ec007bb8cc188c03a13b3258ebb365de0bd3445d3ea7bf1fb136d6ec8a5",
+      "current_sha256": "0ac27ec007bb8cc188c03a13b3258ebb365de0bd3445d3ea7bf1fb136d6ec8a5",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaGuidance.cs",
+      "sha256": "1fa197b05f90bf92e19be535c100e22de40e8b4c331d5450b11be97a7b55ac57",
+      "current_sha256": "1fa197b05f90bf92e19be535c100e22de40e8b4c331d5450b11be97a7b55ac57",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaGuidance.cs.meta",
+      "sha256": "f8ac9113505490d04e1d4af4b8b11288acefa21856807a2305b36541a70821c8",
+      "current_sha256": "f8ac9113505490d04e1d4af4b8b11288acefa21856807a2305b36541a70821c8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaHudLayout.cs",
+      "sha256": "85da3c0daa5b485bcb787ad33ea3140a5ee3d03a8a7f5bd3c9349bfe13e98d94",
+      "current_sha256": "85da3c0daa5b485bcb787ad33ea3140a5ee3d03a8a7f5bd3c9349bfe13e98d94",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaHudLayout.cs.meta",
+      "sha256": "3a3a1aa39ca359f9d062c3b55298f96b863d2f4968778e0d59c853a00f1f2aa9",
+      "current_sha256": "3a3a1aa39ca359f9d062c3b55298f96b863d2f4968778e0d59c853a00f1f2aa9",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMinimap.cs",
+      "sha256": "481622df439b0a7e14b87a8210a839736e451cfe103421c306b26245408de321",
+      "current_sha256": "481622df439b0a7e14b87a8210a839736e451cfe103421c306b26245408de321",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMinimap.cs.meta",
+      "sha256": "7898507c96f854b058aaba5b26d2fbd7b27ba51a64e01e1394fc544cdddc1463",
+      "current_sha256": "7898507c96f854b058aaba5b26d2fbd7b27ba51a64e01e1394fc544cdddc1463",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMinimapCircle.cs",
+      "sha256": "2d774243f564c5dc0191274bd05ffc5df79686e57238b158768f0457861ffdcf",
+      "current_sha256": "2d774243f564c5dc0191274bd05ffc5df79686e57238b158768f0457861ffdcf",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMinimapCircle.cs.meta",
+      "sha256": "9ec2cd90ca46b7f36b164632b2135378721fa6c01d57dc16261a54cd76fae3e6",
+      "current_sha256": "9ec2cd90ca46b7f36b164632b2135378721fa6c01d57dc16261a54cd76fae3e6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMinimapIcon.cs",
+      "sha256": "af0e5d55b653fc5deccae864e03ad4eddb810c47c4530ba46c2d2e13db02e4d7",
+      "current_sha256": "af0e5d55b653fc5deccae864e03ad4eddb810c47c4530ba46c2d2e13db02e4d7",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMinimapIcon.cs.meta",
+      "sha256": "e67990deccef8023cb433f44770be49d09affa618f6213a87963f5b9339771d8",
+      "current_sha256": "e67990deccef8023cb433f44770be49d09affa618f6213a87963f5b9339771d8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMusic.cs",
+      "sha256": "e46ac0dfa694deab1d64d556aec00a36ed09c5b3c2e7ac6066d3446b4a581c9f",
+      "current_sha256": "e46ac0dfa694deab1d64d556aec00a36ed09c5b3c2e7ac6066d3446b4a581c9f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaMusic.cs.meta",
+      "sha256": "fe5cf68fc03ca8672d630f1a01ab43242ba738edb45d1d0c5e54b973edb6ce96",
+      "current_sha256": "fe5cf68fc03ca8672d630f1a01ab43242ba738edb45d1d0c5e54b973edb6ce96",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaRewardCache.cs",
+      "sha256": "ca7bd01f35dbeac01f252f1b9f98de945f50dc9edf4cd8461b7bbb9fe0c2ea24",
+      "current_sha256": "ca7bd01f35dbeac01f252f1b9f98de945f50dc9edf4cd8461b7bbb9fe0c2ea24",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaRewardCache.cs.meta",
+      "sha256": "1c5e649aa3e47907bfb6d9eaf24f7fea82c57cbb226d529374b2cb3e04b2f106",
+      "current_sha256": "1c5e649aa3e47907bfb6d9eaf24f7fea82c57cbb226d529374b2cb3e04b2f106",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaRunStats.cs",
+      "sha256": "eb880d1b5fdc23771ef0d399f710f3de9f47ab499073f7372ee5d52521dc6720",
+      "current_sha256": "eb880d1b5fdc23771ef0d399f710f3de9f47ab499073f7372ee5d52521dc6720",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaRunStats.cs.meta",
+      "sha256": "3ce028bde2fdaaf01863c6afdd81a91af90ea04fe7953d82978189554e0411ff",
+      "current_sha256": "3ce028bde2fdaaf01863c6afdd81a91af90ea04fe7953d82978189554e0411ff",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaUpgradeStation.cs",
+      "sha256": "e5349facf6f738043d0d664a29c3414e796de0d302295099c6eb74b9f0e10ca6",
+      "current_sha256": "e5349facf6f738043d0d664a29c3414e796de0d302295099c6eb74b9f0e10ca6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArenaUpgradeStation.cs.meta",
+      "sha256": "f6de24c63c78d54e01b8eb2fb844bd00666701f3c7797565ce2bf032287fd26c",
+      "current_sha256": "f6de24c63c78d54e01b8eb2fb844bd00666701f3c7797565ce2bf032287fd26c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArtDirection/WastelandVisualPreset.cs",
+      "sha256": "f26da3589e0f89e9d2c18086cb13744859ed725a841c4c97d7855491f49e414e",
+      "current_sha256": "f26da3589e0f89e9d2c18086cb13744859ed725a841c4c97d7855491f49e414e",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArtDirection/WastelandVisualPreset.cs.meta",
+      "sha256": "b2e709be2440c400e9213b3012385319c76dafdd2306421cb6125dfbc8d4cbb8",
+      "current_sha256": "b2e709be2440c400e9213b3012385319c76dafdd2306421cb6125dfbc8d4cbb8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/ArtDirection.meta",
+      "sha256": "2200c4580cff5635b0430a8b93173bb00f2add24c3c1b33f2a06a0ebc16ceb00",
+      "current_sha256": "2200c4580cff5635b0430a8b93173bb00f2add24c3c1b33f2a06a0ebc16ceb00",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/AttackRange.cs",
+      "sha256": "abb9f4edcc71220bdf474f481c1f060a012b54982bcfd53e77d5a27ca57974ef",
+      "current_sha256": "abb9f4edcc71220bdf474f481c1f060a012b54982bcfd53e77d5a27ca57974ef",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/AttackRange.cs.meta",
+      "sha256": "6e130b9b24b8fb3b223bc07b3b2c329f6ce29afcb2a14a907bd9622decb281f3",
+      "current_sha256": "6e130b9b24b8fb3b223bc07b3b2c329f6ce29afcb2a14a907bd9622decb281f3",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/AttackRangeIndicator.cs",
+      "sha256": "209b1ae3ea29d52fed3ee2a969c97e90ecc51514cef025a9c6721adbc9cbf97f",
+      "current_sha256": "209b1ae3ea29d52fed3ee2a969c97e90ecc51514cef025a9c6721adbc9cbf97f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/AttackRangeIndicator.cs.meta",
+      "sha256": "50693dcfd7f807078c1d849faa27e8c150f0543a790e0d8637d4e4e7a6d6719a",
+      "current_sha256": "50693dcfd7f807078c1d849faa27e8c150f0543a790e0d8637d4e4e7a6d6719a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/BuggyGun.cs",
+      "sha256": "d74e1d709d4b8455202d317266072884cf6efecee2c939ca649b4d916ec8ae89",
+      "current_sha256": "d74e1d709d4b8455202d317266072884cf6efecee2c939ca649b4d916ec8ae89",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/BuggyGun.cs.meta",
+      "sha256": "e1a504136558a30be9e149d6f0e4a3bb0ff11fdd0fc16ef9050b7b6a01225d9a",
+      "current_sha256": "e1a504136558a30be9e149d6f0e4a3bb0ff11fdd0fc16ef9050b7b6a01225d9a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/BuggyTuning.cs",
+      "sha256": "6fc707b003f282cacc1ff810e4a8659d220ef4537eb3113fcc9425ddecfd4b22",
+      "current_sha256": "6fc707b003f282cacc1ff810e4a8659d220ef4537eb3113fcc9425ddecfd4b22",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/BuggyTuning.cs.meta",
+      "sha256": "945ceaa6c06d9e77612b607ead9963371760267a3201b328f9832e9d356da9d7",
+      "current_sha256": "945ceaa6c06d9e77612b607ead9963371760267a3201b328f9832e9d356da9d7",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatEffects.cs",
+      "sha256": "bb84b827d7ab73595cdda70fcf6aeb0fa2b31a81e86585c8c4daefc18852ad10",
+      "current_sha256": "bb84b827d7ab73595cdda70fcf6aeb0fa2b31a81e86585c8c4daefc18852ad10",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatEffects.cs.meta",
+      "sha256": "bf5380d067271e0f9c3f9e7abe0dedca270a03b52b78345aa47096bcde1f0984",
+      "current_sha256": "bf5380d067271e0f9c3f9e7abe0dedca270a03b52b78345aa47096bcde1f0984",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatTarget.cs",
+      "sha256": "5456e33816de9a0858e728b9258ded5bb2e9c335da692a85e4913b7bc46ad601",
+      "current_sha256": "5456e33816de9a0858e728b9258ded5bb2e9c335da692a85e4913b7bc46ad601",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatTarget.cs.meta",
+      "sha256": "83cf458d77b25c26b541a2efe0b01256d9a96049ed10f02f98cf9b19dd3e01f2",
+      "current_sha256": "83cf458d77b25c26b541a2efe0b01256d9a96049ed10f02f98cf9b19dd3e01f2",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatTuning.cs",
+      "sha256": "0e96fa0124b6b178ffaf3151cc943f81bc4fad66c8eac06a8840a08ef5448673",
+      "current_sha256": "0e96fa0124b6b178ffaf3151cc943f81bc4fad66c8eac06a8840a08ef5448673",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatTuning.cs.meta",
+      "sha256": "aa34a2aba13c167e0e509fcbc10ca4ab89f297948d0ada8b2f39dda3a97fc7b2",
+      "current_sha256": "aa34a2aba13c167e0e509fcbc10ca4ab89f297948d0ada8b2f39dda3a97fc7b2",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/DecorationCrushChunk.cs",
+      "sha256": "c3d728289fb66a49dfe81bcd38b5c46698af851f0570c159c44a9fc44506ea49",
+      "current_sha256": "c3d728289fb66a49dfe81bcd38b5c46698af851f0570c159c44a9fc44506ea49",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/DecorationCrushChunk.cs.meta",
+      "sha256": "60071473304e1c700f98010e686b99e8969dc81f441a24e0dcd6b88038cc395c",
+      "current_sha256": "60071473304e1c700f98010e686b99e8969dc81f441a24e0dcd6b88038cc395c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics.meta",
+      "sha256": "2dc1e45833fc5647b6961bec3a1304f518fda0cd4a74a7c8685dbb4849a1e091",
+      "current_sha256": "2dc1e45833fc5647b6961bec3a1304f518fda0cd4a74a7c8685dbb4849a1e091",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/DriveInput.cs",
+      "sha256": "7a99ae8ebc5c9f760a27f7840bca1b93bdf88fd92e7e92b0650242007a549505",
+      "current_sha256": "7a99ae8ebc5c9f760a27f7840bca1b93bdf88fd92e7e92b0650242007a549505",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/DriveInput.cs.meta",
+      "sha256": "fdf09558e6ea4e08034f37d72053f8eb9e3638a68086896b69b48bd59dfca225",
+      "current_sha256": "fdf09558e6ea4e08034f37d72053f8eb9e3638a68086896b69b48bd59dfca225",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EncounterSpawn.cs",
+      "sha256": "2a5a77745833cbe5d768aaa986546a19dca8ccd53dff5501f39a94b99813725c",
+      "current_sha256": "2a5a77745833cbe5d768aaa986546a19dca8ccd53dff5501f39a94b99813725c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EncounterSpawn.cs.meta",
+      "sha256": "5dbad0723d049a2308e908b2e14a1690e1b821cde4f9956659df8d47045f41f5",
+      "current_sha256": "5dbad0723d049a2308e908b2e14a1690e1b821cde4f9956659df8d47045f41f5",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EnemyBuggy.cs",
+      "sha256": "45002bd6609aa08f315828f37041ae5cc1b34c35acb01d12682a025e5920ba59",
+      "current_sha256": "45002bd6609aa08f315828f37041ae5cc1b34c35acb01d12682a025e5920ba59",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EnemyBuggy.cs.meta",
+      "sha256": "572bc950cbc93b4c7bc9eb7cb114cac98e0ca8da1efdd43a3e08de5fd04e1c1f",
+      "current_sha256": "572bc950cbc93b4c7bc9eb7cb114cac98e0ca8da1efdd43a3e08de5fd04e1c1f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EnemyHealthBar.cs",
+      "sha256": "d25ce5806fbdb33e0b85417acb24cc97465d1acd132d92e7f0e7376ef58985eb",
+      "current_sha256": "d25ce5806fbdb33e0b85417acb24cc97465d1acd132d92e7f0e7376ef58985eb",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EnemyHealthBar.cs.meta",
+      "sha256": "c478d8a336502f2518f6023408873cae467348cf1ff7b547750b7855913efa4c",
+      "current_sha256": "c478d8a336502f2518f6023408873cae467348cf1ff7b547750b7855913efa4c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EnemyRespawnMarker.cs",
+      "sha256": "2e0c66be5c0a9cdb65d14c173dca7a18dd578cf6407a9cb0318f35f2d555ba14",
+      "current_sha256": "2e0c66be5c0a9cdb65d14c173dca7a18dd578cf6407a9cb0318f35f2d555ba14",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/EnemyRespawnMarker.cs.meta",
+      "sha256": "3dc599778d18d6b1c7167c7010cd7d5f3761947d862e1e12f6333e92c287855f",
+      "current_sha256": "3dc599778d18d6b1c7167c7010cd7d5f3761947d862e1e12f6333e92c287855f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/FloatingJoystick.cs",
+      "sha256": "3c8559b9acf2f34463ec6384ae2db2749c53bca171b734c2839da1daa429b16f",
+      "current_sha256": "3c8559b9acf2f34463ec6384ae2db2749c53bca171b734c2839da1daa429b16f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/FloatingJoystick.cs.meta",
+      "sha256": "f95531c7ee07c639573a1b6d113ac3cc23272105cd72d90f20dfa3c4deda9a3a",
+      "current_sha256": "f95531c7ee07c639573a1b6d113ac3cc23272105cd72d90f20dfa3c4deda9a3a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/FollowCamera.cs",
+      "sha256": "092ec78899780d411ed63c70baeb8ebd33da21a3eb5183b018c5280a092318ac",
+      "current_sha256": "092ec78899780d411ed63c70baeb8ebd33da21a3eb5183b018c5280a092318ac",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/FollowCamera.cs.meta",
+      "sha256": "4193b8d6265d90fab3b4efd78d0c900e02605e587f1b9c06a17b74c5361545b1",
+      "current_sha256": "4193b8d6265d90fab3b4efd78d0c900e02605e587f1b9c06a17b74c5361545b1",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/GameSession.cs",
+      "sha256": "5b44a13fc5240a3cd54db2a9ac6b8b5a5e8130c6061dd010c17637da85a780b8",
+      "current_sha256": "5b44a13fc5240a3cd54db2a9ac6b8b5a5e8130c6061dd010c17637da85a780b8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/GameSession.cs.meta",
+      "sha256": "4f45a31f6bbd103e837ae79648124b07f9c405d46e955362da3f82faac436fa5",
+      "current_sha256": "4f45a31f6bbd103e837ae79648124b07f9c405d46e955362da3f82faac436fa5",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/GreenwoodSanctuary.cs",
+      "sha256": "604358b0528f5725336a42c8afafd29ea1f858de07d0306559274473b97f50e7",
+      "current_sha256": "604358b0528f5725336a42c8afafd29ea1f858de07d0306559274473b97f50e7",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/GreenwoodSanctuary.cs.meta",
+      "sha256": "c48a26c8a268001b3a95df609a39ef2c675026586d220132b106aef8b896792c",
+      "current_sha256": "c48a26c8a268001b3a95df609a39ef2c675026586d220132b106aef8b896792c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/HarpoonCollector.cs",
+      "sha256": "f97ab7084432f15ef97404f231d71e5f35c427e7acd8d306d54768cd08000f75",
+      "current_sha256": "f97ab7084432f15ef97404f231d71e5f35c427e7acd8d306d54768cd08000f75",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/HarpoonCollector.cs.meta",
+      "sha256": "fc6c31fd60e4e0aef037864a4f8f5001af5e7d16f343c22358919e3180c291cc",
+      "current_sha256": "fc6c31fd60e4e0aef037864a4f8f5001af5e7d16f343c22358919e3180c291cc",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/HudView.cs",
+      "sha256": "069945b9d3d57fee9223d517c460424de0248386791b973afe61ab8a829ce760",
+      "current_sha256": "069945b9d3d57fee9223d517c460424de0248386791b973afe61ab8a829ce760",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/HudView.cs.meta",
+      "sha256": "e6a1449b04dcdfd0fbe51387be61d5505994478fd933762c0b6121bcad3896ad",
+      "current_sha256": "e6a1449b04dcdfd0fbe51387be61d5505994478fd933762c0b6121bcad3896ad",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/LevelLayout.cs",
+      "sha256": "0a7b644b46d77356b9452306b01f347953abc062e9aa29ecc46d4c82d1657dee",
+      "current_sha256": "0a7b644b46d77356b9452306b01f347953abc062e9aa29ecc46d4c82d1657dee",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/LevelLayout.cs.meta",
+      "sha256": "445a849d76db4165628bba80ec4aaea00327e5437f89a5d4ea0e9b1b21e6ec58",
+      "current_sha256": "445a849d76db4165628bba80ec4aaea00327e5437f89a5d4ea0e9b1b21e6ec58",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/PickupPool.cs",
+      "sha256": "48c51f46cf6e3ac075c6e417e3bc382c479dc26e3f10be5d1612524eda1cfd1f",
+      "current_sha256": "48c51f46cf6e3ac075c6e417e3bc382c479dc26e3f10be5d1612524eda1cfd1f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/PickupPool.cs.meta",
+      "sha256": "0d2067135d28522415d4bd787ea806d254963e9f8282303227aa58796a17854c",
+      "current_sha256": "0d2067135d28522415d4bd787ea806d254963e9f8282303227aa58796a17854c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/PlayerTrackVisuals.cs",
+      "sha256": "aab253610bd6b42918e51e4bbe8a46eb8478ef585b60a87f2de1ba2896cb814f",
+      "current_sha256": "e489b641f3752e101ef30bec8236b1f47f396f6ed29601118e9e968367e9a975",
+      "unchanged": false
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/PlayerTrackVisuals.cs.meta",
+      "sha256": "f939edcc3862ad1c5cda54ab7f67f6699e4e3b2268b780b565613ec5ba0a5f2b",
+      "current_sha256": "f939edcc3862ad1c5cda54ab7f67f6699e4e3b2268b780b565613ec5ba0a5f2b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Raider.cs",
+      "sha256": "a4e887aa9c86eacf2a7eb5eb0edd246774e3710992be58e5ef0249d053388abd",
+      "current_sha256": "a4e887aa9c86eacf2a7eb5eb0edd246774e3710992be58e5ef0249d053388abd",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Raider.cs.meta",
+      "sha256": "8362570eb1059de4ae0b49b17c33ac4db4c3f8c2a90089e22f2ab5ae50f743f0",
+      "current_sha256": "8362570eb1059de4ae0b49b17c33ac4db4c3f8c2a90089e22f2ab5ae50f743f0",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/RamSensor.cs",
+      "sha256": "77988a827d6916fab67d0cb78277ff8f1ab31748afa5e30cf2e419cee8d713fc",
+      "current_sha256": "77988a827d6916fab67d0cb78277ff8f1ab31748afa5e30cf2e419cee8d713fc",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/RamSensor.cs.meta",
+      "sha256": "f6c466a6aaa7155a700e636f93b7b7d26e07507a3b63915630809c447b376e4f",
+      "current_sha256": "f6c466a6aaa7155a700e636f93b7b7d26e07507a3b63915630809c447b376e4f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/RepairWorkshop.cs",
+      "sha256": "9ea6b46ec3db6311767dee0840ec6e72e43a61a562dcbae81bf1941377fd3cb3",
+      "current_sha256": "9ea6b46ec3db6311767dee0840ec6e72e43a61a562dcbae81bf1941377fd3cb3",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/RepairWorkshop.cs.meta",
+      "sha256": "978992e717eb2b7e2e721dd8d24e61e9a3afcb8e167e9d126c4585e8cfd63dba",
+      "current_sha256": "978992e717eb2b7e2e721dd8d24e61e9a3afcb8e167e9d126c4585e8cfd63dba",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/SafeArea.cs",
+      "sha256": "f89134ad3c9561e73aa057d302d66921400031078b4266b2f5144446aa0b69c4",
+      "current_sha256": "f89134ad3c9561e73aa057d302d66921400031078b4266b2f5144446aa0b69c4",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/SafeArea.cs.meta",
+      "sha256": "7e61518c1b6148f9745f51e4c7f4d78260c6955ded2be437fd4b148dd66926ae",
+      "current_sha256": "7e61518c1b6148f9745f51e4c7f4d78260c6955ded2be437fd4b148dd66926ae",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/SpawnDirector.cs",
+      "sha256": "97d66a4a9abc30e6c75cbe1856d446547703d40d43711255d869f433fba0363b",
+      "current_sha256": "97d66a4a9abc30e6c75cbe1856d446547703d40d43711255d869f433fba0363b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/SpawnDirector.cs.meta",
+      "sha256": "90b73363735d1f1a218ba6a474f3628cf3af63372f78b3dad72747b6c91ad95a",
+      "current_sha256": "90b73363735d1f1a218ba6a474f3628cf3af63372f78b3dad72747b6c91ad95a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/TireTracks.cs",
+      "sha256": "0eef8d9272fbe7c59727379608d106a6135eded75c6c223c1e4c560342a2c5fb",
+      "current_sha256": "0eef8d9272fbe7c59727379608d106a6135eded75c6c223c1e4c560342a2c5fb",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/TireTracks.cs.meta",
+      "sha256": "e9f39ec564449fc05f8539df91c3e2fe7d47ddfeb389dd4fe932cdb79f394b6e",
+      "current_sha256": "e9f39ec564449fc05f8539df91c3e2fe7d47ddfeb389dd4fe932cdb79f394b6e",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/TurretController.cs",
+      "sha256": "7d9b9f1303f9af76e2af5280cd7f29e1378842d766d14a17dd6c97c01cd1a983",
+      "current_sha256": "7d9b9f1303f9af76e2af5280cd7f29e1378842d766d14a17dd6c97c01cd1a983",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/TurretController.cs.meta",
+      "sha256": "233ca8e3997db527c0436d576c7a8d8127e60a45a1c460c3246362698e89d70d",
+      "current_sha256": "233ca8e3997db527c0436d576c7a8d8127e60a45a1c460c3246362698e89d70d",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleController.cs",
+      "sha256": "5fdc88efe9370ce54732b1b236884a15200f4fcfee7bf8ac972a98859b7fef70",
+      "current_sha256": "5fdc88efe9370ce54732b1b236884a15200f4fcfee7bf8ac972a98859b7fef70",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleController.cs.meta",
+      "sha256": "03bda7b0676117405de50f49f01346de291fe94b1aef48761c2f82928697dc51",
+      "current_sha256": "03bda7b0676117405de50f49f01346de291fe94b1aef48761c2f82928697dc51",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleExplosion.cs",
+      "sha256": "1dc5a30bd45a54e0700e1ef1914ff16e4f67058ff83f0f5fbb34a3abea01789d",
+      "current_sha256": "1dc5a30bd45a54e0700e1ef1914ff16e4f67058ff83f0f5fbb34a3abea01789d",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleExplosion.cs.meta",
+      "sha256": "f2f6bae8cf51a86a9ad88fcf465da7950bd59f177767ed3a158320f86f1d987a",
+      "current_sha256": "f2f6bae8cf51a86a9ad88fcf465da7950bd59f177767ed3a158320f86f1d987a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleHealth.cs",
+      "sha256": "b50dcbbc883935b05ad1decebcb4ee529c5c7b91f49fa59783f36d1d92cbebf6",
+      "current_sha256": "b50dcbbc883935b05ad1decebcb4ee529c5c7b91f49fa59783f36d1d92cbebf6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleHealth.cs.meta",
+      "sha256": "912131194441741524a9cfb324139e8becf41a2ea0f8cf1be1ed9472e797cc17",
+      "current_sha256": "912131194441741524a9cfb324139e8becf41a2ea0f8cf1be1ed9472e797cc17",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleTuning.cs",
+      "sha256": "346d8feb30aa397ff57d846367683d13babb74230375ad379b78ca397e71eea3",
+      "current_sha256": "346d8feb30aa397ff57d846367683d13babb74230375ad379b78ca397e71eea3",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleTuning.cs.meta",
+      "sha256": "38b1e16f2e2f7bd758937b3cd27f1f84a8380c228b5330c3f5f40767beacc4a9",
+      "current_sha256": "38b1e16f2e2f7bd758937b3cd27f1f84a8380c228b5330c3f5f40767beacc4a9",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/EnemyIdentity.cs",
+      "sha256": "9e106a6a9ce05902941c1108bc3c2d3d5632b9086e48bedc2f9ae28edc7301c6",
+      "current_sha256": "9e106a6a9ce05902941c1108bc3c2d3d5632b9086e48bedc2f9ae28edc7301c6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/EnemyIdentity.cs.meta",
+      "sha256": "25cbbddb2d43f2cca810ab89377ee6660aabf0a211601f8b5c3a59f688b6ba02",
+      "current_sha256": "25cbbddb2d43f2cca810ab89377ee6660aabf0a211601f8b5c3a59f688b6ba02",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/TruckArenaBoss.cs",
+      "sha256": "88b7757f445445d10af102b48e9910d519afa762cd5b1052afe6abcb56cae626",
+      "current_sha256": "88b7757f445445d10af102b48e9910d519afa762cd5b1052afe6abcb56cae626",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/TruckArenaBoss.cs.meta",
+      "sha256": "67f62847f3e536c059bd22bd44476b692053bd361a81225ae084fa49990f1dd9",
+      "current_sha256": "67f62847f3e536c059bd22bd44476b692053bd361a81225ae084fa49990f1dd9",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/WastelandMutant.cs",
+      "sha256": "ea171ba9e5138adf3d6c7ad0f73f97e8adfd8fb5ed720b6c004f843221dfde4c",
+      "current_sha256": "ea171ba9e5138adf3d6c7ad0f73f97e8adfd8fb5ed720b6c004f843221dfde4c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/WastelandMutant.cs.meta",
+      "sha256": "52441950112b1ebb4710dcb2b45fff7e7eb0fd48737e21d877aebdf2877b7938",
+      "current_sha256": "52441950112b1ebb4710dcb2b45fff7e7eb0fd48737e21d877aebdf2877b7938",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/Zone1BossHud.cs",
+      "sha256": "0b765a7476801faaaf670483a00bbcb65c5067bfe2c8600ce8198428fe865b39",
+      "current_sha256": "0b765a7476801faaaf670483a00bbcb65c5067bfe2c8600ce8198428fe865b39",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/Zone1BossHud.cs.meta",
+      "sha256": "e1316932e25d837f1da9716b3e073e75f07ec281080f494fdcc928410cd0a80c",
+      "current_sha256": "e1316932e25d837f1da9716b3e073e75f07ec281080f494fdcc928410cd0a80c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/Zone1EnemyRoster.cs",
+      "sha256": "ae9133a7b05e09a3afa259cf3453c05a9967b06824e2c5441e7b682521efb8e9",
+      "current_sha256": "ae9133a7b05e09a3afa259cf3453c05a9967b06824e2c5441e7b682521efb8e9",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1/Zone1EnemyRoster.cs.meta",
+      "sha256": "6f340a5573938f3262e30a364c3fb54d91cd0628518dbc36a349ef50f0729357",
+      "current_sha256": "6f340a5573938f3262e30a364c3fb54d91cd0628518dbc36a349ef50f0729357",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Zone1.meta",
+      "sha256": "dfeddd488fb6c3a1e0b751f4dc3523f79c7c70a0d9ba5b38797ec0d2fb326fb6",
+      "current_sha256": "dfeddd488fb6c3a1e0b751f4dc3523f79c7c70a0d9ba5b38797ec0d2fb326fb6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 Boss Raider.asset",
+      "sha256": "6141c6c214c2755603bde8bb47fc2fd0220fc80a551a9fee6da9672694576692",
+      "current_sha256": "6141c6c214c2755603bde8bb47fc2fd0220fc80a551a9fee6da9672694576692",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 Boss Raider.asset.meta",
+      "sha256": "e9ba8112f4fe8717d980018f5672e879b9356a9cad0ae32fa348920624987280",
+      "current_sha256": "e9ba8112f4fe8717d980018f5672e879b9356a9cad0ae32fa348920624987280",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 Buggy.asset",
+      "sha256": "306b1770d9fd61cd7e2f2cc6abe1597526026d9397a7428bc0f243f725c149c8",
+      "current_sha256": "306b1770d9fd61cd7e2f2cc6abe1597526026d9397a7428bc0f243f725c149c8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 Buggy.asset.meta",
+      "sha256": "0fee06a5f4bd5dc19c112faf1bca1ad3b4c6b37451162a5862492cdf6705b8dd",
+      "current_sha256": "0fee06a5f4bd5dc19c112faf1bca1ad3b4c6b37451162a5862492cdf6705b8dd",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 basic Raider.asset",
+      "sha256": "4cbc739db734aa7206742677e57ea6bc1e44b2f82416fa5d88989dbfc3fba12f",
+      "current_sha256": "4cbc739db734aa7206742677e57ea6bc1e44b2f82416fa5d88989dbfc3fba12f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 basic Raider.asset.meta",
+      "sha256": "0c9de6cafb15d348dd556abc2c826151c264c5ad476ce9a1c38540fdaec6315a",
+      "current_sha256": "0c9de6cafb15d348dd556abc2c826151c264c5ad476ce9a1c38540fdaec6315a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 player combat.asset",
+      "sha256": "f07ab3547f472f550f9f19d636f3f4a2a08648f5ecb682c2199762dc980fef7f",
+      "current_sha256": "f07ab3547f472f550f9f19d636f3f4a2a08648f5ecb682c2199762dc980fef7f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 player combat.asset.meta",
+      "sha256": "4f06994defc61c985d633c8790a83c30b2ddc09ba924f0a6617260d61e15ca83",
+      "current_sha256": "4f06994defc61c985d633c8790a83c30b2ddc09ba924f0a6617260d61e15ca83",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 vehicle handling.asset",
+      "sha256": "9b41a507eda7c09be48bb3c38d22250dc8e82a6dc52a78b12de914f4147ad550",
+      "current_sha256": "9b41a507eda7c09be48bb3c38d22250dc8e82a6dc52a78b12de914f4147ad550",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 vehicle handling.asset.meta",
+      "sha256": "8b245d59f4f7276c6fc2b257c5408969b9e81477dc2720fa7ddd695c2cb2ba7b",
+      "current_sha256": "8b245d59f4f7276c6fc2b257c5408969b9e81477dc2720fa7ddd695c2cb2ba7b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena warning ring.asset",
+      "sha256": "0b4412ab7eafeec7596eeedeeccf2f888bafe689fb13036edbabbf7d1ae81c47",
+      "current_sha256": "0b4412ab7eafeec7596eeedeeccf2f888bafe689fb13036edbabbf7d1ae81c47",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena warning ring.asset.meta",
+      "sha256": "48461fff425cd2503d1e88634b0346c60072974bcc79e309f2553e46b08c49ff",
+      "current_sha256": "48461fff425cd2503d1e88634b0346c60072974bcc79e309f2553e46b08c49ff",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Attack amber.mat.meta",
+      "sha256": "8df7267b182ea9cfbfe03d39f3807d0b5773752187d44cc42abdd70a69113338",
+      "current_sha256": "8df7267b182ea9cfbfe03d39f3807d0b5773752187d44cc42abdd70a69113338",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Boss Raider.prefab.meta",
+      "sha256": "ed44242a53069f8177e34b21e829e84e09ee06d266a9e2706295a43749c445d6",
+      "current_sha256": "ed44242a53069f8177e34b21e829e84e09ee06d266a9e2706295a43749c445d6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Boss strike amber.mat.meta",
+      "sha256": "f2e9ab24d58289eee5f14115f7aa9924871c7a5a9a36fa6a0ed56f58d39e6f57",
+      "current_sha256": "f2e9ab24d58289eee5f14115f7aa9924871c7a5a9a36fa6a0ed56f58d39e6f57",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Health mint.mat.meta",
+      "sha256": "affbb13ff94512f61053db6d41c46510489632eb7cf3ba0cefb4d0050330b6d9",
+      "current_sha256": "affbb13ff94512f61053db6d41c46510489632eb7cf3ba0cefb4d0050330b6d9",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Levels/Greenwood/Arena1/Station worn steel.mat.meta",
+      "sha256": "e4261f8e4a36b540c0ebbe85a498c30065947747f6f598afc0a95ebdeb2db6c8",
+      "current_sha256": "e4261f8e4a36b540c0ebbe85a498c30065947747f6f598afc0a95ebdeb2db6c8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Art/HeroVehicle_01/HeroVehicle_source.json",
+      "sha256": "3a8890043314a6d5b4614233edd2338096ae0f691fc4d89c4a1907f5f0c8d46b",
+      "current_sha256": "3a8890043314a6d5b4614233edd2338096ae0f691fc4d89c4a1907f5f0c8d46b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Art/HeroVehicle_01/HeroVehicle_source.json.meta",
+      "sha256": "c9af414a31860d0186e7c177d90746abfb55b872f76b78aa35c0c2e81e49a765",
+      "current_sha256": "c9af414a31860d0186e7c177d90746abfb55b872f76b78aa35c0c2e81e49a765",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_01.wav",
+      "sha256": "3e50f1a015d3ca50248a4f4a70930eb5f01a2f6001bc150700c75eeb78e92d57",
+      "current_sha256": "3e50f1a015d3ca50248a4f4a70930eb5f01a2f6001bc150700c75eeb78e92d57",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_01.wav.meta",
+      "sha256": "0f5a694f85f7021d1cc70c0b8db6bdea8099677ca731f3423303ad8eb752a3b8",
+      "current_sha256": "0f5a694f85f7021d1cc70c0b8db6bdea8099677ca731f3423303ad8eb752a3b8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_02.wav",
+      "sha256": "6177a39347ba908fd6f43f0486d9010549735af845d6028eab44a6296becfb90",
+      "current_sha256": "6177a39347ba908fd6f43f0486d9010549735af845d6028eab44a6296becfb90",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_02.wav.meta",
+      "sha256": "1d639a33aed5c0aa25cc400d4d251a00ce516767938a03f242e055a31e037484",
+      "current_sha256": "1d639a33aed5c0aa25cc400d4d251a00ce516767938a03f242e055a31e037484",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_03.wav",
+      "sha256": "6a8a57b77edddf39d16f03d268ae5bbf516340088d20bf0c495a92ca9b80eefa",
+      "current_sha256": "6a8a57b77edddf39d16f03d268ae5bbf516340088d20bf0c495a92ca9b80eefa",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Enemy_03.wav.meta",
+      "sha256": "b7ab9082c90a5276e8e72aa013d9593f296abd2161da5af31db33520e32e6718",
+      "current_sha256": "b7ab9082c90a5276e8e72aa013d9593f296abd2161da5af31db33520e32e6718",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_01.wav",
+      "sha256": "bf95bf12c2e146c19586b3d94672e5fc8e4d38115326f07d7f0ec296b050e4ed",
+      "current_sha256": "bf95bf12c2e146c19586b3d94672e5fc8e4d38115326f07d7f0ec296b050e4ed",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_01.wav.meta",
+      "sha256": "ad3d55684b738b8d88f7bf7c2737db0a59a33577567731e16537afeef612c172",
+      "current_sha256": "ad3d55684b738b8d88f7bf7c2737db0a59a33577567731e16537afeef612c172",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_02.wav",
+      "sha256": "58899e92140bb1500cb0dc0fe087d33483da2e18e3cb472a5980748cf3f556b0",
+      "current_sha256": "58899e92140bb1500cb0dc0fe087d33483da2e18e3cb472a5980748cf3f556b0",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_02.wav.meta",
+      "sha256": "ab3a401a214b3957e6bb9a1d914e3d11ae4920e22fbddc2dafd74db296696a3a",
+      "current_sha256": "ab3a401a214b3957e6bb9a1d914e3d11ae4920e22fbddc2dafd74db296696a3a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_03.wav",
+      "sha256": "255cb5a9ab8adacb6b6c9f6b00f5e71c6398f0ff82b1c2830c97b64574d9ccbe",
+      "current_sha256": "255cb5a9ab8adacb6b6c9f6b00f5e71c6398f0ff82b1c2830c97b64574d9ccbe",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Gun_Player_03.wav.meta",
+      "sha256": "3eb0c9148eb77a84c64d843dc36f7b7df9a3ff112760abcf5f63f62059424461",
+      "current_sha256": "3eb0c9148eb77a84c64d843dc36f7b7df9a3ff112760abcf5f63f62059424461",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_01.wav",
+      "sha256": "b62ec8266d8b77914d165d0e94d022bc189d157cbece5eb2bfc7cc931e43f00c",
+      "current_sha256": "b62ec8266d8b77914d165d0e94d022bc189d157cbece5eb2bfc7cc931e43f00c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_01.wav.meta",
+      "sha256": "1f45dab43a4fd85c4487a4f758f3ff7601745d59c92e64a87ed41b0cded46f0b",
+      "current_sha256": "1f45dab43a4fd85c4487a4f758f3ff7601745d59c92e64a87ed41b0cded46f0b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_02.wav",
+      "sha256": "42eae5254525c6bd30b544f10118b8c1c32a80920077d21081836579418baa5b",
+      "current_sha256": "42eae5254525c6bd30b544f10118b8c1c32a80920077d21081836579418baa5b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_02.wav.meta",
+      "sha256": "aa50a5b92b01c96f213267d8cde012cd93e003d7924b3cb22d86557436b8ea6b",
+      "current_sha256": "aa50a5b92b01c96f213267d8cde012cd93e003d7924b3cb22d86557436b8ea6b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_03.wav",
+      "sha256": "2ceeebce999c745190aa503344b82306306cdc899dd9c21334946ea3c5f87ddc",
+      "current_sha256": "2ceeebce999c745190aa503344b82306306cdc899dd9c21334946ea3c5f87ddc",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Impact_Bullet_03.wav.meta",
+      "sha256": "5fb0624e0878894e37162d3f48469912a0f48babd0ffb7ec205b429b7314d789",
+      "current_sha256": "5fb0624e0878894e37162d3f48469912a0f48babd0ffb7ec205b429b7314d789",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Tire_Roll_Loop.wav",
+      "sha256": "520da767473bee62d0316c956504f0182ce22910a1b959553e1eff83d52773c2",
+      "current_sha256": "520da767473bee62d0316c956504f0182ce22910a1b959553e1eff83d52773c2",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade/Tire_Roll_Loop.wav.meta",
+      "sha256": "28470bf80429f8ed7c6f11c74390d1678b5cb5bb73ab6da6d16da652200a9566",
+      "current_sha256": "28470bf80429f8ed7c6f11c74390d1678b5cb5bb73ab6da6d16da652200a9566",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Arcade.meta",
+      "sha256": "f314ba583dcb28601c04104148f028a749c16dc3fc6aee47703a1e72448daf39",
+      "current_sha256": "f314ba583dcb28601c04104148f028a749c16dc3fc6aee47703a1e72448daf39",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Engine.wav",
+      "sha256": "20942deb90944df169f05d931e1e5b05aea704da8ba1c3be1572efb340d9adbf",
+      "current_sha256": "20942deb90944df169f05d931e1e5b05aea704da8ba1c3be1572efb340d9adbf",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Engine.wav.meta",
+      "sha256": "1eb70bae0125add24c775a8f4f836dcca99bae6fa3afa5bccb521b3dd93fb517",
+      "current_sha256": "1eb70bae0125add24c775a8f4f836dcca99bae6fa3afa5bccb521b3dd93fb517",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Gun.wav",
+      "sha256": "6ca973e0baadf6c70515a979ec1e6949ab43d5a821215112e505cde6dc078f0b",
+      "current_sha256": "6ca973e0baadf6c70515a979ec1e6949ab43d5a821215112e505cde6dc078f0b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Gun.wav.meta",
+      "sha256": "21d18a33624b693e0182f925ac3111361aa08348d3f08f91ba0066d3911dc294",
+      "current_sha256": "21d18a33624b693e0182f925ac3111361aa08348d3f08f91ba0066d3911dc294",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Impact.wav",
+      "sha256": "e324a532de9d0cb9b03fd6ed691ff95bffe993574989d3d3bef3479fbb6cba3a",
+      "current_sha256": "e324a532de9d0cb9b03fd6ed691ff95bffe993574989d3d3bef3479fbb6cba3a",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Impact.wav.meta",
+      "sha256": "bbf590ae94da89d6fd6384b34dbf17eec4c8c002c91f6275229e6e31d56f9ca3",
+      "current_sha256": "bbf590ae94da89d6fd6384b34dbf17eec4c8c002c91f6275229e6e31d56f9ca3",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Music/Dustlight Road - source.txt",
+      "sha256": "5644957cb227b5baf6f74055dff60bddb79a8a211cc8a05b820f7a703e7d3860",
+      "current_sha256": "5644957cb227b5baf6f74055dff60bddb79a8a211cc8a05b820f7a703e7d3860",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Music/Dustlight Road - source.txt.meta",
+      "sha256": "e6bfcac591090b19974bc5d538aaa079a2ef5367a515520fc0afbb67375d4394",
+      "current_sha256": "e6bfcac591090b19974bc5d538aaa079a2ef5367a515520fc0afbb67375d4394",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Music/Dustlight Road.wav",
+      "sha256": "7ad177b5e3062b316249c086c48e58e4db2fadad2d0bd1882c0be17bb5088491",
+      "current_sha256": "7ad177b5e3062b316249c086c48e58e4db2fadad2d0bd1882c0be17bb5088491",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Music/Dustlight Road.wav.meta",
+      "sha256": "d13dbf7fd40f625d83f0368ce21675bd784ee463815b62303ee3c4a5c74f9e07",
+      "current_sha256": "d13dbf7fd40f625d83f0368ce21675bd784ee463815b62303ee3c4a5c74f9e07",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Music.meta",
+      "sha256": "5371752b4036b15f337f711f8db1a39c57ff0dbb7b6e903575126cfccfdcb9df",
+      "current_sha256": "5371752b4036b15f337f711f8db1a39c57ff0dbb7b6e903575126cfccfdcb9df",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Pickup.wav",
+      "sha256": "26ec8322f5e73371dc8c1dcb5e59782895ebccc8c5101b6653f20bc5620d4411",
+      "current_sha256": "26ec8322f5e73371dc8c1dcb5e59782895ebccc8c5101b6653f20bc5620d4411",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Pickup.wav.meta",
+      "sha256": "05c5b0eab23e243800ec1bceb47b0021fe5c5b713df6aa693510fac13e34b641",
+      "current_sha256": "05c5b0eab23e243800ec1bceb47b0021fe5c5b713df6aa693510fac13e34b641",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Vehicle explosion.wav",
+      "sha256": "f297ac53f769ab8938d95afd8aaf74e64c57ff57434ce8b8fb5df5706079f892",
+      "current_sha256": "f297ac53f769ab8938d95afd8aaf74e64c57ff57434ce8b8fb5df5706079f892",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Audio/Vehicle explosion.wav.meta",
+      "sha256": "013806905b31b532917ad74744ed63fae7a5c2724915ba51c13869f425b2a2a8",
+      "current_sha256": "013806905b31b532917ad74744ed63fae7a5c2724915ba51c13869f425b2a2a8",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Dust Jackal.prefab",
+      "sha256": "21ae55b4fb7a6e9ed95188d2203a5fd3625a15ef733b27d22ec9fe056c78946f",
+      "current_sha256": "21ae55b4fb7a6e9ed95188d2203a5fd3625a15ef733b27d22ec9fe056c78946f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Dust Jackal.prefab.meta",
+      "sha256": "09deb62094dcbec5ac28c6e6db2fb3cb89aebd936e2f180eb668dcfa921ced1b",
+      "current_sha256": "09deb62094dcbec5ac28c6e6db2fb3cb89aebd936e2f180eb668dcfa921ced1b",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment/Rounded sandstone.prefab",
+      "sha256": "03ddcd9a22a5af0b198ff4ce347ea8c6cffdc6213ef44adee1ed1ab212df7db4",
+      "current_sha256": "03ddcd9a22a5af0b198ff4ce347ea8c6cffdc6213ef44adee1ed1ab212df7db4",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment/Rounded sandstone.prefab.meta",
+      "sha256": "84a9d10e0d4a631302fb44903bd11ab52d6a94c2acfdeb8107d2648d7a9da8dd",
+      "current_sha256": "84a9d10e0d4a631302fb44903bd11ab52d6a94c2acfdeb8107d2648d7a9da8dd",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment/Rusted corrugated barricade.prefab",
+      "sha256": "0a005ebddfcbc8ae18b1bd5d64e322bf91e00fd5d550d2940c9ee518b2006c39",
+      "current_sha256": "0a005ebddfcbc8ae18b1bd5d64e322bf91e00fd5d550d2940c9ee518b2006c39",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment/Rusted corrugated barricade.prefab.meta",
+      "sha256": "ae6d1c7ffd05e208f6ff256835841902a6210f11de6733f0706ed2ee8306da4f",
+      "current_sha256": "ae6d1c7ffd05e208f6ff256835841902a6210f11de6733f0706ed2ee8306da4f",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment/Sandstone pebble (decoration).prefab",
+      "sha256": "5f0d6591c53b1227719232e2176daabc04f1168fcf50770964d5d8713e7a4a35",
+      "current_sha256": "5f0d6591c53b1227719232e2176daabc04f1168fcf50770964d5d8713e7a4a35",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment/Sandstone pebble (decoration).prefab.meta",
+      "sha256": "b5c1465829d73bff4db5dcb1146356622f08d13cd88d4bdd453a59570d03574c",
+      "current_sha256": "b5c1465829d73bff4db5dcb1146356622f08d13cd88d4bdd453a59570d03574c",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Environment.meta",
+      "sha256": "b06ef1bbde3f66cdd6f565cff53b1cf164467d870cf7cd713c4ffe0899eeacfa",
+      "current_sha256": "b06ef1bbde3f66cdd6f565cff53b1cf164467d870cf7cd713c4ffe0899eeacfa",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Rust Vulture Enemy Buggy.prefab",
+      "sha256": "5dca6fe4ba68ccaf359ff82b83a18dbd260a8c090cc8b20ff495a91b3080e226",
+      "current_sha256": "5dca6fe4ba68ccaf359ff82b83a18dbd260a8c090cc8b20ff495a91b3080e226",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Rust Vulture Enemy Buggy.prefab.meta",
+      "sha256": "7e3bec53b771cd601e95cfb75a5a40e49e8dea2359e6fa3d3c1bdb2b7e53e712",
+      "current_sha256": "7e3bec53b771cd601e95cfb75a5a40e49e8dea2359e6fa3d3c1bdb2b7e53e712",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Scrap pickup.prefab",
+      "sha256": "2070d1c87c406bf06a7cddabc0eeca5961c4c21ad7af155ea83c73a187c61c42",
+      "current_sha256": "2070d1c87c406bf06a7cddabc0eeca5961c4c21ad7af155ea83c73a187c61c42",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Scrap pickup.prefab.meta",
+      "sha256": "ae2fbe30b76093e9e9c42e337f3fbf935a00e139f267277fa7f7055b299dcfa6",
+      "current_sha256": "ae2fbe30b76093e9e9c42e337f3fbf935a00e139f267277fa7f7055b299dcfa6",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Wasteland Raider.prefab",
+      "sha256": "2af6c3605a20d7958f304a5915532ec925492d3126ab0fa27f830af338f8d475",
+      "current_sha256": "2af6c3605a20d7958f304a5915532ec925492d3126ab0fa27f830af338f8d475",
+      "unchanged": true
+    },
+    {
+      "path": "Assets/RoadGunner/Prefabs/Wasteland Raider.prefab.meta",
+      "sha256": "a701622170ece8fe888d031e147d2cd14e85508573f0111094f912cdf95269e5",
+      "current_sha256": "a701622170ece8fe888d031e147d2cd14e85508573f0111094f912cdf95269e5",
+      "unchanged": true
+    }
+  ]
+}

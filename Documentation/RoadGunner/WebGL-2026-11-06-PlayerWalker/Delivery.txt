@@ -1,0 +1,20 @@
+ROAD GUNNER — WALKER-ONLY WEBGL
+Unity6000.6.4f1; built2026-11-06T15:35:57.5350500Z.
+Built the actual saved Level01_Greenwood scene after the player-only walker and
+footstep replacement. No full art/world installer or balance adjustment ran.
+Seven static artifacts,21209677 bytes (~21.2MB) total compressed player payload.
+The Unity BuildReport totalSize field (55824774) uses a different accounting.
+Archive: outputs/WebGL-2026-11-06-PlayerWalker/RoadGunner-WebGL-Walker-2026-11-06.zip
+ZIP bytes: 20798315; SHA256: 80a5ce2417022a9f1e370abd97746d3b92dd93df92b3e5e1ec5f3522d8105b14
+ZIP CRC and seven entries verified.
+
+WebBuild.json validates gzipCRC, Unity data/WASM headers, WebAssembly.validate,
+loader/framework/inline JavaScript syntax, cache-version tags and all2214 frozen
+input hashes. Five automatic URP/graphics build-metadata files were archived then
+restored exactly; no production input differences remain. Metadata-restoration.json
+is retained under outputs. Native evidence is19+204=223 new PASS, not prior totals.
+Browser.txt records actual Safari walker/footprint/movement/brake/pause observations.
+
+Local running preview: http://127.0.0.1:8765/?build=walker-only-20261106
+To serve later from the repository: python3 -m http.server 8765 --bind 127.0.0.1 --directory WebBuild
+The preview is local to this computer. Public GitHub Pages remains unchanged.

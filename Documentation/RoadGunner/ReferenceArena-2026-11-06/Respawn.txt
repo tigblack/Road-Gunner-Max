@@ -1,0 +1,21 @@
+Enemy respawn — actual saved Arena 1 actors; Unity 6000.6.4f1
+Fixture: delay temporarily2s instead of30s, AI/auto-gun isolated, real damage/death hooks, scaled Playing time, real map navigation and colliders. Player/one Raider are repositioned only for setup. This is not a natural playthrough.
+PASS saved roster has15 eligible actors and a nonrespawning final boss: Roster=16; registered=15; production delay=30; boss excluded=True
+PASS normal lethal damage queues one death-site countdown and one reward: Pending=1; death=(100.76, 0.09, 4.77); home distance=3; remaining=2; kills=1
+PASS death marker renders a circle, progress and noninteractive real seconds: Visible=True; seconds=2; remaining=1.855211; progress=0.07239473
+PASS countdown advances during real Playing frames without an immediate spawn: Remaining 1.855211 -> 1.539877; scaled game time=0.7531403
+PASS pause freezes countdown and circular progress: Paused remaining=1.038687; progress=0.4806565; unscaled wait0.5s
+PASS resume respawns the same full-health Raider at its death site: Alive=True; position=(100.76, 0.09, 4.77); death site=(100.76, 0.00, 4.77); HP=45
+PASS a respawned enemy can die again and grants exactly one new reward: Kills=2; earned=2; resources=2
+PASS Restart clears pending markers and restores the fresh16-actor arena: Alive=16; pending=0; visible markers=0
+PASS Buggy wreck returns as the same grounded full-health vehicle with a fresh gun: Wreck observed=True; alive=True; contacts=4; HP=105; gun ready=True
+PASS Monster respawn resets its earned reward and a real committed telegraph: Real warning=True; death cleared warning=True; alive=True; reward reset=True
+PASS an occupied death site defers instead of spawning inside the actual player: Blocked=True; pending=True; remaining=0; player occupies=(100.76, 0.00, 4.77)
+PASS clearing the player permits a same-site navigation-safe retry: Alive=True; site distance=0; no player penetration=True
+PASS a real solid blocks respawn until removed without moving the death site: Solid deferred=True; respawn after removal=True; same-site distance=0
+PASS Defeated cancels pending jobs and markers without a future enemy: State=Defeated; pending=0; visible=0
+PASS final boss completes with Monster alive and permanently cancels this run's countdowns: State=Completed; Monster alive=True; pending=0; earned=11
+RESULT checks=15; failures=0; original delay/settings restored, saved scene not written.
+
+PASS runtime Console: errors/exceptions/asserts=0
+

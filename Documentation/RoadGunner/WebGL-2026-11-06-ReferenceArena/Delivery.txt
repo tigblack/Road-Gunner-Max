@@ -1,0 +1,44 @@
+ROAD GUNNER — WEBGL BUILD OF THE NEW ARENA 1
+6 November 2026. Unity6000.6.4f1.
+
+Built the current saved Level01_Greenwood.unity with the rebuilt reference-shaped
+Arena1: wide crossroads, southeast repair workshop, southwest outpost, northeast
+camp/Monster, northwest Warlord, closed gates, rebaked map and navigation.
+The standard existing RoadGunner.EditorTools.WebBuild.Build method was used.
+No authoring/art installer was rerun and gameplay/physics were not rebalanced.
+The build includes the current saved assets and current runtime visual sources,
+including preserved concurrent vehicle-visual work.
+
+OUTPUT
+WebBuild/ contains the complete seven-file static player: index, build-info,
+.nojekyll, loader, gzip data/framework/WASM. Total packaged file bytes23656692
+(about23.7MB); Unity BuildReport totalSize=58132861 has a different meaning.
+Build timestamp: 2026-11-06T15:03:59.3474410Z. Build command succeeded in54.16s.
+Archive: outputs/WebGL-2026-11-06-ReferenceArena/RoadGunner-WebGL-2026-11-06.zip
+Archive bytes: 23227272
+Archive SHA256: e0553d92eb42f28e20883748d6c3fa35ba0a2e2998d2aa0c2e0b59db4b6fe3dc
+Local running preview: http://127.0.0.1:8765/?build=reference-arena-20261106
+Use PLAY; the tested Safari window is left paused after the smoke run.
+The HTTP server is local to this computer, not a public/phone URL.
+To restart serving later from the repository folder:
+python3 -m http.server 8765 --bind 127.0.0.1 --directory WebBuild
+Opening index.html via file:// is not a supported way to load the WASM payload.
+
+VALIDATION
+WebBuild.json validates all7 artifacts, gzipCRC, UnityData/WASM headers,
+WebAssembly.validate, loader/framework/inline JavaScript syntax and template
+cache-version parameters. ZIP integrity was independently checked.
+Browser.txt records a real local Safari launch, movement/brake/turn,
+automatic combat/rewards and Pause. No public website deployment was performed.
+The preceding372 native scene checks are referenced with their report hashes;
+they are not described as newly rerun browser assertions.
+
+PRESERVATION
+2184 input files were frozen before packaging;2183 production/asset files remain
+byte-identical. Unity removed one ignored Finder Assets/.DS_Store file. Five known
+URP/graphics metadata files changed during target packaging; their generated
+versions were archived under outputs and exact pre-build bytes restored.
+Input-state, Build-state and Metadata-restoration JSON record these separately.
+The saved scene, new map geometry, navigation, gameplay, art, audio, tuning and
+concurrent source edits were retained. The generated player is not affected by
+restoring editor metadata after packaging.

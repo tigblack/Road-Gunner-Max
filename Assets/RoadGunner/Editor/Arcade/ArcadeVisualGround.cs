@@ -58,7 +58,7 @@ namespace RoadGunner.Editor
             log.Add("Arcade ground: " + WorldTexturePath + " regenerated (" + Size + "px) + road distance " + RoadMapPath + "; detail " + DetailPath + "; " + configured + " desert materials.");
         }
 
-        public static void BakeMinimap(GameSession session, List<string> log)
+        public static void BakeMinimap(GameSession session, List<string> log, bool transparentOutside = false)
         {
             var layout = RoadGunnerLevelAuthoring.Current;
             if (!session || !session.minimap || !layout) { log.Add("Minimap rebake skipped (no minimap/layout)."); return; }
@@ -74,7 +74,7 @@ namespace RoadGunner.Editor
             {
                 if (source) foreach (var m in materials) m.SetTexture("_BaseMap", source);
                 if (dressing) dressing.gameObject.SetActive(false);
-                texture = ArenaMinimapBaker.BakeAndConfigure(layout, session.minimap);
+                texture = ArenaMinimapBaker.BakeAndConfigure(layout, session.minimap, transparentOutside: transparentOutside);
             }
             finally
             {
@@ -95,9 +95,9 @@ namespace RoadGunner.Editor
                         float l = c.r * .299f + c.g * .587f + c.b * .114f;
                         c.r = l + (c.r - l) * 1.22f; c.g = l + (c.g - l) * 1.22f; c.b = l + (c.b - l) * 1.22f;
                         c.r = (c.r - .55f) * 1.1f + .55f; c.g = (c.g - .55f) * 1.1f + .55f; c.b = (c.b - .55f) * 1.1f + .55f;
-                        pixels[i] = new Color(Mathf.Clamp01(c.r), Mathf.Clamp01(c.g), Mathf.Clamp01(c.b), 1);
+                        pixels[i] = new Color(Mathf.Clamp01(c.r), Mathf.Clamp01(c.g), Mathf.Clamp01(c.b), transparentOutside ? c.a : 1);
                     }
-                    var boosted = new Texture2D(decoded.width, decoded.height, TextureFormat.RGB24, false);
+                    var boosted = new Texture2D(decoded.width, decoded.height, transparentOutside ? TextureFormat.RGBA32 : TextureFormat.RGB24, false);
                     try { boosted.SetPixels(pixels); boosted.Apply(false, false); File.WriteAllBytes(path, boosted.EncodeToPNG()); }
                     finally { Object.DestroyImmediate(boosted); }
                     AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);

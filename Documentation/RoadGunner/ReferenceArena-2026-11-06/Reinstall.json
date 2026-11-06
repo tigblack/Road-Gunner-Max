@@ -1,0 +1,9 @@
+{
+  "semantic_authoring_equal": true,
+  "generated_files_checked": 64,
+  "generated_files_changed": [],
+  "protected_files_checked": 208,
+  "protected_files_changed": [],
+  "existing_component_configuration_unchanged": true,
+  "scope": "Fresh second authoring run; scene/NavMesh byte IDs are not equality criteria. Full existing-object guard plus 601 full-car samples,25 Nav paths and3 gate seals rerun by installer."
+}

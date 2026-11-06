@@ -10,6 +10,11 @@ namespace RoadGunner
     public sealed class VehicleTuning : ScriptableObject
     {
         public float mass = 1400, maxSpeed = 18, totalDriveTorque = 3100;
+        [Header("Walker character movement (player opt-in)")]
+        [Tooltip("Immediate grounded screen-direction movement and stop; keeps the physical suspension, vertical motion and solid-world collision. Overrides wheel/tracked driving only for this profile.")]
+        public bool walkerDrive;
+        [Range(.005f,.08f), Tooltip("Compound-body sweep clearance from solid walls, in metres.")]
+        public float walkerCollisionSkin = .02f;
         [Header("Tracked drive (player profile only)")]
         [Tooltip("Zero steering angle on four suspension wheels; differential track torque and bounded grounded yaw torque.")]
         public bool trackedDrive;

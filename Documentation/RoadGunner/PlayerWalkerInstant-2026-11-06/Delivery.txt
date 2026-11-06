@@ -1,0 +1,45 @@
+PLAYER WALKER — INSTANT CHARACTER MOVEMENT / 6 NOVEMBER 2026
+
+Saved player: Assets/RoadGunner/Scenes/Level01_Greenwood.unity.
+Player-only handling profile: Arena 1 vehicle handling.asset, walkerDrive=true,
+walkerCollisionSkin=0.02m. Maximum speed remains 9.36m/s; the existing directional
+input dead zone, response exponent and analog magnitude remain in effect.
+
+Grounded movement and facing immediately follow the requested screen direction.
+The first FixedUpdate after production input applies requested planar velocity;
+release/Space stop planar movement on the first FixedUpdate. Pause and terminal
+session changes stop it synchronously. Compound-body sweeps slide against actual
+solids; dynamic suspension, vertical velocity, gravity and physical contacts remain.
+Unsupported bodies receive no directional propulsion or facing. Existing enemy
+handling profiles, health, damage, attack range, rewards and arena are retained.
+
+The walker has layered armour plates, fasteners, vents, hoses, hydraulics, optical
+head details and machined weapon receivers/barrels. Seven combined upper meshes,
+19,124 vertices / 9,636 triangles, use the existing shared eight-colour material.
+The articulated legs and sole-landing footprints remain active; obsolete player
+car-body, cabin, crew and wheel mesh references remain detached.
+
+FRESH NATIVE ACCEPTANCE (Unity 6000.6.4f1; actual saved scene):
+- InstantMovement.txt: 33 passing assertions, production Keyboard/InputSystem path.
+  All eight starts measured 9.36m/s on the first FixedUpdate; releases <=0.1m/s.
+  Reversal, Space, Pause/Resume, Completed/Restart, falling, real north-gate blocking,
+  escape and diagonal sliding passed. Exact measured gate penetration: 0.
+- PlayMode.txt: 19 passing appearance/gait/footprint assertions. 34 actual foot
+  landings produced 34 sole imprints (17 left, 17 right), zero wheel stamps.
+  No continuous stamps at rest, during Pause or in the air. Restart clears them.
+- Gameplay.txt: 204 passing existing combat, upgrades, rewards, harpoon, touch/UI,
+  boss and state regression assertions. The legacy first-frame slow-turn predicate
+  remains for vehicle profiles; the explicit walker profile permits its immediate
+  character-facing turn, checked independently by InstantMovement.txt.
+All three runs recorded zero runtime Console errors, exceptions and asserts.
+The first focused fixture was corrected to await stable post-ResetPose suspension
+contacts before measuring first input; no speed threshold or game code was relaxed.
+
+PRESERVATION: Authoring.json compares 7,387 protected scene/configuration rows
+before and after visual authoring. Handling.json records only the deliberate
+player profile fields. Protected-inputs.json verifies 895 arena, navigation,
+other tuning, audio, package and project-setting files unchanged.
+
+These automated native checks use isolated administrative setups; they are not a
+natural playthrough or a physical-phone/performance measurement. Packaged WebGL
+and public deployment evidence are in WebGL-2026-11-06-PlayerWalkerInstant/.

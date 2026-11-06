@@ -1,0 +1,14 @@
+ACTUAL LOCAL SAFARI SMOKE — WALKER-ONLY RELEASE
+6 November 2026. URL http://127.0.0.1:8765/?build=walker-only-20261106
+
+PLAY loaded the freshly rebuilt Unity WebGL successfully. The actual player is
+only the bipedal walker; no automobile hull, cabin, crew or tyre meshes rendered.
+The normal portrait HUD/range ring/circular map were visible without pink/missing
+materials or a startup error overlay. A native W hold moved the walker and animated
+its legs. Space stopped it at displayed00km/h. The trail clearly showed separate
+alternating mechanical footprints rather than continuous track/tire strips.
+Escape opened PAUSED, showing baseline5.25damage/shot, HP100 and MUSIC30%.
+The test window is left paused. Actual browser images are in the computer-use tool
+transcript; PlayerWalker/Screenshots are native Unity camera captures, not browser
+screenshots. No script injection, complete browser playthrough, physical-device,
+mobile-emulation, isolated sound test or browser performance result is claimed.

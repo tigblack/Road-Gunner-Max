@@ -381,6 +381,7 @@ namespace RoadGunner
                 "Road collider/render vertices=" + (road && road.sharedMesh ? road.sharedMesh.vertexCount : 0));
             var definitions = Field<Array>(definition, "routes");
             var allNodes = new List<Vector3>(); var checkedLoops = new Dictionary<string, int>();
+            var routePoints = new Dictionary<string, Vector3[]>(); var checkedRoutes = new HashSet<string>();
             var details = new List<string> { "route,width_m,samples,nav_samples,car_clear_samples,road_cross_sections" };
             bool startFound = NavMesh.SamplePosition(s.startPosition, out var start, 3, NavMesh.AllAreas);
             foreach (var item in definitions)
@@ -389,6 +390,7 @@ namespace RoadGunner
                 float width = Field<float>(item, "widthMeters");
                 var route = routeRoot.Find(id);
                 var points = route ? Enumerable.Range(0, route.childCount).Select(i => route.GetChild(i).position).ToArray() : Array.Empty<Vector3>();
+                routePoints[id] = points;
                 allNodes.AddRange(points);
                 int navigable = 0, clear = 0, crossSections = 0; string obstruction = "";
                 for (int i = 0; i < points.Length; i++)
@@ -418,12 +420,43 @@ namespace RoadGunner
                     "Width=" + width + "m; nav=" + navigable + "/" + points.Length + "; actual car clear=" + clear +
                     "; surface width samples=" + crossSections + "/" + sections + "; first obstruction=" + obstruction);
                 details.Add(id + "," + width + "," + points.Length + "," + navigable + "," + clear + "," + crossSections);
-                if (connected && clear == points.Length) checkedLoops[loop] = checkedLoops.TryGetValue(loop, out int count) ? count + 1 : 1;
+                if (connected && clear == points.Length)
+                {
+                    checkedLoops[loop] = checkedLoops.TryGetValue(loop, out int count) ? count + 1 : 1;
+                    checkedRoutes.Add(id);
+                }
             }
             File.WriteAllLines(ArtifactFolder + "/RouteClearance.csv", details);
-            Check("parallel Warlord and Rustworks routes remain usable", checkedLoops.TryGetValue("warlord-loop", out int warlordRoutes) && warlordRoutes >= 2 &&
-                checkedLoops.TryGetValue("rustworks-loop", out int rustRoutes) && rustRoutes >= 2 && checkedLoops.TryGetValue("salvage-loop", out int salvageRoutes) && salvageRoutes >= 2,
-                "Each alternate authored branch has its own complete centreline clearance and connects to the same start navigation component");
+            var arms = new[] { "main-south", "main-north", "cross-west", "cross-east" };
+            if (arms.All(id => routePoints.ContainsKey(id) && routeRoot.Find(id)))
+            {
+                bool complete = arms.All(id => routePoints[id].Length >= 2 && checkedRoutes.Contains(id)) &&
+                    checkedLoops.TryGetValue("crossroads", out int crossroads) && crossroads >= 4;
+                bool commonCentre = complete, distinct = complete, oppositePairs = false;
+                var directions = new Vector3[4]; Vector3 centre = Vector3.zero;
+                if (complete)
+                {
+                    var south = routePoints[arms[0]]; centre = south[south.Length - 1];
+                    for (int i = 0; i < arms.Length; i++)
+                    {
+                        var points = routePoints[arms[i]]; Vector3 first = points[0], last = points[points.Length - 1];
+                        bool firstAtCentre = Vector3.Distance(first, centre) <= .05f, lastAtCentre = Vector3.Distance(last, centre) <= .05f;
+                        commonCentre &= firstAtCentre != lastAtCentre;
+                        directions[i] = Flat((firstAtCentre ? last : first) - centre).normalized;
+                        distinct &= directions[i].sqrMagnitude > .9f;
+                        for (int j = 0; j < i; j++) distinct &= Vector3.Dot(directions[i], directions[j]) < .95f;
+                    }
+                    oppositePairs = Vector3.Dot(directions[0], directions[1]) < -.98f &&
+                        Vector3.Dot(directions[2], directions[3]) < -.98f && Mathf.Abs(Vector3.Dot(directions[0], directions[2])) < .1f;
+                }
+                Check("four crossroads arms remain clear and connected through one centre", complete && commonCentre && distinct && oppositePairs,
+                    "All4 real arms passed their connected/chassis checks=" + complete + "; shared endpoint centre=" + centre +
+                    "; within0.05m=" + commonCentre + ";4distinct directions=" + distinct + "; north/south and east/west opposite pairs=" + oppositePairs);
+            }
+            else
+                Check("parallel Warlord and Rustworks routes remain usable", checkedLoops.TryGetValue("warlord-loop", out int warlordRoutes) && warlordRoutes >= 2 &&
+                    checkedLoops.TryGetValue("rustworks-loop", out int rustRoutes) && rustRoutes >= 2 && checkedLoops.TryGetValue("salvage-loop", out int salvageRoutes) && salvageRoutes >= 2,
+                    "Each alternate authored branch has its own complete centreline clearance and connects to the same start navigation component");
 
             Vector3 front = (s.vehicle.wheels[0].transform.position + s.vehicle.wheels[1].transform.position) * .5f;
             Vector3 rear = (s.vehicle.wheels[2].transform.position + s.vehicle.wheels[3].transform.position) * .5f;
@@ -485,19 +518,74 @@ namespace RoadGunner
                     if (zone.id == "ash-ridge") yield return CaptureLandscapeRegion();
                 }
             }
-            var blockers = owned.GetComponentsInChildren<Collider>().Where(c => c.enabled && !c.isTrigger && c != road && !c.GetComponentInParent<ArenaRewardCache>()).ToArray();
-            bool solidSight = blockers.Length > 0;
+            var reference = layout.authoredContentRoot.Find("Reference arena");
+            var solidRoot = reference ? reference : owned;
+            var blockers = solidRoot.GetComponentsInChildren<Collider>(true).Where(c => !c.isTrigger && c != road && !c.GetComponentInParent<ArenaRewardCache>()).ToArray();
+            bool solidSight = blockers.Length > 0; var groups = new List<string>(); string firstFailure = "";
+            if (reference)
+                foreach (string name in new[] { "Finished wasteland landmarks", "Solid scattered rocks", "Closed gates", "Continuous rock perimeter" })
+                {
+                    var group = reference.Find(name);
+                    int count = group ? group.GetComponentsInChildren<Collider>(true).Count(c => !c.isTrigger) : 0;
+                    groups.Add(name + "=" + count);
+                    if (count == 0) { solidSight = false; if (firstFailure == "") firstFailure = "Missing or empty required solid root: " + name; }
+                }
+            var enemyGuns = s.spawns.authoredBuggies.Where(b => b).Select(b => b.gun).ToArray();
+            bool gunsPresent = enemyGuns.Length > 0 && enemyGuns.All(g => g);
+            solidSight &= gunsPresent;
+            if (!gunsPresent && firstFailure == "") firstFailure = "An authored Buggy has no gun/mask to verify";
+            int verified = 0;
             foreach (var blocker in blockers)
             {
-                var bounds = blocker.bounds;
-                Vector3 a = bounds.center - Vector3.right * (bounds.extents.x + .5f), b = bounds.center + Vector3.right * (bounds.extents.x + .5f);
-                solidSight &= (exploration.tuning.obstructionMask.value & (1 << blocker.gameObject.layer)) != 0 &&
-                    !Physics.GetIgnoreLayerCollision(s.vehicle.gameObject.layer, blocker.gameObject.layer) &&
-                    Physics.RaycastAll(a, (b - a).normalized, Vector3.Distance(a, b), exploration.tuning.obstructionMask, QueryTriggerInteraction.Ignore).Any(hit => hit.collider == blocker);
+                int bit = 1 << blocker.gameObject.layer; string reason = "";
+                if (!blocker.enabled || !blocker.gameObject.activeInHierarchy) reason = "Solid collider is disabled/inactive";
+                else if (reference && blocker.gameObject.layer != 0) reason = "Reference solid is not on Default layer";
+                else if (Physics.GetIgnoreLayerCollision(s.vehicle.gameObject.layer, blocker.gameObject.layer)) reason = "Player collision layer ignores this solid";
+                else if ((exploration.tuning.obstructionMask.value & bit) == 0) reason = "Exploration LOS mask excludes this solid";
+                else if ((s.turret.hitMask.value & bit) == 0) reason = "Player gun mask excludes this solid";
+                else if (!gunsPresent || enemyGuns.Any(g => (g.hitMask.value & bit) == 0)) reason = "An authored Buggy gun mask excludes this solid";
+                else if (SolidSurfaceRay(blocker, exploration.tuning.obstructionMask.value, out reason)) verified++;
+                if (reason != "") { solidSight = false; if (firstFailure == "") firstFailure = HierarchyPath(blocker.transform) + ": " + reason; }
             }
             Check("new solid landmarks block both vehicle collision and line of sight", solidSight,
-                "Actual authored non-trigger scenery colliders=" + blockers.Length + "; all belong to the collision and exploration LOS masks");
+                "Root=" + HierarchyPath(solidRoot) + "; actual non-trigger scenery colliders=" + blockers.Length + "; surface-ray verified=" + verified +
+                "/" + blockers.Length + "; groups=" + string.Join(", ", groups) + "; player/exploration/authored Buggy gun masks checked; first failure=" + firstFailure);
         }
+
+        static bool SolidSurfaceRay(Collider collider, int mask, out string reason)
+        {
+            // A hollow gate/gantry need not contain its world AABB centre. Use a real collision triangle,
+            // not the renderer mesh (which may be static-batched), and try both sides without changing backface settings.
+            if (collider is MeshCollider meshCollider)
+            {
+                var mesh = meshCollider.sharedMesh;
+                if (!mesh || !mesh.isReadable) { reason = "Collision mesh missing or unreadable; no triangle proof"; return false; }
+                var vertices = mesh.vertices; var indices = mesh.triangles; int triangles = indices.Length / 3;
+                int samples = Mathf.Min(64, triangles);
+                for (int sample = 0; sample < samples; sample++)
+                {
+                    int index = (samples == 1 ? 0 : (int)((long)sample * (triangles - 1) / (samples - 1))) * 3;
+                    Vector3 a = collider.transform.TransformPoint(vertices[indices[index]]), b = collider.transform.TransformPoint(vertices[indices[index + 1]]),
+                        c = collider.transform.TransformPoint(vertices[indices[index + 2]]);
+                    Vector3 normal = Vector3.Cross(b - a, c - a);
+                    if (normal.sqrMagnitude < 1e-12f) continue;
+                    normal.Normalize(); Vector3 centre = (a + b + c) / 3;
+                    if (RayHitsSolid(collider, centre + normal * .25f, -normal, .5f, mask) ||
+                        RayHitsSolid(collider, centre - normal * .25f, normal, .5f, mask)) { reason = ""; return true; }
+                }
+                reason = "No physical LOS hit on " + samples + " sampled collision triangles (total=" + triangles + ")"; return false;
+            }
+            var bounds = collider.bounds;
+            foreach (var axis in new[] { Vector3.right, Vector3.up, Vector3.forward })
+            {
+                float half = Vector3.Dot(bounds.extents, axis) + .5f;
+                if (RayHitsSolid(collider, bounds.center - axis * half, axis, half * 2, mask)) { reason = ""; return true; }
+            }
+            reason = "No physical LOS hit through primitive collision geometry"; return false;
+        }
+        static bool RayHitsSolid(Collider collider, Vector3 origin, Vector3 direction, float distance, int mask) =>
+            Physics.RaycastAll(origin, direction, distance, mask, QueryTriggerInteraction.Ignore).Any(hit => hit.collider == collider);
+        static string HierarchyPath(Transform node) => node.parent ? HierarchyPath(node.parent) + "/" + node.name : node.name;
 
         IEnumerator WorkshopDriveThrough()
         {
