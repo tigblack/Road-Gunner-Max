@@ -46,7 +46,7 @@ The current9 November WebGL contains the walker contact/cannon/harpoon feel pass
 and rebuilt reference arena. Release evidence:
 Documentation/RoadGunner/WalkerFeel-2026-11-09/
 Documentation/RoadGunner/WebGL-2026-11-09-WalkerFeel/
-Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/
+Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/?build=ba604b9
 Tap PLAY to start the game and audio; use the floating touch stick.
 
 ENEMY RETURNS

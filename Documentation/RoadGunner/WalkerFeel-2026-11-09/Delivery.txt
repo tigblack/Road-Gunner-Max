@@ -162,3 +162,12 @@ Final Safari26.6.2 WebGL startup and actual keyboard combat/loot passed with
 zero captured console errors or unhandled errors, in a900x1600 portrait canvas.
 Game-only output mute was verified before PLAY. See Browser.txt for the isolated
 QA wrapper, exact scope and unavailable touch/phone/performance checks.
+
+Published delivery
+https://tigblack.github.io/Road-Gunner-Max/?build=ba604b9
+Implementation and exact source payload: dd5ea8dbe726012d9a6a372203217c938e39ea1a.
+Pages deployment: ba604b904f33e6158576736ab5c8c19c94683fa2, status built. Six public HTTPS artifact
+hashes and the empty .nojekyll Git blob match the validated seven-file release.
+See ../WebGL-2026-11-09-WalkerFeel/Publication.json and Publication.txt.
+Physical phone and public-browser playthrough remain unverified; the actual
+Safari gameplay smoke was local against the same binary files.

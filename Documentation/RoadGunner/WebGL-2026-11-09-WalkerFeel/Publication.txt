@@ -1,0 +1,14 @@
+PUBLISHED WALKER FEEL WEBGL — 9 NOVEMBER 2026
+Play: https://tigblack.github.io/Road-Gunner-Max/?build=ba604b9
+Implementation/source payload commit: dd5ea8dbe726012d9a6a372203217c938e39ea1a
+GitHub Pages commit: ba604b904f33e6158576736ab5c8c19c94683fa2
+Pages build status: built.
+Verified six public HTTPS files against exact local validated byte hashes; empty
+.nojekyll verified in the deployed Git tree. Seven static artifacts total
+21,318,552 bytes. Publication.json records timestamps, refs and individual hashes.
+
+Local Safari26.6.2 actual WebGL movement/combat/loot smoke had0 captured errors.
+The public payload is byte-identical; a public browser playthrough or physical
+phone test is not inferred from HTTP hashes. Native acceptance368/368 passed.
+A source-only follow-up records these publication documents; it changes no game
+code, assets or deployed player files.

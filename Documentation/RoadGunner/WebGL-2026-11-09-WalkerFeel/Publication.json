@@ -1,0 +1,92 @@
+{
+  "verifiedAtUtc": "2026-11-09T17:32:27.728085+00:00",
+  "sourceCommit": "dd5ea8dbe726012d9a6a372203217c938e39ea1a",
+  "pagesCommit": "ba604b904f33e6158576736ab5c8c19c94683fa2",
+  "url": "https://tigblack.github.io/Road-Gunner-Max/?build=ba604b9",
+  "remoteRefs": {
+    "refs/heads/feature/arena1-reference-layout-20261106": "dd5ea8dbe726012d9a6a372203217c938e39ea1a",
+    "refs/heads/gh-pages": "ba604b904f33e6158576736ab5c8c19c94683fa2",
+    "refs/heads/main": "dd5ea8dbe726012d9a6a372203217c938e39ea1a"
+  },
+  "pagesBuild": {
+    "status": "built",
+    "commit": "ba604b904f33e6158576736ab5c8c19c94683fa2",
+    "created_at": "2026-11-09T17:30:29Z",
+    "updated_at": "2026-11-09T17:30:54Z",
+    "error": {
+      "message": null
+    }
+  },
+  "publicFiles": [
+    {
+      "path": "Build/WebBuild.data.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.data.unityweb?build=ba604b9",
+      "status": 200,
+      "bytes": 11146716,
+      "sha256": "a124e8aaf4125b52b71d37c38faefce323b815abf13d9371fdf31ec13a0ce1d3",
+      "matchesValidatedArtifact": true,
+      "headers": {
+        "Content-Type": "application/vnd.unity"
+      }
+    },
+    {
+      "path": "Build/WebBuild.framework.js.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.framework.js.unityweb?build=ba604b9",
+      "status": 200,
+      "bytes": 74863,
+      "sha256": "86a0bec5fdba080185d9e769a4f33a42f334c01276540b79a07ac5a36f495304",
+      "matchesValidatedArtifact": true,
+      "headers": {
+        "Content-Type": "application/vnd.unity"
+      }
+    },
+    {
+      "path": "Build/WebBuild.loader.js",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.loader.js?build=ba604b9",
+      "status": 200,
+      "bytes": 48779,
+      "sha256": "5dbff764bb6148a9edd88c5e2e8043fa5ba76e58dd8a1e8c195ab628711f980b",
+      "matchesValidatedArtifact": true,
+      "headers": {
+        "Content-Type": "application/javascript; charset=utf-8"
+      }
+    },
+    {
+      "path": "Build/WebBuild.wasm.unityweb",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/Build/WebBuild.wasm.unityweb?build=ba604b9",
+      "status": 200,
+      "bytes": 10042364,
+      "sha256": "f57b6f30792e43499bc03b2389b680ba47b8d8346dbdde5323868a907be1a462",
+      "matchesValidatedArtifact": true,
+      "headers": {
+        "Content-Type": "application/vnd.unity"
+      }
+    },
+    {
+      "path": "build-info.json",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/build-info.json?build=ba604b9",
+      "status": 200,
+      "bytes": 240,
+      "sha256": "43402583907d46911290b545fd64a26033375aa9db33e43cb61aa51f1bee5e3c",
+      "matchesValidatedArtifact": true,
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    },
+    {
+      "path": "index.html",
+      "url": "https://tigblack.github.io/Road-Gunner-Max/index.html?build=ba604b9",
+      "status": 200,
+      "bytes": 5590,
+      "sha256": "44c0ba2bb2f0be7d2295b6164d2100617783bb967c598359a1cdbd321a2e0b2c",
+      "matchesValidatedArtifact": true,
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      }
+    }
+  ],
+  "emptyNojekyllGitBlobVerified": true,
+  "compressedTotalBytes": 21318552,
+  "nativeChecks": 368,
+  "scope": "Atomic push, remote refs, actual GitHub Pages built status and six public HTTPS artifact byte hashes verified. Empty .nojekyll verified from deployed Git tree. Local Safari WebGL smoke is recorded separately; no physical phone/public browser playthrough inferred."
+}
