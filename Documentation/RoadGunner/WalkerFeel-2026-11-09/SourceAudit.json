@@ -1,0 +1,194 @@
+{
+  "scope": "Pre-task production hash inventory compared with final native-approved frozen packaging inputs. Build-time preservation is recorded separately in WebBuild.json.",
+  "baseHead": "d81d0ef1a21380378b2ebdd229e07add345184c2",
+  "beforeFiles": 2220,
+  "afterFiles": 2246,
+  "changed": [
+    {
+      "path": "Assets/RoadGunner/README.txt",
+      "beforeSha256": "2b98988d2c9516bfe1eea1f4013e198e7e1bb52266b0031332a62d4e167fe3a4",
+      "afterSha256": "96779204725d7198da217be9247df1675675bd634d2dd0d466a62fc64a106619"
+    },
+    {
+      "path": "Assets/RoadGunner/Scenes/Level01_Greenwood.unity",
+      "beforeSha256": "2fb8236c487901035ddc99196717af2acf8cba0ee7d01b1056d2a9dd9e0ee994",
+      "afterSha256": "4def69cb96715388cd82edbea5e19468bdfbdd46fa687d87bb9d15326814708f"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Arcade/ArcadeAudio.cs",
+      "beforeSha256": "5431a6b2e06c1cfd004bc70e18f062f1366ebb8d6881546b569585103fc663bb",
+      "afterSha256": "44fe1f51c907953376849e28610fca6a15b04c4587b9f5537d97fb658de03de7"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatEffects.cs",
+      "beforeSha256": "bb84b827d7ab73595cdda70fcf6aeb0fa2b31a81e86585c8c4daefc18852ad10",
+      "afterSha256": "18f99c2be968d1b894f1534b5f601fde0b240438b5ad8a89334fbf82a4c8f3fc"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CombatTuning.cs",
+      "beforeSha256": "0e96fa0124b6b178ffaf3151cc943f81bc4fad66c8eac06a8840a08ef5448673",
+      "afterSha256": "eba756046c2617d6548b3054c99c91b90e327ee2946aa35b537e4c3538fce42a"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/HarpoonCollector.cs",
+      "beforeSha256": "f97ab7084432f15ef97404f231d71e5f35c427e7acd8d306d54768cd08000f75",
+      "afterSha256": "dcdcdbf675afc344dafb2662e7b2502299342aa6aa13e6187758b96937a8e1e1"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/PickupPool.cs",
+      "beforeSha256": "48c51f46cf6e3ac075c6e417e3bc382c479dc26e3f10be5d1612524eda1cfd1f",
+      "afterSha256": "411307102b4d7057503e5755e65dd4025ba04675df5f360b2b53513a7ce9e71e"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/PlayerTrackVisuals.cs",
+      "beforeSha256": "1d37e258a61d32e82818cf5283123bdd090de8c28fb1db74e1cce152c6159c36",
+      "afterSha256": "96618b3e16b2c2143f12225c9a6dea4809223bf98f2f776a7fd1a593eba5a763"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/TireTracks.cs",
+      "beforeSha256": "92fd925b44c1678b1a6b1df2ab305db83a7a0c715d225c26cdbfa29137bee37e",
+      "afterSha256": "0213313002ee841d157bff81808e06a5b215b4454d3535ff2e86ef79648fd435"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/TurretController.cs",
+      "beforeSha256": "7d9b9f1303f9af76e2af5280cd7f29e1378842d766d14a17dd6c97c01cd1a983",
+      "afterSha256": "013e4fe9775ff99687311612fd3a12e30b3a617fcd6c349de2a65865ac6088ee"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleController.cs",
+      "beforeSha256": "60b7652a92359d49b865c8bde02216bd1b4ee00c51bb7a27d712fb2d2e2e9d0e",
+      "afterSha256": "e3f8af96d2b80f6f37e68f8d8dd2bffd29f1e7f24a3f02c20d73268f21b0a585"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/VehicleTuning.cs",
+      "beforeSha256": "3a0982c5113044ea2142c0ce26df60426126680be4c950f3d7f5322bd55082f1",
+      "afterSha256": "e89d3a60a68d4490b7f378cb70fe6b985e3ae450db4270eb025c94b12ab94e00"
+    },
+    {
+      "path": "Assets/Settings/Mobile_Renderer.asset",
+      "beforeSha256": "ba311a07340833b0a43b03654303b031e1f54fd3aad74ef9abfaef50b92da62c",
+      "afterSha256": "51ea147e70bdd1624f240a6493e945c74dac0b63189a47e031cf0f8dde65ca3c"
+    },
+    {
+      "path": "Assets/Settings/PC_Renderer.asset",
+      "beforeSha256": "f91b794a11140a5d47afa85c9012e1b46341aeb417bfa0fb9a5df7b8f15a477c",
+      "afterSha256": "56c4772860c950ae23b8b2da8fa8afb770713c2b0ea96d4740b3f8e173e9c7df"
+    }
+  ],
+  "added": [
+    {
+      "path": "Assets/RoadGunner/Editor/CannonFeelVerification.cs",
+      "sha256": "5150207620e3079ac0e0b0c10eeaff8f962d6a795ade4cfdd97fc098ec3b5782"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/CannonFeelVerification.cs.meta",
+      "sha256": "9d6d5b9e9714241a796d60693041dc855fe0567efecc0239347a10a8fa4f2552"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/HarpoonFeelVerification.cs",
+      "sha256": "5941d2353edd372f896542bd1d1e7bb53299769aeeb6aa9e3dbe03e90bbf0278"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/HarpoonFeelVerification.cs.meta",
+      "sha256": "93e01a0246b678d651d0b59023d0e6bf8678cb27956d9f6e8d2a89ba0597c3de"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/QuietBatchAudio.cs",
+      "sha256": "1b21521c0dbabf0b2ff68d571a948ff8c7fccb2214325c15030d4dfe6f85ed73"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/QuietBatchAudio.cs.meta",
+      "sha256": "7d1f937f436cb28c71e8f046211aed9c3648d7cb63c3537045b4df83c91c53d5"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerArenaRunVerification.cs",
+      "sha256": "fd7cb56dd0b079ffd01a8c38c0f17ad6c776417e38c7d2b5c05c9a91ab26851c"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerArenaRunVerification.cs.meta",
+      "sha256": "dbe8d126ee6b2db957b306acd529b5b915ce1c815781020eeec053c88d187e83"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerFeelInstaller.cs",
+      "sha256": "83bce702fcb90cde6fa7db504fcafaaaa3439c5ffd3901856979fdd4818c2b40"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerFeelInstaller.cs.meta",
+      "sha256": "ac7907c54bf863070ba70f2421e4adbd622096640640a248cc478dc7dd0cee68"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerFeelVerification.cs",
+      "sha256": "b12f6b4d8fd3645e65661c5ed4b948cf691249d851a9d8f0c454e9c4f32ddeed"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerFeelVerification.cs.meta",
+      "sha256": "179b466665fe02cac453afa8081cd654ecede96b2ad8bd322c994e85cecbbac8"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerRockContactVerification.cs",
+      "sha256": "5565f1ae7f42671f560fbf805a4111f7b9b46f2dc219fe556f2f157e2249f421"
+    },
+    {
+      "path": "Assets/RoadGunner/Editor/WalkerRockContactVerification.cs.meta",
+      "sha256": "f45419433603d51aa95b28c0e39a00bae4a2f1f99f10a2f914d1ce4c89a08450"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CannonVisualRecoil.cs",
+      "sha256": "f9b38f33e68e87c93f2de83f24e973f3b3cfa1ddc4628bec606977aad23a2131"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/CannonVisualRecoil.cs.meta",
+      "sha256": "009308c4ed4b3a522cdb3e9f745a601528c3246b95f8cda4e13ad00a935c7708"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/CannonFeelPlayChecks.cs",
+      "sha256": "8ebb185138f8aebc32a520f731641e2909d1bb28bdb31ea3ed04307e12b16b6e"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/CannonFeelPlayChecks.cs.meta",
+      "sha256": "33d702d3943549319270567deba4673b05da1fec832a8c594b7aeaf966318edc"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/HarpoonFeelPlayChecks.cs",
+      "sha256": "a14254158ac4d6507cf615e203d7989acb7a62a97f69c56fbfe129d606805d07"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/HarpoonFeelPlayChecks.cs.meta",
+      "sha256": "085e0d808c6a138d6c94eb8061da987ea584c54ad578d9c32a17e57b8aa922f8"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WalkerArenaRunPlayChecks.cs",
+      "sha256": "e68b28fa6edbd05bdabdca02e10b959705f437024e9176527c7a7be5176f01ed"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WalkerArenaRunPlayChecks.cs.meta",
+      "sha256": "9f8ed73fc44b542afb901fceb26abcbf1f2b5c0bdf34e67f9125aa22ed0e8085"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WalkerFeelPlayChecks.cs",
+      "sha256": "9fe63c92a6ef818483cb34cb24ec82ae40fc6b730b15113929805905927d0d11"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WalkerFeelPlayChecks.cs.meta",
+      "sha256": "346f6844697a4aee3650fc53bd37235333eb9e34b70c06305c089248b0812ad0"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WalkerRockContactPlayChecks.cs",
+      "sha256": "7325e93cdbcc4986c99161aefa541223b66506ff23415018d537968b2e1cdfe7"
+    },
+    {
+      "path": "Assets/RoadGunner/Scripts/Diagnostics/WalkerRockContactPlayChecks.cs.meta",
+      "sha256": "7407843465332fad32250543ab6ff8ebafcbd306cc743f0f7686005b45d1a78d"
+    }
+  ],
+  "removed": [],
+  "unchangedArenaTuningAssets": [
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 Boss Raider.asset",
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 Buggy.asset",
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 basic Raider.asset",
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 player combat.asset",
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena 1 vehicle handling.asset",
+    "Assets/RoadGunner/Levels/Greenwood/Arena1/Arena warning ring.asset"
+  ],
+  "preexistingConceptVehicleEditPreservedAndExcludedFromChange": true
+}

@@ -26,6 +26,11 @@ namespace RoadGunner
         [Range(.045f, .1f)] public float shoeThickness = .074f;
         [Range(.02f, .07f)] public float grouserHeight = .045f;
         [Range(0, .12f)] public float returnSag = .045f;
+        [Header("Walker feel — cosmetic only")]
+        [Range(.15f,.25f)] public float bodySettleSeconds = .20f;
+        [Range(0,4)] public float motionLeanDegrees = 2.2f;
+        [Range(0,.16f)] public float landingCompression = .09f;
+        [Range(0,2)] public float footfallIntensity = 1;
 
         const float StrideLength = 2.48f;
         const float ThighLength = 0.68f;
@@ -40,13 +45,20 @@ namespace RoadGunner
         {
             public readonly Vector3 Position, Normal, Forward;
             public readonly bool IsLeft;
-            public FootContact(Vector3 position, Vector3 normal, Vector3 forward, bool isLeft)
-            { Position = position; Normal = normal; Forward = forward; IsLeft = isLeft; }
+            public readonly float Intensity;
+            public readonly int PlantId;
+            public FootContact(Vector3 position, Vector3 normal, Vector3 forward, bool isLeft, float intensity = 1, int plantId = 0)
+            { Position = position; Normal = normal; Forward = forward; IsLeft = isLeft; Intensity = intensity; PlantId = plantId; }
         }
         /// <summary>One actual, supported swing-to-stance landing; never a wheel-track sample.</summary>
         public event Action<FootContact> FootPlanted;
         public int PlantedFootCount { get; private set; }
         public bool IsWalkingRig => left != null && right != null && HasValidRig();
+        public Vector3 LeftFootWorldPosition => left == null ? transform.position : left.CurrentSole;
+        public Vector3 RightFootWorldPosition => right == null ? transform.position : right.CurrentSole;
+        public bool LeftFootInStance => left != null && left.HasPlant && !left.Swinging;
+        public bool RightFootInStance => right != null && right.HasPlant && !right.Swinging;
+        public float VisualReactionMagnitude => reactionPosition.magnitude + reactionAngles.magnitude * .01f;
 
         public float LeftPhase => left == null ? 0 : Mathf.Repeat(LeftDistanceMeters / left.LoopLength, 1);
         public float RightPhase => right == null ? 0 : Mathf.Repeat(RightDistanceMeters / right.LoopLength, 1);
@@ -65,6 +77,32 @@ namespace RoadGunner
         int runSerial, poseResetSerial;
         bool sampled;
         readonly RaycastHit[] footGroundHits = new RaycastHit[16];
+        Vector3 previousBodyPosition,previousPlanarVelocity;
+        Vector3 reactionPosition,reactionVelocity,reactionAngles,reactionAngularVelocity;
+        int observedLanding;
+        bool sharpTurn;
+        float planarSpeed;
+        bool WalkerMode => vehicle && vehicle.tuning && vehicle.tuning.walkerDrive;
+
+        /// <summary>One bounded visual kick from the actual cannon firing event.</summary>
+        public void CannonImpulse(float strength01) { AddReaction(new Vector3(0,0,-.012f),new Vector3(-1.1f,0,0),strength01); }
+        public void ImpactImpulse(Vector3 worldDirection,float strength01)
+        {
+            var local=transform.InverseTransformDirection(Vector3.ProjectOnPlane(worldDirection,Vector3.up).normalized);
+            AddReaction(new Vector3(local.x,0,local.z)*.025f,new Vector3(-local.z*2,0,local.x*2),strength01);
+        }
+        void AddReaction(Vector3 offset,Vector3 angles,float strength)
+        {
+            if(!Application.isPlaying||(session&&!session.Playing))return;
+            float rate=8/Mathf.Clamp(bodySettleSeconds,.15f,.25f),gain=rate*2.71828f*Mathf.Clamp01(strength);
+            reactionVelocity=Vector3.ClampMagnitude(reactionVelocity+offset*gain,12);
+            reactionAngularVelocity=Vector3.ClampMagnitude(reactionAngularVelocity+angles*gain,500);
+        }
+        static void DecayReaction(ref Vector3 position,ref Vector3 velocity,float rate,float dt)
+        {
+            var c=velocity+position*rate;float decay=Mathf.Exp(-rate*dt);
+            velocity=(velocity-c*rate*dt)*decay;position=(position+c*dt)*decay;
+        }
 
         // Upper mech visual hierarchy nodes (under "Replaceable visuals")
         Transform visualRoot;
@@ -155,6 +193,10 @@ namespace RoadGunner
             currentPelvisRot = Quaternion.identity;
             previousHarpoonState = HarpoonState.Idle;
             PlantedFootCount = 0;
+            reactionPosition=reactionVelocity=reactionAngles=reactionAngularVelocity=Vector3.zero;
+            previousPlanarVelocity=Vector3.zero;sharpTurn=false;planarSpeed=0;
+            observedLanding=vehicle?vehicle.LandingSerial:0;
+            if(left!=null)ResetLeg(left,true);if(right!=null)ResetLeg(right,false);
             ResetFootTracking();
             sampled = false;
             if (session) runSerial = session.RunSerial;
@@ -167,6 +209,9 @@ namespace RoadGunner
             if (left != null) left.ContactSampled = false;
             if (right != null) right.ContactSampled = false;
         }
+
+        static void ResetLeg(Side side,bool isLeft)
+        {side.HasPlant=side.Swinging=side.PendingPlant=side.StepEligible=false;side.GaitPhase=isLeft?0:.5f;side.CurrentSole=Vector3.zero;side.WasMoving=false;}
 
         void OnDisable() { sampled = false; ResetFootTracking(); }
 
@@ -197,21 +242,47 @@ namespace RoadGunner
             float discontinuity = Mathf.Max(4, 80 * dt);
             if (sampled && ((l - previousLeft).sqrMagnitude > discontinuity * discontinuity ||
                             (r - previousRight).sqrMagnitude > discontinuity * discontinuity ||
-                            Vector3.Dot(forward, previousForward) < .5f)) ResetMotion();
+                            (!WalkerMode&&Vector3.Dot(forward, previousForward) < .5f))) ResetMotion();
+            sharpTurn=sampled&&Vector3.Dot(forward,previousForward)<.82f;
             if (sampled && dt > .00001f)
             {
                 Vector3 direction = (previousForward + forward).normalized;
-                float dl = Vector3.Dot(l - previousLeft, direction), dr = Vector3.Dot(r - previousRight, direction);
+                float dl,dr;
+                if(WalkerMode)dl=dr=vehicle.WalkerGrounded?Vector3.ProjectOnPlane(vehicle.transform.position-previousBodyPosition,Vector3.up).magnitude:0;
+                else {dl=Vector3.Dot(l-previousLeft,direction);dr=Vector3.Dot(r-previousRight,direction);}
                 LeftDistanceMeters += dl; RightDistanceMeters += dr;
-                LeftBeltSpeed = dl / dt; RightBeltSpeed = dr / dt;
+                if(WalkerMode)LeftBeltSpeed=RightBeltSpeed=vehicle.WalkerGrounded?vehicle.HorizontalSpeed:0;
+                else {LeftBeltSpeed = dl / dt; RightBeltSpeed = dr / dt;}
             }
             else LeftBeltSpeed = RightBeltSpeed = 0;
             previousLeft = l; previousRight = r; previousForward = forward; sampled = true;
+            previousBodyPosition=vehicle.transform.position;
+            if(WalkerMode)UpdateWalkerReaction(dt);
 
             ComputeLocomotionState(dt);
             UpdateSide(left, true, LeftDistanceMeters);
             UpdateSide(right, false, RightDistanceMeters);
             AnimateUpperMech(dt);
+        }
+
+        void UpdateWalkerReaction(float dt)
+        {
+            Vector3 velocity=Vector3.ProjectOnPlane(vehicle.Body.linearVelocity,Vector3.up);
+            planarSpeed=vehicle.WalkerGrounded?velocity.magnitude:0;
+            Vector3 change=transform.InverseTransformDirection(velocity-previousPlanarVelocity)/Mathf.Max(1,vehicle.tuning.maxSpeed);
+            if(vehicle.WalkerGrounded&&change.magnitude>.06f)
+                AddReaction(Vector3.zero,new Vector3(change.z*motionLeanDegrees,0,-change.x*motionLeanDegrees),Mathf.Clamp01(change.magnitude));
+            if(sharpTurn&&vehicle.WalkerGrounded)AddReaction(Vector3.zero,new Vector3(0,0,Mathf.Sign(change.x)*motionLeanDegrees),.6f);
+            if(observedLanding!=vehicle.LandingSerial)
+            {
+                observedLanding=vehicle.LandingSerial;
+                if(observedLanding>0)AddReaction(Vector3.down*landingCompression,new Vector3(1.5f,0,0),Mathf.Clamp01(vehicle.LandingSpeed/7));
+            }
+            previousPlanarVelocity=velocity;
+            float rate=8/Mathf.Clamp(bodySettleSeconds,.15f,.25f);
+            DecayReaction(ref reactionPosition,ref reactionVelocity,rate,dt);
+            DecayReaction(ref reactionAngles,ref reactionAngularVelocity,rate,dt);
+            reactionPosition=Vector3.ClampMagnitude(reactionPosition,.12f);reactionAngles=Vector3.ClampMagnitude(reactionAngles,5);
         }
 
         void ComputeLocomotionState(float dt)
@@ -254,8 +325,14 @@ namespace RoadGunner
             // Pelvis hip-twist & roll with stride
             float pelvisYaw = Mathf.Sin(walkRad) * 6.5f * walkBlend;
             float pelvisRoll = -Mathf.Sin(walkRad) * 3.2f * walkBlend;
-            float pelvisPitch = Mathf.Clamp(smoothedForwardSpeed / 5.85f, -0.5f, 1f) * 3.0f * walkBlend;
+            float pelvisPitch = Mathf.Clamp(smoothedForwardSpeed / Mathf.Max(1,vehicle.tuning.maxSpeed), -0.5f, 1f) * 3.0f * walkBlend;
             currentPelvisRot = Quaternion.Euler(pelvisPitch, pelvisYaw, pelvisRoll);
+            if(WalkerMode)
+            {
+                currentPelvisBobY+=reactionPosition.y;
+                currentPelvisSwayX+=reactionPosition.x;currentPelvisBobZ+=reactionPosition.z;
+                currentPelvisRot*=Quaternion.Euler(reactionAngles*.45f);
+            }
         }
 
         void AnimateUpperMech(float dt)
@@ -277,21 +354,18 @@ namespace RoadGunner
             }
 
             // Torso leans into forward acceleration, banks into turns, and counter-rotates against the pelvis
-            float forwardLean = Mathf.Clamp(smoothedForwardSpeed / 5.85f, -0.6f, 1f) * 8.5f * walkBlend + idlePulse * 1.1f;
+            float forwardLean = Mathf.Clamp(smoothedForwardSpeed / Mathf.Max(1,vehicle.tuning.maxSpeed), -0.6f, 1f) * 8.5f * walkBlend + idlePulse * 1.1f;
             float turnBank = Mathf.Clamp(-smoothedTurnSpeed * 1.8f, -6.5f, 6.5f) * walkBlend;
             float torsoCounterYaw = -Mathf.Sin(walkRad) * 7.5f * walkBlend;
 
             // When the left-arm harpoon fires or reels, twist the upper torso slightly toward the harpoon's aim
             bool harpoonActive = harpoon && harpoon.State != HarpoonState.Idle;
-            if (harpoon && harpoon.State == HarpoonState.Launching && previousHarpoonState != HarpoonState.Launching)
-                launchRecoilTimer = 1f;
+            launchRecoilTimer=harpoon?harpoon.LaunchReaction:0;
             previousHarpoonState = harpoon ? harpoon.State : HarpoonState.Idle;
-            if (launchRecoilTimer > 0f)
-                launchRecoilTimer = Mathf.MoveTowards(launchRecoilTimer, 0f, dt * 5.5f);
 
             leftArmAimBlend = Mathf.MoveTowards(leftArmAimBlend, harpoonActive ? 1f : 0f, dt * (harpoonActive ? 12f : 4.5f));
 
-            Quaternion torsoRot = Quaternion.Euler(forwardLean, torsoCounterYaw, turnBank);
+            Quaternion torsoRot = Quaternion.Euler(forwardLean, torsoCounterYaw, turnBank)*Quaternion.Euler(reactionAngles);
             Vector3 torsoPivot = new Vector3(0f, 1.56f, 0f);
             Vector3 torsoOffset = pelvisOffset + new Vector3(0f, Mathf.Sin(walkRad * 2f) * 0.018f * walkBlend, 0f);
             if (torsoNode)
@@ -323,9 +397,8 @@ namespace RoadGunner
             if (leftArmMount)
             {
                 Vector3 movedLeftShoulder = torsoOffset + torsoPivot + torsoRot * (baseLeftArmMountPos - torsoPivot);
-                leftArmMount.localPosition = movedLeftShoulder;
-                if (harpoon && harpoon.cable && harpoon.cable.enabled && harpoon.spawnPoint)
-                    harpoon.cable.SetPosition(0, harpoon.spawnPoint.position);
+                float tension=harpoon?harpoon.CableTension:0;
+                leftArmMount.localPosition = movedLeftShoulder+torsoRot*new Vector3(0,-.018f*tension,-.015f*tension);
             }
 
             // Left Arm Harpoon Gauntlet visual mesh:
@@ -333,13 +406,11 @@ namespace RoadGunner
             // - While aiming/launching/retracting: aligns with HarpoonPivot toward the target pickup + launch recoil kick
             if (leftArmVisual && leftArmMount)
             {
-                var pivot = leftArmVisual.parent;
                 float leftArmPitch = Mathf.Cos(walkRad) * 18f * walkBlend + forwardLean * 0.6f - idlePulse * 1.5f;
-                Quaternion walkArmWorldLocal = torsoRot * Quaternion.Euler(leftArmPitch, -4f, 3.5f * walkBlend);
-                Quaternion idleInPivotSpace = Quaternion.Inverse(pivot.localRotation) * walkArmWorldLocal;
+                Quaternion idleInPivotSpace = Quaternion.Euler(leftArmPitch,0,3.5f * walkBlend);
                 Quaternion activeInPivotSpace = Quaternion.Euler(-launchRecoilTimer * 8f, 0f, 0f);
                 leftArmVisual.localRotation = Quaternion.Slerp(idleInPivotSpace, activeInPivotSpace, leftArmAimBlend);
-                leftArmVisual.localPosition = new Vector3(0f, 0f, -launchRecoilTimer * 0.16f);
+                leftArmVisual.localPosition = new Vector3(0f, -(harpoon?harpoon.DockReaction:0)*.015f, -launchRecoilTimer * 0.16f);
             }
         }
 
@@ -536,10 +607,15 @@ namespace RoadGunner
                 dir * FootLateralOffset + footOutwardX + currentPelvisSwayX * 0.35f,
                 groundY + FootAnkleHeight + slopeDeltaY + footLiftY,
                 footZ);
+            float legYawDeg = Mathf.Clamp(-smoothedTurnSpeed * 1.6f, -10f, 10f) * walkBlend + dir * 4f;
+            Quaternion legYawRot = Quaternion.Euler(0f, legYawDeg, 0f);
+            Quaternion footRot = Quaternion.LookRotation(groundSlopeAxis, groundUp) * legYawRot * Quaternion.Euler(footPitchDeg, 0f, 0f);
+            if(WalkerMode)PrepareWalkerFoot(side,isLeft,groundY,ref anklePos,ref footRot);
 
             // 2-Bone Analytical Inverse Kinematics (Hip -> Knee -> Ankle)
             Vector3 toAnkle = anklePos - hipPos;
             float maxReach = ThighLength + ShinLength - 0.015f;
+            if(WalkerMode&&toAnkle.magnitude>maxReach){anklePos=hipPos+toAnkle.normalized*maxReach;toAnkle=anklePos-hipPos;}
             float dist = Mathf.Clamp(toAnkle.magnitude, 0.25f, maxReach);
             Vector3 axisToAnkle = toAnkle.sqrMagnitude > 0.0001f ? toAnkle / toAnkle.magnitude : Vector3.down;
 
@@ -547,8 +623,6 @@ namespace RoadGunner
             float hipBendRad = Mathf.Acos(cosHip);
 
             // Knee bends forward (+Z) and slightly outward (dir * X) for an aggressive Armored Core stance
-            float legYawDeg = Mathf.Clamp(-smoothedTurnSpeed * 1.6f, -10f, 10f) * walkBlend + dir * 4f;
-            Quaternion legYawRot = Quaternion.Euler(0f, legYawDeg, 0f);
             Vector3 kneeForwardHint = legYawRot * new Vector3(dir * 0.10f, 0.20f, 1f).normalized;
             Vector3 bendNormal = Vector3.Cross(axisToAnkle, kneeForwardHint);
             if (bendNormal.sqrMagnitude < 0.0001f) bendNormal = Vector3.right;
@@ -568,7 +642,6 @@ namespace RoadGunner
             Quaternion shinRot = Quaternion.LookRotation(shinFwd.normalized, -shinDir);
 
             Quaternion kneeRot = Quaternion.Slerp(thighRot, shinRot, 0.5f);
-            Quaternion footRot = Quaternion.LookRotation(groundSlopeAxis, groundUp) * legYawRot * Quaternion.Euler(footPitchDeg, 0f, 0f);
             Quaternion ankleRot = Quaternion.Slerp(shinRot, footRot, 0.5f);
 
             foreach (var group in side.Groups)
@@ -611,7 +684,106 @@ namespace RoadGunner
             }
             side.Mesh.SetVertices(side.Vertices); side.Mesh.SetNormals(side.Normals);
             side.Mesh.bounds = new Bounds(new Vector3(dir * HipLateralOffset, groundY + 0.85f, 0f), new Vector3(1.4f, 2.2f, 2.4f));
-            SampleFootContact(side, isLeft, distance, rawPhase, anklePos, footRot, a, b);
+            if(WalkerMode)FinishWalkerPlant(side,isLeft,anklePos,footRot);
+            else SampleFootContact(side, isLeft, distance, rawPhase, anklePos, footRot, a, b);
+        }
+
+        bool FootSupported(bool isLeft)
+        {
+            var a=isLeft?rearLeft:rearRight;var b=isLeft?frontLeft:frontRight;
+            return vehicle.WalkerGrounded&&a.GetGroundHit(out var ah)&&b.GetGroundHit(out var bh)&&ah.normal.y>.5f&&bh.normal.y>.5f;
+        }
+        bool FootGround(Vector3 point,out RaycastHit ground,float tolerance=.7f)
+        {
+            int count=Physics.RaycastNonAlloc(point+Vector3.up*.6f,Vector3.down,footGroundHits,1.3f,~0,QueryTriggerInteraction.Ignore);
+            int nearest=-1;float distance=float.PositiveInfinity;
+            for(int i=0;i<count;i++)
+            {
+                var hit=footGroundHits[i];
+                if(!hit.collider||hit.collider.transform.IsChildOf(vehicle.transform)||hit.normal.y<.6f||
+                    Mathf.Abs(Vector3.Dot(point-hit.point,hit.normal))>tolerance||hit.distance>=distance)continue;
+                nearest=i;distance=hit.distance;
+            }
+            ground=nearest>=0?footGroundHits[nearest]:default;return nearest>=0;
+        }
+        void PrepareWalkerFoot(Side side,bool isLeft,float groundY,ref Vector3 ankle,ref Quaternion rotation)
+        {
+            float dt=Application.isPlaying?Time.deltaTime:0,dir=isLeft?-1:1;
+            var meshTransform=(isLeft?leftMesh:rightMesh).transform;
+            Vector3 nominal=meshTransform.TransformPoint(new Vector3(dir*FootLateralOffset,groundY,isLeft?.16f:-.16f));
+            bool moving=planarSpeed>.08f&&vehicle.CanDrive&&(!session||session.Playing);
+            if(!Application.isPlaying||!FootSupported(isLeft))
+            {side.HasPlant=side.Swinging=side.PendingPlant=side.StepEligible=false;side.WasMoving=false;return;}
+            if(!side.HasPlant&&!side.Swinging)
+            {
+                if(!FootGround(nominal,out var initial))return;
+                side.Plant=initial.point;side.PlantNormal=initial.normal;side.PlantForward=Vector3.ProjectOnPlane(vehicle.transform.forward,initial.normal).normalized;
+                side.CurrentSole=initial.point;side.HasPlant=true;
+            }
+            if(!side.Swinging&&moving)
+            {
+                side.GaitPhase+=planarSpeed*dt/StrideLength;
+                var local=meshTransform.InverseTransformPoint(side.Plant);
+                bool replant=sharpTurn||Mathf.Abs(local.x-dir*FootLateralOffset)>.35f;
+                bool starting=!side.WasMoving&&!isLeft;
+                if(side.GaitPhase>=StanceFraction||local.z<-.44f||replant||starting)
+                    BeginWalkerSwing(side,isLeft,groundY,starting?.08f:replant?.10f:Mathf.Clamp(StrideLength*(1-StanceFraction)/Mathf.Max(.1f,planarSpeed),.10f,.28f),replant||starting);
+            }
+            if(side.Swinging)
+            {
+                if((!moving&&side.WasMoving)||sharpTurn)
+                {
+                    side.SwingStart=side.CurrentSole;side.SwingProgress=0;side.SwingDuration=.12f;
+                    Vector3 target=nominal+(moving?Vector3.ProjectOnPlane(vehicle.Body.linearVelocity,Vector3.up)*.12f:Vector3.zero);
+                    side.TargetValid=FootGround(target,out var shortened);
+                    side.SwingTarget=side.TargetValid?shortened.point:target;
+                    if(side.TargetValid)side.TargetNormal=shortened.normal;
+                    side.StepEligible&=moving;
+                }
+                side.SwingProgress=Mathf.Min(1,side.SwingProgress+dt/Mathf.Max(.05f,side.SwingDuration));
+                float u=side.SwingProgress,smooth=u*u*(3-2*u);
+                side.CurrentSole=Vector3.Lerp(side.SwingStart,side.SwingTarget,smooth)+Vector3.up*(Mathf.Sin(u*Mathf.PI)*(moving?.30f:.13f));
+                side.GaitPhase=StanceFraction+(1-StanceFraction)*u;
+                if(u>=1)
+                {
+                    side.Swinging=false;side.HasPlant=side.TargetValid;side.GaitPhase=0;
+                    side.Plant=side.SwingTarget;side.PlantNormal=side.TargetNormal;
+                    side.PlantForward=Vector3.ProjectOnPlane(vehicle.transform.forward,side.PlantNormal).normalized;
+                    side.PendingPlant=side.HasPlant&&side.StepEligible&&moving;
+                }
+            }
+            else side.CurrentSole=side.Plant;
+            side.WasMoving=moving;
+            Vector3 normal=side.Swinging?Vector3.Slerp(side.PlantNormal,side.TargetNormal,side.SwingProgress):side.PlantNormal;
+            if(normal.sqrMagnitude<.5f)normal=Vector3.up;
+            Vector3 forward=side.Swinging?Vector3.ProjectOnPlane(vehicle.transform.forward,normal):side.PlantForward;
+            if(forward.sqrMagnitude<.1f)forward=Vector3.ProjectOnPlane(vehicle.transform.forward,normal);
+            var worldRotation=Quaternion.LookRotation(forward.normalized,normal.normalized);
+            rotation=Quaternion.Inverse(meshTransform.rotation)*worldRotation;
+            ankle=meshTransform.InverseTransformPoint(side.CurrentSole+worldRotation*Vector3.up*FootAnkleHeight);
+        }
+        void BeginWalkerSwing(Side side,bool isLeft,float groundY,float duration,bool shortStep)
+        {
+            var meshTransform=(isLeft?leftMesh:rightMesh).transform;
+            side.SwingStart=side.CurrentSole;side.SwingProgress=0;side.SwingDuration=duration;
+            Vector3 velocity=Vector3.ProjectOnPlane(vehicle.Body.linearVelocity,Vector3.up);
+            Vector3 target=meshTransform.TransformPoint(new Vector3((isLeft?-1:1)*FootLateralOffset,groundY,shortStep?.25f:.48f))+velocity*duration;
+            side.TargetValid=FootGround(target,out var ground);side.SwingTarget=side.TargetValid?ground.point:target;
+            side.TargetNormal=side.TargetValid?ground.normal:Vector3.up;
+            side.Swinging=true;side.HasPlant=false;side.StepEligible=true;
+        }
+        void FinishWalkerPlant(Side side,bool isLeft,Vector3 ankle,Quaternion rotation)
+        {
+            var meshTransform=(isLeft?leftMesh:rightMesh).transform;
+            side.CurrentSole=meshTransform.TransformPoint(ankle+rotation*(Vector3.down*FootAnkleHeight));
+            if(!side.PendingPlant)return;side.PendingPlant=false;
+            if(!FootSupported(isLeft)||planarSpeed<=.08f||!vehicle.CanDrive||(session&&!session.Playing)||
+                !FootGround(side.CurrentSole,out var ground,.18f))return;
+            Vector3 forward=Vector3.ProjectOnPlane(meshTransform.TransformDirection(rotation*Vector3.forward),ground.normal).normalized;
+            if(forward.sqrMagnitude<.5f)return;
+            PlantedFootCount++;
+            float intensity=Mathf.Clamp01(footfallIntensity*Mathf.Lerp(.35f,1,Mathf.Clamp01(planarSpeed/Mathf.Max(1,vehicle.tuning.maxSpeed))));
+            FootPlanted?.Invoke(new FootContact(ground.point,ground.normal.normalized,forward,isLeft,intensity,PlantedFootCount));
         }
 
         void SampleFootContact(Side side, bool isLeft, float distance, float phase, Vector3 ankle, Quaternion footRotation,
@@ -711,6 +883,9 @@ namespace RoadGunner
             public float LoopLength = 1;
             public bool ContactSampled, WasSwing;
             public float ContactDistance;
+            public bool HasPlant,Swinging,PendingPlant,StepEligible,WasMoving,TargetValid;
+            public Vector3 Plant,PlantNormal=Vector3.up,PlantForward=Vector3.forward,CurrentSole,SwingStart,SwingTarget,TargetNormal=Vector3.up;
+            public float GaitPhase,SwingProgress,SwingDuration;
         }
 
         // One UV palette material and one combined dynamic mesh per side. There are no per-part

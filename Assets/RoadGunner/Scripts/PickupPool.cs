@@ -109,8 +109,12 @@ namespace RoadGunner
         }
         public void ReleaseGear(GearHandle handle,Object owner)
         {
-            if(!TryGetReservedGear(handle,owner,out var item))return;
-            int i=handle.Slot;reservedBy[i]=null;positions[i]=OnGround(item.position);flyingGear[i]=false;
+            // Cancellation releases ownership even if the pooled visual was disabled after reservation.
+            // Slot/generation/owner still prevent an old cycle from releasing another life or collector.
+            int i=handle.Slot;
+            if(!owner||values==null||i<0||i>=values.Length||values[i]<=0||generations[i]!=handle.Generation||reservedBy[i]!=owner)return;
+            reservedBy[i]=null;flyingGear[i]=false;
+            if(items[i])positions[i]=OnGround(items[i].position);
         }
         public bool CollectReservedGear(GearHandle handle,Object owner)
         {

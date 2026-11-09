@@ -5,6 +5,13 @@ namespace RoadGunner
     public sealed class CombatTuning : ScriptableObject
     {
         [Header("Vehicle and turret")] public float vehicleHealth=100, range=10, shotsPerSecond=5, bulletDamage=15, yawSpeed=300, aimTolerance=7;
+        [Header("Cannon presentation (no physical impulse)")]
+        [Min(.01f), Tooltip("Damped world-space mount settling; the existing yawSpeed still bounds tracking.")]
+        public float cannonMountSettleSeconds = .06f;
+        [Range(0,.18f), Tooltip("Maximum cosmetic barrel travel in metres. Does not move the collision body.")]
+        public float cannonRecoilMeters = .09f;
+        [Range(.005f,.06f)] public float cannonRecoilKickSeconds = .018f;
+        [Range(.04f,.25f)] public float cannonRecoilReturnSeconds = .14f;
         public float sharedMeleeCooldown=.35f, ramMinimumSpeed=6, ramCooldown=.8f;
         [Header("Player arena progression")]
         [Range(.01f, 2f), Tooltip("Outgoing player damage relative to the original weapon/ram damage.")]

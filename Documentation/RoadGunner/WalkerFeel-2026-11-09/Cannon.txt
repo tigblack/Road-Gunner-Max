@@ -1,0 +1,26 @@
+Cannon presentation and hitscan; actual saved Arena1; Unity 6000.6.4f1
+Controlled regression: AI and unrelated collection isolated, actual saved Raider/cache moved for setup, one temporary cover collider, one temporary cloned tuning only to hold an allowed off-axis shot. Real TurretController acquisition/hitscan/effects and production keyboard driving. No shot/damage method injection, active driving teleport/velocity override, or scene/asset write. Not a natural full playthrough.
+PASS saved balance is unchanged: range=10; Hz=5; damage=5.25
+PASS only the readable barrel has a private runtime mesh: vertices=2904; moving=1512
+PASS stationary cannon resolves five real target hits: shots=5; target hits=5
+PASS one damage event per bullet at original damage: health events=5; HP delta=26.25
+PASS cadence remains .2 seconds within one render update: intervals=0.2166,0.2001,0.2167,0.2164
+PASS each shot shares actual muzzle flash tracer and impact ray: invalid snapshots=0
+PASS cannon fires while actual walker moves: travel=4.305587; moving shots=2; hits=2
+PASS moving shots keep one consistent event pose: invalid snapshots=0
+PASS 180-degree movement reversal keeps target-relative aim and next real hit: body reversed=True; subsequent hits=1; final target angular error=0.01978234; largest transition target error=9.156244; mount step/budget ratio=0.4802218; legitimate changed world aim=7.471285
+PASS reversal shots retain the exact final muzzle event pose: invalid snapshots=0
+PASS two live enemies retarget across the chassis after a normal gun kill: both initially visible=True; normal kills=1; second target hits=2; retarget seconds=0.866591
+PASS retargeted shots resolve one valid muzzle-to-impact ray: invalid snapshots=0
+PASS cover blocks acquisition and damage: shots added=0; HP=45
+PASS first cover impact stays authoritative on an allowed off-axis shot: target LOS clear=True; hit=Temporary off-axis first impact cover; HP delta=0
+PASS cover flash and tracer use resolved first impact: invalid snapshots=0; impact=(-80.515, 1.432, -81.135)
+PASS eligible enemy stays ahead of nearer supply cache: both attackable=True; enemy hits=3; cache HP=10.5 / 10.5
+PASS continuous fire has bounded travel and full return: peak metres=0.08887433; limit=0.09; resting=0
+PASS shared source vertices indices and materials remain immutable: source vertices=2904; runtime clone=True
+PASS pause freezes the shot and cosmetic recoil: held metres=0.08888778; current=0.08888778; added shots=0
+PASS resume lets a held recoil settle: resting metres=0
+PASS restart leaves no recoil or stale target: recoil=0; target=none; ledger=0 / 0
+RESULT checks=21; failures=0; no saved scene/assets modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

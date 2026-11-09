@@ -35,8 +35,11 @@ namespace RoadGunner
         public bool WalkerBlocked { get; private set; }
         public Vector3 WalkerRequestedVelocity { get; private set; }
         public Vector3 WalkerResolvedVelocity { get; private set; }
+        public Vector3 WalkerSupportNormal { get; private set; } = Vector3.up;
+        public int LandingSerial { get; private set; }
+        public float LandingSpeed { get; private set; }
         public bool CanDrive { get; set; } = true;
-        /// <summary>Set by the arcade audio sink, which mutes the engine drone and voices movement as tyre roll instead.</summary>
+        /// <summary>Set by the arcade sink, which owns movement audio (planted footfalls for the walker).</summary>
         [System.NonSerialized] public bool externalEngineAudio;
         [System.NonSerialized] public ArcadeFeedback feedback;
         float steering,turnDirection,wheelbase,frontTrack,frontCentre;
@@ -47,7 +50,14 @@ namespace RoadGunner
         BoxCollider[] walkerBoxes;
         readonly RaycastHit[] walkerCastHits=new RaycastHit[64];
         readonly Collider[] walkerOverlaps=new Collider[64];
+        readonly RaycastHit[] walkerSupportHits=new RaycastHit[16];
         GameSession walkerSession;
+        PlayerTrackVisuals walkerVisuals;
+        bool walkerHadSupport,walkerSupportSampled;
+        float walkerFallSpeed,walkerAirTime;
+        bool walkerLandingPending;
+        int walkerSupportSteps;
+        float walkerPendingFall,lastLandingAt=-10;
         void Awake() {
             Body=GetComponent<Rigidbody>(); Body.mass=tuning.mass; Body.centerOfMass=tuning.centerOfMass;
             Body.interpolation=RigidbodyInterpolation.Interpolate; Body.collisionDetectionMode=CollisionDetectionMode.ContinuousDynamic;
@@ -79,7 +89,7 @@ namespace RoadGunner
             }
             leftTrackCentre/=Mathf.Max(1,left);rightTrackCentre/=Mathf.Max(1,right);
             trackWidth=Mathf.Max(.1f,rightTrackCentre.x-leftTrackCentre.x);
-            if(tuning.walkerDrive)walkerBoxes=GetComponentsInChildren<BoxCollider>(true);
+            if(tuning.walkerDrive){walkerBoxes=GetComponentsInChildren<BoxCollider>(true);walkerVisuals=GetComponentInChildren<PlayerTrackVisuals>(true);}
         }
         void Start(){BindWalkerSession();}
         void OnEnable(){if(Body)BindWalkerSession();}
@@ -108,6 +118,9 @@ namespace RoadGunner
             LeftTrackSpeed=Vector3.Dot(Body.GetPointVelocity(transform.TransformPoint(leftTrackCentre)),transform.forward);
             RightTrackSpeed=Vector3.Dot(Body.GetPointVelocity(transform.TransformPoint(rightTrackCentre)),transform.forward);
             if(tuning.walkerDrive) {
+                supportNormal=Vector3.zero;GroundedWheels=0;
+                foreach(var wheel in wheels)if(wheel.GetGroundHit(out var contact)&&WalkerSupportedContact(wheel,contact))
+                {GroundedWheels++;supportNormal+=contact.normal;}
                 DriveWalker(supportNormal);
                 AntiRoll(0,1);AntiRoll(2,3);
                 return;
@@ -140,7 +153,18 @@ namespace RoadGunner
             LeftTrackTorque=RightTrackTorque=AppliedBrakeTorque=0;WalkerBlocked=false;
             foreach(var wheel in wheels)wheel.motorTorque=wheel.brakeTorque=wheel.steerAngle=0;
             WalkerGrounded=GroundedWheels>=2&&supportNormal.sqrMagnitude>.01f&&
-                Vector3.Dot(supportNormal.normalized,Vector3.up)>.55f&&Vector3.Dot(transform.up,Vector3.up)>.5f;
+                Vector3.Dot(supportNormal.normalized,Vector3.up)>=WalkerGroundDot&&Vector3.Dot(transform.up,Vector3.up)>.5f;
+            WalkerSupportNormal=WalkerGrounded?supportNormal.normalized:Vector3.up;
+            if(!WalkerGrounded){walkerAirTime+=Time.fixedDeltaTime;walkerFallSpeed=Mathf.Max(walkerFallSpeed,-Body.linearVelocity.y);walkerSupportSteps=0;walkerLandingPending=false;}
+            else {
+                if(walkerSupportSampled&&!walkerHadSupport&&walkerAirTime>=.12f&&walkerFallSpeed>=1&&Time.time-lastLandingAt>=.35f)
+                {walkerLandingPending=true;walkerPendingFall=walkerFallSpeed;}
+                walkerSupportSteps++;
+                if(walkerLandingPending&&walkerSupportSteps>=2&&Time.time-lastLandingAt>=.35f)
+                {LandingSpeed=walkerPendingFall;LandingSerial++;lastLandingAt=Time.time;walkerLandingPending=false;}
+                walkerAirTime=walkerFallSpeed=0;
+            }
+            walkerHadSupport=WalkerGrounded;walkerSupportSampled=true;
             bool active=CanDrive&&input&&input.Enabled&&!input.Brake&&(!walkerSession||walkerSession.Playing);
             float magnitude=active?input.Magnitude:0;
             Vector3 direction=active?Vector3.ProjectOnPlane(input.WorldDirection,Vector3.up).normalized:Vector3.zero;
@@ -172,6 +196,20 @@ namespace RoadGunner
         bool WalkerSolid(Collider other) => other&&other.enabled&&!other.isTrigger&&other.attachedRigidbody!=Body&&
             !other.transform.IsChildOf(transform)&&!Physics.GetIgnoreLayerCollision(gameObject.layer,other.gameObject.layer);
         bool WalkerBox(BoxCollider box) => box&&box.enabled&&!box.isTrigger&&box.gameObject.activeInHierarchy&&box.attachedRigidbody==Body;
+        float WalkerGroundDot=>Mathf.Cos(Mathf.Clamp(tuning.walkerGroundAngle,15,55)*Mathf.Deg2Rad);
+        bool WalkerSupportedContact(WheelCollider wheel,WheelHit contact) {
+            if(Vector3.Dot(contact.normal,Vector3.up)<WalkerGroundDot)return false;
+            var anchor=wheel.transform.TransformPoint(wheel.center);
+            float reach=wheel.radius+wheel.suspensionDistance+.1f;
+            float drop=Vector3.Dot(anchor-contact.point,Vector3.up);
+            if(drop<.02f||drop>reach)return false;
+            int count=Physics.RaycastNonAlloc(anchor+Vector3.up*.05f,Vector3.down,walkerSupportHits,reach+.05f,~0,QueryTriggerInteraction.Ignore);
+            float nearest=float.PositiveInfinity;int chosen=-1;
+            for(int i=0;i<count;i++)if(WalkerSolid(walkerSupportHits[i].collider)&&walkerSupportHits[i].distance<nearest)
+            {chosen=i;nearest=walkerSupportHits[i].distance;}
+            return chosen>=0&&Vector3.Dot(walkerSupportHits[chosen].normal,Vector3.up)>=WalkerGroundDot&&
+                Mathf.Abs(walkerSupportHits[chosen].point.y-contact.point.y)<=.16f;
+        }
         void WalkerBoxPose(BoxCollider box,Quaternion facing,Vector3 offset,out Vector3 center,out Vector3 half,out Quaternion orientation,out Vector3 origin) {
             // Cancel the interpolated render root before rebuilding the shape at the actual physics pose.
             Quaternion localFrame=Quaternion.Inverse(transform.rotation);
@@ -183,7 +221,7 @@ namespace RoadGunner
         }
         bool WalkerPenetration(BoxCollider box,Vector3 origin,Quaternion orientation,Collider other,out Vector3 normal,out float depth) {
             if(Physics.ComputePenetration(box,origin,orientation,other,other.transform.position,other.transform.rotation,out normal,out depth)&&
-                Vector3.Dot(normal,Vector3.up)<.6f)return true;
+                Vector3.Dot(normal,Vector3.up)<WalkerGroundDot)return true;
             normal=Vector3.zero;depth=0;return false;
         }
         bool WalkerFacingBlocked(Quaternion facing) {
@@ -230,11 +268,14 @@ namespace RoadGunner
                     int count=Physics.BoxCastNonAlloc(center,half,direction,walkerCastHits,orientation,length+skin,~0,QueryTriggerInteraction.Ignore);
                     for(int i=0;i<count;i++) {
                         var hit=walkerCastHits[i];
-                        if(!WalkerSolid(hit.collider)||Vector3.Dot(hit.normal,Vector3.up)>.6f||hit.distance>=nearest)continue;
+                        if(!WalkerSolid(hit.collider)||Vector3.Dot(hit.normal,Vector3.up)>=WalkerGroundDot||hit.distance>=nearest)continue;
                         Vector3 normal=Vector3.ProjectOnPlane(hit.normal,Vector3.up).normalized;
                         if(Vector3.Dot(direction,normal)>=-.00001f)continue;
-                        if(hit.distance<=skin&&WalkerPenetration(box,origin,orientation,hit.collider,out var separating,out _)&&
-                            Vector3.Dot(direction,Vector3.ProjectOnPlane(separating,Vector3.up))>=-.00001f)continue;
+                        if(hit.distance<=skin&&Physics.ComputePenetration(box,origin,orientation,hit.collider,hit.collider.transform.position,
+                            hit.collider.transform.rotation,out var separating,out _)) {
+                            if(Vector3.Dot(separating,Vector3.up)>=WalkerGroundDot||
+                                Vector3.Dot(direction,Vector3.ProjectOnPlane(separating,Vector3.up))>=-.00001f)continue;
+                        }
                         nearest=hit.distance;wallNormal=normal;
                     }
                 }
@@ -380,11 +421,12 @@ namespace RoadGunner
             if(engine && !externalEngineAudio) { engine.pitch=.75f+Mathf.Clamp01(Speed/18)*.5f; engine.volume=CanDrive?Mathf.InverseLerp(1,18,Speed)*.05f:0; }
         }
         void OnCollisionEnter(Collision collision) {
-            if(!feedback || collision.contactCount==0) return;
+            if(collision.contactCount==0) return;
             // Ground contact is handled by the wheels; report real body impacts against obstacles and actors.
             float speed=collision.relativeVelocity.magnitude; var contact=collision.GetContact(0);
             if(speed<2.5f || Vector3.Dot(contact.normal,Vector3.up)>.75f) return;
-            feedback.VehicleCollision(contact.point,speed);
+            if(tuning.walkerDrive&&walkerVisuals)walkerVisuals.ImpactImpulse(-contact.normal,Mathf.Clamp01(speed/10));
+            if(feedback)feedback.VehicleCollision(contact.point,speed);
         }
         public void ResetPose(Vector3 position,Quaternion rotation) {
             PoseResetSerial++;
@@ -393,6 +435,8 @@ namespace RoadGunner
             RequestedYawRate=AppliedYawAssistTorque=LeftTrackSpeed=RightTrackSpeed=LeftTrackTorque=RightTrackTorque=0;
             AppliedPivotLateralForce=0;
             WalkerGrounded=WalkerBlocked=false;WalkerRequestedVelocity=WalkerResolvedVelocity=Vector3.zero;
+            WalkerSupportNormal=Vector3.up;LandingSerial=0;LandingSpeed=walkerAirTime=walkerFallSpeed=0;walkerHadSupport=walkerSupportSampled=false;
+            walkerLandingPending=false;walkerSupportSteps=0;walkerPendingFall=0;lastLandingAt=Time.time;
             foreach(var w in wheels) { w.motorTorque=0; w.brakeTorque=tuning.walkerDrive?0:tuning.holdBrakeTorque; w.steerAngle=0; }
             if(dust!=null) foreach(var p in dust) if(p) p.Clear();
         }

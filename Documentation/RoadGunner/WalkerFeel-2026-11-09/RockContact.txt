@@ -1,0 +1,11 @@
+Actual saved rock contact — Unity 6000.6.4f1
+One unchanged Default-layer nonconvex MeshCollider at Reference arena/Solid scattered rocks/scenery-052. Inputs enter the production DriveInput testDirection -> Update -> walker FixedUpdate path. ResetPose only sets up independent trials. No driving position/velocity injection, substitute colliders, copied props, geometry mutation or required impact impulse (the walker deliberately sweeps before touching). No scene/asset writes; limited regression, not exhaustive rock certification.
+PASS fixture uses the actual saved solid Boulder: path=Reference arena/Solid scattered rocks/scenery-052; world=(-58.66428, 0.00000, -91.41405); bounds=Center: (-58.33, 1.20, -91.71), Extents: (3.20, 1.20, 3.12); vertices=330; chassis boxes=2
+SELECTED actual face=(-60.08182, 0.90000, -89.95763); inward=(0.86996, 0.00000, -0.49313); tangent=(-0.49313, 0.00000, -0.86996); rest root height=0.5066016
+PASS head-on walker is stopped by the real rock without lift or tunneling: blocked Fixed=51; verified rock-adjacent=51; peak=9.36; travel=4.793823; furthest face plane=-3.20701; exact penetration=0; lift=0.01012361
+PASS steering away from actual rock responds on the first eligible Fixed: first escape mps=9.36; escape distance=0.5621947; grounded=4
+PASS shallow input slides at the saved rock without penetrating or climbing: blocked Fixed=28; verified rock-adjacent=27; tangent travel=8.900572; exact penetration=0; lift=0.06389996
+PASS saved collision geometry and ledger remain unchanged: same mesh=True; same pose=True; ledger=0 / 0; HP=100
+RESULT checks=5; failures=0; saved rock and scene not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

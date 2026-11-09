@@ -1,3 +1,18 @@
+CURRENT WALKER VERSION — 9 NOVEMBER 2026
+The saved Level01_Greenwood scene now uses the reference crossroads arena and
+an articulated bipedal walker. Read the repository-root README.txt for current
+controls and authoring. Ground movement starts, stops and reverses immediately
+at up to9.36m/s; partial stick magnitude controls speed. Hidden suspension contacts
+retain real vertical dynamics. Separate planted-foot impressions and mechanical
+footfalls replace the old player tracks/tyre-roll presentation. Shoulder cannon
+and arm harpoon feedback follow actual shot and reservation events.
+Use RoadGunner.Editor.WalkerFeelInstaller.InstallBatch only to reauthor feel audio.
+Evidence: Documentation/RoadGunner/WalkerFeel-2026-11-09/.
+Native checks support -batchmode -rgMuteAudio: mutes the test listener only;
+desktop volume and normal Editor/WebGL audio are unchanged.
+The older vehicle/exploration notes below are historical and are retained as
+source references. Do not use their full installers to rebuild this walker.
+
 ROAD GUNNER — ARENA 1
 Unity 6000.6.4f1 • URP 17.6.0 • portrait wasteland vehicle combat
 

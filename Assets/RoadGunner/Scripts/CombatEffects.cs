@@ -48,6 +48,7 @@ namespace RoadGunner
             if(!hostile){
                 // Flame tongues point along the barrel with a random roll; legacy spike meshes keep their old orientation.
                 flash.SetPositionAndRotation(from,flameFlash?rotation*Quaternion.Euler(0,0,Random.Range(0,60f)):rotation*Quaternion.Euler(90,0,0));
+                if(flashScale!=Vector3.zero)flash.localScale=flameFlash?new Vector3(flashScale.x,flashScale.y,flashScale.z*.7f):flashScale;
                 flash.gameObject.SetActive(true);flashUntil=Time.time+flashTime;
             }
             if(Legacy(ArcadeFeedback.LegacySound.Gun)&&gun)source.PlayOneShot(gun,hostile?.15f:.22f);

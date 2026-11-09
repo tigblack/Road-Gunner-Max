@@ -1,0 +1,58 @@
+Normal saved Arena 1 route — Unity 6000.6.4f1
+Winning attempt: administrative Restart at the ordinary start, then only DriveInput.testDirection through its normal Update/FixedUpdate. All saved enemies, AI, auto-gun, harpoon, rewards, damage and respawn stay enabled. No Hit/Damage/Collect/Drop/score calls, health injection, enemy despawn or pose reset during the winning attempt. A scripted input route is not a human playthrough; failure or timeout remains a failure.
+PASS ordinary saved roster and health are live: HP=100; initial enemies=16; no winning-run isolation
+PHASE first-raiders t=0.00
+PASS input route first-raiders: remaining=1.26m; state=Playing; t=4.91; hp=100/100; kills=0; scrap=0/0; shots=2; pos=(-53.92, 0.52, -53.92)
+PHASE first-live-fight t=4.91
+PASS actual auto-gun defeats nearby saved Raiders: state=Playing; t=9.25; hp=94/100; kills=2; scrap=1/2; shots=18; pos=(-51.10, 0.52, -48.91)
+PHASE workshop-route t=10.75
+PASS input route workshop-route: remaining=1.25m; state=Playing; t=11.38; hp=94/100; kills=2; scrap=2/2; shots=18; pos=(-47.03, 0.52, -46.61)
+PHASE workshop-route t=11.38
+PASS input route workshop-route: remaining=1.29m; state=Playing; t=14.63; hp=94/100; kills=2; scrap=2/2; shots=20; pos=(-25.69, 0.52, -66.30)
+PHASE workshop-route t=14.63
+PASS input route workshop-route: remaining=1.28m; state=Playing; t=17.45; hp=94/100; kills=2; scrap=2/2; shots=20; pos=(-6.29, 0.52, -82.27)
+PHASE workshop-route t=17.45
+PASS input route workshop-route: remaining=1.27m; state=Playing; t=20.40; hp=100/100; kills=2; scrap=2/2; shots=20; pos=(13.20, 0.52, -64.50)
+PHASE workshop t=20.40
+PASS actual enemy damage is repaired by the workshop: actual damage=6; workshop healing=6; active repair cues=1; state=Playing; t=24.40; hp=100/100; kills=2; scrap=2/2; shots=20; pos=(13.20, 0.52, -64.50)
+PASS normal-run pause holds body and active countdown: remaining=13.22741 -> 13.22741
+PHASE east-ram-approach t=24.40
+PASS input route east-ram-approach: remaining=1.28m; state=Playing; t=26.67; hp=100/100; kills=2; scrap=2/2; shots=20; pos=(32.36, 0.52, -58.71)
+PHASE actual-ram t=26.67
+PASS real movement produces a hostile ram hit: observed production EnemyHit(ram=true)=1; state=Playing; t=26.67; hp=100/100; kills=2; scrap=2/2; shots=20; pos=(32.36, 0.52, -58.71)
+PHASE return-workshop t=26.67
+PASS input route return-workshop: remaining=1.25m; state=Playing; t=28.70; hp=100/100; kills=2; scrap=2/2; shots=20; pos=(15.34, 0.52, -63.31)
+PHASE workshop t=28.70
+PHASE wait-real-return t=31.72
+PASS a naturally killed actor returns after its real countdown: first=Arena 1 · Encounter 1 · Raider 01; elapsed=30.00581; life=3; returns=1; state=Playing; t=37.63; hp=100/100; kills=3; scrap=2/3; shots=30; pos=(15.34, 0.52, -63.31)
+PHASE northwest-route t=37.63
+PASS input route northwest-route: remaining=1.25m; state=Playing; t=40.47; hp=100/100; kills=3; scrap=3/3; shots=38; pos=(32.73, 0.52, -45.10)
+PHASE northwest-route t=40.47
+PASS input route northwest-route: remaining=1.26m; state=Playing; t=43.55; hp=100/100; kills=3; scrap=3/3; shots=44; pos=(52.15, 0.52, -25.64)
+PHASE northwest-route t=43.55
+PASS input route northwest-route: remaining=1.29m; state=Playing; t=49.43; hp=100/100; kills=3; scrap=3/3; shots=46; pos=(15.03, 0.52, 13.21)
+PHASE northwest-route t=49.43
+PASS input route northwest-route: remaining=1.26m; state=Playing; t=56.25; hp=100/100; kills=3; scrap=3/3; shots=46; pos=(-29.16, 0.52, 57.44)
+PHASE actual-upgrade t=56.25
+PASS input route actual-upgrade: remaining=1.28m; state=Playing; t=58.68; hp=100/100; kills=3; scrap=3/3; shots=46; pos=(-16.66, 0.48, 74.97)
+PASS ordinary approach claims the run Attack station: ATK=2; shot=6.615
+PHASE warlord-road-return t=58.93
+PASS input route warlord-road-return: remaining=1.26m; state=Playing; t=61.23; hp=100/100; kills=3; scrap=3/3; shots=46; pos=(-29.26, 0.52, 59.32)
+PHASE warlord-branch-entry t=61.23
+PASS input route warlord-branch-entry: remaining=1.26m; state=Playing; t=62.57; hp=100/100; kills=3; scrap=3/3; shots=46; pos=(-37.92, 0.52, 66.37)
+PHASE warlord-approach t=62.57
+PASS input route warlord-approach: remaining=1.29m; state=Playing; t=65.94; hp=100/100; kills=3; scrap=3/3; shots=46; pos=(-43.94, 0.52, 95.96)
+PHASE warlord-live-orbit t=65.94
+PASS normal input run defeats Warlord and completes: state=Completed; t=106.41; hp=88/100; kills=13; scrap=22/22; shots=182; pos=(-17.17, 0.48, 69.42); bossHP=0
+PASS completion settles every earned drop once: collected=22; earned=22; stored=0; reserved=0
+PASS winning route uses automatic harpoon while retaining live systems: launches=11; reels=11; collections=11; travelled=724.6m
+PASS Restart clears normal run loot feedback and progression: state=Playing; t=106.41; hp=100/100; kills=0; scrap=0/0; shots=182; pos=(-84.85, 0.70, -84.85)
+SEPARATE PASSIVE DEFEAT FIXTURE: after Restart only the auto-gun is disabled; actual AI, health damage and movement remain production. No Damage/Hit injection.
+PHASE passive-defeat-approach t=106.41
+PASS input route passive-defeat-approach: remaining=1.26m; state=Playing; t=111.30; hp=100/100; kills=0; scrap=0/0; shots=182; pos=(-53.92, 0.52, -53.92)
+PHASE passive-real-defeat t=111.30
+PASS actual enemy attacks produce defeat without health injection: state=Defeated; t=137.09; hp=0/100; kills=0; scrap=0/0; shots=182; pos=(-53.89, 0.52, -53.89)
+PASS Restart after actual defeat restores a fresh arena: state=Playing; t=137.09; hp=100/100; kills=0; scrap=0/0; shots=182; pos=(-84.85, 0.70, -84.85)
+RESULT checks=29; failures=0; no saved scene/assets modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

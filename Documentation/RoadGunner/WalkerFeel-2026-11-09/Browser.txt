@@ -1,0 +1,32 @@
+SAFARI LOCAL WEBGL SMOKE — 9 NOVEMBER 2026
+Safari26.6.2 (21624.5.1.11.3), macOS26.6.2, AppleM5Max/36GB.
+Final payload: seven files,21,318,552 compressed bytes; exact hashes in the
+sibling WebGL release manifest. Runtime canvas900x1600, portrait9:16.
+
+Native Safari UI launched PLAY, loaded the actual WebGL/WASM game and showed
+the biped, current HUD, minimap and separate footsteps. Normal W/A/S/D input
+moved and reversed the walker. Actual auto-fire damaged/killed enemies; HUD
+reached KILLS2/SCRAP2 with HP100. Release showed speed00km/h. No direct gameplay
+state injection or JavaScript calls to damage/award/teleport were used.
+
+A local-only test page wraps the original bootstrap and original Build files.
+Before PLAY it intercepts WebAudio connections to a zero-gain destination and
+captures console.error, window error and unhandled rejection events. A visible
+badge confirmed mute hook=true, destination connections229, errors0 after real
+movement/combat/loot. Safari's own game-tab mute was also enabled and showed
+Unmute This Tab. Neither method changes computer volume or release audio.
+The test harness and badge are NOT part of the published seven-file payload.
+
+First build produced one SSAO resource console error. The installed URP inactive
+feature/stripping mismatch was fixed in two renderer assets, followed by another
+successful native10-shot visual pass and WebGL build. Final fresh cache-tagged
+browser startup and gameplay had error count0; the first failed build is retained
+only as ignored diagnostic evidence. It is not presented as passing acceptance.
+
+Pause was observed in the earlier browser trial; the complete input/Space/Pause/
+Recover/reset contracts passed native acceptance. Later browser keyboard actions
+were interrupted by desktop focus changes, so additional browser brake/pause
+coverage is not claimed. No browser touch emulation or physical phone was
+available; native queued Touchscreen/UI acceptance is separately disclosed in
+Gameplay.txt. No browser/mobile FPS, audible phone mix or full browser arena
+playthrough is claimed. The full actual-AI victory was native input-only.

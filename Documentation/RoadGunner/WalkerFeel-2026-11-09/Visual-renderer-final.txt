@@ -1,0 +1,20 @@
+Road Gunner visual capture • Unity 6000.6.4f1 • 540x960 • quality Mobile
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/01-start.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=16 | shots=0 | 28 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/02-drive-turn.png | car=(-67.3, 0.5, -75.7) | region=dust-flats | live enemies=16 | shots=0 | 30 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/03-drive-fast.png | car=(-60.3, 0.5, -69.0) | region=dust-flats | live enemies=16 | shots=0 | 24 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/04-combat-a.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=5 | 23 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/05-combat-b.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=6 | 24 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/06-combat-c.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=7 | 24 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/07-explosion-early.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=8 | 24 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/08-explosion-late.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=9 | 23 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/09-raider-deaths.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=9 | 23 ms
+SHOT outputs/visual-capture/walker-feel-renderer-final-20261109/10-loot.png | car=(-84.9, 0.5, -84.9) | region=dust-flats | live enemies=14 | shots=9 | 23 ms
+audio mark parked t=-1.00
+audio mark accelerate t=-1.00
+audio mark cruise-turn t=-1.00
+audio mark brake t=-1.00
+audio mark combat t=-1.00
+audio mark calm t=-1.00
+audio mark end t=-1.00
+
+RESULT shots=10 failures=0 console errors=0

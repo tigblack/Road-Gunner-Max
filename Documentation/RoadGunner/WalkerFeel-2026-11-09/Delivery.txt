@@ -1,0 +1,164 @@
+ROAD GUNNER — WALKER AND WEAPON FEEL
+9 November 2026 — implemented Unity/WebGL feel pass
+
+Scope
+The existing saved Unity Arena 1 and biped walker remain the baseline. This pass
+connects grounded movement, visible foot placement, cannon fire and automatic
+Gear retrieval. It does not regenerate the arena, model, minimap or navigation.
+Scene: Assets/RoadGunner/Scenes/Level01_Greenwood.unity
+Unity 6000.6.4f1; URP 17.6.0; portrait 9:16.
+
+Before and after
+- The pre-change saved walker already passed 33 instantaneous-movement checks.
+  Full input, release, reversal and Space therefore retain that control contract;
+  this pass improves support validation and presentation rather than adding an
+  acceleration ramp. Wheel contacts now require a sufficiently upward normal
+  and matching ground below the wheel. A falling brush against a wall cannot
+  become ground support. Compound sweeps retain wall stopping/sliding and
+  movement away from contact; vertical fall and suspension remain physical.
+- Previously feet advanced from local stride without a persistent world stance
+  anchor. Supported stance now holds a measured world foot position, replans
+  on stops/reversals and drives bounded, damped pelvis/torso reactions. The same
+  accepted foot plant produces one sole impression, dust burst and mechanical
+  footfall. The player tyre-roll/skid layers are suppressed. Landing feedback
+  follows a real fall followed by stable support; reset and idle motion do not
+  invent locomotion plants.
+- Cannon aim/fire previously ran before the late gait had moved its mount.
+  Gait now resolves at 12000, cannon at 12100. One immutable actual shot snapshot
+  supplies muzzle pose, forward hitscan, tracer, flash and hit result. World aim
+  persists across chassis reversals. A private runtime barrel mesh recoils and
+  returns without changing shared source geometry or the collision body.
+- Harpoon resolves at 12200, after the actual moving mount. Its eight-point
+  world-space cable runs from the current winch to the actual hook/reserved Gear;
+  launch slack tightens during powered pull. Launch/dock reactions and distinct
+  launch/latch/dock cues accompany a retrieval-only winch loop. Disabling an
+  already reserved Gear visual now releases ownership by owner/slot/generation,
+  fixing the former stuck-reservation case. Pause retains a valid frozen pull;
+  invalid targets, Recover and terminal/reset transitions clean up the hook and
+  audio. A Restart inside the real award callback cannot leave a stale dock.
+
+Final tuning
+- Existing control: full input 9.36 m/s; partial stick remains analog; release,
+  reversal and Space act on the eligible physics step. No airborne propulsion
+  or gravity cancellation is introduced. Compound collision skin 0.02 m;
+  maximum accepted support angle 50 degrees.
+- Cosmetic body settling 0.20 s (designer range 0.15–0.25 s), motion lean 2.2
+  degrees, landing compression 0.09 m, footfall intensity 1. Reactions are bounded
+  independently of the collision body.
+- Cannon mount settling 0.06 s; maximum barrel travel 0.09 m; kick 0.018 s;
+  return 0.14 s. Original yaw-speed and attack/LOS rules remain authoritative.
+- Harpoon 8 cable points, launch slack 0.16 m maximum, tension blend 0.06 s,
+  launch reaction 0.18 s and dock reaction 0.12 s. These add no gameplay waits.
+- Existing project SFX are reused: Impact.wav, Impact_Bullet_02.wav, Pickup.wav
+  and Engine.wav. No new generated/third-party audio is claimed. Bank levels:
+  footfall 0.32, landing 0.38, hook launch 0.30, latch 0.24, dock 0.20;
+  retrieval-only winch 0.075, routed through the existing SFX/audio system.
+
+Preserved gameplay
+Player base HP100 and speed cap9.36; auto-gun10m,5 shots/s and5.25 base damage
+at Attack1; free Attack2 gives6.3 before separate exploration bonuses. Harpoon
+selection8m, launch36m/s, pull30m/s and post-collection delay0.08s are unchanged.
+Enemy tuning,16 starting enemies/15 eligible returns,30-second respawns,
+upgrades, caches/secrets, repair, scenery rewards and Warlord completion remain.
+Contact pickup/harpoon award once; completion still settles every earned drop.
+Authoring.json records identical protected tuning/layout snapshots before/after
+the narrow feel installer. Physics/audio/presentation fixes are intentional;
+this is not a claim that every runtime operation is presentation-only.
+
+Edited implementation groups
+- Control/support: Scripts/VehicleController.cs, VehicleTuning.cs.
+- Rig/contact: Scripts/PlayerTrackVisuals.cs, TireTracks.cs.
+- Cannon: Scripts/TurretController.cs, CombatTuning.cs, CombatEffects.cs;
+  new Scripts/CannonVisualRecoil.cs.
+- Retrieval: Scripts/HarpoonCollector.cs; only ReleaseGear in PickupPool.cs.
+- Audio: Scripts/Arcade/ArcadeAudio.cs.
+- Narrow saved-scene authoring: new Editor/WalkerFeelInstaller.cs and existing
+  Level01_Greenwood.unity audio bindings. It reuses assets and preserves balance.
+- New focused diagnostics/runners: WalkerFeel, CannonFeel, HarpoonFeel and
+  WalkerArenaRun and WalkerRockContact PlayChecks/Verification pairs;
+  new Editor/QuietBatchAudio.cs.
+  Corresponding .meta files are ordinary Unity metadata.
+- README current-state/release documentation is maintained separately by root.
+  A pre-existing ConceptArt/ConceptVehicle.cs change is outside this feel pass;
+  the legacy car/world authoring tools were not invoked for this work.
+
+Verified native results
+368 checks passed, failures0, Console errors/exceptions/asserts0 in every suite:
+InstantMovement33 + gait/visual19 + gameplay204 + respawn15 + ContactFeel25 +
+Cannon21 + Harpoon17 + saved-rock contact5 + normal ArenaRun29.
+See NativeResults.json and individual reports, including fixture boundaries.
+
+The final input-only winning run completed at106.41 game seconds with88/100HP,
+13 kills,22/22 earned Scrap and11 completed harpoon cycles. Actual enemy damage
+was repaired while entering the workshop. A naturally killed Raider returned
+after30.00581s; an actual ram occurred. Warlord death immediately completed the
+run and settled remaining Gear. A separate disclosed passive fixture disabled
+only the gun: real enemy attacks caused Defeat; Restart restored16 foes.
+The winning run kept AI, damage, auto-gun, harpoon and progression enabled;
+it injected no damage, health, awards, actor poses or direct kills.
+
+Contact tests requested native render caps30/60/120:9.36m/s, held world stance,
+equal plant/audio/dust counts and idle silence passed. Temporary8deg ramp/ledge
+and5m fall fixtures test natural falling, valid support and one landing cue.
+The real saved rock and closed gate test head-on stopping, shallow sliding and
+immediate escape. Measured rock penetration0m; maximum lift0.064m. These are
+limited regressions, not certification of every obstacle or a phone FPS test.
+
+Cannon: five real baseline hits cause26.25 damage with five HP events; cadence
+is0.2s plus one render-update tolerance. Actual180deg body reversal and150deg
+retarget preserve target-relative aim; flash/tracer/hit share the real shot pose.
+Cover blocks acquisition and first forward impact wins; enemies precede caches.
+Recoil stays within0.09m and returns to0; shared source meshes stay unchanged.
+
+Harpoon: moving endpoints, slack/tension and once-only awards pass. Real launch/
+latch/dock voice starts1/1/1; winch active during pull only. Pause/Resume, inactive
+target, contact competition, Recover, Restart, Defeat, completion and a Restart
+reentered from the actual award callback all clean up without duplicate payout.
+
+Development failures were retained in ignored outputs and corrected: an IK reach
+overextension needed a0.48m stride target/earlier0.44m rear lift; an off-road test
+shortcut hit actual rocks; the repair observer missed healing on approach; and
+an aim test incorrectly expected unchanged world bearing after shoulder movement.
+Final tests use the road, actual repair-zone membership and target-relative aim.
+No balance change was used to manufacture a pass.
+
+Visual review
+10 before and10 after540x960 gameplay captures passed without Console errors.
+These staged visual fixtures are not natural playthroughs. Native current game,
+walker detail/footprints and harpoon launch/pull images are in Screenshots/.
+The biped silhouette, portrait HUD and separate sole impressions remain readable.
+No model/world/minimap/nav asset regeneration was needed for this feel pass.
+
+Test audio and limits
+Later native runs use -rgMuteAudio: an opt-in editor-only helper sets the test
+listener volume0. It changes no desktop setting, clip, saved mix or published
+player audio. Actual AudioSource states and event counts remain exercised.
+Browser QA uses a separate local silence harness before PLAY; its WebAudio
+destination has zero gain. The seven release artifacts are not modified by it.
+Audible quality on a phone, physical touch and mobile performance remain untested.
+
+Historical reports overwritten by legacy runners were restored byte-for-byte;
+fresh results are in this folder. Hardware.json records Apple M5 Max/36GB/
+macOS26.6.2. Native requested-cap checks are not browser FPS guarantees.
+
+Browser render correction and packaging
+The first WebGL smoke found a real SSAO startup resource error. Installed URP17.6
+strips unused SSAO resources but still calls Create on an inactive feature.
+Removed the already inactive SSAO objects, list entries and feature-map entries
+from Assets/Settings/Mobile_Renderer.asset and PC_Renderer.asset. Both profiles
+retain their active ink outline and other settings; no SSAO-on appearance was
+lost. RendererFix.json records exact fileIDs/GUIDs/hashes and independent review.
+Game code and balance did not change after the368 native acceptance checks.
+A further10 portrait captures passed with Console0 after this render-only fix.
+
+RoadGunner.EditorTools.WebBuild.Build succeeded. Seven Gzip/fallback static files
+total21,318,552 bytes. CRC/data-header/JavaScript/WebAssembly checks pass. All2246
+frozen production input hashes match after restoring five Unity-generated render
+serialization files byte-for-byte; no unexpected production changes occurred.
+See ../WebGL-2026-11-09-WalkerFeel/WebBuild.json for exact hashes and provenance.
+
+Browser verification
+Final Safari26.6.2 WebGL startup and actual keyboard combat/loot passed with
+zero captured console errors or unhandled errors, in a900x1600 portrait canvas.
+Game-only output mute was verified before PLAY. See Browser.txt for the isolated
+QA wrapper, exact scope and unavailable touch/phone/performance checks.

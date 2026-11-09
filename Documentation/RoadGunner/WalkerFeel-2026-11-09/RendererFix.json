@@ -1,0 +1,77 @@
+{
+  "recorded_at_utc": "2026-11-09T17:24:51.247416+00:00",
+  "unity": "6000.6.4f1",
+  "urp": "17.6.0",
+  "scope": "Only two renderer assets: remove already inactive SSAO list/map references and complete subassets. Existing active ink outline, renderer modes, shaders, scene, gameplay and strip settings retained.",
+  "cause": "URP strips SSAO resources for no active SSAO, but ScriptableRenderer ctor and ScriptableRendererFeature.OnEnable call inactive feature.Create, which attempts resource load.",
+  "files": [
+    {
+      "asset": "Assets/Settings/Mobile_Renderer.asset",
+      "asset_guid_preserved": "65bc7dbf4170f435aa868c779acfb082",
+      "main_file_id_preserved": 11400000,
+      "before_sha256": "ba311a07340833b0a43b03654303b031e1f54fd3aad74ef9abfaef50b92da62c",
+      "after_sha256": "51ea147e70bdd1624f240a6493e945c74dac0b63189a47e031cf0f8dde65ca3c",
+      "before_features": [
+        {
+          "file_id": 6989455859910281719,
+          "active": false,
+          "kind": "ScreenSpaceAmbientOcclusion"
+        },
+        {
+          "file_id": -1853348242174133081,
+          "active": true,
+          "kind": "Arcade ink outline"
+        }
+      ],
+      "after_features": [
+        {
+          "file_id": -1853348242174133081,
+          "active": true,
+          "kind": "Arcade ink outline"
+        }
+      ],
+      "after_feature_map_ids": [
+        -1853348242174133081
+      ],
+      "removed_subasset_fully": true,
+      "meta_sha256_unchanged": "a148ee2b4987b05b8ff7ae5f9bf84916184f77aefddc821dceb551f5a69f8179"
+    },
+    {
+      "asset": "Assets/Settings/PC_Renderer.asset",
+      "asset_guid_preserved": "f288ae1f4751b564a96ac7587541f7a2",
+      "main_file_id_preserved": 11400000,
+      "before_sha256": "f91b794a11140a5d47afa85c9012e1b46341aeb417bfa0fb9a5df7b8f15a477c",
+      "after_sha256": "56c4772860c950ae23b8b2da8fa8afb770713c2b0ea96d4740b3f8e173e9c7df",
+      "before_features": [
+        {
+          "file_id": 7833122117494664109,
+          "active": false,
+          "kind": "ScreenSpaceAmbientOcclusion"
+        },
+        {
+          "file_id": -474188471403668684,
+          "active": true,
+          "kind": "Arcade ink outline"
+        }
+      ],
+      "after_features": [
+        {
+          "file_id": -474188471403668684,
+          "active": true,
+          "kind": "Arcade ink outline"
+        }
+      ],
+      "after_feature_map_ids": [
+        -474188471403668684
+      ],
+      "removed_subasset_fully": true,
+      "meta_sha256_unchanged": "b5df8ddb2708c6ed4c133a5ff9ee95a75cc20e4ee3ed6181366a61aedbaf31ec"
+    }
+  ],
+  "unchanged_settings_sha256": {
+    "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset": "f074f70005181226c7614cbfb06b064e692c1032763bef94ccf334d91d0056d0",
+    "ProjectSettings/QualitySettings.asset": "bb902f79b588671c6258d41f146bb7d0fb203a055c71a91536559f58bf810118",
+    "ProjectSettings/GraphicsSettings.asset": "15ff4127a0f261f15321f24c6a6b5c82e1f5a306ad32fd399eac3e3c46c723c9"
+  },
+  "validation": "Static GUID/local-fileID/list/map/subasset guards passed. Unity not launched by author; native capture and WebGL browser verification pending root."
+}

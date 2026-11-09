@@ -1,0 +1,71 @@
+{
+  "unity": "6000.6.4f1",
+  "totalChecks": 368,
+  "scope": "Native Editor integration and disclosed controlled fixtures, input-only actual-AI victory and separate passive actual-AI defeat. Not phone or browser FPS evidence. Later runs use -rgMuteAudio for game-only output mute.",
+  "reports": [
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/PlayMode.txt",
+      "checks": 19,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "d24796a87d080253bbb89a7de20fa0fb08792830d5ab97669d3ed7e2cfa4f3a4"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/Gameplay.txt",
+      "checks": 204,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "375057123f8bfdc801bef3aeb9552159375d32bdcc12b5f80ed36c4d881ca746"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/InstantMovement.txt",
+      "checks": 33,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "aa46fd5379d79664957f7e3f085faadb1707e5d2a5c6359aedbd372230dd7346"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/ContactFeel.txt",
+      "checks": 25,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "1f998f4b9034a6749a6e1d0a39f532df8330d999fe8e56e4accd444f37411ce4"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/Cannon.txt",
+      "checks": 21,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "89c85488973a4f35cd2326cda967b6272dd0e69bf66bd3178074a58447d7ecbd"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/Harpoon.txt",
+      "checks": 17,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "400a23506e7dc16e6a1dca49e59d11f754aad2bb083dc63325391479664d8a3d"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/ArenaRun.txt",
+      "checks": 29,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "416c14b4dce60df7dd9c15b6ce91aaf562947b7cd48f6784fb832c16b1065aca"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/Respawn.txt",
+      "checks": 15,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "9671c952e083f9bb46f80d96299f1df2eb3dbfc31a68b92817d5fa40ca7f7dec"
+    },
+    {
+      "path": "Documentation/RoadGunner/WalkerFeel-2026-11-09/RockContact.txt",
+      "checks": 5,
+      "failures": 0,
+      "consoleErrorsExceptionsAsserts": 0,
+      "sha256": "6d9867c2718ae52629d6efa688b3f9d1be37436c1ed8bf680fd797e263fa2e52"
+    }
+  ],
+  "formatting": "Only trailing report blank lines normalized for repository whitespace. Raw runner reports retained in ignored outputs; substantive results unchanged."
+}

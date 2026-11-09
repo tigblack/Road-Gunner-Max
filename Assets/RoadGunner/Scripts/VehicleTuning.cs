@@ -15,6 +15,8 @@ namespace RoadGunner
         public bool walkerDrive;
         [Range(.005f,.08f), Tooltip("Compound-body sweep clearance from solid walls, in metres.")]
         public float walkerCollisionSkin = .02f;
+        [Range(15,55), Tooltip("Steepest upward contact accepted as walker support; walls never become ground.")]
+        public float walkerGroundAngle = 50;
         [Header("Tracked drive (player profile only)")]
         [Tooltip("Zero steering angle on four suspension wheels; differential track torque and bounded grounded yaw torque.")]
         public bool trackedDrive;

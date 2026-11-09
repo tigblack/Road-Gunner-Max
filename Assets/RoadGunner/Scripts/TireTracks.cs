@@ -15,6 +15,7 @@ namespace RoadGunner
         readonly Color[] colors=new Color[Capacity*VerticesPerStamp];
         readonly float[] born=new float[Capacity];
         readonly int[] usedQuads=new int[Capacity];
+        readonly float[] stampIntensity=new float[Capacity];
         readonly Vector3[] last=new Vector3[2];
         Mesh mesh;
         GameObject holder;
@@ -34,6 +35,9 @@ namespace RoadGunner
         public Mesh ImprintMesh=>mesh;
         public int StampCapacity=>Capacity;
         public float FadeSeconds=>Lifetime;
+        public int FootDustBurstCount {get;private set;}
+        /// <summary>Accepted ground plant after its one visible print and dust burst; audio consumes this same event.</summary>
+        public event System.Action<PlayerTrackVisuals.FootContact> FootprintPlaced;
 
         void Awake()
         {
@@ -76,7 +80,7 @@ namespace RoadGunner
         }
         public void Clear()
         {
-            next=0;StampCount=LeftFootprintCount=RightFootprintCount=WheelStampCount=ActiveStampCount=0;
+            next=0;StampCount=LeftFootprintCount=RightFootprintCount=WheelStampCount=ActiveStampCount=FootDustBurstCount=0;
             for(int i=0;i<Capacity;i++){born[i]=-100;usedQuads[i]=0;}
             System.Array.Clear(colors,0,colors.Length);
             if(mesh)mesh.colors=colors;
@@ -105,9 +109,11 @@ namespace RoadGunner
             Quad(next,2,at,right,forward,.145f,.42f,.17f,.46f,13);
             Quad(next,3,at,right,forward,0,-.39f,.26f,.40f,0);
             Quad(next,4,at,right,forward,contact.IsLeft?-.30f:.30f,-.02f,.12f,.26f,0);
+            stampIntensity[next]=Mathf.Clamp01(contact.Intensity);
             CommitStamp(QuadsPerStamp);
             if(contact.IsLeft)LeftFootprintCount++;else RightFootprintCount++;
-            LandingDust(contact.Position,normal,forward,contact.IsLeft);
+            LandingDust(contact.Position,normal,forward,contact.IsLeft,contact.Intensity);
+            FootprintPlaced?.Invoke(contact);
         }
         static bool Finite(Vector3 p)=>!float.IsNaN(p.x)&&!float.IsNaN(p.y)&&!float.IsNaN(p.z)&&!float.IsInfinity(p.x)&&!float.IsInfinity(p.y)&&!float.IsInfinity(p.z);
         void Quad(int stamp,int quad,Vector3 at,Vector3 right,Vector3 forward,float x,float z,float width,float length,float yaw)
@@ -121,13 +127,13 @@ namespace RoadGunner
         {
             born[next]=Time.time;usedQuads[next]=quads;StampCount++;next=(next+1)%Capacity;
         }
-        void LandingDust(Vector3 position,Vector3 normal,Vector3 forward,bool isLeft)
+        void LandingDust(Vector3 position,Vector3 normal,Vector3 forward,bool isLeft,float intensity)
         {
             var systems=vehicle.dust;if(systems==null||systems.Length==0)return;
             int index=isLeft?2:3;if(index>=systems.Length)index=isLeft?0:systems.Length-1;
             var dust=systems[index];if(!dust||dust.main.simulationSpace!=ParticleSystemSimulationSpace.World)return;
             var parameters=new ParticleSystem.EmitParams {position=position+normal*.04f,velocity=normal*.5f-forward*.18f,applyShapeToPosition=false};
-            dust.Emit(parameters,3);
+            dust.Emit(parameters,Mathf.Clamp(Mathf.RoundToInt(3*Mathf.Clamp01(intensity)),1,5));FootDustBurstCount++;
         }
         void SuppressContinuousDust()
         {
@@ -147,7 +153,7 @@ namespace RoadGunner
             if(Time.time<refresh)return;refresh=Time.time+.06f;ActiveStampCount=0;
             for(int i=0;i<Capacity;i++)
             {
-                float alpha=Mathf.Clamp01(1-(Time.time-born[i])/Lifetime)*FreshAlpha;
+                float alpha=Mathf.Clamp01(1-(Time.time-born[i])/Lifetime)*FreshAlpha*stampIntensity[i];
                 if(usedQuads[i]>0&&alpha>0)ActiveStampCount++;
                 int first=i*VerticesPerStamp,used=usedQuads[i]*4;
                 for(int j=0;j<VerticesPerStamp;j++)colors[first+j]=new Color(1,1,1,j<used?alpha:0);
@@ -167,7 +173,7 @@ namespace RoadGunner
                 var forward=Vector3.ProjectOnPlane(transform.forward,hit.normal).normalized;
                 var right=Vector3.Cross(hit.normal,forward);
                 Quad(next,0,hit.point+hit.normal*.016f,right,forward,0,0,tracked?.68f:.38f,.58f,0);
-                CommitStamp(1);WheelStampCount++;
+                stampIntensity[next]=1;CommitStamp(1);WheelStampCount++;
             }
         }
         void OnDestroy()

@@ -1,0 +1,30 @@
+Walker contact/gait/audio integration, actual saved scene; Unity 6000.6.4f1
+Movement uses production DriveInput test direction and Rigidbody physics. ResetPose/despawn isolate fixtures; temporary ramp and wall are explicitly test geometry, not saved level edits. Frame caps are requested render caps, not device-performance claims.
+PASS saved balance retained: max=9.36; HP=100
+PASS grounded drive at requested render cap 30: speed=9.36; observed frames=25; max render dt=0.05593167
+PASS world stance anchors hold at cap 30: held samples=18; largest consecutive world drift=0.05644242
+PASS same accepted plants produce audio dust and footprints at cap 30: prints=7; sounds=7; dust bursts=7
+PASS walker tyre loop is completely silent at cap 30: roll playing=False; volume=0
+PASS idle settles without new locomotion feedback at cap 30: speed=1.026985E-05; reaction=1.06626E-07; added plants=0
+PASS grounded drive at requested render cap 60: speed=9.36; observed frames=49; max render dt=0.01672187
+PASS world stance anchors hold at cap 60: held samples=39; largest consecutive world drift=5.960464E-08
+PASS same accepted plants produce audio dust and footprints at cap 60: prints=7; sounds=7; dust bursts=7
+PASS walker tyre loop is completely silent at cap 60: roll playing=False; volume=0
+PASS idle settles without new locomotion feedback at cap 60: speed=8.249614E-06; reaction=3.741474E-07; added plants=0
+PASS grounded drive at requested render cap 120: speed=9.36; observed frames=96; max render dt=0.008413046
+PASS world stance anchors hold at cap 120: held samples=83; largest consecutive world drift=5.960464E-08
+PASS same accepted plants produce audio dust and footprints at cap 120: prints=7; sounds=7; dust bursts=7
+PASS walker tyre loop is completely silent at cap 120: roll playing=False; volume=0
+PASS idle settles without new locomotion feedback at cap 120: speed=4.353928E-06; reaction=1.287875E-06; added plants=0
+PASS partial stick preserves analog response: magnitude=0.3500468; speed=3.276438
+PASS Pause freezes locomotion feedback: prints=21; audio=21
+PASS Recover does not invent steps: added prints=0; sounds=0
+PASS brushing a vertical wall while falling cannot ground the walker: false grounded=False; vertical=-4.120198
+PASS fall produces one valid scaled landing and recovery: landing serial=1; speed=9.809999; sound delta=1
+PASS standing landing creates no locomotion footprints: added footprints=0
+PASS traversable slope keeps real support without vertical snapping: sloped support=True; climb=1.971782
+PASS walking off a ledge keeps gravity and lands: airborne=True; min vertical velocity=-7.298471; landings=1; end grounded=True; end velocity=(0.04, 0.39, 0.04); end y=0.4641685
+PASS Restart clears feedback and keeps ledger clean: prints=0; sounds=0; scrap=0
+RESULT checks=25; failures=0; saved scene/assets not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

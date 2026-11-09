@@ -1,0 +1,24 @@
+Actual saved walker, Unity 6000.6.4f1
+Setup ResetPose and administrative enemy despawn only; all walking uses production input/Rigidbody/WheelCollider physics. Airborne fixture is explicitly elevated without changing a running velocity. No scene/asset writes.
+PASS walker keeps baseline HP and real damage: HP=100; bullet=5.25
+PASS complete articulated biped is active: two actual articulated leg meshes
+PASS new torso pelvis arm and harpoon meshes exist: saved walker wrappers with enabled combined meshes
+PASS obsolete automobile and crew meshes are detached: legacy car/driver/mechanic/wheel mesh references=0
+PASS all ordinary wheel renderers are removed or disabled: four original empty visual anchors retained
+PASS physical chassis and wheel contacts remain: physical wheels=4; mass=1400
+PASS footprint mode replaces wheel stamping: mode=True
+PASS real weapon and collector anchors survive: turret and harpoon production references valid
+PASS idle walker settles without painting tread strips: grounded=4; stamps=0
+PASS leg joints actually change during travel: actual dynamic vertex motion, not a static leg replacement
+PASS production direction input moves the walker: travel=41.93268m
+PASS both feet make discrete grounded impressions: left=19; right=19; wheel=0
+PASS each printed step comes from a verified sole landing: events=38; prints=38; invalid=0
+PASS landing cadence contains separate left right placements: distinct world-space foot placements=38
+PASS footprints use a bounded actual render mesh: vertices=12800; stamps=38
+PASS standing feet do not continuously repaint the ground: speed=4.818009E-08; stamps=38
+PASS pause cannot produce footprints: stamps=38
+PASS airborne gait creates no ground impressions: grounded=0; added=0
+PASS restart clears footprints and step phase: stamps=0; active=0; steps=0
+RESULT checks=19; failures=0; saved scene not modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

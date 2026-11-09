@@ -1,0 +1,22 @@
+Actual saved HarpoonCollector/PickupPool, Unity 6000.6.4f1
+Isolated administrative Restart/despawn and production DropGear create controlled reward fixtures. Every award uses normal contact pickup, automatic harpoon or normal completion payout; no direct CollectReservedGear/Hit/score calls. Movement uses production DriveInput and the actual body. Not a natural combat playthrough; no scene/assets written.
+PASS saved harpoon keeps authoritative range and cadence: range=8; launch=36; pull=30; delay=0.08
+PASS moving and reversing preserves live cable and reserved gear endpoints: launch=True; pull=True; cable error=1.192093E-07; gear error=1.192093E-07; travel=0.1287738
+PASS launch slack straightens under powered pull: saw slack=True; max tension=1; points=8
+PASS dock awards through the real pool exactly once: Scrap=1; collections=1; stored=0
+PASS one moving cycle voices launch latch and dock once then stops its winch: launch/latch/dock=1/1/1; winch=False; winch observed during pull=True
+PASS Pause freezes Launching without releasing ownership: state=Launching; reservation=True; cable drift=0; launch/latch/dock=1/0/0; winch=False
+PASS Resume finishes held Launching reward once: Scrap=1; collections=1; launch/latch/dock=1/1/1; winch=False
+PASS Pause freezes Retracting without releasing ownership: state=Retracting; reservation=True; cable drift=0; launch/latch/dock=1/1/0; winch=False
+PASS Resume finishes held Retracting reward once: Scrap=1; collections=1; launch/latch/dock=1/1/1; winch=False
+PASS inactive target cancels and releases its real reservation: reservations=0; stored=1; cancellation delta=1; launch/latch/dock=1/0/0; winch=False
+PASS released inactive gear can later be retrieved without duplication: Scrap=1; collections=1
+PASS contact and harpoon paths settle each gear value only once: Scrap=5; collector docks=1; active=0
+PASS Recover cancels hook and reservation before changing pose: pose serial=7 -> 8; stored=1; reservations=0; launch/latch/dock=1/1/0; winch=False
+PASS Restart synchronously clears loot and all retrieval feedback: state=Idle; stored=0; launch=0; dock=0
+PASS Defeat releases a live pull without awarding it: state=Defeated; stored=1; Scrap=0
+PASS completion preserves earned pool payout and cancels the hook: first payout=5; after repeat completion=5; stored=0
+PASS Restart from the real award callback cannot leave an old dock: run=12 -> 13; Scrap=0; docks=0; dock reaction=0
+RESULT checks=17; failures=0; no saved scene/assets modified.
+
+PASS runtime Console: errors/exceptions/asserts=0

@@ -9,7 +9,7 @@ namespace RoadGunner
     /// voice cap, priority, jitter), tyre roll as the only movement sound (no engine drone), tyre skid, desert wind.
     /// Presentation only. Each legacy CombatEffects one-shot keeps playing until its own generated clips exist.
     /// </summary>
-    [DisallowMultipleComponent]
+    [DisallowMultipleComponent, DefaultExecutionOrder(12300)]
     public sealed class ArcadeAudio : ArcadeFeedbackSink
     {
         [Serializable]
@@ -64,6 +64,21 @@ namespace RoadGunner
         public Bank explosion = new Bank(), crash = new Bank(), collision = new Bank(), crateBreak = new Bank(), crateHit = new Bank();
         public Bank scrap = new Bank(), gearDrop = new Bank(), killChime = new Bank(), upgrade = new Bank(), uiClick = new Bank();
         public Bank bossWarning = new Bank(), victory = new Bank(), defeat = new Bank(), harpoonFire = new Bank(), harpoonReel = new Bank(), whoosh = new Bank();
+        [Header("Walker contact and winch (actual gameplay events)")]
+        public Bank footfall = new Bank { volume=.32f, volumeJitter=.04f, pitchJitter=.45f, cooldown=0, maxVoices=3, priority=7 };
+        public Bank landing = new Bank { volume=.38f, volumeJitter=0, pitchJitter=.2f, cooldown=.1f, maxVoices=1, priority=7 };
+        public Bank harpoonLatch = new Bank { volume=.24f, volumeJitter=.02f, pitchJitter=.2f, cooldown=0, maxVoices=1, priority=5 };
+        public Bank harpoonDock = new Bank { volume=.20f, volumeJitter=.02f, pitchJitter=.25f, cooldown=0, maxVoices=1, priority=5 };
+        public AudioSource winch;
+        [Range(0,1)] public float winchVolume=.075f;
+        public int FootPlantsReceived { get; private set; }
+        public int FootfallsStarted { get; private set; }
+        public int LandingSoundsStarted { get; private set; }
+        public int HarpoonLaunchSoundsStarted { get; private set; }
+        public int HarpoonLatchSoundsStarted { get; private set; }
+        public int HarpoonDockSoundsStarted { get; private set; }
+        public bool WalkerRollMuted => Vehicle && Vehicle.tuning && Vehicle.tuning.walkerDrive && (!roll || !roll.isPlaying && roll.volume<=.0005f);
+        public bool WinchPlaying => winch && winch.isPlaying;
 
         [Header("Loops (clips live on the sources)")]
         [Tooltip("Tyres rolling over sand: the movement sound (there is no engine drone). Silent at rest, rises with speed.")]
@@ -90,6 +105,11 @@ namespace RoadGunner
         int shotIndex, scrapStep, impactSuppressedFrame = -1, reelVoice = -1;
         float skidAmount, intensity, lastScrap = -10, airborneSince = -1;
         float rollLevel, skidLevel, windLevel;
+        TireTracks footprintSource;
+        HarpoonCollector collector;
+        int landingSerial, audioPoseSerial;
+        float pausedAt=-1;
+        bool[] pausedVoices = new bool[0];
 #if UNITY_EDITOR
         float nextTrace;
 #endif
@@ -138,10 +158,11 @@ namespace RoadGunner
             if (!session) session = hub && hub.session ? hub.session : GetComponentInParent<GameSession>();
             if (voices == null || voices.Length == 0) voices = CreateVoices(14);
             state = new Voice[voices.Length];
+            pausedVoices = new bool[voices.Length];
             foreach (var source in new[] { roll, skid, wind }) PrepareLoop(source);
         }
 
-        void OnEnable() { RefreshOwnership(); }
+        void OnEnable() { RefreshOwnership();if(started)BindWalker(); }
 
         void Start()
         {
@@ -154,7 +175,14 @@ namespace RoadGunner
                 bulletImpact.fallback = effects.impact;
                 explosion.fallback = effects.explosion;
                 scrap.fallback = upgrade.fallback = crateBreak.fallback = effects.pickup;
+                footfall.fallback=landing.fallback=harpoonLatch.fallback=effects.impact;
+                harpoonDock.fallback=effects.pickup;
+                harpoonFire.fallback=effects.impact;
             }
+            BindWalker();
+            if(!winch) {var go=new GameObject("Walker winch · retrieval only");go.transform.SetParent(transform,false);winch=go.AddComponent<AudioSource>();ConfigureLoop(winch,160);}
+            if(!winch.clip&&Vehicle&&Vehicle.engine)winch.clip=Vehicle.engine.clip;
+            PrepareLoop(winch);
             view = session && session.input && session.input.view ? session.input.view : Camera.main;
             RefreshOwnership();
 #if UNITY_EDITOR
@@ -168,6 +196,7 @@ namespace RoadGunner
 
         void OnDisable()
         {
+            UnbindWalker();StopWinch();
 #if UNITY_EDITOR
             if (started) Debug.Log("ARCADE AUDIO stats: own sounds=" + OwnedSounds + " voices started=" + VoicesStarted + " rejected=" + VoicesRejected);
 #endif
@@ -178,6 +207,59 @@ namespace RoadGunner
             foreach (var source in new[] { roll, skid, wind }) if (source) source.Stop();
             rollLevel = skidLevel = windLevel = 0;
             StopVoices();
+        }
+
+        void BindWalker()
+        {
+            UnbindWalker();var vehicle=Vehicle;if(!vehicle)return;
+            footprintSource=vehicle.GetComponent<TireTracks>();
+            if(footprintSource)footprintSource.FootprintPlaced+=FootPlant;
+            collector=vehicle.GetComponent<HarpoonCollector>();
+            if(collector)collector.CollectionCancelled+=StopWinch;
+            audioPoseSerial=vehicle.PoseResetSerial;landingSerial=vehicle.LandingSerial;
+        }
+        void UnbindWalker()
+        {
+            if(footprintSource)footprintSource.FootprintPlaced-=FootPlant;
+            if(collector)collector.CollectionCancelled-=StopWinch;
+            footprintSource=null;collector=null;
+        }
+        void FootPlant(PlayerTrackVisuals.FootContact contact)
+        {
+            if(!started||paused||ended||!session||!session.Playing)return;
+            FootPlantsReceived++;
+            float weight=Mathf.Lerp(.65f,1,Mathf.Clamp01(contact.Intensity));
+            if(PlayAt(footfall,contact.Position,weight,.67f)>=0)FootfallsStarted++;
+        }
+        void UpdateWalkerAudio(VehicleController vehicle,bool playing)
+        {
+            if(vehicle&&vehicle.tuning&&vehicle.tuning.walkerDrive)
+            {
+                if(audioPoseSerial!=vehicle.PoseResetSerial){audioPoseSerial=vehicle.PoseResetSerial;landingSerial=vehicle.LandingSerial;}
+                if(vehicle.LandingSerial!=landingSerial)
+                {
+                    landingSerial=vehicle.LandingSerial;
+                    if(playing&&landingSerial>0&&PlayAt(landing,vehicle.transform.position,Mathf.Lerp(.35f,1,Mathf.InverseLerp(1,9,vehicle.LandingSpeed)),.56f)>=0)LandingSoundsStarted++;
+                }
+            }
+            if(paused){if(winch&&winch.isPlaying)winch.Pause();return;}
+            if(!winch||!winch.clip)return;
+            if(!playing||!collector||!collector.WinchActive){StopWinch();return;}
+            winch.volume=winchVolume*masterVolume*Mathf.Lerp(.5f,1,collector.CableTension);
+            winch.pitch=Mathf.Lerp(1.12f,1.42f,collector.CableTension);
+            if(!winch.isPlaying){winch.UnPause();if(!winch.isPlaying)winch.Play();}
+        }
+        void StopWinch()
+        {
+            if(winch){winch.Stop();winch.volume=0;}
+            if(reelVoice>=0&&reelVoice<state.Length&&state[reelVoice].bank==harpoonReel)FadeVoice(reelVoice,.04f);
+            reelVoice=-1;
+        }
+        void StopMachineVoices()
+        {
+            StopWinch();
+            for(int i=0;i<state.Length;i++)if(state[i].bank==footfall||state[i].bank==landing||state[i].bank==harpoonFire||state[i].bank==harpoonLatch||state[i].bank==harpoonDock||state[i].bank==harpoonReel)
+            {if(voices[i])voices[i].Stop();state[i]=default;pausedVoices[i]=false;}
         }
 
         void RefreshOwnership()
@@ -193,7 +275,7 @@ namespace RoadGunner
             }
             OwnedSounds = owned;
             if (hub) hub.ownedSounds = owned;
-            // The engine drone is gone for good while this sink runs; movement is the tyre roll layer.
+            // This sink owns movement audio: planted walker footfalls, or the legacy roll layer for other profiles.
             var vehicle = Vehicle;
             MutesEngine = isActiveAndEnabled && vehicle;
             if (vehicle) vehicle.externalEngineAudio = MutesEngine;
@@ -267,6 +349,7 @@ namespace RoadGunner
             float finalVolume = Mathf.Clamp01(bank.volume * volume * masterVolume * (1 + Random.Range(-bank.volumeJitter, bank.volumeJitter)));
             var source = voices[index];
             source.Stop();
+            pausedVoices[index]=false;
             source.clip = clip; source.loop = false; source.pitch = finalPitch; source.volume = finalVolume;
             source.panStereo = Mathf.Clamp(pan, -1, 1);
             if (delay > 0) source.PlayDelayed(delay); else source.Play();
@@ -309,6 +392,7 @@ namespace RoadGunner
                 if (keepThisFrame && i < state.Length && state[i].bank != null && state[i].frame == Time.frameCount) continue;
                 if (voices[i]) voices[i].Stop();
                 if (i < state.Length) state[i] = default;
+                if (i < pausedVoices.Length) pausedVoices[i]=false;
             }
             reelVoice = -1;
         }
@@ -320,7 +404,7 @@ namespace RoadGunner
             float dt = Mathf.Min(Time.unscaledDeltaTime, .1f);
             for (int i = 0; i < state.Length; i++)
             {
-                if (state[i].fade <= 0 || !voices[i]) continue;
+                if (state[i].fade <= 0 || !voices[i] || pausedVoices[i]) continue;
                 voices[i].volume = Mathf.Max(0, voices[i].volume - state[i].fade * dt);
                 if (voices[i].volume <= 0) { voices[i].Stop(); state[i] = default; }
             }
@@ -332,6 +416,7 @@ namespace RoadGunner
             UpdateRoll(vehicle, playing, dt);
             UpdateSkid(vehicle, playing, dt);
             UpdateWind(vehicle, dt);
+            UpdateWalkerAudio(vehicle,playing);
         }
 
         void Drive(AudioSource source, ref float level, float target, float rate, float dt, float pitch)
@@ -351,6 +436,8 @@ namespace RoadGunner
 
         void UpdateRoll(VehicleController vehicle, bool playing, float dt)
         {
+            if(vehicle&&vehicle.tuning&&vehicle.tuning.walkerDrive)
+            {rollLevel=0;if(roll){roll.Stop();roll.volume=0;}return;}
             if (!roll || !roll.clip) return;
             float speed01 = 0, grip = 0;
             if (vehicle && playing && vehicle.CanDrive)
@@ -375,6 +462,8 @@ namespace RoadGunner
 
         void UpdateSkid(VehicleController vehicle, bool playing, float dt)
         {
+            if(vehicle&&vehicle.tuning&&vehicle.tuning.walkerDrive)
+            {skidAmount=skidLevel=0;if(skid){skid.Stop();skid.volume=0;}airborneSince=-1;return;}
             if (!skid || !skid.clip) return;
             float amount = 0;
             if (vehicle && playing && vehicle.GroundedWheels > 0)
@@ -417,16 +506,34 @@ namespace RoadGunner
         public override void RunRestarted()
         {
             StopVoices(true);   // Restart announces the start region in the same frame; keep that cue
+            StopWinch();
             paused = ended = false;
+            pausedAt=-1;FootPlantsReceived=FootfallsStarted=LandingSoundsStarted=HarpoonLaunchSoundsStarted=HarpoonLatchSoundsStarted=HarpoonDockSoundsStarted=0;
+            if(Vehicle){audioPoseSerial=Vehicle.PoseResetSerial;landingSerial=Vehicle.LandingSerial;}
             skidAmount = intensity = 0; scrapStep = 0; airborneSince = -1;
             RefreshOwnership();
         }
 
-        public override void PausedChanged(bool isPaused) { paused = isPaused; }
+        public override void PausedChanged(bool isPaused)
+        {
+            if(paused==isPaused)return;paused=isPaused;
+            if(paused)
+            {
+                pausedAt=Time.unscaledTime;
+                for(int i=0;i<voices.Length;i++)if(voices[i]&&voices[i].isPlaying){pausedVoices[i]=true;voices[i].Pause();}
+                if(winch&&winch.isPlaying)winch.Pause();
+            }
+            else
+            {
+                float held=pausedAt>=0?Time.unscaledTime-pausedAt:0;pausedAt=-1;
+                for(int i=0;i<voices.Length;i++)if(pausedVoices[i]){state[i].start+=held;state[i].end+=held;if(voices[i])voices[i].UnPause();pausedVoices[i]=false;}
+            }
+        }
 
         public override void Defeat(Vector3 carPosition)
         {
             ended = true;
+            StopMachineVoices();
             Play2D(crash, 1, .8f);
             Play2D(defeat, 1, 1, .25f);
         }
@@ -434,10 +541,11 @@ namespace RoadGunner
         public override void Victory(Vector3 bossPosition)
         {
             ended = true;
+            StopMachineVoices();
             Play2D(victory, 1, 1, .12f);
         }
 
-        public override void Recovered(Vector3 carPosition) { if (Play2D(whoosh, .9f) < 0) Play2D(uiClick, .5f, .85f); }
+        public override void Recovered(Vector3 carPosition) { StopMachineVoices();if(Vehicle){audioPoseSerial=Vehicle.PoseResetSerial;landingSerial=Vehicle.LandingSerial;}if (Play2D(whoosh, .9f) < 0) Play2D(uiClick, .5f, .85f); }
 
         public override void UiClick() { Play2D(uiClick); }
 
@@ -537,18 +645,19 @@ namespace RoadGunner
             Play2D(scrap, amount > 1 ? 1.08f : 1, Semitones(scrapStep));
         }
 
-        public override void HarpoonLaunched(Vector3 from) { PlayAt(harpoonFire, from); }
+        public override void HarpoonLaunched(Vector3 from) { if(PlayAt(harpoonFire, from,.9f,1.18f)>=0)HarpoonLaunchSoundsStarted++; }
 
         public override void HarpoonLatched(Vector3 at)
         {
-            if (metalHit.HasOwn) PlayAt(metalHit, at, .35f, 1.3f);
-            reelVoice = PlayAt(harpoonReel, at);
+            if(PlayAt(harpoonLatch,at,1,.92f)>=0)HarpoonLatchSoundsStarted++;
+            if(!winch||!winch.clip)reelVoice=PlayAt(harpoonReel,at);
         }
 
         public override void HarpoonReeled(Vector3 at)
         {
             if (reelVoice >= 0 && reelVoice < state.Length && state[reelVoice].bank == harpoonReel) FadeVoice(reelVoice, .12f);
             reelVoice = -1;
+            StopWinch();if(PlayAt(harpoonDock,at,.65f,.8f)>=0)HarpoonDockSoundsStarted++;
         }
 
         public override void UpgradeCollected(ArenaUpgradeKind kind, Vector3 position)

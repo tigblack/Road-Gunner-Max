@@ -1,0 +1,12 @@
+{
+  "model": "Mac17,7",
+  "chip": "Apple M5 Max",
+  "memory": "36 GB",
+  "os": "macOS 26.6.2 (25G83)",
+  "gpu": [
+    {
+      "model": "Apple M5 Max",
+      "metal": null
+    }
+  ]
+}

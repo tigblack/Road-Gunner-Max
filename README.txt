@@ -9,7 +9,7 @@ Open this repository folder through Unity Hub using the version above. Let Unity
 import Assets and restore Packages, then open:
 Assets/RoadGunner/Scenes/Level01_Greenwood.unity
 
-Press Play. The latest 6 November source revision rebuilds Arena 1 around a wide
+Press Play. The 6 November layout revision rebuilt Arena 1 around a wide
 four-arm crossroads, southeast repair hub, southwest guard outpost, northeast
 camp/optional Ashmaw, northwest Warlord and three closed exits. It adapts the
 researched historical Butcher Hero topology to our vehicle and wasteland.
@@ -42,10 +42,11 @@ exploration, reference-layout drives, respawns and its former wheel physics.
 The later instant walker has separate fresh acceptance below. Delivery.txt and
 Screenshots/native-overview.png record the saved result and scope. A repeat
 installer pass preserves the same geometry/assets without duplicate gameplay.
-The current6 November WebGL contains the detailed walker, instant character
-movement and rebuilt reference arena. Release evidence:
-Documentation/RoadGunner/WebGL-2026-11-06-PlayerWalkerInstant/.
-Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/?build=981233b
+The current9 November WebGL contains the walker contact/cannon/harpoon feel pass
+and rebuilt reference arena. Release evidence:
+Documentation/RoadGunner/WalkerFeel-2026-11-09/
+Documentation/RoadGunner/WebGL-2026-11-09-WalkerFeel/
+Play in a phone browser: https://tigblack.github.io/Road-Gunner-Max/
 Tap PLAY to start the game and audio; use the floating touch stick.
 
 ENEMY RETURNS
@@ -107,8 +108,8 @@ RoadGunner.Editor.PlayerWalkerInstantVerification.Run
 RoadGunner.Editor.PlayerWalkerVerification.Run
 RoadGunner.Editor.Arena1Verification.Run
 Fresh evidence and actual game/detail captures: PlayerWalkerInstant-2026-11-06/.
-All256 current assertions pass (33 instant movement +19 gait/visuals +204 gameplay),
-with zero runtime Console errors/exceptions/asserts.
+The 6 November revision passed256 assertions (33 instant movement +19 gait/visuals
++204 gameplay). Current 9 November reports are recorded separately below.
 The upper model has layered armour, fasteners, vents, hydraulic components, hoses
 and machined weapon details, combined into the same seven shared-material meshes.
 Do not rerun the older full car/art/world installers over this saved version.
@@ -190,33 +191,36 @@ Resume. Implementation notes:
 Documentation/RoadGunner/AntonFeedback-2026-10-29/Implementation.txt
 
 ARENA AUTHORING AND TUNING
-Tools / Road Gunner / Level Editor opens the existing scene-based authoring
-tools. Per-level settings live under Assets/RoadGunner/Levels/Greenwood/Arena1.
-The Arena 1 player profile has trackedDrive=true, maxSpeed=9.36m/s and unchanged
-acceleration=2.2m/s2. The speed limit is60% above the previous5.85m/s profile. The
-same15-second flat-course comparison measured5.31100 ->8.45277m/s (59.16% faster),
-approximately19.1 ->30.4km/h actual cruise. Initial wheel-only and half-speed
-track conversion measurements remain historical in their own release folders.
-Four existing
-WheelColliders provide suspension and ground contacts; visible tyres are hidden
-behind two animated track assemblies. Motor torque differs between the sides;
-wheel steering stays zero. A bounded 9000 Nm yaw assist acts only with support
-on both sides, never by replacing body velocity/rotation. Recover/Restart still
-reset pose explicitly. Buggies retain their wheeled profile. Combat HP/ATK and
-arena geometry are retained. Current speed evidence: Documentation/RoadGunner/Speed60-2026-11-05/.
-Track conversion history: Documentation/RoadGunner/TrackedVehicle-2026-11-03/.
+Tools / Road Gunner / Level Editor opens the scene-based authoring tools.
+Per-level settings live under Assets/RoadGunner/Levels/Greenwood/Arena1.
+The current player uses walkerDrive=true with instant grounded screen-relative
+movement at 9.36m/s, analog stick speed and immediate release/Space/reversal.
+Compound collision sweeps stop inward wall motion and permit sliding and exit;
+the dynamic body and four hidden suspension contacts retain vertical physics.
+Buggies retain their own wheeled profile. The player has no visible tracks/car.
 
-The saved scene already has tracks. To regenerate only their visual assets:
-Tools / Road Gunner / Player / Install Tracked Visuals Only
-Batch: RoadGunner.Editor.PlayerTrackVisualInstaller.InstallBatch
-This preserves body, crew, weapons and the four suspension contacts. Do not run
-legacy world/presentation installers just to build or publish this saved scene.
-Historical wheel-only revision evidence remains in WheelPhysics-2026-10-30/.
-After editing terrain or roads, refresh the static map through the existing
-minimap authoring workflow and rebake navigation as required by the Level Editor.
-Legacy rebalance/prototype/polish commands have their own authoring scopes and
-may replace presentation or tuning; apply the Anton feedback installer, then the exploration installer
-when retaining the current HUD and map. See Assets/RoadGunner/README.txt for details.
+The 9 November feel pass links valid planted feet to one footprint, dust puff
+and mechanical footfall. World stance anchors, shortened replants and bounded
+pelvis/torso/landing reactions express the immediate movement. The cannon resolves
+aim, muzzle, hitscan, flash and tracer after the shoulder pose, with cosmetic
+barrel recoil. Harpoon launch/slack/latch/tension/pull/dock follow its real pool
+reservation; invalid targets and session transitions clear retrieval feedback.
+Presentation tuning: body settle .20s, motion lean 2.2deg, landing compression
+.09m, footfall intensity 1; cannon settle .06s, recoil .09m/kick .018s/return .14s;
+cable 8 points, slack .16m, tension settle .06s. Gameplay remains gun10m/5Hz/
+5.25 base actual damage and harpoon8m/36m/s/30m/s/.08s collection delay.
+Narrow audio authoring: RoadGunner.Editor.WalkerFeelInstaller.InstallBatch.
+Acceptance: WalkerFeelVerification.Run, CannonFeelVerification.Run,
+HarpoonFeelVerification.Run, WalkerArenaRunVerification.Run in RoadGunner.Editor.
+Use -batchmode -rgMuteAudio without -quit/-nographics for quiet native checks.
+This flag mutes only the test game's listener; it never changes desktop volume
+or the published player's audio. Evidence: WalkerFeel-2026-11-09/.
+
+The differential-track speed measurements and torque/yaw-assist setup are
+historical: Speed60-2026-11-05/ and TrackedVehicle-2026-11-03/. Do not replay
+PlayerTrackVisualInstaller or old car/art/world installers over the walker.
+After terrain changes refresh the static map and navigation through the current
+ReferenceArena authoring workflow. No regeneration is needed for packaging.
 
 WEB BUILD AND PUBLISHED DEMO
 Use Tools / Road Gunner / Web / Build Mobile Web, or batch entry
@@ -224,17 +228,17 @@ RoadGunner.EditorTools.WebBuild.Build with -buildTarget WebGL. Output: WebBuild/
 Rebuild WebGL after saving changes to the scene. Gzip with JavaScript
 decompression fallback supports static hosting.
 
-WebBuild/ contains the 5 November rotated-small-stone fix, built with Unity 6000.6.4f1.
-The player limit remains 9.36m/s with the current tracked handling.
-Seven static artifacts total 26,789,667 bytes. Fresh native acceptance:
-actual-world stone6 + scenery31 + gameplay204 + exploration88 + respawn15 = 344 PASS,
-with zero failures and runtime Console errors. Five small rotated boulders now
-crumble correctly; real saved-world driving, Restart and large-rock collision
-are checked. The 30-second enemy return timers and existing game rules remain.
-Build/input hashes, source audit, before/after captures and publication evidence:
-Documentation/RoadGunner/StoneFix-2026-11-05/.
-Play: https://tigblack.github.io/Road-Gunner-Max/?build=c0934fe
-Publication evidence: Documentation/RoadGunner/StoneFix-2026-11-05/Publication.txt.
+WebBuild/ contains the 9 November walker/weapon feel pass, Unity6000.6.4f1.
+Seven static artifacts total21,318,552 bytes. All368 native checks pass, with
+zero runtime Console errors/exceptions/asserts. The input-only actual-AI arena
+run defeats Warlord and settles earned Scrap; actual enemy Defeat and Restart
+are also exercised. Controlled fixtures and browser/device limits are disclosed.
+Build/input hashes and source preservation:
+Documentation/RoadGunner/WebGL-2026-11-09-WalkerFeel/WebBuild.json
+Delivery and final native evidence:
+Documentation/RoadGunner/WalkerFeel-2026-11-09/Delivery.txt
+The earlier 6 November instant walker player981233b and 5 November stone fix
+c0934fe remain historical snapshots in their named release folders.
 The preceding respawn release 8a38955 is documented in EnemyRespawn-2026-11-05/.
 The preceding small-stone release c65fd56 is documented in SmallStones-2026-11-05/.
 The preceding +60% speed release 51d237e is documented in Speed60-2026-11-05/.
